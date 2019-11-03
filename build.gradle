@@ -1,0 +1,39 @@
+apply plugin: "com.github.ben-manes.versions"
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath Dependencies.gradle
+        classpath Dependencies.kotlin_gradle_plugin
+        classpath Dependencies.kotlin_android_extensions
+        classpath Dependencies.dependency_updates
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+def isNonStable = { String version ->
+    return listOf("alpha", "beta", "rc", "cr", "m", "preview")
+            .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-]*") }
+            .any { nonStableIdentifier -> nonStableIdentifier.matches(candidate.version) }
+}
+
+dependencyUpdates {
+    // disallow release candidates as upgradable versions from stable versions
+    rejectVersionIf { dependency ->
+        isNonStable(dependency.candidate.version) && !isNonStable(dependency.currentVersion)
+    }
+}
