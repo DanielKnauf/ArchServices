@@ -5,13 +5,13 @@ import knaufdan.android.core.arch.implementation.BaseFragment
 import knaufdan.android.core.arch.implementation.BaseViewModel
 import knaufdan.android.core.databinding.BindableElement
 import knaufdan.android.core.navigation.FragmentContainer
-import knaufdan.android.core.navigation.INavigator
+import knaufdan.android.core.navigation.INavigationService
 
-typealias FragmentSetup = Pair<FragmentContainer, BaseFragment<*>>
+typealias FragmentSetup = Pair<FragmentContainer, BaseFragment<out BaseViewModel>>
 
 interface IBaseActivity<ViewModel : BaseViewModel> : BindableElement<ViewModel>, IAndroidComponent {
     /**
-     * [FragmentContainer] will be set as [INavigator.fragmentContainer].
+     * [FragmentContainer] will be set as [INavigationService.fragmentContainer].
      * [BaseFragment] will be placed into the [FragmentContainer].
      *
      * @return [Pair] of [FragmentContainer] and [BaseFragment].

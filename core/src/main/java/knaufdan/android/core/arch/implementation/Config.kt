@@ -13,7 +13,7 @@ internal sealed class Config(
         layoutRes: Int,
         viewModelKey: Int,
         titleRes: Int,
-        val fragmentSetup: Pair<FragmentContainer, BaseFragment<*>?>?
+        val fragmentSetup: Pair<FragmentContainer, BaseFragment<out BaseViewModel>?>?
     ) : Config(
         layoutRes,
         viewModelKey,
