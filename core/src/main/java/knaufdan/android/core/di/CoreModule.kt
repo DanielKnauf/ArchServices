@@ -7,8 +7,8 @@ import knaufdan.android.core.audio.AudioService
 import knaufdan.android.core.audio.IAudioService
 import knaufdan.android.core.broadcast.BroadcastService
 import knaufdan.android.core.broadcast.IBroadcastService
-import knaufdan.android.core.navigation.INavigator
-import knaufdan.android.core.navigation.Navigator
+import knaufdan.android.core.navigation.INavigationService
+import knaufdan.android.core.navigation.NavigationService
 import knaufdan.android.core.notification.INotificationService
 import knaufdan.android.core.notification.NotificationService
 
@@ -31,5 +31,5 @@ class CoreModule {
 
     @Singleton
     @Provides
-    internal fun provideNavigator(navigator: Navigator): INavigator = navigator
+    internal fun provideNavigator(navigationService: NavigationService): INavigationService = navigationService
 }

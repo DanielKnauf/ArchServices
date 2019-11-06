@@ -12,7 +12,7 @@ import javax.inject.Inject
 import knaufdan.android.core.ContextProvider
 import knaufdan.android.core.arch.IBaseActivity
 import knaufdan.android.core.di.vm.ViewModelFactory
-import knaufdan.android.core.navigation.Navigator
+import knaufdan.android.core.navigation.NavigationService
 
 abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(),
     IBaseActivity<ViewModel> {
@@ -21,7 +21,7 @@ abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(),
     lateinit var contextProvider: ContextProvider
 
     @Inject
-    lateinit var navigator: Navigator
+    lateinit var navigationService: NavigationService
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -55,7 +55,7 @@ abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(),
             }
 
             fragmentSetup?.apply {
-                navigator.fragmentContainer = first
+                navigationService.fragmentContainer = first
 
                 showInitialFragment(
                     savedInstanceState = savedInstanceState,
@@ -94,12 +94,12 @@ abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(),
     }
 
     private fun showInitialFragment(
-        initialFragment: BaseFragment<*>?,
+        initialFragment: BaseFragment<out BaseViewModel>?,
         savedInstanceState: Bundle?
     ) = initialFragment?.run {
         arguments = savedInstanceState
 
-        navigator.goTo(
+        navigationService.goTo(
             this,
             false
         )
