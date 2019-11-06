@@ -55,7 +55,7 @@ class NavigationService @Inject constructor(private val contextProvider: Context
         }
     }
 
-    override fun backPressed() = with(contextProvider.context) {
+    override fun onBackPressed() = with(contextProvider.context) {
         if (this is Activity) {
             onBackPressed()
         }

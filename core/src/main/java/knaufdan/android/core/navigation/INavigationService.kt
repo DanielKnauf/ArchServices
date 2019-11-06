@@ -22,5 +22,5 @@ interface INavigationService {
         container: FragmentContainer = fragmentContainer
     )
 
-    fun backPressed()
+    fun onBackPressed()
 }
