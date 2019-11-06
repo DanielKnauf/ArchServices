@@ -13,6 +13,23 @@ class NavigationService @Inject constructor(private val contextProvider: Context
     INavigationService {
     override var fragmentContainer = -1
 
+    override fun cleanGoTo(
+        fragment: BaseFragment<out BaseViewModel>,
+        container: FragmentContainer
+    ) = with(contextProvider.context) {
+
+        check(container != -1) { "Could not replace ${fragment.fragmentTag} because no fragmentContainer is defined. Current container value = $container" }
+
+        if (this is AppCompatActivity) {
+            supportFragmentManager.popBackStackImmediate()
+            goTo(
+                fragment = fragment,
+                addToBackStack = false,
+                container = container
+            )
+        }
+    }
+
     override fun goTo(
         fragment: BaseFragment<out BaseViewModel>,
         addToBackStack: Boolean,

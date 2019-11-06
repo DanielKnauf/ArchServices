@@ -7,14 +7,14 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.AndroidInjection
-import java.lang.reflect.ParameterizedType
-import javax.inject.Inject
 import knaufdan.android.core.ContextProvider
 import knaufdan.android.core.arch.IBaseActivity
 import knaufdan.android.core.di.vm.ViewModelFactory
 import knaufdan.android.core.navigation.NavigationService
+import java.lang.reflect.ParameterizedType
+import javax.inject.Inject
 
-abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(),
+abstract class BaseActivity<ViewModel : ActivityViewModel> : AppCompatActivity(),
     IBaseActivity<ViewModel> {
 
     @Inject
@@ -67,6 +67,9 @@ abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity(),
 
     override fun onBackPressed() {
         supportFragmentManager.notifyBackPressed()
+        if (viewModel.handleBackPressed(supportFragmentManager)) {
+            return
+        }
         super.onBackPressed()
     }
 
