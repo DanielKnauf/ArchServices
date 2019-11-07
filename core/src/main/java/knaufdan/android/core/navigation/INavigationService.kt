@@ -9,7 +9,7 @@ interface INavigationService {
     var fragmentContainer: FragmentContainer
 
     /**
-     * Clears the backStack and sets the [fragment] into the [container].
+     * Clears backStack and sets [fragment] into the [container].
      */
     fun cleanGoTo(
         fragment: BaseFragment<out BaseViewModel>,
