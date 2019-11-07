@@ -10,7 +10,7 @@ interface IActivityViewModel : IBaseViewModel {
     /**
      * Is called on [BaseActivity.onBackPressed].
      *
-     * @return [true] if the backPress is fully handled and must not be forwarded via [super].
+     * @return [true] if the backPress event is fully handled and must not be forwarded via [super.onBackPressed].
      */
     fun handleBackPressed(fragmentManager: FragmentManager): isHandled
 }
