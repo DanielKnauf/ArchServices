@@ -8,11 +8,19 @@ typealias FragmentContainer = Int
 interface INavigationService {
     var fragmentContainer: FragmentContainer
 
+    /**
+     * Clears backStack and sets [fragment] into the [container].
+     */
+    fun cleanGoTo(
+        fragment: BaseFragment<out BaseViewModel>,
+        container: FragmentContainer = fragmentContainer
+    )
+
     fun goTo(
         fragment: BaseFragment<out BaseViewModel>,
         addToBackStack: Boolean,
         container: FragmentContainer = fragmentContainer
     )
 
-    fun backPressed()
+    fun onBackPressed()
 }

@@ -9,7 +9,7 @@ import knaufdan.android.core.navigation.INavigationService
 
 typealias FragmentSetup = Pair<FragmentContainer, BaseFragment<out BaseViewModel>>
 
-interface IBaseActivity<ViewModel : BaseViewModel> : BindableElement<ViewModel>, IAndroidComponent {
+interface IBaseActivity<ViewModel : IActivityViewModel> : BindableElement<ViewModel>, IAndroidComponent {
     /**
      * [FragmentContainer] will be set as [INavigationService.fragmentContainer].
      * [BaseFragment] will be placed into the [FragmentContainer].
