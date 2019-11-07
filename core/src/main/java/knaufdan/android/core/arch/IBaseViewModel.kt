@@ -7,7 +7,7 @@ import knaufdan.android.core.arch.implementation.BaseFragment
 interface IBaseViewModel : LifecycleObserver {
 
     /**
-     * Is called in [BaseActivity.onCreate] ot [BaseFragment.onCreateView] before binding the [IBaseViewModel].
+     * Is called in [BaseActivity.onCreate] and [BaseFragment.onCreateView] before binding the [IBaseViewModel].
      */
     fun handleBundle(bundle: Bundle?)
 }
