@@ -3,6 +3,8 @@ package knaufdan.android.core.di
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
+import knaufdan.android.core.ISharedPrefService
+import knaufdan.android.core.SharedPrefService
 import knaufdan.android.core.audio.AudioService
 import knaufdan.android.core.audio.IAudioService
 import knaufdan.android.core.broadcast.BroadcastService
@@ -31,5 +33,9 @@ class CoreModule {
 
     @Singleton
     @Provides
-    internal fun provideNavigator(navigationService: NavigationService): INavigationService = navigationService
+    internal fun provideNavigationService(navigationService: NavigationService): INavigationService = navigationService
+
+    @Singleton
+    @Provides
+    internal fun provideSharedPrefService(sharedPrefService: SharedPrefService): ISharedPrefService = sharedPrefService
 }
