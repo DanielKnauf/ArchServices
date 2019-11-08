@@ -3,6 +3,8 @@ package knaufdan.android.core.di
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
+import knaufdan.android.core.alarm.AlarmService
+import knaufdan.android.core.alarm.IAlarmService
 import knaufdan.android.core.audio.AudioService
 import knaufdan.android.core.audio.IAudioService
 import knaufdan.android.core.broadcast.BroadcastService
@@ -17,8 +19,7 @@ class CoreModule {
 
     @Singleton
     @Provides
-    internal fun provideNotificationService(notificationService: NotificationService): INotificationService =
-        notificationService
+    internal fun provideAlarmService(alarmService: AlarmService): IAlarmService = alarmService
 
     @Singleton
     @Provides
@@ -31,5 +32,11 @@ class CoreModule {
 
     @Singleton
     @Provides
-    internal fun provideNavigator(navigationService: NavigationService): INavigationService = navigationService
+    internal fun provideNavigator(navigationService: NavigationService): INavigationService =
+        navigationService
+
+    @Singleton
+    @Provides
+    internal fun provideNotificationService(notificationService: NotificationService): INotificationService =
+        notificationService
 }

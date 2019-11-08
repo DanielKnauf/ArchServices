@@ -2,11 +2,11 @@ package knaufdan.android.core.navigation
 
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
+import javax.inject.Inject
+import javax.inject.Singleton
 import knaufdan.android.core.ContextProvider
 import knaufdan.android.core.arch.implementation.BaseFragment
 import knaufdan.android.core.arch.implementation.BaseViewModel
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
 class NavigationService @Inject constructor(private val contextProvider: ContextProvider) :
