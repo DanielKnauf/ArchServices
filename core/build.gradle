@@ -27,18 +27,19 @@ android {
         enabled = true
     }
 
-    apply from: "$rootDir/buildSrc/ktlint.gradle.kts"
+    apply from: "$rootDir.parentFile/$rootProject.name/buildSrc/ktlint.gradle.kts"
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation Dependencies.androidX_app_compat
-    implementation Dependencies.androidX_lifecycle_extensions
-    implementation Dependencies.androidX_lifecycle_viewModel
     implementation Dependencies.androidX_localbroadcast_manager
     implementation Dependencies.androidX_core_ktx
     implementation Dependencies.gson
-    
+
+    //lifecycle
+    implementation Dependencies.androidX_lifecycle_viewModel
+    implementation Dependencies.androidX_lifecycle_extensions
     kapt Dependencies.androidX_lifecycle_compiler
 
     //testing

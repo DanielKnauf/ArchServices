@@ -3,6 +3,8 @@ package knaufdan.android.core.di
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
+import knaufdan.android.core.ISharedPrefService
+import knaufdan.android.core.SharedPrefService
 import knaufdan.android.core.alarm.AlarmService
 import knaufdan.android.core.alarm.IAlarmService
 import knaufdan.android.core.audio.AudioService
@@ -39,4 +41,8 @@ class CoreModule {
     @Provides
     internal fun provideNotificationService(notificationService: NotificationService): INotificationService =
         notificationService
+
+    @Singleton
+    @Provides
+    internal fun provideSharedPrefService(sharedPrefService: SharedPrefService): ISharedPrefService = sharedPrefService
 }
