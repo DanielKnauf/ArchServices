@@ -27,7 +27,7 @@ android {
         enabled = true
     }
 
-    apply from: "$rootDir/buildSrc/ktlint.gradle.kts"
+    apply from: "$rootDir.parentFile/$rootProject.name/buildSrc/ktlint.gradle.kts"
 }
 
 dependencies {
