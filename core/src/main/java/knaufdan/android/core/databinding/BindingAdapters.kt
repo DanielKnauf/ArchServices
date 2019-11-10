@@ -14,7 +14,6 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import javax.sql.DataSource
 
 @BindingAdapter(value = ["backgroundResource"])
 fun View.bindBackgroundResource(@DrawableRes background: Int) {
@@ -26,41 +25,53 @@ fun TextView.bindNumber(number: Int?) {
     text = number?.toString() ?: ""
 }
 
-@BindingAdapter(value = ["bindableOne"])
-fun <DataSource>ViewGroup.bindDataSource(bindableOne: BindableElement<DataSource>) {
+@BindingAdapter(value = ["element"])
+fun ViewGroup.bindElement(element: BindableElement<*>) {
     val context = context
+
+    if (element.getDataSource() is List<*>) {
+        bindRecyclerView(listElement = element.toListElement())
+        return
+    }
 
     val inflater = LayoutInflater.from(context)
 
     try {
         DataBindingUtil.inflate<ViewDataBinding>(
                 inflater,
-                bindableOne.getLayoutRes(),
+                element.getLayoutRes(),
                 this,
                 false
         ).apply {
-            setVariable(bindableOne.getBindingKey(), bindableOne.getDataSource())
+            setVariable(element.getBindingKey(), element.getDataSource())
             if (context is LifecycleOwner) lifecycleOwner = context
-            this@bindDataSource.addView(root)
+            this@bindElement.addView(root)
         }
     } catch (e: Resources.NotFoundException) {
-        Log.e("BindingAdapters", "LayoutRes could not be found and no binding was generated in $context")
+        Log.e(".bindDataSource()", "LayoutRes could not be found. No binding was generated in $context")
     }
 }
 
-
-//TODO: FIND BETTER NAME!
-
-
-@BindingAdapter(value = ["bindable"])
-fun <DataSource> ViewGroup.bindRecyclerView(bindable: BindableElement<List<DataSource>>) {
+private fun <DataSource> ViewGroup.bindRecyclerView(listElement: BindableElement<List<DataSource>>) {
     val context = context
 
     RecyclerView(context).apply {
         layoutParams = ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         layoutManager = LinearLayoutManager(context)
-        adapter = BindableAdapter(bindable)
+        adapter = BindableAdapter(
+                dataSources = listElement.getDataSource(),
+                layoutRes = listElement.getLayoutRes(),
+                bindingKey = listElement.getBindingKey()
+        )
 
         this@bindRecyclerView.addView(this)
     }
+}
+
+private fun BindableElement<*>.toListElement() = object : BindableElement<List<*>> {
+    override fun getLayoutRes() = this@toListElement.getLayoutRes()
+
+    override fun getBindingKey() = this@toListElement.getBindingKey()
+
+    override fun getDataSource() = this@toListElement.getDataSource() as List<*>
 }
