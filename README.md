@@ -3,6 +3,21 @@
 ## Description
 //TODO
 
+## Use it
+
+Everything can be received as a dependency from [jitpack.io](https://jitpack.io): 
+```
+allprojects {
+   repositories {
+      maven { url 'https://jitpack.io' }
+   }
+}
+
+dependencies {
+   implementation 'com.github.DanielKnauf:archservices:master-SNAPSHOT'
+}
+```
+
 ## License
 ```
 Copyright (C) 2019 Daniel Knauf
