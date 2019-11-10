@@ -13,13 +13,13 @@ import androidx.core.app.NotificationCompat
 import javax.inject.Inject
 import javax.inject.Singleton
 import knaufdan.android.core.ContextProvider
-import knaufdan.android.core.TextProvider
+import knaufdan.android.core.ITextProvider
 import kotlin.reflect.KClass
 
 @Singleton
 class NotificationService @Inject constructor(
     private val contextProvider: ContextProvider,
-    private val textProvider: TextProvider
+    private val textProvider: ITextProvider
 ) : INotificationService {
     private val notificationManager by lazy {
         contextProvider.context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
