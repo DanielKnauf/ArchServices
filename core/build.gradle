@@ -27,7 +27,7 @@ android {
         enabled = true
     }
 
-    apply from: "$rootDir.parentFile/$rootProject.name/buildSrc/ktlint.gradle.kts"
+    apply from: "$rootDir/buildSrc/ktlint.gradle.kts"
 }
 
 dependencies {
@@ -35,6 +35,7 @@ dependencies {
     implementation Dependencies.androidX_app_compat
     implementation Dependencies.androidX_localbroadcast_manager
     implementation Dependencies.androidX_core_ktx
+    implementation Dependencies.androidX_recyclerView
     implementation Dependencies.gson
 
     //lifecycle
