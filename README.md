@@ -5,7 +5,7 @@
 
 ## Use it
 
-Everything can be received as a dependency from [jitpack.io](https://jitpack.io): 
+The latest `master` version can be received as a dependency from [jitpack.io](https://jitpack.io): 
 ```
 allprojects {
    repositories {
