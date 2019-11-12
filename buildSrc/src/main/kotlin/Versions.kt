@@ -6,6 +6,7 @@ object Versions {
     const val appcompat_version = "1.1.0"
     const val lifecycle_version = "2.2.0-alpha05"
     const val broadcast_manager_version = "1.0.0"
+    const val recyclerView_version = "1.0.0"
     const val dagger_version = "2.24"
     const val gson_version = "2.8.6"
 

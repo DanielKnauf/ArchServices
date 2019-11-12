@@ -35,6 +35,7 @@ dependencies {
     implementation Dependencies.androidX_app_compat
     implementation Dependencies.androidX_localbroadcast_manager
     implementation Dependencies.androidX_core_ktx
+    implementation Dependencies.androidX_recyclerView
     implementation Dependencies.gson
 
     //lifecycle

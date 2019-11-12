@@ -9,6 +9,7 @@ import Versions.jUnit_version
 import Versions.kotlin_version
 import Versions.ktLint_version
 import Versions.lifecycle_version
+import Versions.recyclerView_version
 import Versions.test_runner_version
 
 object Dependencies {
@@ -21,10 +22,13 @@ object Dependencies {
 
     val androidX_core_ktx = "androidx.core:core-ktx:$androidx_core_version"
     val androidX_app_compat = "androidx.appcompat:appcompat:$appcompat_version"
-    val androidX_localbroadcast_manager ="androidx.localbroadcastmanager:localbroadcastmanager:$broadcast_manager_version"
+    val androidX_localbroadcast_manager =
+        "androidx.localbroadcastmanager:localbroadcastmanager:$broadcast_manager_version"
+    val androidX_recyclerView = "androidx.recyclerview:recyclerview:$recyclerView_version"
 
     val androidX_lifecycle_extensions = "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
-    val androidX_lifecycle_viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    val androidX_lifecycle_viewModel =
+        "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     val androidX_lifecycle_compiler = "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
 
     val jUnit = "junit:junit:$jUnit_version"
@@ -38,6 +42,7 @@ object Dependencies {
 
     val gson = "com.google.code.gson:gson:$gson_version"
 
-    val dependency_updates = "com.github.ben-manes:gradle-versions-plugin:$dependency_updates_version"
+    val dependency_updates =
+        "com.github.ben-manes:gradle-versions-plugin:$dependency_updates_version"
     val ktLint = "com.pinterest:ktlint:$ktLint_version"
 }
