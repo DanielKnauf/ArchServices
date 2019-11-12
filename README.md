@@ -1,7 +1,8 @@
 # ArchServices
 
 ## Description
-//TODO
+The underlying architecture concept of _ArchServices_ is to keep `Activities` and `Fragments` as small and clean as possible. The `ViewModel` should handle all logic (even lifecycle events) or  delegate it to another class. 
+From this premise, base classed for `Activity` and `Fragment` were created which handle the _Mvvm_-setup (e.g. connect layout to viewmodel) and forward events to the `ViewModel` (e.g. onBackPressed or the bundle of onCreate). Also `Micro Services` for different functionalities were created which can easily be injected into the `ViewModel` via _Dagger_. 
 
 ## Use it
 
