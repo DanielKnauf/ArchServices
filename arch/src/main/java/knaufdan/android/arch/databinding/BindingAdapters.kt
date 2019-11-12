@@ -26,45 +26,51 @@ fun TextView.bindNumber(number: Int?) {
 }
 
 @BindingAdapter(value = ["element"])
-fun ViewGroup.bindElement(element: BindableElement<*>) {
-    val context = context
-
+fun ViewGroup.bindElement(element: BindableElement<*>) =
     if (element.getDataSource() is List<*>) {
-        bindRecyclerView(listElement = element.toListElement())
-        return
+        element.toListElement().bindToRecyclerView(parent = this)
+    } else {
+        element.bindToLinearLayout(parent = this)
     }
 
-    val inflater = LayoutInflater.from(context)
+private fun <DataSource> BindableElement<List<DataSource>>.bindToRecyclerView(parent: ViewGroup) {
+    val context = parent.context
 
-    try {
-        DataBindingUtil.inflate<ViewDataBinding>(
-                inflater,
-                element.getLayoutRes(),
-                this,
-                false
-        ).apply {
-            setVariable(element.getBindingKey(), element.getDataSource())
-            if (context is LifecycleOwner) lifecycleOwner = context
-            this@bindElement.addView(root)
-        }
-    } catch (e: Resources.NotFoundException) {
-        Log.e(".bindDataSource()", "LayoutRes could not be found. No binding was generated in $context")
+    RecyclerView(context).apply {
+        layoutParams = ViewGroup.LayoutParams(
+            LinearLayout.LayoutParams.MATCH_PARENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
+        layoutManager = LinearLayoutManager(context)
+        adapter = BindableAdapter(
+            dataSources = getDataSource(),
+            layoutRes = getLayoutRes(),
+            bindingKey = getBindingKey()
+        )
+
+        parent.addView(this)
     }
 }
 
-private fun <DataSource> ViewGroup.bindRecyclerView(listElement: BindableElement<List<DataSource>>) {
-    val context = context
+private fun <DataSource> BindableElement<DataSource>.bindToLinearLayout(parent: ViewGroup) {
+    val context = parent.context
 
-    RecyclerView(context).apply {
-        layoutParams = ViewGroup.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-        layoutManager = LinearLayoutManager(context)
-        adapter = BindableAdapter(
-            dataSources = listElement.getDataSource(),
-            layoutRes = listElement.getLayoutRes(),
-            bindingKey = listElement.getBindingKey()
+    try {
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(context),
+            getLayoutRes(),
+            parent,
+            false
+        ).apply {
+            setVariable(getBindingKey(), getDataSource())
+            if (context is LifecycleOwner) lifecycleOwner = context
+            parent.addView(root)
+        }
+    } catch (e: Resources.NotFoundException) {
+        Log.e(
+            ".bindDataSource()",
+            "LayoutRes could not be found. No binding was generated in $context"
         )
-
-        this@bindRecyclerView.addView(this)
     }
 }
 
