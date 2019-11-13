@@ -4,19 +4,19 @@ import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import javax.inject.Inject
 import javax.inject.Singleton
-import knaufdan.android.core.ContextProvider
+import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.arch.implementation.BaseFragment
 import knaufdan.android.core.arch.implementation.BaseViewModel
 
 @Singleton
-class NavigationService @Inject constructor(private val contextProvider: ContextProvider) :
+class NavigationService @Inject constructor(private val contextProvider: IContextProvider) :
     INavigationService {
     override var fragmentContainer = -1
 
     override fun cleanGoTo(
         fragment: BaseFragment<out BaseViewModel>,
         container: FragmentContainer
-    ) = with(contextProvider.context) {
+    ) = with(contextProvider.getContext()) {
 
         check(container != -1) { "Could not replace ${fragment.fragmentTag} because no fragmentContainer is defined. Current container value = $container" }
 
@@ -34,7 +34,7 @@ class NavigationService @Inject constructor(private val contextProvider: Context
         fragment: BaseFragment<out BaseViewModel>,
         addToBackStack: Boolean,
         container: FragmentContainer
-    ) = with(contextProvider.context) {
+    ) = with(contextProvider.getContext()) {
 
         check(container != -1) { "Could not replace ${fragment.fragmentTag} because no fragmentContainer is defined. Current container value = $container" }
 
@@ -55,7 +55,7 @@ class NavigationService @Inject constructor(private val contextProvider: Context
         }
     }
 
-    override fun onBackPressed() = with(contextProvider.context) {
+    override fun onBackPressed() = with(contextProvider.getContext()) {
         if (this is Activity) {
             onBackPressed()
         }
