@@ -5,15 +5,15 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class TextProvider @Inject constructor(private val contextProvider: ContextProvider) : ITextProvider {
+class TextProvider @Inject constructor(private val contextProvider: IContextProvider) : ITextProvider {
 
     override fun getText(
         @StringRes textId: Int,
         formatArgument: Any?
     ): String =
             formatArgument?.run {
-                contextProvider.context.getString(textId, this)
+                contextProvider.getContext().getString(textId, this)
             } ?: getText(textId)
 
-    private fun getText(@StringRes textId: Int): String = contextProvider.context.getString(textId)
+    private fun getText(@StringRes textId: Int): String = contextProvider.getContext().getString(textId)
 }

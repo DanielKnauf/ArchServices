@@ -11,14 +11,13 @@ import javax.inject.Singleton
 import kotlin.reflect.KClass
 
 @Singleton
-class SharedPrefService @Inject constructor(private val contextProvider: ContextProvider) :
+class SharedPrefService @Inject constructor(private val contextProvider: IContextProvider) :
         ISharedPrefService {
 
     private val sharedPrefLocation = "knaufdan.android.simpletimerapp.sharedPref"
 
-    private val sharedPrefs by lazy {
-        contextProvider.context.getSharedPreferences(sharedPrefLocation, MODE_PRIVATE)
-    }
+    private val sharedPrefs
+        get() = contextProvider.getContext().getSharedPreferences(sharedPrefLocation, MODE_PRIVATE)
 
     override fun saveAsJsonTo(
         key: String,

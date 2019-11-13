@@ -2,11 +2,8 @@ package knaufdan.android.core.di
 
 import dagger.Module
 import dagger.Provides
+import knaufdan.android.core.*
 import javax.inject.Singleton
-import knaufdan.android.core.ISharedPrefService
-import knaufdan.android.core.ITextProvider
-import knaufdan.android.core.SharedPrefService
-import knaufdan.android.core.TextProvider
 import knaufdan.android.core.alarm.AlarmService
 import knaufdan.android.core.alarm.IAlarmService
 import knaufdan.android.core.audio.AudioService
@@ -33,6 +30,10 @@ class CoreModule {
     @Provides
     internal fun provideBroadcastService(broadcastService: BroadcastService): IBroadcastService =
             broadcastService
+
+    @Singleton
+    @Provides
+    internal fun provideContextProvider(contextProvider: ContextProvider): IContextProvider = contextProvider
 
     @Singleton
     @Provides
