@@ -1,4 +1,4 @@
-package knaufdan.android.core
+package knaufdan.android.core.preferences
 
 import kotlin.reflect.KClass
 

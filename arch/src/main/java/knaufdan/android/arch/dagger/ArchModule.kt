@@ -11,5 +11,4 @@ class ArchModule {
     @Provides
     internal fun provideNavigator(navigationService: knaufdan.android.arch.navigation.NavigationService): knaufdan.android.arch.navigation.INavigationService =
         navigationService
-
 }

@@ -8,10 +8,10 @@ import android.content.Intent
 import android.os.Bundle
 import javax.inject.Inject
 import javax.inject.Singleton
-import knaufdan.android.core.ContextProvider
+import knaufdan.android.core.IContextProvider
 
 @Singleton
-class AlarmService @Inject constructor(private val contextProvider: ContextProvider) :
+class AlarmService @Inject constructor(private val contextProvider: IContextProvider) :
     IAlarmService {
 
     /**
@@ -31,7 +31,7 @@ class AlarmService @Inject constructor(private val contextProvider: ContextProvi
         }
 
         val wakeUpTime = System.currentTimeMillis().plus(timeToWakeFromNow)
-        val (alarmManager, pendingIntent) = contextProvider.context.buildTools(
+        val (alarmManager, pendingIntent) = contextProvider.getContext().buildTools(
             extras = extras,
             broadcastReceiverType = broadcastReceiverType
         )
@@ -44,7 +44,7 @@ class AlarmService @Inject constructor(private val contextProvider: ContextProvi
      * @param broadcastReceiverType - the receiver which should be canceled.
      */
     override fun cancelAlarm(broadcastReceiverType: Class<out BroadcastReceiver>) {
-        val (alarmManager, pendingIntent) = contextProvider.context.buildTools(broadcastReceiverType = broadcastReceiverType)
+        val (alarmManager, pendingIntent) = contextProvider.getContext().buildTools(broadcastReceiverType = broadcastReceiverType)
         alarmManager.cancel(pendingIntent)
     }
 

@@ -1,9 +1,9 @@
 package knaufdan.android.arch.mvvm
 
 import androidx.fragment.app.FragmentManager
+import knaufdan.android.arch.databinding.BindableElement
 import knaufdan.android.arch.mvvm.implementation.BaseFragment
 import knaufdan.android.arch.mvvm.implementation.BaseViewModel
-import knaufdan.android.arch.databinding.BindableElement
 import knaufdan.android.arch.navigation.FragmentContainer
 import knaufdan.android.arch.navigation.INavigationService
 

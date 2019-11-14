@@ -1,16 +1,16 @@
-package knaufdan.android.core.broadcast
+package knaufdan.android.services.service.broadcast
 
 import android.content.BroadcastReceiver
 import android.content.IntentFilter
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import javax.inject.Inject
-import knaufdan.android.core.ContextProvider
+import knaufdan.android.core.IContextProvider
 
-class BroadcastService @Inject constructor(private val contextProvider: ContextProvider) :
+class BroadcastService @Inject constructor(private val contextProvider: IContextProvider) :
     IBroadcastService {
 
     private val localBroadcastManager: LocalBroadcastManager by lazy {
-        LocalBroadcastManager.getInstance(contextProvider.context)
+        LocalBroadcastManager.getInstance(contextProvider.getContext())
     }
 
     override fun registerLocalBroadcastReceiver(actionBroadcastReceiver: ActionBroadcastReceiver) {

@@ -12,8 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.android.support.AndroidSupportInjection
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
-import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
+import knaufdan.android.arch.mvvm.IBaseFragment
 
 abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), IBaseFragment<ViewModel> {
 

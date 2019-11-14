@@ -9,19 +9,19 @@ import androidx.lifecycle.ViewModelProvider
 import dagger.android.AndroidInjection
 import java.lang.reflect.ParameterizedType
 import javax.inject.Inject
-import knaufdan.android.core.ContextProvider
-import knaufdan.android.arch.mvvm.IBaseActivity
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
-import knaufdan.android.arch.navigation.NavigationService
+import knaufdan.android.arch.mvvm.IBaseActivity
+import knaufdan.android.arch.navigation.INavigationService
+import knaufdan.android.core.IContextProvider
 
 abstract class BaseActivity<ViewModel : ActivityViewModel> : AppCompatActivity(),
-    IBaseActivity<ViewModel> {
+        IBaseActivity<ViewModel> {
 
     @Inject
-    lateinit var contextProvider: ContextProvider
+    lateinit var contextProvider: IContextProvider
 
     @Inject
-    lateinit var navigationService: NavigationService
+    lateinit var navigationService: INavigationService
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -43,7 +43,7 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : AppCompatActivity()
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
 
-        contextProvider.context = this
+        contextProvider.setContext(this)
 
         config.run {
             setBinding(savedInstanceState)

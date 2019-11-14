@@ -1,4 +1,4 @@
-package knaufdan.android.core.audio
+package knaufdan.android.services.userinteraction.audio
 
 import androidx.annotation.RawRes
 

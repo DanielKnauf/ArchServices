@@ -1,4 +1,4 @@
-package knaufdan.android.core.broadcast
+package knaufdan.android.services.service.broadcast
 
 import android.content.Context
 import android.content.Intent

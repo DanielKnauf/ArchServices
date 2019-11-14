@@ -1,4 +1,4 @@
-package knaufdan.android.core
+package knaufdan.android.core.preferences
 
 import android.content.Context.MODE_PRIVATE
 import android.content.SharedPreferences
@@ -8,17 +8,17 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import javax.inject.Inject
 import javax.inject.Singleton
+import knaufdan.android.core.IContextProvider
 import kotlin.reflect.KClass
 
 @Singleton
-class SharedPrefService @Inject constructor(private val contextProvider: ContextProvider) :
-        ISharedPrefService {
+class SharedPrefService @Inject constructor(private val contextProvider: IContextProvider) :
+    ISharedPrefService {
 
     private val sharedPrefLocation = "knaufdan.android.simpletimerapp.sharedPref"
 
-    private val sharedPrefs by lazy {
-        contextProvider.context.getSharedPreferences(sharedPrefLocation, MODE_PRIVATE)
-    }
+    private val sharedPrefs
+        get() = contextProvider.getContext().getSharedPreferences(sharedPrefLocation, MODE_PRIVATE)
 
     override fun saveAsJsonTo(
         key: String,

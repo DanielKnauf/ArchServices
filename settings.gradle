@@ -1,2 +1,2 @@
-include ':core', ':arch'
+include ':core', ':arch', ':services'
 rootProject.name='ArchServices'
