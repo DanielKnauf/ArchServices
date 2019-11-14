@@ -50,8 +50,8 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), IBaseFragme
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = config.run {
-        if(titleRes != -1){
-            activity?.title = getString(titleRes)
+        if (titleRes != -1) {
+            activity?.setTitle(titleRes)
         }
 
         // do only initiate view model on first start
