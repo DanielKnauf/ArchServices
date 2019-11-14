@@ -13,14 +13,17 @@ class ServiceDispatcher @Inject constructor(private val contextProvider: IContex
         serviceClass: KClass<S>,
         bundle: Bundle?
     ) {
-        val context = contextProvider.getContext()
-        val intent = Intent(context, serviceClass.java)
+        contextProvider.getContext().apply {
+            val intent = Intent(
+                    this,
+                    serviceClass.java
+            )
+            bundle?.apply {
+                intent.putExtras(this)
+            }
 
-        bundle?.let {
-            intent.putExtras(it)
+            startService(intent)
         }
-
-        context.startService(intent)
     }
 
     override fun <S : Service> stopService(serviceClass: KClass<S>) {

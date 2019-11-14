@@ -1,5 +1,8 @@
 package knaufdan.android.arch.navigation
 
+import knaufdan.android.arch.mvvm.implementation.BaseFragment
+import knaufdan.android.arch.mvvm.implementation.BaseViewModel
+
 typealias FragmentContainer = Int
 
 interface INavigationService {
@@ -9,12 +12,12 @@ interface INavigationService {
      * Clears backStack and sets [fragment] into the [container].
      */
     fun cleanGoTo(
-        fragment: knaufdan.android.arch.mvvm.implementation.BaseFragment<out knaufdan.android.arch.mvvm.implementation.BaseViewModel>,
+        fragment: BaseFragment<out BaseViewModel>,
         container: FragmentContainer = fragmentContainer
     )
 
     fun goTo(
-        fragment: knaufdan.android.arch.mvvm.implementation.BaseFragment<out knaufdan.android.arch.mvvm.implementation.BaseViewModel>,
+        fragment: BaseFragment<out BaseViewModel>,
         addToBackStack: Boolean,
         container: FragmentContainer = fragmentContainer
     )

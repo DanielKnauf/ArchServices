@@ -26,14 +26,14 @@ fun TextView.bindNumber(number: Int?) {
 }
 
 @BindingAdapter(value = ["element"])
-fun ViewGroup.bindElement(element: BindableElement<*>) =
+fun ViewGroup.bindElement(element: IBindableElement<*>) =
     if (element.getDataSource() is List<*>) {
         element.toListElement().bindToRecyclerView(parent = this)
     } else {
         element.bindToLinearLayout(parent = this)
     }
 
-private fun <DataSource> BindableElement<List<DataSource>>.bindToRecyclerView(parent: ViewGroup) {
+private fun <DataSource> IBindableElement<List<DataSource>>.bindToRecyclerView(parent: ViewGroup) {
     val context = parent.context
 
     RecyclerView(context).apply {
@@ -52,7 +52,7 @@ private fun <DataSource> BindableElement<List<DataSource>>.bindToRecyclerView(pa
     }
 }
 
-private fun <DataSource> BindableElement<DataSource>.bindToLinearLayout(parent: ViewGroup) {
+private fun <DataSource> IBindableElement<DataSource>.bindToLinearLayout(parent: ViewGroup) {
     val context = parent.context
 
     try {
@@ -74,8 +74,8 @@ private fun <DataSource> BindableElement<DataSource>.bindToLinearLayout(parent: 
     }
 }
 
-private fun BindableElement<*>.toListElement() = object :
-    BindableElement<List<*>> {
+private fun IBindableElement<*>.toListElement() = object :
+    IBindableElement<List<*>> {
     override fun getLayoutRes() = this@toListElement.getLayoutRes()
 
     override fun getBindingKey() = this@toListElement.getBindingKey()

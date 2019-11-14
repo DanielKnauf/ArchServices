@@ -1,7 +1,7 @@
 package knaufdan.android.arch.mvvm
 
 import androidx.fragment.app.FragmentManager
-import knaufdan.android.arch.databinding.BindableElement
+import knaufdan.android.arch.databinding.IBindableElement
 import knaufdan.android.arch.mvvm.implementation.BaseFragment
 import knaufdan.android.arch.mvvm.implementation.BaseViewModel
 import knaufdan.android.arch.navigation.FragmentContainer
@@ -9,7 +9,7 @@ import knaufdan.android.arch.navigation.INavigationService
 
 typealias FragmentSetup = Pair<FragmentContainer, BaseFragment<out BaseViewModel>>
 
-interface IBaseActivity<ViewModel : IActivityViewModel> : BindableElement<ViewModel>,
+interface IBaseActivity<ViewModel : IActivityViewModel> : IBindableElement<ViewModel>,
     IAndroidComponent {
     /**
      * [FragmentContainer] will be set as [INavigationService.fragmentContainer].

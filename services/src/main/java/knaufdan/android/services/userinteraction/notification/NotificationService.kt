@@ -18,8 +18,8 @@ import kotlin.reflect.KClass
 
 @Singleton
 class NotificationService @Inject constructor(
-        private val contextProvider: IContextProvider,
-        private val textProvider: ITextProvider
+    private val contextProvider: IContextProvider,
+    private val textProvider: ITextProvider
 ) : INotificationService {
     private val notificationManager
         get() = contextProvider.getContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
