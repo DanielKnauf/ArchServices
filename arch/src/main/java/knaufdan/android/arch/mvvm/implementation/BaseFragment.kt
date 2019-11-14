@@ -17,10 +17,10 @@ import knaufdan.android.arch.mvvm.IBaseFragment
 
 abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), IBaseFragment<ViewModel> {
 
-    val fragmentTag = this::class.simpleName
-
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
+
+    val fragmentTag = this::class.simpleName
 
     private lateinit var viewModel: ViewModel
 
@@ -50,6 +50,10 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), IBaseFragme
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? = config.run {
+        if(titleRes != -1){
+            activity?.title = getString(titleRes)
+        }
+
         // do only initiate view model on first start
         if (savedInstanceState == null) {
             viewModel.handleBundle(arguments)
