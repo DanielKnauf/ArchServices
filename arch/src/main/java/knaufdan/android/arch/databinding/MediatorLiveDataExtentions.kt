@@ -15,8 +15,39 @@ fun <Target, Source> MediatorLiveData<Target>.bindTo(
         val newValue = mapping(sourceValue)
 
         postValue(
-            postOnlyDifferentValues = postOnlyDifferentValues,
-            newValue = newValue
+                postOnlyDifferentValues = postOnlyDifferentValues,
+                newValue = newValue
+        )
+    }
+}
+
+fun <Target, Source1, Source2> MediatorLiveData<Target>.bindTo(
+    source1: LiveData<Source1>,
+    source2: LiveData<Source2>,
+    postOnlyDifferentValues: Boolean = true,
+    mapping: (sourceValue1: Source1?, sourceValue2: Source2?) -> Target
+) {
+    addSource(source1) { sourceValue1 ->
+        val newValue = mapping(
+                sourceValue1,
+                source2.value
+        )
+
+        postValue(
+                postOnlyDifferentValues = postOnlyDifferentValues,
+                newValue = newValue
+        )
+    }
+
+    addSource(source2) { sourceValue2 ->
+        val newValue = mapping(
+                source1.value,
+                sourceValue2
+        )
+
+        postValue(
+                postOnlyDifferentValues = postOnlyDifferentValues,
+                newValue = newValue
         )
     }
 }
@@ -30,40 +61,40 @@ fun <Target, Source1, Source2, Source3> MediatorLiveData<Target>.bindTo(
 ) {
     addSource(source1) { sourceValue1 ->
         val newValue = mapping(
-            sourceValue1,
-            source2.value,
-            source3.value
+                sourceValue1,
+                source2.value,
+                source3.value
         )
 
         postValue(
-            postOnlyDifferentValues = postOnlyDifferentValues,
-            newValue = newValue
+                postOnlyDifferentValues = postOnlyDifferentValues,
+                newValue = newValue
         )
     }
 
     addSource(source2) { sourceValue2 ->
         val newValue = mapping(
-            source1.value,
-            sourceValue2,
-            source3.value
+                source1.value,
+                sourceValue2,
+                source3.value
         )
 
         postValue(
-            postOnlyDifferentValues = postOnlyDifferentValues,
-            newValue = newValue
+                postOnlyDifferentValues = postOnlyDifferentValues,
+                newValue = newValue
         )
     }
 
     addSource(source3) { sourceValue3 ->
         val newValue = mapping(
-            source1.value,
-            source2.value,
-            sourceValue3
+                source1.value,
+                source2.value,
+                sourceValue3
         )
 
         postValue(
-            postOnlyDifferentValues = postOnlyDifferentValues,
-            newValue = newValue
+                postOnlyDifferentValues = postOnlyDifferentValues,
+                newValue = newValue
         )
     }
 }
