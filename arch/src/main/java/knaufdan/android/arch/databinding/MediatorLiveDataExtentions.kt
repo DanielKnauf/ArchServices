@@ -3,74 +3,139 @@ package knaufdan.android.arch.databinding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 
-fun <Target, Source> MediatorLiveData<Target>.bindTo(
-    source: LiveData<Source>,
-    postOnlyDifferentValues: Boolean = true,
-    mapping: (sourceValue: Source) -> Target = { value ->
-        @Suppress("UNCHECKED_CAST")
-        value as Target
-    }
+
+/**
+ * Adds the [source] to the calling [MediatorLiveData] target. The posted value is determined by the [mapping] function.
+ *
+ * @param TargetData - the type of data hold by target.
+ * @param source - the added [LiveData] source
+ * @param SourceData - the type of data hold by [source]
+ * @param postOnlyDifferentValues - when true results matching the current target value are discarded
+ * @param mapping - the function used to determine the value posted
+ */
+fun <TargetData, SourceData> MediatorLiveData<TargetData>.bindTo(
+        source: LiveData<SourceData>,
+        postOnlyDifferentValues: Boolean = true,
+        mapping: (sourceValue: SourceData) -> TargetData = { value ->
+            @Suppress("UNCHECKED_CAST")
+            value as TargetData
+        }
 ) {
-    addSource(source) { sourceValue ->
-        val newValue = mapping(sourceValue)
+    addSource(source) { value ->
+        val newValue = mapping(value)
 
         postValue(
-            postOnlyDifferentValues = postOnlyDifferentValues,
-            newValue = newValue
+                postOnlyDifferentValues = postOnlyDifferentValues,
+                newValue = newValue
         )
     }
 }
 
-fun <Target, Source1, Source2, Source3> MediatorLiveData<Target>.bindTo(
-    source1: LiveData<Source1>,
-    source2: LiveData<Source2>,
-    source3: LiveData<Source3>,
-    postOnlyDifferentValues: Boolean = true,
-    mapping: (sourceValue1: Source1?, sourceValue2: Source2?, sourceValue3: Source3?) -> Target
+/**
+ * Adds all sources to the calling [MediatorLiveData] target. The posted value is determined by the [merging] function.
+ *
+ * @param TargetData - the type of data hold by target.
+ * @param firstSource - the first added [LiveData] source
+ * @param FirstData - the type of data hold by [firstSource]
+ * @param secondSource - the second added [LiveData] source
+ * @param SecondData - the type of data hold by [secondSource]
+ * @param postOnlyDifferentValues - when true results matching the current target value are discarded
+ * @param merging - the function used to determine the value posted
+ */
+fun <TargetData, FirstData, SecondData> MediatorLiveData<TargetData>.bindTo(
+        firstSource: LiveData<FirstData>,
+        secondSource: LiveData<SecondData>,
+        postOnlyDifferentValues: Boolean = true,
+        merging: (sourceValue1: FirstData?, sourceValue2: SecondData?) -> TargetData
 ) {
-    addSource(source1) { sourceValue1 ->
-        val newValue = mapping(
-            sourceValue1,
-            source2.value,
-            source3.value
+    addSource(firstSource) { value ->
+        val newValue = merging(
+                value,
+                secondSource.value
         )
 
         postValue(
-            postOnlyDifferentValues = postOnlyDifferentValues,
-            newValue = newValue
+                postOnlyDifferentValues = postOnlyDifferentValues,
+                newValue = newValue
         )
     }
 
-    addSource(source2) { sourceValue2 ->
-        val newValue = mapping(
-            source1.value,
-            sourceValue2,
-            source3.value
+    addSource(secondSource) { value ->
+        val newValue = merging(
+                firstSource.value,
+                value
         )
 
         postValue(
-            postOnlyDifferentValues = postOnlyDifferentValues,
-            newValue = newValue
+                postOnlyDifferentValues = postOnlyDifferentValues,
+                newValue = newValue
+        )
+    }
+}
+
+/**
+ * Adds all sources to the calling [MediatorLiveData] target. The posted value is determined by the [merging] function.
+ *
+ * @param TargetData - the type of data hold by target.
+ * @param firstSource - the first added [LiveData] source
+ * @param FirstData - the type of data hold by [firstSource]
+ * @param secondSource - the second added [LiveData] source
+ * @param SecondData - the type of data hold by [secondSource]
+ * @param thirdSource - the second added [LiveData] source
+ * @param ThirdData- the type of data hold by [thirdSource]
+ * @param postOnlyDifferentValues - when true results matching the current target value are discarded
+ * @param merging - the function used to determine the value posted
+ */
+fun <TargetData, FirstData, SecondData, ThirdData> MediatorLiveData<TargetData>.bindTo(
+        firstSource: LiveData<FirstData>,
+        secondSource: LiveData<SecondData>,
+        thirdSource: LiveData<ThirdData>,
+        postOnlyDifferentValues: Boolean = true,
+        merging: (sourceValue1: FirstData?, sourceValue2: SecondData?, sourceValue3: ThirdData?) -> TargetData
+) {
+    addSource(firstSource) { value ->
+        val newValue = merging(
+                value,
+                secondSource.value,
+                thirdSource.value
+        )
+
+        postValue(
+                postOnlyDifferentValues = postOnlyDifferentValues,
+                newValue = newValue
         )
     }
 
-    addSource(source3) { sourceValue3 ->
-        val newValue = mapping(
-            source1.value,
-            source2.value,
-            sourceValue3
+    addSource(secondSource) { value ->
+        val newValue = merging(
+                firstSource.value,
+                value,
+                thirdSource.value
         )
 
         postValue(
-            postOnlyDifferentValues = postOnlyDifferentValues,
-            newValue = newValue
+                postOnlyDifferentValues = postOnlyDifferentValues,
+                newValue = newValue
+        )
+    }
+
+    addSource(thirdSource) { value ->
+        val newValue = merging(
+                firstSource.value,
+                secondSource.value,
+                value
+        )
+
+        postValue(
+                postOnlyDifferentValues = postOnlyDifferentValues,
+                newValue = newValue
         )
     }
 }
 
 private fun <Target> MediatorLiveData<Target>.postValue(
-    postOnlyDifferentValues: Boolean,
-    newValue: Target
+        postOnlyDifferentValues: Boolean,
+        newValue: Target
 ) {
     if (postOnlyDifferentValues && value == newValue) {
         return
