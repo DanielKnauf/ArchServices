@@ -7,12 +7,12 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.AndroidInjection
-import javax.inject.Inject
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseActivity
 import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.IContextProvider
+import javax.inject.Inject
 
 abstract class BaseActivity<ViewModel : ActivityViewModel> : AppCompatActivity(),
     IBaseActivity<ViewModel> {
@@ -101,8 +101,8 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : AppCompatActivity()
         arguments = savedInstanceState
 
         navigationService.goToFragment(
-            this,
-            false
+            fragment = this,
+            addToBackStack = false
         )
     } ?: Unit
 }

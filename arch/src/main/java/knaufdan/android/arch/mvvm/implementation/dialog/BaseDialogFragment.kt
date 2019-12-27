@@ -11,11 +11,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.support.AndroidSupportInjection
-import javax.inject.Inject
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.arch.mvvm.implementation.BaseViewModel
 import knaufdan.android.arch.mvvm.implementation.Config
+import javax.inject.Inject
 
 abstract class BaseDialogFragment<ViewModel : BaseViewModel> : DialogFragment(),
     IBaseFragment<ViewModel> {
@@ -80,22 +80,17 @@ abstract class BaseDialogFragment<ViewModel : BaseViewModel> : DialogFragment(),
 
         dialog?.apply {
             when (config.dialogStyle) {
-                DialogStyle.FULL_SCREEN -> applyFullScreen()
-                DialogStyle.FULL_WIDTH -> applyFullWidth()
+                DialogStyle.FULL_SCREEN -> setLayoutParams()
+                DialogStyle.FULL_WIDTH -> setLayoutParams(heightParam = ViewGroup.LayoutParams.WRAP_CONTENT)
             }
         }
     }
 
-    private fun Dialog.applyFullScreen() {
-        val width = ViewGroup.LayoutParams.MATCH_PARENT
-        val height = ViewGroup.LayoutParams.MATCH_PARENT
-        window?.setLayout(width, height)
-    }
-
-    private fun Dialog.applyFullWidth() {
-        val width = ViewGroup.LayoutParams.MATCH_PARENT
-        val height = ViewGroup.LayoutParams.WRAP_CONTENT
-        window?.setLayout(width, height)
+    private fun Dialog.setLayoutParams(
+        widthParam: Int = ViewGroup.LayoutParams.MATCH_PARENT,
+        heightParam: Int = ViewGroup.LayoutParams.MATCH_PARENT
+    ) {
+        window?.setLayout(widthParam, heightParam)
     }
 
     private fun getDialogStyle() =

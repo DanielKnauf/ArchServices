@@ -5,4 +5,4 @@ enum class DialogStyle {
     FULL_WIDTH
 }
 
-fun String.toDialogStyle() = DialogStyle.values().find { style -> style.name.equals(this, true) } ?: DialogStyle.FULL_WIDTH
+fun String.toDialogStyle() = DialogStyle.values().find { style -> style.name.equals(this, true) } ?: DialogStyle.FULL_SCREEN
