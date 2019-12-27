@@ -2,6 +2,7 @@ package knaufdan.android.arch.mvvm.implementation
 
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
+import knaufdan.android.arch.mvvm.implementation.dialog.DialogStyle
 import knaufdan.android.arch.navigation.FragmentContainer
 
 internal sealed class Config(
@@ -24,6 +25,17 @@ internal sealed class Config(
         layoutRes: Int,
         viewModelKey: Int,
         titleRes: Int
+    ) : Config(
+        layoutRes,
+        viewModelKey,
+        titleRes
+    )
+
+    internal class DialogConfig(
+        layoutRes: Int,
+        viewModelKey: Int,
+        titleRes: Int,
+        val dialogStyle: DialogStyle = DialogStyle.FULL_WIDTH
     ) : Config(
         layoutRes,
         viewModelKey,

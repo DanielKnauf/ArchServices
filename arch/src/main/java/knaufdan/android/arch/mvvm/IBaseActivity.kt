@@ -7,7 +7,7 @@ import knaufdan.android.arch.mvvm.implementation.BaseViewModel
 import knaufdan.android.arch.navigation.FragmentContainer
 import knaufdan.android.arch.navigation.INavigationService
 
-typealias FragmentSetup = Pair<FragmentContainer, BaseFragment<out BaseViewModel>>
+typealias FragmentSetup = Pair<FragmentContainer, BaseFragment<out BaseViewModel>?>
 
 interface IBaseActivity<ViewModel : IActivityViewModel> : IBindableElement<ViewModel>,
     IAndroidComponent {

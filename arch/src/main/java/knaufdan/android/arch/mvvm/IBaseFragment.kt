@@ -5,5 +5,7 @@ import knaufdan.android.arch.mvvm.implementation.BaseViewModel
 
 interface IBaseFragment<ViewModel : BaseViewModel> : IBindableElement<ViewModel>,
     IAndroidComponent {
-    fun setBackPressed(isBackPressed: Boolean)
+    fun setBackPressed(isBackPressed: Boolean) = Unit
+
+    fun getFragmentTag(): String = this::class.java.simpleName
 }
