@@ -1,6 +1,5 @@
 package knaufdan.android.arch.databinding
 
-import android.content.res.Resources
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -26,12 +25,17 @@ fun TextView.bindNumber(number: Int?) {
 }
 
 @BindingAdapter(value = ["element"])
-fun ViewGroup.bindElement(element: IBindableElement<*>) =
+fun ViewGroup.bindElement(element: IBindableElement<*>?) {
+    if (element == null) {
+        return
+    }
+
     if (element.getDataSource() is List<*>) {
         element.toListElement().bindToRecyclerView(parent = this)
     } else {
         element.bindToLinearLayout(parent = this)
     }
+}
 
 private fun <DataSource> IBindableElement<List<DataSource>>.bindToRecyclerView(parent: ViewGroup) {
     val context = parent.context
@@ -48,6 +52,7 @@ private fun <DataSource> IBindableElement<List<DataSource>>.bindToRecyclerView(p
             bindingKey = getBindingKey()
         )
 
+        parent.removeAllViewsInLayout()
         parent.addView(this)
     }
 }
@@ -64,21 +69,22 @@ private fun <DataSource> IBindableElement<DataSource>.bindToLinearLayout(parent:
         ).apply {
             setVariable(getBindingKey(), getDataSource())
             if (context is LifecycleOwner) lifecycleOwner = context
+            parent.removeAllViewsInLayout()
             parent.addView(root)
         }
-    } catch (e: Resources.NotFoundException) {
+    } catch (e: Throwable) {
         Log.e(
-            ".bindDataSource()",
-            "LayoutRes could not be found. No binding was generated in $context"
+            ".bindToLinearLayout()",
+            "LayoutRes could not be found. No binding was generated for $parent in $context"
         )
     }
 }
 
-private fun IBindableElement<*>.toListElement() = object :
-    IBindableElement<List<*>> {
-    override fun getLayoutRes() = this@toListElement.getLayoutRes()
+private fun IBindableElement<*>.toListElement() =
+    object : IBindableElement<List<*>> {
+        override fun getLayoutRes() = this@toListElement.getLayoutRes()
 
-    override fun getBindingKey() = this@toListElement.getBindingKey()
+        override fun getBindingKey() = this@toListElement.getBindingKey()
 
-    override fun getDataSource() = this@toListElement.getDataSource() as List<*>
-}
+        override fun getDataSource() = this@toListElement.getDataSource() as List<*>
+    }

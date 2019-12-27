@@ -18,10 +18,10 @@ import androidx.lifecycle.MediatorLiveData
  * @return [LiveData] observing the result of the [merging] function
  */
 fun <FirstData, SecondData, TargetData> merge(
-        firstSource: LiveData<FirstData>,
-        secondSource: LiveData<SecondData>,
-        postOnlyDifferentValues: Boolean = true,
-        merging: (FirstData?, SecondData?) -> TargetData
+    firstSource: LiveData<FirstData>,
+    secondSource: LiveData<SecondData>,
+    postOnlyDifferentValues: Boolean = true,
+    merging: (FirstData?, SecondData?) -> TargetData
 ): LiveData<TargetData> =
         MediatorLiveData<TargetData>().apply {
             bindTo(
@@ -49,11 +49,11 @@ fun <FirstData, SecondData, TargetData> merge(
  * @return [LiveData] observing the result of the [merging] function
  */
 fun <FirstData, SecondData, ThirdData, TargetData> merge(
-        firstSource: LiveData<FirstData>,
-        secondSource: LiveData<SecondData>,
-        thirdSource: LiveData<ThirdData>,
-        postOnlyDifferentValues: Boolean = true,
-        merging: (FirstData?, SecondData?, ThirdData?) -> TargetData
+    firstSource: LiveData<FirstData>,
+    secondSource: LiveData<SecondData>,
+    thirdSource: LiveData<ThirdData>,
+    postOnlyDifferentValues: Boolean = true,
+    merging: (FirstData?, SecondData?, ThirdData?) -> TargetData
 ): LiveData<TargetData> =
         MediatorLiveData<TargetData>().apply {
             bindTo(

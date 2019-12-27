@@ -3,7 +3,6 @@ package knaufdan.android.arch.databinding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 
-
 /**
  * Adds the [source] to the calling [MediatorLiveData] target. The posted value is determined by the [mapping] function.
  *
@@ -14,12 +13,12 @@ import androidx.lifecycle.MediatorLiveData
  * @param mapping - the function used to determine the value posted
  */
 fun <TargetData, SourceData> MediatorLiveData<TargetData>.bindTo(
-        source: LiveData<SourceData>,
-        postOnlyDifferentValues: Boolean = true,
-        mapping: (sourceValue: SourceData) -> TargetData = { value ->
-            @Suppress("UNCHECKED_CAST")
-            value as TargetData
-        }
+    source: LiveData<SourceData>,
+    postOnlyDifferentValues: Boolean = true,
+    mapping: (sourceValue: SourceData) -> TargetData = { value ->
+        @Suppress("UNCHECKED_CAST")
+        value as TargetData
+    }
 ) {
     addSource(source) { value ->
         val newValue = mapping(value)
@@ -43,10 +42,10 @@ fun <TargetData, SourceData> MediatorLiveData<TargetData>.bindTo(
  * @param merging - the function used to determine the value posted
  */
 fun <TargetData, FirstData, SecondData> MediatorLiveData<TargetData>.bindTo(
-        firstSource: LiveData<FirstData>,
-        secondSource: LiveData<SecondData>,
-        postOnlyDifferentValues: Boolean = true,
-        merging: (sourceValue1: FirstData?, sourceValue2: SecondData?) -> TargetData
+    firstSource: LiveData<FirstData>,
+    secondSource: LiveData<SecondData>,
+    postOnlyDifferentValues: Boolean = true,
+    merging: (sourceValue1: FirstData?, sourceValue2: SecondData?) -> TargetData
 ) {
     addSource(firstSource) { value ->
         val newValue = merging(
@@ -87,11 +86,11 @@ fun <TargetData, FirstData, SecondData> MediatorLiveData<TargetData>.bindTo(
  * @param merging - the function used to determine the value posted
  */
 fun <TargetData, FirstData, SecondData, ThirdData> MediatorLiveData<TargetData>.bindTo(
-        firstSource: LiveData<FirstData>,
-        secondSource: LiveData<SecondData>,
-        thirdSource: LiveData<ThirdData>,
-        postOnlyDifferentValues: Boolean = true,
-        merging: (sourceValue1: FirstData?, sourceValue2: SecondData?, sourceValue3: ThirdData?) -> TargetData
+    firstSource: LiveData<FirstData>,
+    secondSource: LiveData<SecondData>,
+    thirdSource: LiveData<ThirdData>,
+    postOnlyDifferentValues: Boolean = true,
+    merging: (sourceValue1: FirstData?, sourceValue2: SecondData?, sourceValue3: ThirdData?) -> TargetData
 ) {
     addSource(firstSource) { value ->
         val newValue = merging(
@@ -134,8 +133,8 @@ fun <TargetData, FirstData, SecondData, ThirdData> MediatorLiveData<TargetData>.
 }
 
 private fun <Target> MediatorLiveData<Target>.postValue(
-        postOnlyDifferentValues: Boolean,
-        newValue: Target
+    postOnlyDifferentValues: Boolean,
+    newValue: Target
 ) {
     if (postOnlyDifferentValues && value == newValue) {
         return
