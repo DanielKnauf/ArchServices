@@ -1,5 +1,6 @@
-package knaufdan.android.arch.mvvm.implementation
+package knaufdan.android.arch.mvvm.implementation.dialog
 
+import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,14 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.support.AndroidSupportInjection
-import javax.inject.Inject
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseFragment
+import knaufdan.android.arch.mvvm.implementation.BaseViewModel
+import knaufdan.android.arch.mvvm.implementation.Config
+import javax.inject.Inject
 
-abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), IBaseFragment<ViewModel> {
+abstract class BaseDialogFragment<ViewModel : BaseViewModel> : DialogFragment(),
+    IBaseFragment<ViewModel> {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -23,11 +27,12 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), IBaseFragme
 
     override fun getDataSource(): ViewModel = viewModel
 
-    private val config: Config.FragmentConfig by lazy {
-        Config.FragmentConfig(
+    private val config: Config.DialogConfig by lazy {
+        Config.DialogConfig(
             layoutRes = getLayoutRes(),
             viewModelKey = getBindingKey(),
-            titleRes = getTitleRes()
+            titleRes = getTitleRes(),
+            dialogStyle = getDialogStyle()
         )
     }
 
@@ -38,8 +43,6 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), IBaseFragme
         viewModel = ViewModelProvider(this, viewModelFactory).get(getDataSourceClass())
         viewModel.fragmentTag = getFragmentTag()
         lifecycle.addObserver(viewModel)
-
-        setBackPressed(isBackPressed = false)
     }
 
     override fun onCreateView(
@@ -66,14 +69,34 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), IBaseFragme
                 )
 
             binding.run {
-                lifecycleOwner = this@BaseFragment
                 setVariable(viewModelKey, viewModel)
                 executePendingBindings()
                 binding.root
             }
         }
 
-    override fun setBackPressed(isBackPressed: Boolean) {
-        viewModel.isBackPressed = isBackPressed
+    override fun onStart() {
+        super.onStart()
+
+        dialog?.apply {
+            when (config.dialogStyle) {
+                DialogStyle.FULL_SCREEN -> setLayoutParams()
+                DialogStyle.FULL_WIDTH -> setLayoutParams(heightParam = ViewGroup.LayoutParams.WRAP_CONTENT)
+            }
+        }
+    }
+
+    private fun Dialog.setLayoutParams(
+        widthParam: Int = ViewGroup.LayoutParams.MATCH_PARENT,
+        heightParam: Int = ViewGroup.LayoutParams.MATCH_PARENT
+    ) {
+        window?.setLayout(widthParam, heightParam)
+    }
+
+    private fun getDialogStyle() =
+        (arguments?.getString(KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN) ?: "").toDialogStyle()
+
+    companion object {
+        const val KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN = "KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN"
     }
 }

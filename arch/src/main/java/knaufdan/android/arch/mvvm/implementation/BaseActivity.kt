@@ -7,15 +7,15 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.AndroidInjection
-import java.lang.reflect.ParameterizedType
-import javax.inject.Inject
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseActivity
+import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.IContextProvider
+import javax.inject.Inject
 
 abstract class BaseActivity<ViewModel : ActivityViewModel> : AppCompatActivity(),
-        IBaseActivity<ViewModel> {
+    IBaseActivity<ViewModel> {
 
     @Inject
     lateinit var contextProvider: IContextProvider
@@ -72,13 +72,13 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : AppCompatActivity()
     }
 
     override fun FragmentManager.notifyBackPressed() = fragments.forEach { fragment ->
-        if (fragment is BaseFragment<*>) {
+        if (fragment is IBaseFragment<*>) {
             fragment.setBackPressed(isBackPressed = true)
         }
     }
 
     private fun Config.setBinding(savedInstanceState: Bundle?) {
-        viewModel = ViewModelProvider(this@BaseActivity, viewModelFactory).get(typeOfViewModel)
+        viewModel = ViewModelProvider(this@BaseActivity, viewModelFactory).get(getDataSourceClass())
 
         lifecycle.addObserver(viewModel)
 
@@ -100,14 +100,9 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : AppCompatActivity()
     ) = initialFragment?.run {
         arguments = savedInstanceState
 
-        navigationService.goTo(
-            this,
-            false
+        navigationService.goToFragment(
+            fragment = this,
+            addToBackStack = false
         )
     } ?: Unit
-
-    @Suppress("UNCHECKED_CAST")
-    private val typeOfViewModel: Class<ViewModel> =
-        (javaClass.genericSuperclass as ParameterizedType)
-            .actualTypeArguments[0] as Class<ViewModel>
 }
