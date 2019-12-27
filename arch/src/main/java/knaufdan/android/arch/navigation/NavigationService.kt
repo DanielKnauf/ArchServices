@@ -10,7 +10,7 @@ import knaufdan.android.arch.mvvm.implementation.dialog.DialogStyle
 import knaufdan.android.core.IContextProvider
 
 @Singleton
-class NavigationService @Inject constructor(private val contextProvider: IContextProvider) :
+internal class NavigationService @Inject constructor(private val contextProvider: IContextProvider) :
     INavigationService {
 
     override var fragmentContainer = -1

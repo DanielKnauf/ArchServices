@@ -1,4 +1,4 @@
-package knaufdan.android.core.alarm
+package knaufdan.android.services.alarm
 
 import android.app.AlarmManager
 import android.app.PendingIntent
@@ -9,9 +9,10 @@ import android.os.Bundle
 import javax.inject.Inject
 import javax.inject.Singleton
 import knaufdan.android.core.IContextProvider
+import knaufdan.android.core.alarm.IAlarmService
 
 @Singleton
-class AlarmService @Inject constructor(private val contextProvider: IContextProvider) :
+internal class AlarmService @Inject constructor(private val contextProvider: IContextProvider) :
     IAlarmService {
 
     /**

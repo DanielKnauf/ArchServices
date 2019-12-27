@@ -1,4 +1,4 @@
-package knaufdan.android.core.notification
+package knaufdan.android.services.userinteraction.notification
 
 import android.app.Notification
 import android.app.Notification.CATEGORY_ALARM
@@ -17,7 +17,7 @@ import knaufdan.android.core.resources.ITextProvider
 import kotlin.reflect.KClass
 
 @Singleton
-class NotificationService @Inject constructor(
+internal class NotificationService @Inject constructor(
     private val contextProvider: IContextProvider,
     private val textProvider: ITextProvider
 ) : INotificationService {
