@@ -1,4 +1,4 @@
-package knaufdan.android.core.notification
+package knaufdan.android.services.userinteraction.notification
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes

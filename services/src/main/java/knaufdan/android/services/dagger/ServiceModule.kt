@@ -3,17 +3,17 @@ package knaufdan.android.services.dagger
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
-import knaufdan.android.core.alarm.AlarmService
 import knaufdan.android.core.alarm.IAlarmService
 import knaufdan.android.core.dagger.CoreModule
-import knaufdan.android.core.notification.INotificationService
-import knaufdan.android.core.notification.NotificationService
+import knaufdan.android.services.alarm.AlarmService
 import knaufdan.android.services.service.IServiceDispatcher
 import knaufdan.android.services.service.ServiceDispatcher
 import knaufdan.android.services.service.broadcast.BroadcastService
 import knaufdan.android.services.service.broadcast.IBroadcastService
 import knaufdan.android.services.userinteraction.audio.AudioService
 import knaufdan.android.services.userinteraction.audio.IAudioService
+import knaufdan.android.services.userinteraction.notification.INotificationService
+import knaufdan.android.services.userinteraction.notification.NotificationService
 
 @Module(includes = [CoreModule::class])
 class ServiceModule {

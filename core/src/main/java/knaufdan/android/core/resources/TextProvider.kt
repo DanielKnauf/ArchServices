@@ -6,7 +6,7 @@ import javax.inject.Singleton
 import knaufdan.android.core.IContextProvider
 
 @Singleton
-class TextProvider @Inject constructor(private val contextProvider: IContextProvider) :
+internal class TextProvider @Inject constructor(private val contextProvider: IContextProvider) :
     ITextProvider {
 
     override fun getText(

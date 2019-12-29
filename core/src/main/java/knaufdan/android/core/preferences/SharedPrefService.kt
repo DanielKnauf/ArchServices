@@ -12,7 +12,7 @@ import knaufdan.android.core.IContextProvider
 import kotlin.reflect.KClass
 
 @Singleton
-class SharedPrefService @Inject constructor(private val contextProvider: IContextProvider) :
+internal class SharedPrefService @Inject constructor(private val contextProvider: IContextProvider) :
     ISharedPrefService {
 
     private val sharedPrefLocation = "knaufdan.android.simpletimerapp.sharedPref"

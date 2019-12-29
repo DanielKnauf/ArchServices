@@ -12,7 +12,7 @@ import javax.inject.Singleton
 import knaufdan.android.core.IContextProvider
 
 @Singleton
-class AudioService @Inject constructor(private val contextProvider: IContextProvider) :
+internal class AudioService @Inject constructor(private val contextProvider: IContextProvider) :
     IAudioService {
 
     private val mediaPlayers = mutableMapOf<Int, MediaPlayer>()
