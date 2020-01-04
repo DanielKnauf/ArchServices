@@ -2,6 +2,7 @@ package knaufdan.android.arch.mvvm.implementation.dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,17 +12,20 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.support.AndroidSupportInjection
+import javax.inject.Inject
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.arch.mvvm.implementation.BaseViewModel
 import knaufdan.android.arch.mvvm.implementation.Config
-import javax.inject.Inject
+import knaufdan.android.arch.navigation.NavigationService
 
 abstract class BaseDialogFragment<ViewModel : BaseViewModel> : DialogFragment(),
     IBaseFragment<ViewModel> {
 
     @Inject
-    lateinit var viewModelFactory: ViewModelFactory
+    internal lateinit var viewModelFactory: ViewModelFactory
+    @Inject
+    internal lateinit var navigationService: NavigationService
 
     private lateinit var viewModel: ViewModel
 
@@ -84,6 +88,11 @@ abstract class BaseDialogFragment<ViewModel : BaseViewModel> : DialogFragment(),
                 DialogStyle.FULL_WIDTH -> setLayoutParams(heightParam = ViewGroup.LayoutParams.WRAP_CONTENT)
             }
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        navigationService.dismissDialogBySystem(fragmentTag = getFragmentTag())
     }
 
     private fun Dialog.setLayoutParams(

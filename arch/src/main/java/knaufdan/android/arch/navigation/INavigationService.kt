@@ -6,7 +6,6 @@ import knaufdan.android.arch.mvvm.implementation.dialog.BaseDialogFragment
 import knaufdan.android.arch.mvvm.implementation.dialog.DialogStyle
 
 typealias FragmentContainer = Int
-typealias CallbackResult = Any?
 
 interface INavigationService {
     var fragmentContainer: FragmentContainer
@@ -21,20 +20,24 @@ interface INavigationService {
         clearBackStack: Boolean = false
     )
 
-    fun showDialog(
+    fun <ResultType> showDialog(
         fragment: BaseDialogFragment<out BaseViewModel>,
         dialogStyle: DialogStyle = DialogStyle.FULL_WIDTH,
-        callback: ((CallbackResult) -> Unit)? = null
+        callback: ((ResultType?) -> Unit) = {}
     )
 
-    fun dismissDialog(
+    fun dismissDialog(viewModel: BaseViewModel)
+
+    fun <ResultType> dismissDialog(
         viewModel: BaseViewModel,
-        result: CallbackResult = null
+        result: ResultType? = null
     )
 
-    fun dismissDialog(
+    fun dismissDialog(fragmentTag: String)
+
+    fun <ResultType> dismissDialog(
         fragmentTag: String,
-        result: CallbackResult = null
+        result: ResultType?
     )
 
     fun onBackPressed()

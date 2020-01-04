@@ -9,12 +9,14 @@ import knaufdan.android.arch.mvvm.implementation.dialog.BaseDialogFragment
 import knaufdan.android.arch.mvvm.implementation.dialog.BaseDialogFragment.Companion.KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN
 import knaufdan.android.arch.mvvm.implementation.dialog.DialogStyle
 
-private val callbacks: MutableMap<String, (Any?) -> Unit> = mutableMapOf()
+typealias FragmentTag = String
 
-internal fun Context.showDialog(
+private val fragmentConversations: MutableMap<FragmentTag, FragmentConversation<*>> = mutableMapOf()
+
+internal fun <ResultType> Context.showDialog(
     fragment: BaseDialogFragment<out BaseViewModel>,
     dialogStyle: DialogStyle,
-    callback: ((CallbackResult) -> Unit)?
+    callback: ((ResultType?) -> Unit)
 ) {
     if (this is AppCompatActivity) {
         if (supportFragmentManager.fragments.isNotEmpty()) {
@@ -23,14 +25,13 @@ internal fun Context.showDialog(
                 Log.e(
                     "DialogNavigation",
                     "${fragment.getFragmentTag()} could not be displayed as a ${BaseDialogFragment::class.java.simpleName} because there is already a Dialog displayed. " +
-                            "Please dismiss the displayed dialog first using dismissDialog() in ${INavigationService::class.java.simpleName}")
+                            "Please dismiss the displayed dialog first using dismissDialog() in ${INavigationService::class.java.simpleName}"
+                )
                 return
             }
         }
 
-        callback?.apply {
-            callbacks[fragment.getFragmentTag()] = this
-        }
+        fragmentConversations[fragment.getFragmentTag()] = FragmentConversation(callback)
 
         fragment.addStringToBundle(
             key = KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN,
@@ -47,21 +48,44 @@ internal fun Context.showDialog(
     }
 }
 
-internal fun Context.dismissDialog(
+internal fun <ResultType> Context.dismissDialog(
     fragmentTag: String,
-    result: CallbackResult
+    result: ResultType?,
+    dismissedBySystem: Boolean = false
 ) {
     if (this is AppCompatActivity) {
         supportFragmentManager.findFragmentByTag(fragmentTag)?.apply {
             if (this is DialogFragment) {
-                val callback = callbacks[fragmentTag]
-                if (callback == null && result != null) {
-                    throw IllegalStateException("There is a dialog result $result, but no callback could be found for tag = $fragmentTag")
+                val noConversationFound = fragmentConversations[fragmentTag] == null
+                val hasResult = result != null
+                when {
+                    noConversationFound && hasResult -> throw IllegalStateException("There is a dialog result $result, but no conversation could be found for tag = $fragmentTag")
+                    !noConversationFound -> sendResultToCaller(fragmentTag, result)
                 }
-                callback?.invoke(result)
 
-                this.dismiss()
+                if (dismissedBySystem) return
+
+                dismiss()
             }
         }
     }
 }
+
+private fun <ResultType> sendResultToCaller(
+    fragmentTag: String,
+    result: ResultType?
+) {
+    try {
+        @Suppress("UNCHECKED_CAST")
+        (fragmentConversations[fragmentTag] as FragmentConversation<ResultType>).callback.invoke(
+            result
+        )
+        fragmentConversations.remove(fragmentTag)
+    } catch (e: ClassCastException) {
+        throw e
+    }
+}
+
+private data class FragmentConversation<ResultType>(
+    val callback: ((ResultType?) -> Unit)
+)

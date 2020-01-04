@@ -26,10 +26,10 @@ internal class NavigationService @Inject constructor(private val contextProvider
             else replaceFragment(fragment, addToBackStack, container)
         }
 
-    override fun showDialog(
+    override fun <ResultType> showDialog(
         fragment: BaseDialogFragment<out BaseViewModel>,
         dialogStyle: DialogStyle,
-        callback: ((CallbackResult) -> Unit)?
+        callback: ((ResultType?) -> Unit)
     ) =
         contextProvider.getContext().showDialog(
             fragment,
@@ -37,9 +37,12 @@ internal class NavigationService @Inject constructor(private val contextProvider
             callback
         )
 
-    override fun dismissDialog(
+    override fun dismissDialog(viewModel: BaseViewModel) =
+        dismissDialog(viewModel = viewModel, result = null)
+
+    override fun <ResultType> dismissDialog(
         viewModel: BaseViewModel,
-        result: CallbackResult
+        result: ResultType?
     ) {
         dismissDialog(
             viewModel.fragmentTag,
@@ -47,9 +50,12 @@ internal class NavigationService @Inject constructor(private val contextProvider
         )
     }
 
-    override fun dismissDialog(
+    override fun dismissDialog(fragmentTag: String) =
+        dismissDialog(fragmentTag = fragmentTag, result = null)
+
+    override fun <ResultType> dismissDialog(
         fragmentTag: String,
-        result: CallbackResult
+        result: ResultType?
     ) =
         contextProvider.getContext().dismissDialog(fragmentTag, result)
 
@@ -58,4 +64,12 @@ internal class NavigationService @Inject constructor(private val contextProvider
             onBackPressed()
         }
     }
+
+    internal fun dismissDialogBySystem(
+        fragmentTag: String
+    ) = contextProvider.getContext().dismissDialog(
+        fragmentTag = fragmentTag,
+        result = null,
+        dismissedBySystem = true
+    )
 }
