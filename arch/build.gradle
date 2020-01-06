@@ -41,6 +41,9 @@ dependencies {
     implementation Dependencies.androidX_lifecycle_extensions
     kapt Dependencies.androidX_lifecycle_compiler
 
+    //picasso
+    implementation Dependencies.picasso
+
     //dagger2
     implementation Dependencies.dagger_core
     implementation Dependencies.dagger_android

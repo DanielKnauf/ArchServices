@@ -42,6 +42,8 @@ object Dependencies {
 
     val gson = "com.google.code.gson:gson:$gson_version"
 
+    val picasso = "com.squareup.picasso:picasso:$picasso_version"
+
     val dependency_updates =
         "com.github.ben-manes:gradle-versions-plugin:$dependency_updates_version"
     val ktLint = "com.pinterest:ktlint:$ktLint_version"

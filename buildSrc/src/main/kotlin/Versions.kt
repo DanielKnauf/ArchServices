@@ -15,4 +15,6 @@ object Versions {
 
     const val jUnit_version = "4.12"
     const val test_runner_version = "1.2.0"
+
+    const val picasso_version = "2.71828"
 }
