@@ -14,12 +14,12 @@ import knaufdan.android.core.IContextProvider
 internal class NavigationService @Inject constructor(private val contextProvider: IContextProvider) :
         INavigationService {
 
-    override var fragmentContainer = -1
+    override var containerViewId = -1
 
     override fun goToFragment(
         fragment: BaseFragment<out BaseViewModel>,
         addToBackStack: Boolean,
-        container: FragmentContainer,
+        containerViewIdId: ContainerViewId,
         clearBackStack: Boolean,
         vararg bundleParameter: Pair<BundleKey, BundleValue>
     ) {
@@ -32,24 +32,11 @@ internal class NavigationService @Inject constructor(private val contextProvider
             fragment.arguments = this
         }
 
-        goToFragment(
-                fragment,
-                addToBackStack,
-                container,
-                clearBackStack
-        )
+        with(contextProvider.getContext()) {
+            if (clearBackStack) replaceFragmentCleanly(fragment, containerViewIdId)
+            else replaceFragment(fragment, addToBackStack, containerViewIdId)
+        }
     }
-
-    override fun goToFragment(
-        fragment: BaseFragment<out BaseViewModel>,
-        addToBackStack: Boolean,
-        container: FragmentContainer,
-        clearBackStack: Boolean
-    ) =
-            with(contextProvider.getContext()) {
-                if (clearBackStack) replaceFragmentCleanly(fragment, container)
-                else replaceFragment(fragment, addToBackStack, container)
-            }
 
     override fun <ResultType> showDialog(
         fragment: BaseDialogFragment<out BaseViewModel>,

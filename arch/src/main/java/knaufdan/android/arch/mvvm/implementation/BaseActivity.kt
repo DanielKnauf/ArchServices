@@ -53,7 +53,7 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : AppCompatActivity()
             }
 
             fragmentSetup?.apply {
-                navigationService.fragmentContainer = first
+                navigationService.containerViewId = first
 
                 showInitialFragment(
                     savedInstanceState = savedInstanceState,
