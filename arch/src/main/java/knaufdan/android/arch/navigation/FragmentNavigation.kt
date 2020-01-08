@@ -7,14 +7,14 @@ import knaufdan.android.arch.mvvm.implementation.BaseViewModel
 
 internal fun Context.replaceFragmentCleanly(
     fragment: BaseFragment<out BaseViewModel>,
-    container: FragmentContainer
+    containerViewId: ContainerViewId
 ) {
     if (this is AppCompatActivity) {
         supportFragmentManager.popBackStackImmediate()
         replaceFragment(
             fragment = fragment,
             addToBackStack = false,
-            container = container
+            containerViewId = containerViewId
         )
     }
 }
@@ -22,14 +22,14 @@ internal fun Context.replaceFragmentCleanly(
 internal fun Context.replaceFragment(
     fragment: BaseFragment<out BaseViewModel>,
     addToBackStack: Boolean,
-    container: FragmentContainer
+    containerViewId: ContainerViewId
 ) {
-    check(container != -1) { "Could not replace ${fragment.getFragmentTag()} because no fragmentContainer is defined. Current container value = $container" }
+    check(containerViewId != -1) { "Could not replace ${fragment.getFragmentTag()} because no fragmentContainer is defined. Current container value = $containerViewId" }
 
     if (this is AppCompatActivity) {
         supportFragmentManager.beginTransaction().apply {
             replace(
-                container,
+                containerViewId,
                 fragment,
                 fragment.getFragmentTag()
             )

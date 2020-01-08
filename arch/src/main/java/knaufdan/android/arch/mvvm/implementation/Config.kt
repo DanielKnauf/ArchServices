@@ -3,7 +3,7 @@ package knaufdan.android.arch.mvvm.implementation
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
 import knaufdan.android.arch.mvvm.implementation.dialog.DialogStyle
-import knaufdan.android.arch.navigation.FragmentContainer
+import knaufdan.android.arch.navigation.ContainerViewId
 
 internal sealed class Config(
     @LayoutRes val layoutRes: Int,
@@ -14,7 +14,7 @@ internal sealed class Config(
         layoutRes: Int,
         viewModelKey: Int,
         titleRes: Int,
-        val fragmentSetup: Pair<FragmentContainer, BaseFragment<out BaseViewModel>?>?
+        val fragmentSetup: Pair<ContainerViewId, BaseFragment<out BaseViewModel>?>?
     ) : Config(
         layoutRes,
         viewModelKey,
