@@ -2,13 +2,13 @@ package knaufdan.android.arch.navigation
 
 import android.app.Activity
 import android.os.Bundle
+import javax.inject.Inject
+import javax.inject.Singleton
 import knaufdan.android.arch.mvvm.implementation.BaseFragment
 import knaufdan.android.arch.mvvm.implementation.BaseViewModel
 import knaufdan.android.arch.mvvm.implementation.dialog.BaseDialogFragment
 import knaufdan.android.arch.mvvm.implementation.dialog.DialogStyle
 import knaufdan.android.core.IContextProvider
-import javax.inject.Inject
-import javax.inject.Singleton
 
 @Singleton
 internal class NavigationService @Inject constructor(private val contextProvider: IContextProvider) :
@@ -17,13 +17,13 @@ internal class NavigationService @Inject constructor(private val contextProvider
     override var fragmentContainer = -1
 
     override fun goToFragment(
-            fragment: BaseFragment<out BaseViewModel>,
-            addToBackStack: Boolean,
-            container: FragmentContainer,
-            clearBackStack: Boolean,
-            vararg bundleParameter: Pair<BundleKey, BundleValue>
+        fragment: BaseFragment<out BaseViewModel>,
+        addToBackStack: Boolean,
+        container: FragmentContainer,
+        clearBackStack: Boolean,
+        vararg bundleParameter: Pair<BundleKey, BundleValue>
     ) {
-        val bundle = fragment.arguments?: Bundle()
+        val bundle = fragment.arguments ?: Bundle()
         bundle.apply {
             bundleParameter.forEach { parameter ->
                 putParameter(parameter)
@@ -41,10 +41,10 @@ internal class NavigationService @Inject constructor(private val contextProvider
     }
 
     override fun goToFragment(
-            fragment: BaseFragment<out BaseViewModel>,
-            addToBackStack: Boolean,
-            container: FragmentContainer,
-            clearBackStack: Boolean
+        fragment: BaseFragment<out BaseViewModel>,
+        addToBackStack: Boolean,
+        container: FragmentContainer,
+        clearBackStack: Boolean
     ) =
             with(contextProvider.getContext()) {
                 if (clearBackStack) replaceFragmentCleanly(fragment, container)
@@ -52,9 +52,9 @@ internal class NavigationService @Inject constructor(private val contextProvider
             }
 
     override fun <ResultType> showDialog(
-            fragment: BaseDialogFragment<out BaseViewModel>,
-            dialogStyle: DialogStyle,
-            callback: ((ResultType?) -> Unit)
+        fragment: BaseDialogFragment<out BaseViewModel>,
+        dialogStyle: DialogStyle,
+        callback: ((ResultType?) -> Unit)
     ) =
             contextProvider.getContext().showDialog(
                     fragment,
@@ -66,8 +66,8 @@ internal class NavigationService @Inject constructor(private val contextProvider
             dismissDialog(viewModel = viewModel, result = null)
 
     override fun <ResultType> dismissDialog(
-            viewModel: BaseViewModel,
-            result: ResultType?
+        viewModel: BaseViewModel,
+        result: ResultType?
     ) {
         dismissDialog(
                 viewModel.fragmentTag,
@@ -79,8 +79,8 @@ internal class NavigationService @Inject constructor(private val contextProvider
             dismissDialog(fragmentTag = fragmentTag, result = null)
 
     override fun <ResultType> dismissDialog(
-            fragmentTag: String,
-            result: ResultType?
+        fragmentTag: String,
+        result: ResultType?
     ) =
             contextProvider.getContext().dismissDialog(fragmentTag, result)
 
@@ -91,7 +91,7 @@ internal class NavigationService @Inject constructor(private val contextProvider
     }
 
     internal fun dismissDialogBySystem(
-            fragmentTag: String
+        fragmentTag: String
     ) = contextProvider.getContext().dismissDialog(
             fragmentTag = fragmentTag,
             result = null,
