@@ -5,7 +5,7 @@ import java.lang.reflect.ParameterizedType
 typealias LayoutRes = Int
 typealias BindingKey = Int
 
-interface IBindableElement<DataSource> {
+interface IComponent<DataSource> {
 
     /**
      * @return the layout in which [DataSource] should be inserted.

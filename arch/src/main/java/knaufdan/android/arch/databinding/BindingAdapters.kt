@@ -24,20 +24,20 @@ fun TextView.bindNumber(number: Int?) {
     text = number?.toString() ?: ""
 }
 
-@BindingAdapter(value = ["element"])
-fun ViewGroup.bindElement(element: IBindableElement<*>?) {
-    if (element == null) {
+@BindingAdapter(value = ["component"])
+fun ViewGroup.bindComponent(component: IComponent<*>?) {
+    if (component == null) {
         return
     }
 
-    if (element.getDataSource() is List<*>) {
-        element.toListElement().bindToRecyclerView(parent = this)
+    if (component.getDataSource() is List<*>) {
+        component.toListComponent().bindToRecyclerView(parent = this)
     } else {
-        element.bindToLinearLayout(parent = this)
+        component.bindToLinearLayout(parent = this)
     }
 }
 
-private fun <DataSource> IBindableElement<List<DataSource>>.bindToRecyclerView(parent: ViewGroup) {
+private fun <DataSource> IComponent<List<DataSource>>.bindToRecyclerView(parent: ViewGroup) {
     val context = parent.context
 
     RecyclerView(context).apply {
@@ -57,7 +57,7 @@ private fun <DataSource> IBindableElement<List<DataSource>>.bindToRecyclerView(p
     }
 }
 
-private fun <DataSource> IBindableElement<DataSource>.bindToLinearLayout(parent: ViewGroup) {
+private fun <DataSource> IComponent<DataSource>.bindToLinearLayout(parent: ViewGroup) {
     val context = parent.context
 
     try {
@@ -80,11 +80,11 @@ private fun <DataSource> IBindableElement<DataSource>.bindToLinearLayout(parent:
     }
 }
 
-private fun IBindableElement<*>.toListElement() =
-    object : IBindableElement<List<*>> {
-        override fun getLayoutRes() = this@toListElement.getLayoutRes()
+private fun IComponent<*>.toListComponent() =
+    object : IComponent<List<*>> {
+        override fun getLayoutRes() = this@toListComponent.getLayoutRes()
 
-        override fun getBindingKey() = this@toListElement.getBindingKey()
+        override fun getBindingKey() = this@toListComponent.getBindingKey()
 
-        override fun getDataSource() = this@toListElement.getDataSource() as List<*>
+        override fun getDataSource() = this@toListComponent.getDataSource() as List<*>
     }
