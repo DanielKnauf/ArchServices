@@ -1,11 +1,11 @@
 package knaufdan.android.arch.mvvm
 
-import knaufdan.android.arch.databinding.IBindableElement
+import knaufdan.android.arch.databinding.IComponent
 import knaufdan.android.arch.mvvm.implementation.BaseViewModel
 
 typealias FragmentTag = String
 
-interface IBaseFragment<ViewModel : BaseViewModel> : IBindableElement<ViewModel>, IAndroidComponent {
+interface IBaseFragment<ViewModel : BaseViewModel> : IComponent<ViewModel>, IAndroidComponent {
     fun setBackPressed(isBackPressed: Boolean) = Unit
 
     /**
