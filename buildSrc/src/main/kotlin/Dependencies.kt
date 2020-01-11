@@ -11,6 +11,7 @@ import Versions.ktLint_version
 import Versions.lifecycle_version
 import Versions.recyclerView_version
 import Versions.test_runner_version
+import Versions.picasso_version
 
 object Dependencies {
     val gradle = "com.android.tools.build:gradle:$gradle_version"
