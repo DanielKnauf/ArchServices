@@ -9,7 +9,10 @@ class BindableViewHolder<DataSource>(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(dataSource: DataSource) {
-        binding.setVariable(bindingKey, dataSource)
+        binding.setVariable(
+            bindingKey,
+            dataSource
+        )
         binding.executePendingBindings()
     }
 }
