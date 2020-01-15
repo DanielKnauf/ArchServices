@@ -7,24 +7,35 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
 class BindableAdapter<DataSource>(
-    private val dataSources: List<DataSource>,
+    dataSources: List<DataSource>,
     private val layoutRes: LayoutRes,
     private val bindingKey: BindingKey
 ) : RecyclerView.Adapter<BindableViewHolder<DataSource>>() {
+    // Store data in separate list to lose the reference and prevent error if references changes.
+    private val dataSources = dataSources.toList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BindableViewHolder<DataSource> {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = DataBindingUtil.inflate<ViewDataBinding>(inflater, layoutRes, parent, false)
-        return BindableViewHolder(
-            binding = binding,
-            bindingKey = bindingKey
-        )
-    }
+    ): BindableViewHolder<DataSource> =
+        parent.run {
+            val binding = DataBindingUtil.inflate<ViewDataBinding>(
+                LayoutInflater.from(context),
+                layoutRes,
+                this,
+                false
+            )
 
-    override fun onBindViewHolder(holder: BindableViewHolder<DataSource>, position: Int) {
+            BindableViewHolder(
+                binding = binding,
+                bindingKey = bindingKey
+            )
+        }
+
+    override fun onBindViewHolder(
+        holder: BindableViewHolder<DataSource>,
+        position: Int
+    ) {
         holder.bind(dataSources[position])
     }
 
