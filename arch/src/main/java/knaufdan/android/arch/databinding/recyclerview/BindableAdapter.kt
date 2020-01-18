@@ -1,10 +1,12 @@
-package knaufdan.android.arch.databinding
+package knaufdan.android.arch.databinding.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import knaufdan.android.arch.databinding.BindingKey
+import knaufdan.android.arch.databinding.LayoutRes
 
 class BindableAdapter<DataSource>(
     dataSources: List<DataSource>,
