@@ -80,8 +80,8 @@ private fun <DataSource> ViewGroup.bindSingleComponent(
         }
     } catch (e: Throwable) {
         Log.e(
-            ".bindToLinearLayout()",
-            "LayoutRes could not be found. No binding was generated for $parent in $context"
+            "ArchServices",
+            "ViewGroupBindingAdapters - LayoutRes could not be found. No binding was generated for $LayoutRes in $context"
         )
     }
 }
