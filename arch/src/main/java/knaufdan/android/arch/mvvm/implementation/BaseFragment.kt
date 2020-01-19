@@ -35,7 +35,7 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), IBaseFragme
         super.onAttach(context)
         AndroidSupportInjection.inject(this)
 
-        viewModel = ViewModelProvider(this, viewModelFactory).get(getDataSourceClass())
+        viewModel = ViewModelProvider(this, viewModelFactory).get(getTypeClass())
         viewModel.fragmentTag = getFragmentTag()
         lifecycle.addObserver(viewModel)
 
