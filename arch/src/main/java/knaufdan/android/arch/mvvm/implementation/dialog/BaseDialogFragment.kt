@@ -44,7 +44,7 @@ abstract class BaseDialogFragment<ViewModel : BaseViewModel> : DialogFragment(),
         super.onAttach(context)
         AndroidSupportInjection.inject(this)
 
-        viewModel = ViewModelProvider(this, viewModelFactory).get(getDataSourceClass())
+        viewModel = ViewModelProvider(this, viewModelFactory).get(getTypeClass())
         viewModel.fragmentTag = getFragmentTag()
         lifecycle.addObserver(viewModel)
     }

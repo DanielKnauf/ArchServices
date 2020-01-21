@@ -1,11 +1,11 @@
 package knaufdan.android.arch.databinding
 
-import java.lang.reflect.ParameterizedType
+import knaufdan.android.arch.base.IGenericType
 
 typealias LayoutRes = Int
 typealias BindingKey = Int
 
-interface IComponent<DataSource> {
+interface IComponent<DataSource> : IGenericType<DataSource> {
 
     /**
      * @return the layout in which [DataSource] should be inserted.
@@ -21,12 +21,4 @@ interface IComponent<DataSource> {
      * @return [DataSource] which should be inserted in the [LayoutRes].
      */
     fun getDataSource(): DataSource
-
-    /**
-     * @return class type of [DataSource]
-     */
-    @Suppress("UNCHECKED_CAST")
-    fun getDataSourceClass(): Class<DataSource> =
-        (javaClass.genericSuperclass as ParameterizedType)
-            .actualTypeArguments[0] as Class<DataSource>
 }

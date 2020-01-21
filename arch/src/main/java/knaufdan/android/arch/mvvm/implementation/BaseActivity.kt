@@ -78,7 +78,7 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : AppCompatActivity()
     }
 
     private fun Config.setBinding(savedInstanceState: Bundle?) {
-        viewModel = ViewModelProvider(this@BaseActivity, viewModelFactory).get(getDataSourceClass())
+        viewModel = ViewModelProvider(this@BaseActivity, viewModelFactory).get(getTypeClass())
 
         lifecycle.addObserver(viewModel)
 
