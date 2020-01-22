@@ -10,7 +10,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-abstract class Service<Api>(config: ServiceConfig) : IGenericType<Api> {
+abstract class BaseService<Api>(config: ServiceConfig) : IGenericType<Api> {
     protected val api by lazy {
         config.createApi()
     }
@@ -26,7 +26,7 @@ abstract class Service<Api>(config: ServiceConfig) : IGenericType<Api> {
                 ) {
                     responseData.postValue(null)
                     Log.d(
-                        "${this@Service::class.simpleName}",
+                        "${this@BaseService::class.simpleName}",
                         "Call $call failed with ${t.message}"
                     )
                 }
