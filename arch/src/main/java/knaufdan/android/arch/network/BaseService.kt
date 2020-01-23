@@ -8,7 +8,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 abstract class BaseService<Api>(config: ServiceConfig) : IGenericType<Api> {
     protected val api by lazy {
@@ -47,10 +46,8 @@ abstract class BaseService<Api>(config: ServiceConfig) : IGenericType<Api> {
 
     private fun ServiceConfig.createApi(): Api {
         if (baseUrl.isBlank()) {
-            throw IllegalArgumentException()
+            throw IllegalArgumentException("BaseUrl for service ${this@BaseService::class.simpleName} is blank - please set nur baseUrl via serviceConfig.")
         }
-
-        val converterFactory = GsonConverterFactory.create()
 
         return Retrofit.Builder()
             .baseUrl(baseUrl)
