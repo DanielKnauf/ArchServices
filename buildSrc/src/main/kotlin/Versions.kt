@@ -17,4 +17,6 @@ object Versions {
     const val test_runner_version = "1.2.0"
 
     const val picasso_version = "2.71828"
+
+    const val retrofit_version = "2.6.2"
 }

@@ -12,6 +12,7 @@ import Versions.lifecycle_version
 import Versions.recyclerView_version
 import Versions.test_runner_version
 import Versions.picasso_version
+import Versions.retrofit_version
 
 object Dependencies {
     val gradle = "com.android.tools.build:gradle:$gradle_version"
@@ -45,6 +46,11 @@ object Dependencies {
 
     val picasso = "com.squareup.picasso:picasso:$picasso_version"
 
+    //retrofit
+    val retrofit_core = "com.squareup.retrofit2:retrofit:$retrofit_version"
+    val retrofit_gson = "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    //maintenance
     val dependency_updates =
         "com.github.ben-manes:gradle-versions-plugin:$dependency_updates_version"
     val ktLint = "com.pinterest:ktlint:$ktLint_version"

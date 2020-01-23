@@ -55,6 +55,10 @@ dependencies {
     androidTestImplementation Dependencies.androidX_test_runner
     testImplementation Dependencies.jUnit
 
+    //retrofit
+    implementation Dependencies.retrofit_core
+    implementation Dependencies.retrofit_gson
+
     //kotlin
     implementation Dependencies.kotlin_reflect
     implementation Dependencies.kotlin_stdlib
