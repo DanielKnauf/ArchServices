@@ -1,4 +1,4 @@
-package knaufdan.android.simpletimerapp.util
+package knaufdan.android.core.util
 
 object UnBoxUtil {
 
