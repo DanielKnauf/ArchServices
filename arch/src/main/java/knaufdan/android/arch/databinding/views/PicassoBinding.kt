@@ -1,4 +1,4 @@
-package knaufdan.android.arch.databinding.ui
+package knaufdan.android.arch.databinding.views
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

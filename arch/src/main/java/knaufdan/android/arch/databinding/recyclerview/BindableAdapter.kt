@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import knaufdan.android.arch.databinding.BindingKey
-import knaufdan.android.arch.databinding.LayoutRes
+import knaufdan.android.arch.base.component.BindingKey
+import knaufdan.android.arch.base.component.LayoutRes
 
 class BindableAdapter<DataSource>(
     dataSources: List<DataSource>,

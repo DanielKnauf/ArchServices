@@ -2,7 +2,7 @@ package knaufdan.android.arch.databinding.recyclerview
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import knaufdan.android.arch.databinding.BindingKey
+import knaufdan.android.arch.base.component.BindingKey
 
 class BindableViewHolder<DataSource>(
     private val binding: ViewDataBinding,

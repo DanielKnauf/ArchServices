@@ -1,4 +1,4 @@
-package knaufdan.android.arch.databinding
+package knaufdan.android.arch.databinding.livedata
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
