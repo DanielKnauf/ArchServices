@@ -1,6 +1,6 @@
 package knaufdan.android.arch.mvvm
 
-import knaufdan.android.arch.databinding.IComponent
+import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.mvvm.implementation.BaseViewModel
 
 typealias FragmentTag = String

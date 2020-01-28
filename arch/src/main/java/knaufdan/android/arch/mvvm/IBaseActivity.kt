@@ -1,7 +1,7 @@
 package knaufdan.android.arch.mvvm
 
 import androidx.fragment.app.FragmentManager
-import knaufdan.android.arch.databinding.IComponent
+import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.mvvm.implementation.BaseFragment
 import knaufdan.android.arch.mvvm.implementation.BaseViewModel
 import knaufdan.android.arch.navigation.ContainerViewId

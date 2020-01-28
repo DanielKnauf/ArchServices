@@ -3,7 +3,7 @@ package knaufdan.android.arch.databinding.recyclerview
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import knaufdan.android.arch.databinding.IComponent
+import knaufdan.android.arch.base.component.IComponent
 
 @BindingAdapter(value = ["component"])
 fun RecyclerView.bindComponent(component: IComponent<*>?) {

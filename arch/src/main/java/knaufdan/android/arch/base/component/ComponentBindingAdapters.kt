@@ -1,5 +1,7 @@
-package knaufdan.android.arch.databinding
+package knaufdan.android.arch.base.component
 
+import android.content.Context
+import android.content.ContextWrapper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -75,16 +77,25 @@ private fun <DataSource> ViewGroup.bindSingleComponent(
                 bindingKey,
                 dataSource
             )
-            if (context is LifecycleOwner) lifecycleOwner = context
+            context.findLifecycleOwner()?.apply {
+                lifecycleOwner = this
+            }
             addView(root)
         }
     } catch (e: Throwable) {
         Log.e(
             "ArchServices",
-            "ViewGroupBindingAdapters - LayoutRes could not be found. No binding was generated for $LayoutRes in $context"
+            "ComponentBindingAdapters - Error while creating layout with\n" +
+                    "- LayoutRes = $layoutRes \n" +
+                    "- DataSource = $dataSource \n\n" +
+                    "Message: ${e.message}"
         )
     }
 }
+
+private tailrec fun Context?.findLifecycleOwner(): LifecycleOwner? =
+    if (this is LifecycleOwner) this
+    else (this as? ContextWrapper)?.baseContext?.findLifecycleOwner()
 
 private fun IComponent<*>.toListComponent() =
     object : IComponent<List<*>> {
