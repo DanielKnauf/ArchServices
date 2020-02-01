@@ -9,12 +9,21 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
+import java.util.*
+import java.util.Collections.emptyList
+
+private val parentComponents: WeakHashMap<ViewGroup, List<IComponent<*>>> = WeakHashMap()
 
 @BindingAdapter(value = ["components"])
 fun ViewGroup.bindComponents(components: List<IComponent<*>>?) {
     if (components == null) {
         return
     }
+
+    if (hasComponents(components)) {
+        return
+    }
+    parentComponents[this] = components
 
     removeAllViewsInLayout()
 
@@ -28,6 +37,11 @@ fun ViewGroup.bindComponent(component: IComponent<*>?) {
     if (component == null) {
         return
     }
+    if (hasComponents(listOf(component))) {
+        return
+    }
+    parentComponents[this] = listOf(component)
+
     removeAllViewsInLayout()
 
     bindOneComponent(component)
@@ -96,6 +110,11 @@ private fun <DataSource> ViewGroup.bindSingleComponent(
 private tailrec fun Context?.findLifecycleOwner(): LifecycleOwner? =
     if (this is LifecycleOwner) this
     else (this as? ContextWrapper)?.baseContext?.findLifecycleOwner()
+
+private fun ViewGroup.hasComponents(components: List<IComponent<*>>): Boolean {
+    val storedComponents = parentComponents.getOrDefault(this, emptyList()).toTypedArray()
+    return storedComponents.contentDeepEquals(components.toTypedArray())
+}
 
 private fun IComponent<*>.toListComponent() =
     object : IComponent<List<*>> {
