@@ -12,8 +12,9 @@ fun View.bindBackgroundResource(@DrawableRes background: Int) {
 @BindingAdapter(value = ["setFocus"])
 fun View.setFocus(focused: Boolean) {
     if (focused) {
-        this.requestFocus()
+        isFocusableInTouchMode = true
+        requestFocus()
     } else {
-        this.clearFocus()
+        clearFocus()
     }
 }
