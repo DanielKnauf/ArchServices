@@ -94,6 +94,7 @@ private fun <DataSource> ViewGroup.bindSingleComponent(
             context.findLifecycleOwner()?.apply {
                 lifecycleOwner = this
             }
+            executePendingBindings()
             addView(root)
         }
     } catch (e: Throwable) {
