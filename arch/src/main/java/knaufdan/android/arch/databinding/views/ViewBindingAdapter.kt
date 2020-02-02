@@ -8,3 +8,12 @@ import androidx.databinding.BindingAdapter
 fun View.bindBackgroundResource(@DrawableRes background: Int) {
     if (background != -1) setBackground(context.getDrawable(background))
 }
+
+@BindingAdapter(value = ["setFocus"])
+fun View.setFocus(focused: Boolean) {
+    if (focused) {
+        this.requestFocus()
+    } else {
+        this.clearFocus()
+    }
+}
