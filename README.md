@@ -20,6 +20,7 @@ dependencies {
 ```
 ## Used in
 * [Simple Timer App](https://github.com/DanielKnauf/SimpleTimer)
+* [WiP] [b2u](https://github.com/DanielKnauf/b2u)
 
 
 ## License
