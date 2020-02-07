@@ -9,8 +9,8 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
-import java.util.*
 import java.util.Collections.emptyList
+import java.util.WeakHashMap
 
 private val parentComponents: WeakHashMap<ViewGroup, List<IComponent<*>>> = WeakHashMap()
 
