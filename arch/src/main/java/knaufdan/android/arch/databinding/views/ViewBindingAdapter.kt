@@ -27,7 +27,6 @@ fun View.setFocus(
 
     val performFocus = {
         if (focused) {
-            isFocusableInTouchMode = true
             requestFocus()
         } else {
             clearFocus()
