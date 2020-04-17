@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
@@ -21,7 +22,9 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), IBaseFragme
 
     private lateinit var viewModel: ViewModel
 
-    override fun getDataSource(): ViewModel = viewModel
+    private val viewModelStoreOwner: ViewModelStoreOwner by lazy {
+        requireActivity() as ViewModelStoreOwner
+    }
 
     private val config: Config.FragmentConfig by lazy {
         Config.FragmentConfig(
@@ -31,11 +34,13 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), IBaseFragme
         )
     }
 
+    override fun getDataSource(): ViewModel = viewModel
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         AndroidSupportInjection.inject(this)
 
-        viewModel = ViewModelProvider(this, viewModelFactory).get(getTypeClass())
+        viewModel = ViewModelProvider(viewModelStoreOwner, viewModelFactory).get(getTypeClass())
         viewModel.fragmentTag = getFragmentTag()
         lifecycle.addObserver(viewModel)
 
