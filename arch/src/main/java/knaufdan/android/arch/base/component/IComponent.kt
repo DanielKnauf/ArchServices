@@ -5,9 +5,7 @@ import knaufdan.android.arch.base.IGenericType
 typealias LayoutRes = Int
 typealias BindingKey = Int
 
-interface IComponent<DataSource> :
-    IGenericType<DataSource> {
-
+interface IComponent<DataSource> : IGenericType<DataSource> {
     /**
      * @return the layout in which [DataSource] should be inserted.
      */
