@@ -6,7 +6,13 @@ import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
 
 @BindingAdapter(
-    value = ["imageUrl", "resizeWidth", "resizeHeight", "scaleType", "onlyScaleDown"],
+    value = [
+        "imageUrl",
+        "resizeWidth",
+        "resizeHeight",
+        "scaleType",
+        "onlyScaleDown"
+    ],
     requireAll = false
 )
 fun ImageView.bindImage(
