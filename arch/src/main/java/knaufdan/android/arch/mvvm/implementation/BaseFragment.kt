@@ -7,15 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
-import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseFragment
 
-abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), IBaseFragment<ViewModel> {
+abstract class BaseFragment<ViewModel : BaseViewModel> : DaggerFragment(), IBaseFragment<ViewModel> {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -38,7 +37,6 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment(), IBaseFragme
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        AndroidSupportInjection.inject(this)
 
         viewModel = ViewModelProvider(viewModelStoreOwner, viewModelFactory).get(getTypeClass())
         viewModel.fragmentTag = getFragmentTag()

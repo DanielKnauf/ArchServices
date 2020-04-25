@@ -1,12 +1,11 @@
 package knaufdan.android.arch.mvvm.implementation
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
-import dagger.android.AndroidInjection
+import dagger.android.support.DaggerAppCompatActivity
 import javax.inject.Inject
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseActivity
@@ -14,8 +13,7 @@ import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.IContextProvider
 
-abstract class BaseActivity<ViewModel : ActivityViewModel> : AppCompatActivity(),
-    IBaseActivity<ViewModel> {
+abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActivity(), IBaseActivity<ViewModel> {
 
     @Inject
     lateinit var contextProvider: IContextProvider
@@ -41,7 +39,6 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : AppCompatActivity()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AndroidInjection.inject(this)
 
         contextProvider.setContext(this)
 
