@@ -16,4 +16,6 @@ class BindableViewHolder<DataSource>(
         )
         binding.executePendingBindings()
     }
+
+    fun getBinding(): ViewDataBinding = binding
 }

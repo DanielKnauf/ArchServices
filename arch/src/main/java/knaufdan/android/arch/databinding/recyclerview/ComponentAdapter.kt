@@ -5,37 +5,34 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
-import knaufdan.android.arch.base.component.BindingKey
-import knaufdan.android.arch.base.component.LayoutRes
+import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.utils.findLifecycleOwner
 
-class BindableAdapter<DataSource>(
-    dataSources: List<DataSource>,
-    private val layoutRes: LayoutRes,
-    private val bindingKey: BindingKey
+class ComponentAdapter<DataSource>(
+    components: List<IComponent<DataSource>>
 ) : RecyclerView.Adapter<BindableViewHolder<DataSource>>() {
     // Store data in separate list to lose the reference and prevent error if references changes.
-    private val dataSources = dataSources
+    private val dataSource = components
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): BindableViewHolder<DataSource> =
-        parent.run {
+        dataSource[viewType].run {
             val binding = DataBindingUtil.inflate<ViewDataBinding>(
-                LayoutInflater.from(context),
-                layoutRes,
-                this,
+                LayoutInflater.from(parent.context),
+                getLayoutRes(),
+                parent,
                 false
             ).apply {
-                context.findLifecycleOwner()?.apply {
+                parent.context.findLifecycleOwner()?.apply {
                     lifecycleOwner = this
                 }
             }
 
             BindableViewHolder(
                 binding = binding,
-                bindingKey = bindingKey
+                bindingKey = getBindingKey()
             )
         }
 
@@ -43,8 +40,15 @@ class BindableAdapter<DataSource>(
         holder: BindableViewHolder<DataSource>,
         position: Int
     ) {
-        holder.bind(dataSources[position])
+        holder.bind(dataSource[position].getDataSource())
     }
 
-    override fun getItemCount(): Int = dataSources.size
+    override fun getItemViewType(position: Int): Int = position
+
+    override fun getItemCount(): Int = dataSource.size
+
+    override fun onViewRecycled(holder: BindableViewHolder<DataSource>) {
+        holder.getBinding().unbind()
+        super.onViewRecycled(holder)
+    }
 }

@@ -5,37 +5,46 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import knaufdan.android.arch.base.component.IComponent
 
-@BindingAdapter(value = ["component"])
-fun RecyclerView.bindComponent(component: IComponent<*>?) {
-    if (component == null) {
+@BindingAdapter(
+    value = [
+        "components",
+        "orientation"
+    ],
+    requireAll = false
+)
+fun RecyclerView.bindComponents(
+    items: List<IComponent<*>>?,
+    viewOrientation: ViewOrientation?
+) {
+    if (items == null || items.isEmpty()) {
         return
     }
 
+    val components = items.asListOfType<IComponent<Any>>() ?: return
+
     removeAllViewsInLayout()
 
-    layoutManager = LinearLayoutManager(context)
+    layoutManager = LinearLayoutManager(context).apply {
+        orientation = viewOrientation.toRecyclerOrientation()
+    }
 
-    val listComponent = component.toListComponent()
-    adapter = BindableAdapter(
-        dataSources = listComponent.getDataSource(),
-        layoutRes = listComponent.getLayoutRes(),
-        bindingKey = listComponent.getBindingKey()
+    adapter = ComponentAdapter(
+        components = components
     )
 }
 
-private fun IComponent<*>.toListComponent(): IComponent<List<Any?>> {
-    val dataSource =
-        if (getDataSource() is List<*>) {
-            this@toListComponent.getDataSource() as List<*>
-        } else {
-            listOf(this@toListComponent.getDataSource())
-        }
+@Suppress("UNCHECKED_CAST")
+private inline fun <reified T> List<*>.asListOfType(): List<T>? =
+    if (all { item -> item is T }) this as List<T> else null
 
-    return object : IComponent<List<Any?>> {
-        override fun getLayoutRes() = this@toListComponent.getLayoutRes()
-
-        override fun getBindingKey() = this@toListComponent.getBindingKey()
-
-        override fun getDataSource() = dataSource
+private fun ViewOrientation?.toRecyclerOrientation() = this?.run {
+    when (this) {
+        ViewOrientation.VERTICAL -> RecyclerView.VERTICAL
+        ViewOrientation.HORIZONTAL -> RecyclerView.HORIZONTAL
     }
+} ?: RecyclerView.VERTICAL
+
+enum class ViewOrientation {
+    HORIZONTAL,
+    VERTICAL
 }
