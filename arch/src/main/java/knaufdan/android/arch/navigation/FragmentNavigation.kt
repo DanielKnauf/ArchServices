@@ -24,7 +24,7 @@ internal fun Context.replaceFragment(
     addToBackStack: Boolean,
     containerViewId: ContainerViewId
 ) {
-    check(containerViewId != -1) { "Could not replace ${fragment.getFragmentTag()} because no fragmentContainer is defined. Current container value = $containerViewId" }
+    check(containerViewId != -1) { "Could not replace ${fragment.getFragmentTag()}, missing fragmentContainer (id = $containerViewId)" }
 
     if (this is AppCompatActivity) {
         supportFragmentManager.beginTransaction().apply {
@@ -38,7 +38,7 @@ internal fun Context.replaceFragment(
                 addToBackStack(null)
             }
 
-            commitAllowingStateLoss()
+            commit()
         }
     }
 }
