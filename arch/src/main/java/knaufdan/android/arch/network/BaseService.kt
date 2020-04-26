@@ -36,6 +36,8 @@ abstract class BaseService<Api>(config: ServiceConfig) : IGenericType<Api> {
                 ) {
                     if (response.isSuccessful) {
                         responseData.postValue(response.body())
+                    } else {
+                        responseData.postValue(null)
                     }
                 }
             }
