@@ -1,16 +1,14 @@
 package knaufdan.android.arch.base.component
 
-import android.content.Context
-import android.content.ContextWrapper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.LifecycleOwner
 import java.util.Collections.emptyList
 import java.util.WeakHashMap
+import knaufdan.android.arch.utils.findLifecycleOwner
 
 private val parentComponents: WeakHashMap<ViewGroup, List<IComponent<*>>> = WeakHashMap()
 
@@ -107,10 +105,6 @@ private fun <DataSource> ViewGroup.bindSingleComponent(
         )
     }
 }
-
-private tailrec fun Context?.findLifecycleOwner(): LifecycleOwner? =
-    if (this is LifecycleOwner) this
-    else (this as? ContextWrapper)?.baseContext?.findLifecycleOwner()
 
 private fun ViewGroup.hasComponents(components: List<IComponent<*>>): Boolean {
     val storedComponents = parentComponents.getOrDefault(this, emptyList()).toTypedArray()
