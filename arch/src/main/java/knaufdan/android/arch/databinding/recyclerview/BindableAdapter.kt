@@ -15,7 +15,7 @@ class BindableAdapter<DataSource>(
     private val bindingKey: BindingKey
 ) : RecyclerView.Adapter<BindableViewHolder<DataSource>>() {
     // Store data in separate list to lose the reference and prevent error if references changes.
-    private val dataSources = dataSources
+    private val dataSources = dataSources.toList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

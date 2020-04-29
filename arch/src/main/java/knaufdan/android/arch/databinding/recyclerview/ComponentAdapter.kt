@@ -12,7 +12,7 @@ class ComponentAdapter<DataSource>(
     components: List<IComponent<DataSource>>
 ) : RecyclerView.Adapter<BindableViewHolder<DataSource>>() {
     // Store data in separate list to lose the reference and prevent error if references changes.
-    private val dataSource = components
+    private val dataSource = components.toList()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

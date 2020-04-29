@@ -8,13 +8,15 @@ class BindableViewHolder<DataSource>(
     private val binding: ViewDataBinding,
     private val bindingKey: BindingKey
 ) : RecyclerView.ViewHolder(binding.root) {
-
     fun bind(dataSource: DataSource) {
-        binding.setVariable(
-            bindingKey,
-            dataSource
-        )
-        binding.executePendingBindings()
+        binding.apply {
+            setVariable(
+                bindingKey,
+                dataSource
+            )
+
+            executePendingBindings()
+        }
     }
 
     fun getBinding(): ViewDataBinding = binding
