@@ -14,7 +14,5 @@ class ComponentAdapter<DataSource>(
 
     override fun getDataValue(position: Int): DataSource = dataSource[position].getDataSource()
 
-    override fun getItemViewType(position: Int): Int = position
-
     override fun getItemCount(): Int = dataSource.size
 }

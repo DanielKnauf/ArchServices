@@ -4,7 +4,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import knaufdan.android.arch.base.component.BindingKey
 
-class BindableViewHolder<DataSource>(
+class BindingViewHolder<DataSource>(
     private val binding: ViewDataBinding,
     private val bindingKey: BindingKey
 ) : RecyclerView.ViewHolder(binding.root) {

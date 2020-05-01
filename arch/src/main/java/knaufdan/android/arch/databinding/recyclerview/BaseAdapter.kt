@@ -7,11 +7,11 @@ import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 import knaufdan.android.arch.utils.findLifecycleOwner
 
-abstract class BaseAdapter<DataSource> : RecyclerView.Adapter<BindableViewHolder<DataSource>>() {
+abstract class BaseAdapter<DataSource> : RecyclerView.Adapter<BindingViewHolder<DataSource>>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BindableViewHolder<DataSource> =
+    ): BindingViewHolder<DataSource> =
         DataBindingUtil.inflate<ViewDataBinding>(
             LayoutInflater.from(parent.context),
             getLayoutRes(viewType),
@@ -22,23 +22,25 @@ abstract class BaseAdapter<DataSource> : RecyclerView.Adapter<BindableViewHolder
                 lifecycleOwner = this
             }
 
-            BindableViewHolder(
+            BindingViewHolder(
                 binding = this,
                 bindingKey = getBindingKey(viewType)
             )
         }
 
     override fun onBindViewHolder(
-        holder: BindableViewHolder<DataSource>,
+        holder: BindingViewHolder<DataSource>,
         position: Int
     ) {
         holder.bind(getDataValue(position))
     }
 
-    override fun onViewRecycled(holder: BindableViewHolder<DataSource>) {
+    override fun onViewRecycled(holder: BindingViewHolder<DataSource>) {
         holder.getBinding().unbind()
         super.onViewRecycled(holder)
     }
+
+    override fun getItemViewType(position: Int): Int = position
 
     abstract fun getLayoutRes(viewType: Int): Int
 
