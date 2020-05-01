@@ -1,26 +1,63 @@
 package knaufdan.android.arch.databinding.recyclerview
 
+import android.content.Context
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import knaufdan.android.arch.base.component.IComponent
 
-@BindingAdapter(value = ["component"])
-fun RecyclerView.bindComponent(component: IComponent<*>?) {
+@BindingAdapter(
+    value = [
+        "components",
+        "orientation"
+    ],
+    requireAll = false
+)
+fun RecyclerView.bindComponents(
+    items: List<IComponent<*>>?,
+    viewOrientation: ViewOrientation?
+) {
+    if (items == null || items.isEmpty()) {
+        return
+    }
+
+    val components = items.asListOfType<IComponent<Any>>() ?: return
+
+    removeAllViewsInLayout()
+
+    layoutManager = context.createLinearLayoutManager(viewOrientation)
+
+    adapter = ComponentAdapter(
+        components = components
+    )
+}
+
+@BindingAdapter(
+    value = [
+        "component",
+        "orientation"
+    ],
+    requireAll = false
+)
+fun RecyclerView.bindComponent(
+    component: IComponent<*>?,
+    viewOrientation: ViewOrientation?
+) {
     if (component == null) {
         return
     }
 
     removeAllViewsInLayout()
 
-    layoutManager = LinearLayoutManager(context)
+    layoutManager = context.createLinearLayoutManager(viewOrientation)
 
-    val listComponent = component.toListComponent()
-    adapter = BindableAdapter(
-        dataSources = listComponent.getDataSource(),
-        layoutRes = listComponent.getLayoutRes(),
-        bindingKey = listComponent.getBindingKey()
-    )
+    component.toListComponent().apply {
+        adapter = ListAdapter(
+            dataSources = getDataSource(),
+            layoutRes = getLayoutRes(),
+            bindingKey = getBindingKey()
+        )
+    }
 }
 
 private fun IComponent<*>.toListComponent(): IComponent<List<Any?>> {
@@ -38,4 +75,25 @@ private fun IComponent<*>.toListComponent(): IComponent<List<Any?>> {
 
         override fun getDataSource() = dataSource
     }
+}
+
+@Suppress("UNCHECKED_CAST")
+private inline fun <reified T> List<*>.asListOfType(): List<T>? =
+    if (all { item -> item is T }) this as List<T> else null
+
+private fun Context.createLinearLayoutManager(viewOrientation: ViewOrientation?) =
+    LinearLayoutManager(this).apply {
+        orientation = viewOrientation.toRecyclerOrientation()
+    }
+
+private fun ViewOrientation?.toRecyclerOrientation() = this?.run {
+    when (this) {
+        ViewOrientation.VERTICAL -> RecyclerView.VERTICAL
+        ViewOrientation.HORIZONTAL -> RecyclerView.HORIZONTAL
+    }
+} ?: RecyclerView.VERTICAL
+
+enum class ViewOrientation {
+    HORIZONTAL,
+    VERTICAL
 }
