@@ -18,9 +18,7 @@ abstract class BaseAdapter<DataSource> : RecyclerView.Adapter<BindingViewHolder<
             parent,
             false
         ).run {
-            parent.context.findLifecycleOwner()?.apply {
-                lifecycleOwner = this
-            }
+            setLifecycleOwner(parent)
 
             BindingViewHolder(
                 binding = this,
@@ -47,4 +45,10 @@ abstract class BaseAdapter<DataSource> : RecyclerView.Adapter<BindingViewHolder<
     abstract fun getBindingKey(viewType: Int): Int
 
     abstract fun getDataValue(position: Int): DataSource
+
+    companion object {
+        private fun ViewDataBinding.setLifecycleOwner(parent: ViewGroup): ViewDataBinding = apply {
+            lifecycleOwner = parent.context.findLifecycleOwner() ?: return this@setLifecycleOwner
+        }
+    }
 }
