@@ -1,6 +1,8 @@
 package knaufdan.android.arch.databinding.views
 
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
@@ -8,6 +10,8 @@ import com.squareup.picasso.RequestCreator
 @BindingAdapter(
     value = [
         "imageUrl",
+        "loadingImage",
+        "loadingImageRes",
         "resizeWidth",
         "resizeHeight",
         "scaleType",
@@ -16,21 +20,42 @@ import com.squareup.picasso.RequestCreator
     requireAll = false
 )
 fun ImageView.bindImage(
-    imageUrl: String,
+    imageUrl: String?,
+    loadingImage: Drawable?,
+    @DrawableRes loadingImageRes: Int?,
     resizeWidth: Int = -1,
     resizeHeight: Int = -1,
     scaleType: ScaleType? = ScaleType.CENTER_INSIDE,
     onlyScaleDown: Boolean = false
 ) {
-    if (imageUrl.isBlank()) {
+    if (imageUrl == null || imageUrl.isBlank()) {
         return
     }
 
     Picasso.get()
         .load(imageUrl)
-        .applyTransformation(resizeWidth, resizeHeight, scaleType, onlyScaleDown)
+        .applyTransformation(
+            resizeWidth = resizeWidth,
+            resizeHeight = resizeHeight,
+            scaleType = scaleType,
+            onlyScaleDown = onlyScaleDown
+        )
+        .setLoadingImage(
+            loadingImage = loadingImage,
+            loadingImageRes = loadingImageRes
+        )
         .into(this)
 }
+
+private fun RequestCreator.setLoadingImage(
+    loadingImage: Drawable?,
+    loadingImageRes: Int?
+) =
+    when {
+        loadingImage != null -> placeholder(loadingImage)
+        loadingImageRes != null -> placeholder(loadingImageRes)
+        else -> this
+    }
 
 private fun RequestCreator.applyTransformation(
     resizeWidth: Int = -1,
