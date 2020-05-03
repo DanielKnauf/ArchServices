@@ -8,31 +8,23 @@ import javax.inject.Singleton
 
 @Singleton
 class ViewModelFactory @Inject constructor(
-    private val viewModels: Map<Class<out ViewModel>,
-            @JvmSuppressWildcards Provider<ViewModel>>
+    private val providers: Map<Class<out ViewModel>, @JvmSuppressWildcards Provider<ViewModel>>
 ) : ViewModelProvider.Factory {
-
-    @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        var vm: Provider<out ViewModel>? = viewModels[modelClass]
+        val provider: Provider<out ViewModel>? = providers[modelClass] ?: modelClass.toProvider()
 
-        if (vm == null) {
-            for ((key, value) in viewModels) {
-                if (modelClass.isAssignableFrom(key)) {
-                    vm = value
-                    break
-                }
-            }
-        }
-
-        checkNotNull(vm) {
-            "Could not find a viewModel in provided models for $modelClass"
-        }
+        checkNotNull(provider) { "Could not find a provider for $modelClass" }
 
         try {
-            return vm.get() as T
+            @Suppress("UNCHECKED_CAST")
+            return provider.get() as T
         } catch (e: Exception) {
-            throw ClassCastException("Could not cast $vm to given type $modelClass")
+            throw ClassCastException("Could not cast ${provider.get()} to given type $modelClass")
         }
     }
+
+    private fun <T : ViewModel> Class<T>.toProvider(): Provider<out ViewModel>? =
+        providers.entries.firstOrNull { entry ->
+            this.isAssignableFrom(entry.key)
+        }?.value
 }
