@@ -15,30 +15,30 @@ internal class ResourceProvider @Inject constructor(
     private val resources: Resources get() = contextProvider.getContext().resources
 
     override fun getString(
-        textId: Int,
+        stringRes: Int,
         formatArgument: Any?
     ): String =
-        if (textId.isInvalid()) {
+        if (stringRes.isInvalid()) {
             ""
         } else {
             contextProvider.getContext().run {
                 if (formatArgument != null) {
                     getString(
-                        textId,
+                        stringRes,
                         formatArgument
                     )
                 } else {
-                    getString(textId)
+                    getString(stringRes)
                 }
             }
         }
 
     override fun getDrawable(
-        @DrawableRes drawableId: Int,
+        @DrawableRes drawableRes: Int,
         theme: Resources.Theme?
     ): Drawable =
         resources.getDrawable(
-            drawableId,
+            drawableRes,
             theme
         )
 

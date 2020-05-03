@@ -8,12 +8,12 @@ import androidx.annotation.StringRes
 
 interface IResourceProvider {
     fun getString(
-        @StringRes textId: Int,
+        @StringRes stringRes: Int,
         formatArgument: Any? = null
     ): String
 
     fun getDrawable(
-        @DrawableRes drawableId: Int,
+        @DrawableRes drawableRes: Int,
         theme: Resources.Theme? = null
     ): Drawable
 
