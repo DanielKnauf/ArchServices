@@ -2,6 +2,7 @@ package knaufdan.android.core.resources.implementation
 
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
+import android.os.Build
 import androidx.annotation.DrawableRes
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -47,6 +48,16 @@ internal class ResourceProvider @Inject constructor(
             0f
         } else {
             resources.getDimension(dimenRes)
+        }
+
+    override fun getColor(
+        colorRes: Int,
+        theme: Resources.Theme?
+    ): Int =
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            resources.getColor(colorRes, theme)
+        } else {
+            resources.getColor(colorRes)
         }
 
     companion object {
