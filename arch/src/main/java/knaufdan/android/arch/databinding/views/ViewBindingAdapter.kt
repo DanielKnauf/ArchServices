@@ -1,7 +1,12 @@
 package knaufdan.android.arch.databinding.views
 
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.DrawableRes
+import androidx.core.view.marginBottom
+import androidx.core.view.marginLeft
+import androidx.core.view.marginRight
+import androidx.core.view.marginTop
 import androidx.core.view.postDelayed
 import androidx.databinding.BindingAdapter
 
@@ -41,4 +46,27 @@ fun View.setFocus(
     this.postDelayed(focusDelay.toLong()) {
         performFocus()
     }
+}
+
+@BindingAdapter(
+    value = [
+        "marginTop",
+        "marginBottom",
+        "marginLeft",
+        "marginRight"
+    ],
+    requireAll = false
+)
+fun View.bindMargins(
+    marginTop: Number?,
+    marginBottom: Number?,
+    marginLeft: Number?,
+    marginRight: Number?
+) {
+    (layoutParams as? ViewGroup.MarginLayoutParams)?.setMargins(
+        marginLeft?.toInt() ?: this@bindMargins.marginLeft,
+        marginTop?.toInt() ?: this@bindMargins.marginTop,
+        marginRight?.toInt() ?: this@bindMargins.marginRight,
+        marginBottom?.toInt() ?: this@bindMargins.marginBottom
+    )
 }
