@@ -21,6 +21,12 @@ fun RecyclerView.bindComponents(
         return
     }
 
+    adapter?.run {
+        if (this is ComponentAdapter<*> && dataSource == items) {
+            return
+        }
+    }
+
     val components = items.asListOfType<IComponent<Any>>() ?: return
 
     removeAllViewsInLayout()
