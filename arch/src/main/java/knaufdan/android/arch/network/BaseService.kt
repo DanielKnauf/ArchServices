@@ -60,7 +60,7 @@ abstract class BaseService<Api>(config: ServiceConfig) : IGenericType<Api> {
 
     private fun ServiceConfig.createApi(): Api {
         if (baseUrl.isBlank()) {
-            throw IllegalArgumentException("BaseUrl for service $className is blank - please set nur baseUrl via serviceConfig.")
+            throw IllegalArgumentException("BaseUrl for service $className is blank - please set baseUrl via serviceConfig")
         }
 
         return Retrofit.Builder()
