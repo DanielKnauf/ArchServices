@@ -10,45 +10,57 @@ import retrofit2.Response
 import retrofit2.Retrofit
 
 abstract class BaseService<Api>(config: ServiceConfig) : IGenericType<Api> {
-    protected val api by lazy {
-        config.createApi()
-    }
+    private val className: String by lazy { this@BaseService::class.java.simpleName }
+    protected val api by lazy { config.createApi() }
 
-    protected fun <ResponseType> Call<ResponseType>.executeCall(): LiveData<ResponseType?> {
-        val responseData = MutableLiveData<ResponseType?>()
+    protected fun <ResponseType, LocalType> Call<ResponseType>.execute(
+        mapping: ((ResponseType?) -> LocalType)? = null
+    ): LiveData<LocalType?> =
+        MutableLiveData<LocalType?>().apply {
+            bindCall(
+                call = this@execute,
+                mapping = mapping
+            )
+        }
 
-        this.enqueue(
+    private fun <ResponseType, LocalType> MutableLiveData<LocalType?>.bindCall(
+        call: Call<ResponseType>,
+        mapping: ((ResponseType?) -> LocalType)?
+    ) =
+        call.enqueue(
             object : Callback<ResponseType> {
                 override fun onFailure(
                     call: Call<ResponseType>,
                     t: Throwable
                 ) {
-                    responseData.postValue(null)
-                    Log.d(
-                        "${this@BaseService::class.simpleName}",
-                        "Call $call failed with ${t.message}"
+                    postValue(null)
+                    Log.w(
+                        className,
+                        "Call $call failed with msg: ${t.message}"
                     )
                 }
 
+                @Suppress("UNCHECKED_CAST")
                 override fun onResponse(
                     call: Call<ResponseType>,
                     response: Response<ResponseType>
                 ) {
-                    if (response.isSuccessful) {
-                        responseData.postValue(response.body())
-                    } else {
-                        responseData.postValue(null)
-                    }
+                    val value =
+                        if (response.isSuccessful) {
+                            val responseBody = response.body()
+                            mapping?.invoke(responseBody) ?: responseBody as? LocalType
+                        } else {
+                            null
+                        }
+
+                    postValue(value)
                 }
             }
         )
 
-        return responseData
-    }
-
     private fun ServiceConfig.createApi(): Api {
         if (baseUrl.isBlank()) {
-            throw IllegalArgumentException("BaseUrl for service ${this@BaseService::class.simpleName} is blank - please set nur baseUrl via serviceConfig.")
+            throw IllegalArgumentException("BaseUrl for service $className is blank - please set baseUrl via serviceConfig")
         }
 
         return Retrofit.Builder()

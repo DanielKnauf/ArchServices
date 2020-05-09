@@ -18,7 +18,7 @@ fun Bundle.putParameter(parameter: Pair<BundleKey, BundleValue>) {
         is Parcelable -> putParcelable(parameter.first, value)
         is Serializable -> putSerializable(parameter.first, value)
         else -> {
-            Log.e("BundleExtension", "Could not find a method to put ${this::class} to bundle.")
+            Log.e("BundleExtension", "Could not find a method to put ${value::class} to bundle.")
         }
     }
 }
