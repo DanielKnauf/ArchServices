@@ -26,6 +26,6 @@ interface IResourceProvider {
     ): Int
 
     companion object {
-        internal const val INVALID_RES_ID = 0
+        const val INVALID_RES_ID = 0
     }
 }

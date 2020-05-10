@@ -12,8 +12,10 @@ import knaufdan.android.arch.mvvm.IBaseActivity
 import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.IContextProvider
+import knaufdan.android.core.resources.IResourceProvider
 
-abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActivity(), IBaseActivity<ViewModel> {
+abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActivity(),
+    IBaseActivity<ViewModel> {
 
     @Inject
     lateinit var contextProvider: IContextProvider
@@ -45,12 +47,17 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActi
         config.run {
             setBinding(savedInstanceState)
 
-            if (titleRes != -1) {
+            if (titleRes != IResourceProvider.INVALID_RES_ID) {
                 setTitle(titleRes)
             }
 
             fragmentSetup?.apply {
                 navigationService.containerViewId = first
+
+                val isNotFirstStart = savedInstanceState != null
+                if (isNotFirstStart) {
+                    return
+                }
 
                 showInitialFragment(
                     savedInstanceState = savedInstanceState,
@@ -79,8 +86,8 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActi
 
         lifecycle.addObserver(viewModel)
 
-        // do only initiate view model on first start
-        if (savedInstanceState == null) {
+        val isFirstStart = savedInstanceState == null
+        if (isFirstStart) {
             viewModel.handleBundle(intent.extras)
         }
 
@@ -94,12 +101,14 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActi
     private fun showInitialFragment(
         initialFragment: BaseFragment<out BaseViewModel>?,
         savedInstanceState: Bundle?
-    ) = initialFragment?.run {
-        arguments = savedInstanceState
+    ) {
+        initialFragment?.apply {
+            arguments = savedInstanceState
 
-        navigationService.goToFragment(
-            fragment = this,
-            addToBackStack = false
-        )
-    } ?: Unit
+            navigationService.goToFragment(
+                fragment = this,
+                addToBackStack = false
+            )
+        }
+    }
 }
