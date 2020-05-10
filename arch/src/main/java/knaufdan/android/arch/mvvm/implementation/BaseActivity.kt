@@ -13,7 +13,8 @@ import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.IContextProvider
 
-abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActivity(), IBaseActivity<ViewModel> {
+abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActivity(),
+    IBaseActivity<ViewModel> {
 
     @Inject
     lateinit var contextProvider: IContextProvider
@@ -51,6 +52,10 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActi
 
             fragmentSetup?.apply {
                 navigationService.containerViewId = first
+
+                if (savedInstanceState != null) {
+                    return
+                }
 
                 showInitialFragment(
                     savedInstanceState = savedInstanceState,
@@ -94,12 +99,14 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActi
     private fun showInitialFragment(
         initialFragment: BaseFragment<out BaseViewModel>?,
         savedInstanceState: Bundle?
-    ) = initialFragment?.run {
-        arguments = savedInstanceState
+    ) {
+        initialFragment?.apply {
+            arguments = savedInstanceState
 
-        navigationService.goToFragment(
-            fragment = this,
-            addToBackStack = false
-        )
-    } ?: Unit
+            navigationService.goToFragment(
+                fragment = this,
+                addToBackStack = false
+            )
+        }
+    }
 }
