@@ -7,8 +7,7 @@ import knaufdan.android.arch.mvvm.implementation.BaseViewModel
 import knaufdan.android.arch.navigation.ContainerViewId
 import knaufdan.android.arch.navigation.INavigationService
 
-interface IBaseActivity<ViewModel : IActivityViewModel> : IComponent<ViewModel>,
-    IAndroidComponent {
+interface IBaseActivity<ViewModel : IActivityViewModel> : IComponent<ViewModel>, IAndroidComponent {
     /**
      * [ContainerViewId] will be set as [INavigationService.containerViewId].
      * [BaseFragment] will be placed into the [ContainerViewId].
