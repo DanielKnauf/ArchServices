@@ -12,6 +12,7 @@ import knaufdan.android.arch.mvvm.IBaseActivity
 import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.IContextProvider
+import knaufdan.android.core.resources.IResourceProvider
 
 abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActivity(),
     IBaseActivity<ViewModel> {
@@ -46,14 +47,15 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActi
         config.run {
             setBinding(savedInstanceState)
 
-            if (titleRes != -1) {
+            if (titleRes != IResourceProvider.INVALID_RES_ID) {
                 setTitle(titleRes)
             }
 
             fragmentSetup?.apply {
                 navigationService.containerViewId = first
 
-                if (savedInstanceState != null) {
+                val isNotFirstStart = savedInstanceState != null
+                if (isNotFirstStart) {
                     return
                 }
 
@@ -84,8 +86,8 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActi
 
         lifecycle.addObserver(viewModel)
 
-        // do only initiate view model on first start
-        if (savedInstanceState == null) {
+        val isFirstStart = savedInstanceState == null
+        if (isFirstStart) {
             viewModel.handleBundle(intent.extras)
         }
 
