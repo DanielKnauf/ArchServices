@@ -7,14 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import dagger.android.support.DaggerFragment
+import java.util.WeakHashMap
 import javax.inject.Inject
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseFragment
+import knaufdan.android.core.resources.IResourceProvider
 
-abstract class BaseFragment<ViewModel : BaseViewModel> : DaggerFragment(), IBaseFragment<ViewModel> {
+private val bindings: MutableMap<ViewModel, ViewDataBinding> = WeakHashMap()
+
+abstract class BaseFragment<ViewModel : BaseViewModel> : DaggerFragment(),
+    IBaseFragment<ViewModel> {
 
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -51,28 +57,30 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : DaggerFragment(), IBase
         savedInstanceState: Bundle?
     ): View? =
         config.run {
-            if (titleRes != -1) {
+            if (titleRes != IResourceProvider.INVALID_RES_ID) {
                 activity?.setTitle(titleRes)
             }
 
-            // do only initiate view model on first start
-            if (savedInstanceState == null) {
+            val isFirstStart = savedInstanceState == null
+            if (isFirstStart) {
                 viewModel.handleBundle(arguments)
             }
 
-            val binding: ViewDataBinding =
-                DataBindingUtil.inflate(
+            bindings.getOrPut(viewModel) {
+                val binding: ViewDataBinding = DataBindingUtil.inflate(
                     inflater,
                     layoutRes,
                     container,
                     false
                 )
 
-            binding.run {
+                binding.apply {
+                    setVariable(viewModelKey, viewModel)
+                }
+            }.run {
                 lifecycleOwner = this@BaseFragment
-                setVariable(viewModelKey, viewModel)
                 executePendingBindings()
-                binding.root
+                root
             }
         }
 
