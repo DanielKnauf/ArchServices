@@ -67,14 +67,12 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : DaggerFragment(),
             }
 
             bindings.getOrPut(viewModel) {
-                val binding: ViewDataBinding = DataBindingUtil.inflate(
+                DataBindingUtil.inflate<ViewDataBinding>(
                     inflater,
                     layoutRes,
                     container,
                     false
-                )
-
-                binding.apply {
+                ).apply {
                     setVariable(viewModelKey, viewModel)
                 }
             }.run {
