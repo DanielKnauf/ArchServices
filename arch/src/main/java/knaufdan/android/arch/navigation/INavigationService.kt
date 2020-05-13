@@ -1,7 +1,7 @@
 package knaufdan.android.arch.navigation
 
+import knaufdan.android.arch.mvvm.implementation.AndroidBaseViewModel
 import knaufdan.android.arch.mvvm.implementation.BaseFragment
-import knaufdan.android.arch.mvvm.implementation.BaseViewModel
 import knaufdan.android.arch.mvvm.implementation.dialog.BaseDialogFragment
 import knaufdan.android.arch.mvvm.implementation.dialog.DialogStyle
 
@@ -18,7 +18,7 @@ interface INavigationService {
      * @param bundleParameter - parameters which should be put in the bundle of the [fragment].
      */
     fun goToFragment(
-        fragment: BaseFragment<out BaseViewModel>,
+        fragment: BaseFragment<out AndroidBaseViewModel>,
         addToBackStack: Boolean,
         containerViewIdId: ContainerViewId = containerViewId,
         clearBackStack: Boolean = false,
@@ -31,15 +31,15 @@ interface INavigationService {
      * @param callback - method which is invoked when the [fragment] is dismissed.
      */
     fun <ResultType> showDialog(
-        fragment: BaseDialogFragment<out BaseViewModel>,
+        fragment: BaseDialogFragment<out AndroidBaseViewModel>,
         dialogStyle: DialogStyle = DialogStyle.FULL_WIDTH,
         callback: ((ResultType?) -> Unit) = {}
     )
 
-    fun dismissDialog(viewModel: BaseViewModel)
+    fun dismissDialog(viewModel: AndroidBaseViewModel)
 
     fun <ResultType> dismissDialog(
-        viewModel: BaseViewModel,
+        viewModel: AndroidBaseViewModel,
         result: ResultType? = null
     )
 

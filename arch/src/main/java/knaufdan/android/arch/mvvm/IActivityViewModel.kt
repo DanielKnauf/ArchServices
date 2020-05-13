@@ -5,7 +5,7 @@ import knaufdan.android.arch.mvvm.implementation.BaseActivity
 
 typealias isHandled = Boolean
 
-interface IActivityViewModel : IBaseViewModel {
+interface IActivityViewModel : IAndroidBaseViewModel {
 
     /**
      * Is called on [BaseActivity.onBackPressed].

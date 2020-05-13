@@ -15,11 +15,11 @@ import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseFragment
-import knaufdan.android.arch.mvvm.implementation.BaseViewModel
+import knaufdan.android.arch.mvvm.implementation.AndroidBaseViewModel
 import knaufdan.android.arch.mvvm.implementation.Config
 import knaufdan.android.arch.navigation.NavigationService
 
-abstract class BaseDialogFragment<ViewModel : BaseViewModel> : DialogFragment(),
+abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> : DialogFragment(),
     IBaseFragment<ViewModel> {
 
     @Inject
@@ -61,7 +61,7 @@ abstract class BaseDialogFragment<ViewModel : BaseViewModel> : DialogFragment(),
 
             // do only initiate view model on first start
             if (savedInstanceState == null) {
-                viewModel.handleBundle(arguments)
+                viewModel.onFirstStart(arguments)
             }
 
             val binding: ViewDataBinding =
