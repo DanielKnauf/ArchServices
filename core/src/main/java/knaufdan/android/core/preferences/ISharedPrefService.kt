@@ -5,7 +5,6 @@ import kotlin.reflect.KClass
 typealias Key = String
 
 interface ISharedPrefService {
-
     fun saveAsJsonTo(
         key: Key,
         value: Any?
