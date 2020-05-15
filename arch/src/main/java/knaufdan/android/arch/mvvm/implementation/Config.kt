@@ -14,7 +14,7 @@ internal sealed class Config(
         layoutRes: Int,
         viewModelKey: Int,
         titleRes: Int,
-        val fragmentSetup: Pair<ContainerViewId, BaseFragment<out BaseViewModel>?>?
+        val fragmentSetup: Pair<ContainerViewId, BaseFragment<out AndroidBaseViewModel>?>?
     ) : Config(
         layoutRes,
         viewModelKey,

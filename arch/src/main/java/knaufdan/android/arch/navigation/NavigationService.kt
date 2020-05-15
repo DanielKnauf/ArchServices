@@ -4,8 +4,8 @@ import android.app.Activity
 import android.os.Bundle
 import javax.inject.Inject
 import javax.inject.Singleton
+import knaufdan.android.arch.mvvm.implementation.AndroidBaseViewModel
 import knaufdan.android.arch.mvvm.implementation.BaseFragment
-import knaufdan.android.arch.mvvm.implementation.BaseViewModel
 import knaufdan.android.arch.mvvm.implementation.dialog.BaseDialogFragment
 import knaufdan.android.arch.mvvm.implementation.dialog.DialogStyle
 import knaufdan.android.core.IContextProvider
@@ -17,7 +17,7 @@ internal class NavigationService @Inject constructor(private val contextProvider
     override var containerViewId = -1
 
     override fun goToFragment(
-        fragment: BaseFragment<out BaseViewModel>,
+        fragment: BaseFragment<out AndroidBaseViewModel>,
         addToBackStack: Boolean,
         containerViewIdId: ContainerViewId,
         clearBackStack: Boolean,
@@ -46,7 +46,7 @@ internal class NavigationService @Inject constructor(private val contextProvider
     }
 
     override fun <ResultType> showDialog(
-        fragment: BaseDialogFragment<out BaseViewModel>,
+        fragment: BaseDialogFragment<out AndroidBaseViewModel>,
         dialogStyle: DialogStyle,
         callback: ((ResultType?) -> Unit)
     ) =
@@ -56,14 +56,14 @@ internal class NavigationService @Inject constructor(private val contextProvider
                     callback = callback
             )
 
-    override fun dismissDialog(viewModel: BaseViewModel) =
+    override fun dismissDialog(viewModel: AndroidBaseViewModel) =
             dismissDialog(
                     viewModel = viewModel,
                     result = null
             )
 
     override fun <ResultType> dismissDialog(
-        viewModel: BaseViewModel,
+        viewModel: AndroidBaseViewModel,
         result: ResultType?
     ) {
         dismissDialog(

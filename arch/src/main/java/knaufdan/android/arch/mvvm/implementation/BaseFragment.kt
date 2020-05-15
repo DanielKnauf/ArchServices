@@ -19,7 +19,7 @@ import knaufdan.android.core.resources.IResourceProvider
 
 private val bindings: MutableMap<ViewModel, ViewDataBinding> = WeakHashMap()
 
-abstract class BaseFragment<ViewModel : BaseViewModel> : DaggerFragment(),
+abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment(),
     IBaseFragment<ViewModel> {
 
     @Inject
@@ -63,7 +63,7 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : DaggerFragment(),
 
             val isFirstStart = savedInstanceState == null
             if (isFirstStart) {
-                viewModel.handleBundle(arguments)
+                viewModel.onFirstStart(arguments)
             }
 
             bindings.getOrPut(viewModel) {

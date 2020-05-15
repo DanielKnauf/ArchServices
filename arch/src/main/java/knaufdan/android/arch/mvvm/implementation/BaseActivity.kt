@@ -88,7 +88,7 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActi
 
         val isFirstStart = savedInstanceState == null
         if (isFirstStart) {
-            viewModel.handleBundle(intent.extras)
+            viewModel.onFirstStart(intent.extras)
         }
 
         DataBindingUtil.setContentView<ViewDataBinding>(this@BaseActivity, layoutRes).apply {
@@ -99,7 +99,7 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActi
     }
 
     private fun showInitialFragment(
-        initialFragment: BaseFragment<out BaseViewModel>?,
+        initialFragment: BaseFragment<out AndroidBaseViewModel>?,
         savedInstanceState: Bundle?
     ) {
         initialFragment?.apply {

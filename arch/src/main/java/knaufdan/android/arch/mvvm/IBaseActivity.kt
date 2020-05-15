@@ -2,8 +2,8 @@ package knaufdan.android.arch.mvvm
 
 import androidx.fragment.app.FragmentManager
 import knaufdan.android.arch.base.component.IComponent
+import knaufdan.android.arch.mvvm.implementation.AndroidBaseViewModel
 import knaufdan.android.arch.mvvm.implementation.BaseFragment
-import knaufdan.android.arch.mvvm.implementation.BaseViewModel
 import knaufdan.android.arch.navigation.ContainerViewId
 import knaufdan.android.arch.navigation.INavigationService
 
@@ -14,10 +14,10 @@ interface IBaseActivity<ViewModel : IActivityViewModel> : IComponent<ViewModel>,
      *
      * @return [Pair] of [ContainerViewId] and [BaseFragment] or null.
      */
-    fun getFragmentSetup(): Pair<ContainerViewId, BaseFragment<out BaseViewModel>?>? = null
+    fun getFragmentSetup(): Pair<ContainerViewId, BaseFragment<out AndroidBaseViewModel>?>? = null
 
     /**
-     * Communicates an [onBackPressed] event to all [BaseViewModel] of [BaseFragment].
+     * Communicates an [onBackPressed] event to all [AndroidBaseViewModel] of [BaseFragment].
      */
     fun FragmentManager.notifyBackPressed()
 }
