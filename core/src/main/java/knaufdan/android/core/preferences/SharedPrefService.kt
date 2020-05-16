@@ -12,11 +12,10 @@ import knaufdan.android.core.IContextProvider
 import kotlin.reflect.KClass
 
 @Singleton
-internal class SharedPrefService @Inject constructor(private val contextProvider: IContextProvider) :
-    ISharedPrefService {
-
+internal class SharedPrefService @Inject constructor(
+    private val contextProvider: IContextProvider
+) : ISharedPrefService {
     private val sharedPrefLocation = "knaufdan.android.simpletimerapp.sharedPref"
-
     private val sharedPrefs
         get() = contextProvider.getContext().getSharedPreferences(sharedPrefLocation, MODE_PRIVATE)
 
@@ -24,17 +23,25 @@ internal class SharedPrefService @Inject constructor(private val contextProvider
         key: String,
         value: Any?
     ) {
-        saveTo(key, Gson().toJson(value))
+        saveTo(
+            key = key,
+            value = Gson().toJson(value)
+        )
     }
 
     override fun saveTo(
         key: String,
         value: Any?
     ) {
+        if (value == null) {
+            return
+        }
+
         sharedPrefs.edit {
-            value?.let {
-                putValue(key, it)
-            }
+            putValue(
+                key = key,
+                value = value
+            )
         }
     }
 
@@ -47,23 +54,25 @@ internal class SharedPrefService @Inject constructor(private val contextProvider
             is Long -> putLong(key, value)
             is String -> putString(key, value)
             is Enum<*> -> putString(key, value.name)
-            else -> Log.e("${SharedPrefService::class.simpleName}", "Tried to store value of class ${value::class} to key $key but could not find corresponding method.")
+            else -> Log.e(
+                "${SharedPrefService::class.simpleName}",
+                "Tried to store value of class ${value::class} to key $key but could not find corresponding method."
+            )
         }
     }
 
     override fun <T : Any> retrieveJson(
         key: String,
         targetClass: KClass<T>
-    ): T? {
-        val jsonString = retrieveString(key)
-
-        return try {
-            Gson().fromJson(jsonString, targetClass.java)
+    ): T? =
+        try {
+            retrieveString(key).run {
+                Gson().fromJson(this, targetClass.java)
+            }
         } catch (e: JsonSyntaxException) {
             println(e)
             null
         }
-    }
 
     override fun retrieveString(
         key: String,
@@ -73,10 +82,10 @@ internal class SharedPrefService @Inject constructor(private val contextProvider
     override fun retrieveLong(
         key: String,
         defaultValue: Long
-    ) = sharedPrefs.getLong(key, defaultValue)
+    ): Long = sharedPrefs.getLong(key, defaultValue)
 
     override fun retrieveInt(
         key: String,
         defaultValue: Int
-    ) = sharedPrefs.getInt(key, defaultValue)
+    ): Int = sharedPrefs.getInt(key, defaultValue)
 }
