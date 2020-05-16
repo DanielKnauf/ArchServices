@@ -44,7 +44,7 @@ interface ISharedPrefService {
     ): Int
 
     companion object {
-        internal const val DEFAULT_LOCATION: String = "knaufdan.android.core.preferences"
+        internal const val DEFAULT_LOCATION: String = "knaufdan.archservices.preferences"
         internal const val DEFAULT_MODE: Int = Context.MODE_PRIVATE
     }
 }

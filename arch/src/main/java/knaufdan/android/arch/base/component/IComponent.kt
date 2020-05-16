@@ -7,12 +7,12 @@ typealias BindingKey = Int
 
 interface IComponent<DataSource> : IGenericType<DataSource> {
     /**
-     * @return the layout in which [DataSource] should be bound.
+     * @return layout in which [DataSource] should be bound.
      */
     fun getLayoutRes(): LayoutRes
 
     /**
-     * @return the key to which [DataSource] should be mapped.
+     * @return key to which [DataSource] should be mapped.
      */
     fun getBindingKey(): BindingKey
 

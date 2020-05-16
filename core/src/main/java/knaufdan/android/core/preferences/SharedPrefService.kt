@@ -101,7 +101,7 @@ internal class SharedPrefService @Inject constructor(
                 is Enum<*> -> putString(key, value.name)
                 else -> Log.e(
                     "${SharedPrefService::class.simpleName}",
-                    "Tried to store value of class ${value::class} to key $key but could not find corresponding method."
+                    "Could not store value of class ${value::class} to key $key."
                 )
             }
         }
