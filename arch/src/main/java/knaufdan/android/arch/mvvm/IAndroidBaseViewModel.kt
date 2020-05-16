@@ -4,6 +4,9 @@ import android.os.Bundle
 import androidx.lifecycle.LifecycleObserver
 
 interface IAndroidBaseViewModel : LifecycleObserver {
+    var isBackPressed: Boolean
+
+    var fragmentTag: String
 
     /**
      * Notifies about the first start of the corresponding [IBaseActivity] or [IBaseFragment].

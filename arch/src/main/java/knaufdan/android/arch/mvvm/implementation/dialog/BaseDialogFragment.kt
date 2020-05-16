@@ -19,8 +19,7 @@ import knaufdan.android.arch.mvvm.implementation.AndroidBaseViewModel
 import knaufdan.android.arch.mvvm.implementation.Config
 import knaufdan.android.arch.navigation.NavigationService
 
-abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> : DialogFragment(),
-    IBaseFragment<ViewModel> {
+abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> : DialogFragment(), IBaseFragment<ViewModel> {
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory
@@ -29,7 +28,7 @@ abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> : DialogFrag
 
     private lateinit var viewModel: ViewModel
 
-    override fun getDataSource(): ViewModel = viewModel
+    override fun getViewModel(): ViewModel = viewModel
 
     private val config: Config.DialogConfig by lazy {
         Config.DialogConfig(
