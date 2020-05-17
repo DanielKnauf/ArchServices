@@ -5,8 +5,9 @@ import androidx.lifecycle.ViewModel
 import knaufdan.android.arch.mvvm.IAndroidBaseViewModel
 
 abstract class AndroidBaseViewModel : ViewModel(), IAndroidBaseViewModel {
-    var isBackPressed = false
-    var fragmentTag = ""
+    override var isBackPressed = false
+
+    override var fragmentTag = ""
 
     override fun onFirstStart(bundle: Bundle?) = Unit
 }

@@ -19,9 +19,7 @@ import knaufdan.android.core.resources.IResourceProvider
 
 private val bindings: MutableMap<ViewModel, ViewDataBinding> = WeakHashMap()
 
-abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment(),
-    IBaseFragment<ViewModel> {
-
+abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment(), IBaseFragment<ViewModel> {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -39,7 +37,7 @@ abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment()
         )
     }
 
-    override fun getDataSource(): ViewModel = viewModel
+    override fun getViewModel(): ViewModel = viewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

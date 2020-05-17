@@ -14,8 +14,7 @@ import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.resources.IResourceProvider
 
-abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActivity(),
-    IBaseActivity<ViewModel> {
+abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActivity(), IBaseActivity<ViewModel> {
 
     @Inject
     lateinit var contextProvider: IContextProvider
@@ -37,7 +36,7 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActi
         )
     }
 
-    override fun getDataSource(): ViewModel = viewModel
+    override fun getViewModel(): ViewModel = viewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
