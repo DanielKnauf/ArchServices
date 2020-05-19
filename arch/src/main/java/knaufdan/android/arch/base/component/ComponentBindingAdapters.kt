@@ -36,7 +36,7 @@ fun ViewGroup.bindComponents(
     if (hasComponents(components)) {
         return
     }
-    parentComponents[this] = components
+    parentComponents[this] = components.toList()
 
     removeAllViewsInLayout()
 
