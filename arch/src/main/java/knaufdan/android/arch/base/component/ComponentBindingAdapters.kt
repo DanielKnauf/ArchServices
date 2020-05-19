@@ -8,6 +8,7 @@ import android.transition.Visibility
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
@@ -135,6 +136,8 @@ private fun <DataSource> ViewGroup.bindSingleComponent(
                 )
             }
 
+            root.addOnAttachStateChangeListener(createStateChangeListener(component))
+
             addView(root)
         }
     } catch (e: Throwable) {
@@ -161,6 +164,19 @@ private fun IComponent<*>.toListComponent() =
         override fun getBindingKey() = this@toListComponent.getBindingKey()
 
         override fun getDataSource() = this@toListComponent.getDataSource() as List<*>
+    }
+
+private fun createStateChangeListener(
+    component: IComponent<*>
+): View.OnAttachStateChangeListener =
+    object : View.OnAttachStateChangeListener {
+        override fun onViewAttachedToWindow(v: View?) {
+            component.onAttach()
+        }
+
+        override fun onViewDetachedFromWindow(v: View?) {
+            component.onDetach()
+        }
     }
 
 enum class ViewTransition {

@@ -14,5 +14,15 @@ class ComponentAdapter<DataSource>(
 
     override fun getDataValue(position: Int): DataSource = dataSource[position].getDataSource()
 
+    override fun onViewAttachedToWindow(holder: BindingViewHolder<DataSource>) {
+        super.onViewAttachedToWindow(holder)
+        holder.onAttach()
+    }
+
+    override fun onViewDetachedFromWindow(holder: BindingViewHolder<DataSource>) {
+        super.onViewDetachedFromWindow(holder)
+        holder.onDetach()
+    }
+
     override fun getItemCount(): Int = dataSource.size
 }
