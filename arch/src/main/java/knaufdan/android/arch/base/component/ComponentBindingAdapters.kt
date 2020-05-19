@@ -168,7 +168,7 @@ enum class ViewTransition {
     FADE_IN,
     FADE_OUT,
     SLIDE_BOTTOM,
-    SLIDE_TOP;
+    SLIDE_TOP
 }
 
 private fun ViewTransition.toAndroidTransition(): Transition =
