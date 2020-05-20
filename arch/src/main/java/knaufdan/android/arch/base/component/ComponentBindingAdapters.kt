@@ -1,7 +1,14 @@
 package knaufdan.android.arch.base.component
 
+import android.transition.Fade
+import android.transition.Slide
+import android.transition.Transition
+import android.transition.TransitionManager
+import android.transition.Visibility
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
@@ -12,8 +19,17 @@ import knaufdan.android.arch.utils.findLifecycleOwner
 
 private val parentComponents: WeakHashMap<ViewGroup, List<IComponent<*>>> = WeakHashMap()
 
-@BindingAdapter(value = ["components"])
-fun ViewGroup.bindComponents(components: List<IComponent<*>>?) {
+@BindingAdapter(
+    value = [
+        "components",
+        "transition"
+    ],
+    requireAll = false
+)
+fun ViewGroup.bindComponents(
+    components: List<IComponent<*>>?,
+    transition: ViewTransition?
+) {
     if (components == null) {
         return
     }
@@ -26,12 +42,24 @@ fun ViewGroup.bindComponents(components: List<IComponent<*>>?) {
     removeAllViewsInLayout()
 
     components.forEach { component ->
-        bindOneComponent(component)
+        bindOneComponent(
+            component = component,
+            transition = transition
+        )
     }
 }
 
-@BindingAdapter(value = ["component"])
-fun ViewGroup.bindComponent(component: IComponent<*>?) {
+@BindingAdapter(
+    value = [
+        "component",
+        "transition"
+    ],
+    requireAll = false
+)
+fun ViewGroup.bindComponent(
+    component: IComponent<*>?,
+    transition: ViewTransition?
+) {
     if (component == null) {
         return
     }
@@ -42,65 +70,83 @@ fun ViewGroup.bindComponent(component: IComponent<*>?) {
 
     removeAllViewsInLayout()
 
-    bindOneComponent(component)
+    bindOneComponent(
+        component = component,
+        transition = transition
+    )
 }
 
-private fun ViewGroup.bindOneComponent(component: IComponent<*>) {
+private fun ViewGroup.bindOneComponent(
+    component: IComponent<*>,
+    transition: ViewTransition?
+) {
     if (component.getDataSource() is List<*>) {
-        bindListComponent(component.toListComponent())
+        bindListComponent(
+            component = component.toListComponent(),
+            transition = transition
+        )
     } else {
-        bindSingleComponent(component)
-    }
-}
-
-private fun <DataSource> ViewGroup.bindListComponent(component: IComponent<List<DataSource>>) {
-    component.getDataSource().forEach { dataSource ->
         bindSingleComponent(
-            component.getLayoutRes(),
-            component.getBindingKey(),
-            dataSource
+            component = component,
+            transition = transition
         )
     }
 }
 
-private fun <DataSource> ViewGroup.bindSingleComponent(component: IComponent<DataSource>) {
-    bindSingleComponent(
-        component.getLayoutRes(),
-        component.getBindingKey(),
-        component.getDataSource()
-    )
+private fun <DataSource> ViewGroup.bindListComponent(
+    component: IComponent<List<DataSource>>,
+    transition: ViewTransition?
+) {
+    component.getDataSource().forEach { dataSource ->
+        bindSingleComponent(
+            component = object : IComponent<DataSource> {
+                override fun getLayoutRes(): LayoutRes = component.getLayoutRes()
+                override fun getBindingKey(): BindingKey = component.getBindingKey()
+                override fun getDataSource(): DataSource = dataSource
+            },
+            transition = transition
+        )
+    }
 }
 
 private fun <DataSource> ViewGroup.bindSingleComponent(
-    layoutRes: LayoutRes,
-    bindingKey: BindingKey,
-    dataSource: DataSource
+    component: IComponent<DataSource>,
+    transition: ViewTransition?
 ) {
-    val context = context
-
     try {
         DataBindingUtil.inflate<ViewDataBinding>(
             LayoutInflater.from(context),
-            layoutRes,
+            component.getLayoutRes(),
             this,
             false
         ).apply {
             setVariable(
-                bindingKey,
-                dataSource
+                component.getBindingKey(),
+                component.getDataSource()
             )
             context.findLifecycleOwner()?.apply {
                 lifecycleOwner = this
             }
             executePendingBindings()
+
+            transition?.run {
+                TransitionManager.beginDelayedTransition(
+                    this@bindSingleComponent,
+                    transition.toAndroidTransition()
+                )
+            }
+
+            root.addOnAttachStateChangeListener(createStateChangeListener(component))
+
             addView(root)
         }
     } catch (e: Throwable) {
         Log.e(
             "ArchServices",
             "ComponentBindingAdapters - Error while creating layout with\n" +
-                    "- LayoutRes = $layoutRes \n" +
-                    "- DataSource = $dataSource \n\n" +
+                    "- LayoutRes = ${component.getLayoutRes()} \n" +
+                    "- BindingKey = ${component.getBindingKey()} \n" +
+                    "- DataSource = ${component.getDataSource()} \n" +
                     "Message: ${e.message}"
         )
     }
@@ -118,4 +164,34 @@ private fun IComponent<*>.toListComponent() =
         override fun getBindingKey() = this@toListComponent.getBindingKey()
 
         override fun getDataSource() = this@toListComponent.getDataSource() as List<*>
+    }
+
+private fun createStateChangeListener(
+    component: IComponent<*>
+): View.OnAttachStateChangeListener =
+    object : View.OnAttachStateChangeListener {
+        override fun onViewAttachedToWindow(v: View?) {
+            component.onAttach()
+        }
+
+        override fun onViewDetachedFromWindow(v: View?) {
+            component.onDetach()
+        }
+    }
+
+enum class ViewTransition {
+    FADE_IN_OUT,
+    FADE_IN,
+    FADE_OUT,
+    SLIDE_BOTTOM,
+    SLIDE_TOP
+}
+
+private fun ViewTransition.toAndroidTransition(): Transition =
+    when (this) {
+        ViewTransition.FADE_IN_OUT -> Fade()
+        ViewTransition.FADE_IN -> Fade(Visibility.MODE_IN)
+        ViewTransition.FADE_OUT -> Fade(Visibility.MODE_OUT)
+        ViewTransition.SLIDE_BOTTOM -> Slide(Gravity.BOTTOM)
+        ViewTransition.SLIDE_TOP -> Slide(Gravity.TOP)
     }
