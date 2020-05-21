@@ -1,12 +1,7 @@
 package knaufdan.android.arch.base.component
 
-import android.transition.Fade
-import android.transition.Slide
-import android.transition.Transition
 import android.transition.TransitionManager
-import android.transition.Visibility
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +10,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import java.util.Collections.emptyList
 import java.util.WeakHashMap
+import knaufdan.android.arch.base.component.api.ViewTransition
+import knaufdan.android.arch.base.component.api.toAndroidTransition
 import knaufdan.android.arch.utils.findLifecycleOwner
 
 private val parentComponents: WeakHashMap<ViewGroup, List<IComponent<*>>> = WeakHashMap()
@@ -177,21 +174,4 @@ private fun createStateChangeListener(
         override fun onViewDetachedFromWindow(v: View?) {
             component.onDetach()
         }
-    }
-
-enum class ViewTransition {
-    FADE_IN_OUT,
-    FADE_IN,
-    FADE_OUT,
-    SLIDE_BOTTOM,
-    SLIDE_TOP
-}
-
-private fun ViewTransition.toAndroidTransition(): Transition =
-    when (this) {
-        ViewTransition.FADE_IN_OUT -> Fade()
-        ViewTransition.FADE_IN -> Fade(Visibility.MODE_IN)
-        ViewTransition.FADE_OUT -> Fade(Visibility.MODE_OUT)
-        ViewTransition.SLIDE_BOTTOM -> Slide(Gravity.BOTTOM)
-        ViewTransition.SLIDE_TOP -> Slide(Gravity.TOP)
     }
