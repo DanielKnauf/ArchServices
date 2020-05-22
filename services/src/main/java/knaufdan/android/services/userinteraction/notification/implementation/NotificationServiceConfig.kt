@@ -1,7 +1,8 @@
-package knaufdan.android.services.userinteraction.notification
+package knaufdan.android.services.userinteraction.notification.implementation
 
 import android.os.Build
 import android.util.Log
+import knaufdan.android.services.userinteraction.notification.INotificationServiceConfig
 
 class NotificationServiceConfig : INotificationServiceConfig {
     var channelId: String = ""
@@ -64,6 +65,8 @@ class NotificationServiceConfig : INotificationServiceConfig {
     }
 
     companion object {
-        val EMPTY = NotificationServiceConfig()
+        internal val EMPTY: NotificationServiceConfig by lazy {
+            NotificationServiceConfig()
+        }
     }
 }

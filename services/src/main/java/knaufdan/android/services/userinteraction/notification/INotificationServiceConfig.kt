@@ -1,7 +1,6 @@
 package knaufdan.android.services.userinteraction.notification
 
 interface INotificationServiceConfig {
-
     fun setNotificationChannel(
         channelId: String,
         channelName: String = "",

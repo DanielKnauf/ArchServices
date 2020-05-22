@@ -13,7 +13,7 @@ import knaufdan.android.services.service.broadcast.IBroadcastService
 import knaufdan.android.services.userinteraction.audio.AudioService
 import knaufdan.android.services.userinteraction.audio.IAudioService
 import knaufdan.android.services.userinteraction.notification.INotificationService
-import knaufdan.android.services.userinteraction.notification.NotificationService
+import knaufdan.android.services.userinteraction.notification.implementation.NotificationService
 
 @Module(includes = [CoreModule::class])
 class ServiceModule {
