@@ -1,17 +1,11 @@
 package knaufdan.android.core.preferences
 
-import android.content.Context
 import kotlin.reflect.KClass
 
 typealias Key = String
 
 interface ISharedPrefService {
-    var sharedPrefLocation: String
-    var sharedPrefMode: Int
-
-    fun setup(
-        configure: ISharedPrefService.() -> Unit
-    )
+    fun configure(adjust: ISharedPrefServiceConfig.() -> Unit)
 
     fun putJson(
         key: Key,
@@ -42,9 +36,4 @@ interface ISharedPrefService {
         key: Key,
         defaultValue: Int = 0
     ): Int
-
-    companion object {
-        internal const val DEFAULT_LOCATION: String = "knaufdan.archservices.preferences"
-        internal const val DEFAULT_MODE: Int = Context.MODE_PRIVATE
-    }
 }

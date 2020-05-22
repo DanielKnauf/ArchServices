@@ -1,4 +1,4 @@
-package knaufdan.android.core.preferences
+package knaufdan.android.core.preferences.implementation
 
 import android.content.SharedPreferences
 import android.util.Log
@@ -8,28 +8,26 @@ import com.google.gson.JsonSyntaxException
 import javax.inject.Inject
 import javax.inject.Singleton
 import knaufdan.android.core.IContextProvider
-import knaufdan.android.core.preferences.ISharedPrefService.Companion.DEFAULT_LOCATION
-import knaufdan.android.core.preferences.ISharedPrefService.Companion.DEFAULT_MODE
+import knaufdan.android.core.preferences.ISharedPrefService
+import knaufdan.android.core.preferences.ISharedPrefServiceConfig
 import kotlin.reflect.KClass
 
 @Singleton
 internal class SharedPrefService @Inject constructor(
     private val contextProvider: IContextProvider
 ) : ISharedPrefService {
-    override var sharedPrefLocation = DEFAULT_LOCATION
-    override var sharedPrefMode: Int = DEFAULT_MODE
     private val sharedPrefs
         get() = contextProvider.getContext().getSharedPreferences(
-            sharedPrefLocation,
-            sharedPrefMode
+            config.sharedPrefLocation,
+            config.sharedPrefMode
         )
     private val gson: Gson by lazy {
         Gson()
     }
 
-    override fun setup(configure: ISharedPrefService.() -> Unit) {
-        configure(this)
-    }
+    override fun configure(adjust: ISharedPrefServiceConfig.() -> Unit) = adjust(
+        config
+    )
 
     override fun putJson(
         key: String,
@@ -90,6 +88,8 @@ internal class SharedPrefService @Inject constructor(
     ): Int = sharedPrefs.getInt(key, defaultValue)
 
     companion object {
+        private val config = SharedPrefServiceConfig.EMPTY
+
         private fun SharedPreferences.Editor.putValue(
             key: String,
             value: Any
