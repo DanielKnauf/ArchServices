@@ -6,7 +6,7 @@ import javax.inject.Singleton
 import knaufdan.android.core.ContextProvider
 import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.preferences.ISharedPrefService
-import knaufdan.android.core.preferences.SharedPrefService
+import knaufdan.android.core.preferences.implementation.SharedPrefService
 import knaufdan.android.core.resources.IResourceProvider
 import knaufdan.android.core.resources.ITextProvider
 import knaufdan.android.core.resources.TextProvider
