@@ -45,7 +45,7 @@ fun TextView.bindTextGravity(gravity: TextGravity) {
         TextGravity.CENTER -> Gravity.CENTER
         TextGravity.CENTER_HORIZONTAL -> Gravity.CENTER_HORIZONTAL
         TextGravity.CENTER_VERTICAL -> Gravity.CENTER_VERTICAL
-        else -> Gravity.NO_GRAVITY
+        TextGravity.DEFAULT -> Gravity.NO_GRAVITY
     }
 }
 

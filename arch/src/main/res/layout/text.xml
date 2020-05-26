@@ -10,8 +10,7 @@
     </data>
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/text"
         android:text="@{viewModel.text}"
         android:textColor="@{viewModel.textColor}"
         android:textSize="@{viewModel.textSize}"
@@ -21,4 +20,5 @@
         app:marginTop="@{viewModel.marginTop}"
         app:onTextClicked="@{viewModel::onTextClicked}"
         app:textGravity="@{viewModel.textGravity}" />
+
 </layout>
