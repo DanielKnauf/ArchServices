@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="knaufdan.android.arch.base.component.text.implementation.TextViewModel" />
+    </data>
+
+    <TextView
+        style="@style/text"
+        android:text="@{viewModel.text}"
+        android:textColor="@{viewModel.textColor}"
+        android:textSize="@{viewModel.textSize}"
+        app:marginBottom="@{viewModel.marginBottom}"
+        app:marginLeft="@{viewModel.marginLeft}"
+        app:marginRight="@{viewModel.marginRight}"
+        app:marginTop="@{viewModel.marginTop}"
+        app:onTextClicked="@{viewModel::onTextClicked}"
+        app:textGravity="@{viewModel.textGravity}" />
+
+</layout>
