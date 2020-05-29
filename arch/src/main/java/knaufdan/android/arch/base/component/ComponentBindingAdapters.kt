@@ -136,11 +136,7 @@ private fun <DataSource> ViewGroup.bindOneComponent(
 
             root.addOnAttachStateChangeListener(createStateChangeListener(component))
 
-            if (index == -1) {
-                addView(root)
-            } else {
-                addView(root, index)
-            }
+            addView(root, index)
         }
     } catch (e: Throwable) {
         Log.e(
