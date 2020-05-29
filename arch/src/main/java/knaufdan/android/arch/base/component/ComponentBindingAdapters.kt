@@ -13,6 +13,7 @@ import java.util.Collections.emptyList
 import java.util.WeakHashMap
 import knaufdan.android.arch.base.component.api.ViewTransition
 import knaufdan.android.arch.base.component.api.toAndroidTransition
+import knaufdan.android.arch.utils.findLifecycleOwner
 
 private val parentComponents: WeakHashMap<ViewGroup, List<IComponent<*>>> = WeakHashMap()
 
@@ -118,6 +119,10 @@ private fun <DataSource> ViewGroup.bindOneComponent(
                 component.getBindingKey(),
                 component.getDataSource()
             )
+
+            context.findLifecycleOwner()?.apply {
+                lifecycleOwner = this
+            }
 
             executePendingBindings()
 
