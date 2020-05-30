@@ -59,43 +59,30 @@ fun ViewGroup.bindComponents(
         return
     }
 
-    if (oldComponents.isEmpty()) {
-        newComponents.forEach { component ->
-            bindOneComponent(
-                component = component,
-                transition = transition
-            )
-        }
-        parentComponents[this] = newComponents
-        return
-    }
-
-    val newSize = newComponents.size
     val oldSize = oldComponents.size
     newComponents.forEachIndexed { index, newComponent ->
         if (index >= oldSize) {
-            bindOneComponent(
+            addComponent(
                 component = newComponent,
-                transition = transition,
-                index = index
+                transition = transition
             )
             return@forEachIndexed
         }
 
-        val oldComponent = oldComponents[index]
-        if (oldComponent == newComponent) {
+        if (newComponent == oldComponents[index]) {
             return@forEachIndexed
         }
 
         removeViewAt(index)
 
-        bindOneComponent(
+        addComponent(
             component = newComponent,
             transition = transition,
             index = index
         )
     }
 
+    val newSize = newComponents.size
     if (newSize < oldSize) {
         removeViews(newSize, oldSize - newSize)
     }
@@ -103,7 +90,7 @@ fun ViewGroup.bindComponents(
     parentComponents[this] = newComponents
 }
 
-private fun <DataSource> ViewGroup.bindOneComponent(
+private fun <DataSource> ViewGroup.addComponent(
     component: IComponent<DataSource>,
     transition: ViewTransition?,
     index: Int = -1
@@ -129,14 +116,17 @@ private fun <DataSource> ViewGroup.bindOneComponent(
             transition?.run {
                 layoutTransition = LayoutTransition()
                 TransitionManager.beginDelayedTransition(
-                    this@bindOneComponent,
+                    this@addComponent,
                     transition.toAndroidTransition()
                 )
             }
 
             root.addOnAttachStateChangeListener(createStateChangeListener(component))
 
-            addView(root, index)
+            addView(
+                root,
+                index
+            )
         }
     } catch (e: Throwable) {
         Log.e(
@@ -150,8 +140,8 @@ private fun <DataSource> ViewGroup.bindOneComponent(
     }
 }
 
-private fun List<IComponent<*>>.contentDeepEquals(components: List<IComponent<*>>): Boolean =
-    this.toTypedArray().contentDeepEquals(components.toTypedArray())
+private fun List<IComponent<*>>.contentDeepEquals(others: List<IComponent<*>>): Boolean =
+    this.toTypedArray().contentDeepEquals(others.toTypedArray())
 
 private fun createStateChangeListener(
     component: IComponent<*>
