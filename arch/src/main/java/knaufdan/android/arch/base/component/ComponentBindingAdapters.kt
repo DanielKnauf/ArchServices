@@ -1,5 +1,6 @@
 package knaufdan.android.arch.base.component
 
+import android.animation.LayoutTransition
 import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -18,6 +19,27 @@ private val parentComponents: WeakHashMap<ViewGroup, List<IComponent<*>>> = Weak
 
 @BindingAdapter(
     value = [
+        "component",
+        "transition"
+    ],
+    requireAll = false
+)
+fun ViewGroup.bindComponent(
+    component: IComponent<*>?,
+    transition: ViewTransition?
+) {
+    if (component == null) {
+        return
+    }
+
+    bindComponents(
+        components = listOf(component),
+        transition = transition
+    )
+}
+
+@BindingAdapter(
+    value = [
         "components",
         "transition"
     ],
@@ -31,84 +53,47 @@ fun ViewGroup.bindComponents(
         return
     }
 
-    if (hasComponents(components)) {
+    val newComponents = components.toList()
+    val oldComponents = parentComponents[this] ?: emptyList()
+    if (oldComponents.contentDeepEquals(newComponents)) {
         return
     }
-    parentComponents[this] = components.toList()
 
-    removeAllViewsInLayout()
+    val oldSize = oldComponents.size
+    newComponents.forEachIndexed { index, newComponent ->
+        if (index >= oldSize) {
+            addComponent(
+                component = newComponent,
+                transition = transition
+            )
+            return@forEachIndexed
+        }
 
-    components.forEach { component ->
-        bindOneComponent(
-            component = component,
-            transition = transition
+        if (newComponent == oldComponents[index]) {
+            return@forEachIndexed
+        }
+
+        removeViewAt(index)
+
+        addComponent(
+            component = newComponent,
+            transition = transition,
+            index = index
         )
     }
+
+    val newSize = newComponents.size
+    if (newSize < oldSize) {
+        removeViews(newSize, oldSize - newSize)
+    }
+
+    parentComponents[this] = newComponents
 }
 
-@BindingAdapter(
-    value = [
-        "component",
-        "transition"
-    ],
-    requireAll = false
-)
-fun ViewGroup.bindComponent(
-    component: IComponent<*>?,
-    transition: ViewTransition?
-) {
-    if (component == null) {
-        return
-    }
-    if (hasComponents(listOf(component))) {
-        return
-    }
-    parentComponents[this] = listOf(component)
-
-    removeAllViewsInLayout()
-
-    bindOneComponent(
-        component = component,
-        transition = transition
-    )
-}
-
-private fun ViewGroup.bindOneComponent(
-    component: IComponent<*>,
-    transition: ViewTransition?
-) {
-    if (component.getDataSource() is List<*>) {
-        bindListComponent(
-            component = component.toListComponent(),
-            transition = transition
-        )
-    } else {
-        bindSingleComponent(
-            component = component,
-            transition = transition
-        )
-    }
-}
-
-private fun <DataSource> ViewGroup.bindListComponent(
-    component: IComponent<List<DataSource>>,
-    transition: ViewTransition?
-) {
-    component.getDataSource().forEach { dataSource ->
-        bindSingleComponent(
-            component = object : IComponent<DataSource> {
-                override fun getLayoutRes(): LayoutRes = component.getLayoutRes()
-                override fun getBindingKey(): BindingKey = component.getBindingKey()
-                override fun getDataSource(): DataSource = dataSource
-            },
-            transition = transition
-        )
-    }
-}
-
-private fun <DataSource> ViewGroup.bindSingleComponent(
+private fun <DataSource> ViewGroup.addComponent(
     component: IComponent<DataSource>,
-    transition: ViewTransition?
+    transition: ViewTransition?,
+    index: Int = -1
 ) {
     try {
         DataBindingUtil.inflate<ViewDataBinding>(
@@ -121,21 +106,27 @@ private fun <DataSource> ViewGroup.bindSingleComponent(
                 component.getBindingKey(),
                 component.getDataSource()
             )
+
             context.findLifecycleOwner()?.apply {
                 lifecycleOwner = this
             }
+
             executePendingBindings()
 
             transition?.run {
+                layoutTransition = LayoutTransition()
                 TransitionManager.beginDelayedTransition(
-                    this@bindSingleComponent,
+                    this@addComponent,
                     transition.toAndroidTransition()
                 )
             }
 
             root.addOnAttachStateChangeListener(createStateChangeListener(component))
 
-            addView(root)
+            addView(
+                root,
+                index
+            )
         }
     } catch (e: Throwable) {
         Log.e(
@@ -149,19 +140,8 @@ private fun <DataSource> ViewGroup.bindSingleComponent(
     }
 }
 
-private fun ViewGroup.hasComponents(components: List<IComponent<*>>): Boolean {
-    val storedComponents = parentComponents.getOrDefault(this, emptyList()).toTypedArray()
-    return storedComponents.contentDeepEquals(components.toTypedArray())
-}
-
-private fun IComponent<*>.toListComponent() =
-    object : IComponent<List<*>> {
-        override fun getLayoutRes() = this@toListComponent.getLayoutRes()
-
-        override fun getBindingKey() = this@toListComponent.getBindingKey()
-
-        override fun getDataSource() = this@toListComponent.getDataSource() as List<*>
-    }
+private fun List<IComponent<*>>.contentDeepEquals(others: List<IComponent<*>>): Boolean =
+    this.toTypedArray().contentDeepEquals(others.toTypedArray())
 
 private fun createStateChangeListener(
     component: IComponent<*>
