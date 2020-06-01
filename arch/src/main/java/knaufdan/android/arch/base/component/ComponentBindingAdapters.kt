@@ -102,9 +102,10 @@ private fun <DataSource> ViewGroup.addComponent(
             this,
             false
         ).apply {
+            val dataSource = component.getDataSource()
             setVariable(
                 component.getBindingKey(),
-                component.getDataSource()
+                dataSource
             )
 
             context.findLifecycleOwner()?.apply {
@@ -121,7 +122,9 @@ private fun <DataSource> ViewGroup.addComponent(
                 )
             }
 
-            root.addOnAttachStateChangeListener(createStateChangeListener(component))
+            (dataSource as? IComponentViewModel)?.run {
+                root.addOnAttachStateChangeListener(createStateChangeListener(this))
+            }
 
             addView(
                 root,
@@ -144,14 +147,14 @@ private fun List<IComponent<*>>.contentDeepEquals(others: List<IComponent<*>>): 
     this.toTypedArray().contentDeepEquals(others.toTypedArray())
 
 private fun createStateChangeListener(
-    component: IComponent<*>
+    viewModel: IComponentViewModel
 ): View.OnAttachStateChangeListener =
     object : View.OnAttachStateChangeListener {
         override fun onViewAttachedToWindow(v: View?) {
-            component.onAttach()
+            viewModel.onAttach()
         }
 
         override fun onViewDetachedFromWindow(v: View?) {
-            component.onDetach()
+            viewModel.onDetach()
         }
     }
