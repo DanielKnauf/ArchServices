@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
+import knaufdan.android.arch.utils.findLifecycleOwner
 
 abstract class BaseAdapter<DataSource> : RecyclerView.Adapter<BindingViewHolder<DataSource>>() {
     override fun onCreateViewHolder(
@@ -20,7 +21,7 @@ abstract class BaseAdapter<DataSource> : RecyclerView.Adapter<BindingViewHolder<
             BindingViewHolder(
                 binding = this,
                 bindingKey = getBindingKey(viewType),
-                parent = parent
+                lifeCycleOwner = parent.context.findLifecycleOwner()
             )
         }
 
