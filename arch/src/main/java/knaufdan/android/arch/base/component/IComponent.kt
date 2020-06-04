@@ -20,14 +20,4 @@ interface IComponent<DataSource> : IGenericType<DataSource> {
      * @return [DataSource] which should be bound into [LayoutRes].
      */
     fun getDataSource(): DataSource
-
-    /**
-     * Notifies about the attachment of [LayoutRes] to parent view.
-     */
-    fun onAttach(): Unit = Unit
-
-    /**
-     * Notifies about the detachment of [LayoutRes] from parent view.
-     */
-    fun onDetach(): Unit = Unit
 }

@@ -1,6 +1,7 @@
 package knaufdan.android.arch.databinding.recyclerview
 
 import knaufdan.android.arch.base.component.IComponent
+import knaufdan.android.arch.base.component.IComponentViewModel
 
 class ComponentAdapter<DataSource>(
     components: List<IComponent<DataSource>>
@@ -16,12 +17,12 @@ class ComponentAdapter<DataSource>(
 
     override fun onViewAttachedToWindow(holder: BindingViewHolder<DataSource>) {
         super.onViewAttachedToWindow(holder)
-        holder.onAttach()
+        (holder.dataSource as? IComponentViewModel)?.onAttach()
     }
 
     override fun onViewDetachedFromWindow(holder: BindingViewHolder<DataSource>) {
         super.onViewDetachedFromWindow(holder)
-        holder.onDetach()
+        (holder.dataSource as? IComponentViewModel)?.onDetach()
     }
 
     override fun getItemCount(): Int = dataSource.size

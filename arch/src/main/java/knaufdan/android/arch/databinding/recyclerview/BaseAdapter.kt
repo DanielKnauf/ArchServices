@@ -18,11 +18,10 @@ abstract class BaseAdapter<DataSource> : RecyclerView.Adapter<BindingViewHolder<
             parent,
             false
         ).run {
-            setLifecycleOwner(parent)
-
             BindingViewHolder(
                 binding = this,
-                bindingKey = getBindingKey(viewType)
+                bindingKey = getBindingKey(viewType),
+                lifeCycleOwner = parent.context.findLifecycleOwner()
             )
         }
 
@@ -30,11 +29,13 @@ abstract class BaseAdapter<DataSource> : RecyclerView.Adapter<BindingViewHolder<
         holder: BindingViewHolder<DataSource>,
         position: Int
     ) {
-        holder.bind(getDataValue(position))
+        holder.bind(
+            dataSource = getDataValue(position)
+        )
     }
 
     override fun onViewRecycled(holder: BindingViewHolder<DataSource>) {
-        holder.getBinding().unbind()
+        holder.binding.unbind()
         super.onViewRecycled(holder)
     }
 
@@ -45,10 +46,4 @@ abstract class BaseAdapter<DataSource> : RecyclerView.Adapter<BindingViewHolder<
     abstract fun getBindingKey(viewType: Int): Int
 
     abstract fun getDataValue(position: Int): DataSource
-
-    companion object {
-        private fun ViewDataBinding.setLifecycleOwner(parent: ViewGroup): ViewDataBinding = apply {
-            lifecycleOwner = parent.context.findLifecycleOwner() ?: return this@setLifecycleOwner
-        }
-    }
 }

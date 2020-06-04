@@ -1,17 +1,20 @@
 package knaufdan.android.arch.databinding.recyclerview
 
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import knaufdan.android.arch.base.component.BindingKey
-import knaufdan.android.arch.base.component.IComponent
 
 class BindingViewHolder<DataSource>(
-    private val binding: ViewDataBinding,
-    private val bindingKey: BindingKey
+    val binding: ViewDataBinding,
+    private val bindingKey: BindingKey,
+    private val lifeCycleOwner: LifecycleOwner?
 ) : RecyclerView.ViewHolder(binding.root) {
-    private var dataSource: DataSource? = null
+    var dataSource: DataSource? = null
 
-    fun bind(dataSource: DataSource) {
+    fun bind(
+        dataSource: DataSource
+    ) {
         this.dataSource = dataSource
 
         binding.apply {
@@ -20,17 +23,9 @@ class BindingViewHolder<DataSource>(
                 dataSource
             )
 
+            lifecycleOwner = lifeCycleOwner
+
             executePendingBindings()
         }
-    }
-
-    fun getBinding(): ViewDataBinding = binding
-
-    fun onAttach() {
-        (dataSource as? IComponent<*>)?.onAttach()
-    }
-
-    fun onDetach() {
-        (dataSource as? IComponent<*>)?.onDetach()
     }
 }
