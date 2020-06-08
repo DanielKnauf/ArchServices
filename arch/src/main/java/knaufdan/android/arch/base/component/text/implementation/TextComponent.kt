@@ -9,7 +9,7 @@ import knaufdan.android.arch.base.component.text.TextConfig
 import knaufdan.android.core.resources.IResourceProvider
 
 class TextComponent(
-    textConfig: TextConfig,
+    private val textConfig: TextConfig,
     resourceProvider: IResourceProvider
 ) : ITextComponent {
     private val viewModel: TextViewModel by lazy {
@@ -24,4 +24,12 @@ class TextComponent(
     override fun getBindingKey(): BindingKey = BR.viewModel
 
     override fun getDataSource(): TextViewModel = viewModel
+
+    override fun areItemsTheSame(other: Any): Boolean =
+        other is TextComponent &&
+                other.viewModel == viewModel
+
+    override fun areContentsTheSame(other: Any): Boolean =
+        other is TextComponent &&
+                other.textConfig == textConfig
 }

@@ -3,24 +3,23 @@ package knaufdan.android.arch.databinding.recyclerview
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import knaufdan.android.arch.base.component.BindingKey
+import knaufdan.android.arch.base.component.IComponent
 
-class BindingViewHolder<DataSource>(
+class ComponentViewHolder(
     val binding: ViewDataBinding,
-    private val bindingKey: BindingKey,
     private val lifeCycleOwner: LifecycleOwner?
 ) : RecyclerView.ViewHolder(binding.root) {
-    var dataSource: DataSource? = null
+    var component: IComponent<Any>? = null
 
     fun bind(
-        dataSource: DataSource
+        component: IComponent<Any>
     ) {
-        this.dataSource = dataSource
+        this.component = component
 
         binding.apply {
             setVariable(
-                bindingKey,
-                dataSource
+                component.getBindingKey(),
+                component.getDataSource()
             )
 
             lifecycleOwner = lifeCycleOwner

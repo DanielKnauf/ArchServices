@@ -1,29 +1,69 @@
 package knaufdan.android.arch.databinding.recyclerview
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.ListAdapter
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel
+import knaufdan.android.arch.utils.findLifecycleOwner
 
-class ComponentAdapter<DataSource>(
-    components: List<IComponent<DataSource>>
-) : BaseAdapter<DataSource>() {
+class ComponentAdapter(
+    components: List<IComponent<Any>>
+) : ListAdapter<IComponent<Any>, ComponentViewHolder>(ComponentDiffCallback()) {
     // Store data in separate list to lose the reference and prevent error if references changes.
-    internal val dataSource = components.toList()
+    private var dataSource: MutableList<IComponent<Any>> = components.toMutableList()
 
-    override fun getLayoutRes(viewType: Int): Int = dataSource[viewType].getLayoutRes()
+    init {
+        submitList(dataSource)
+    }
 
-    override fun getBindingKey(viewType: Int): Int = dataSource[viewType].getBindingKey()
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ComponentViewHolder =
+        DataBindingUtil.inflate<ViewDataBinding>(
+            LayoutInflater.from(parent.context),
+            dataSource[viewType].getLayoutRes(),
+            parent,
+            false
+        ).run {
+            ComponentViewHolder(
+                binding = this,
+                lifeCycleOwner = parent.context.findLifecycleOwner()
+            )
+        }
 
-    override fun getDataValue(position: Int): DataSource = dataSource[position].getDataSource()
+    override fun onBindViewHolder(
+        holder: ComponentViewHolder,
+        position: Int
+    ) {
+        holder.bind(
+            component = dataSource[position]
+        )
+    }
 
-    override fun onViewAttachedToWindow(holder: BindingViewHolder<DataSource>) {
+    override fun onViewRecycled(holder: ComponentViewHolder) {
+        holder.binding.unbind()
+        super.onViewRecycled(holder)
+    }
+
+    override fun getItemViewType(position: Int): Int = position
+
+    override fun submitList(list: MutableList<IComponent<Any>>?) {
+        val newList = list?.toMutableList() ?: mutableListOf()
+        dataSource = newList
+        super.submitList(newList)
+    }
+
+    override fun onViewAttachedToWindow(holder: ComponentViewHolder) {
         super.onViewAttachedToWindow(holder)
-        (holder.dataSource as? IComponentViewModel)?.onAttach()
+        (holder.component?.getDataSource() as? IComponentViewModel)?.onAttach()
     }
 
-    override fun onViewDetachedFromWindow(holder: BindingViewHolder<DataSource>) {
+    override fun onViewDetachedFromWindow(holder: ComponentViewHolder) {
         super.onViewDetachedFromWindow(holder)
-        (holder.dataSource as? IComponentViewModel)?.onDetach()
+        (holder.component?.getDataSource() as? IComponentViewModel)?.onDetach()
     }
-
-    override fun getItemCount(): Int = dataSource.size
 }
