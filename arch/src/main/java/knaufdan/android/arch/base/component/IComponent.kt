@@ -21,11 +21,12 @@ interface IComponent<DataSource> : IGenericType<DataSource> {
      */
     fun getDataSource(): DataSource
 
-    fun getId(): String = String.format(
-        "%s_ID :: %d_%s_%d",
-        this::class.simpleName,
-        hashCode(),
-        getDataSource(),
-        getDataSource().hashCode()
-    )
+    /**
+     * Unique id for each component.
+     *
+     * Pattern <classname>_ID :: <classHash>_<dataSourceHash>
+     *
+     * @return id
+     */
+    fun getId(): String = "${this::class.simpleName}_ID :: ${this.hashCode()}_${getDataSource().hashCode()}"
 }

@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.ListAdapter
 import knaufdan.android.arch.base.component.IComponent
-import knaufdan.android.arch.base.component.IComponentViewModel
 import knaufdan.android.arch.utils.findLifecycleOwner
 
 class ComponentAdapter(
@@ -14,6 +13,9 @@ class ComponentAdapter(
 ) : ListAdapter<IComponent<Any>, ComponentViewHolder>(ComponentDiffCallback()) {
     // Store data in separate list to lose the reference and prevent error if references changes.
     private var dataSource: MutableList<IComponent<Any>> = components.toMutableList()
+        set(value) {
+            field = value.toMutableList()
+        }
 
     init {
         submitList(dataSource)
@@ -52,18 +54,17 @@ class ComponentAdapter(
     override fun getItemViewType(position: Int): Int = position
 
     override fun submitList(list: MutableList<IComponent<Any>>?) {
-        val newList = list?.toMutableList() ?: mutableListOf()
-        dataSource = newList
-        super.submitList(newList)
+        dataSource = list ?: return
+        super.submitList(dataSource)
     }
 
     override fun onViewAttachedToWindow(holder: ComponentViewHolder) {
         super.onViewAttachedToWindow(holder)
-        (holder.component?.getDataSource() as? IComponentViewModel)?.onAttach()
+        holder.onAttach()
     }
 
     override fun onViewDetachedFromWindow(holder: ComponentViewHolder) {
         super.onViewDetachedFromWindow(holder)
-        (holder.component?.getDataSource() as? IComponentViewModel)?.onDetach()
+        holder.onDetach()
     }
 }

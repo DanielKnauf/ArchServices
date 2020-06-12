@@ -4,12 +4,13 @@ import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import knaufdan.android.arch.base.component.IComponent
+import knaufdan.android.arch.base.component.IComponentViewModel
 
 class ComponentViewHolder(
     val binding: ViewDataBinding,
     private val lifeCycleOwner: LifecycleOwner?
 ) : RecyclerView.ViewHolder(binding.root) {
-    var component: IComponent<Any>? = null
+    private lateinit var component: IComponent<Any>
 
     fun bind(
         component: IComponent<Any>
@@ -26,5 +27,13 @@ class ComponentViewHolder(
 
             executePendingBindings()
         }
+    }
+
+    fun onAttach() {
+        (component.getDataSource() as? IComponentViewModel)?.onAttach()
+    }
+
+    fun onDetach() {
+        (component.getDataSource() as? IComponentViewModel)?.onDetach()
     }
 }

@@ -23,11 +23,9 @@ fun RecyclerView.bindComponents(
 
     val components = items.asListOfType<IComponent<Any>>() ?: return
 
-    adapter?.run {
-        if (this is ComponentAdapter) {
-            this.submitList(components)
-            return
-        }
+    (adapter as? ComponentAdapter)?.run {
+        this.submitList(components.toMutableList())
+        return
     }
 
     layoutManager = context.createLinearLayoutManager(viewOrientation)
@@ -36,8 +34,8 @@ fun RecyclerView.bindComponents(
 }
 
 @Suppress("UNCHECKED_CAST")
-private inline fun <reified T> List<*>.asListOfType(): MutableList<T>? =
-    if (all { item -> item is T }) this as MutableList<T> else null
+private inline fun <reified T> List<*>.asListOfType(): List<T>? =
+    if (all { item -> item is T }) this as List<T> else null
 
 private fun Context.createLinearLayoutManager(viewOrientation: ViewOrientation?) =
     LinearLayoutManager(this).apply {
