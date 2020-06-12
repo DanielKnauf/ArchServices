@@ -21,66 +21,16 @@ fun RecyclerView.bindComponents(
         return
     }
 
-    adapter?.run {
-        if (this is ComponentAdapter<*> && dataSource == items) {
-            return
-        }
-    }
-
     val components = items.asListOfType<IComponent<Any>>() ?: return
 
-    removeAllViewsInLayout()
-
-    layoutManager = context.createLinearLayoutManager(viewOrientation)
-
-    adapter = ComponentAdapter(
-        components = components
-    )
-}
-
-@BindingAdapter(
-    value = [
-        "component",
-        "orientation"
-    ],
-    requireAll = false
-)
-fun RecyclerView.bindComponent(
-    component: IComponent<*>?,
-    viewOrientation: ViewOrientation?
-) {
-    if (component == null) {
+    (adapter as? ComponentAdapter)?.run {
+        this.submitList(components.toMutableList())
         return
     }
 
-    removeAllViewsInLayout()
-
     layoutManager = context.createLinearLayoutManager(viewOrientation)
 
-    component.toListComponent().apply {
-        adapter = ListAdapter(
-            dataSources = getDataSource(),
-            layoutRes = getLayoutRes(),
-            bindingKey = getBindingKey()
-        )
-    }
-}
-
-private fun IComponent<*>.toListComponent(): IComponent<List<Any?>> {
-    val dataSource =
-        if (getDataSource() is List<*>) {
-            this@toListComponent.getDataSource() as List<*>
-        } else {
-            listOf(this@toListComponent.getDataSource())
-        }
-
-    return object : IComponent<List<Any?>> {
-        override fun getLayoutRes() = this@toListComponent.getLayoutRes()
-
-        override fun getBindingKey() = this@toListComponent.getBindingKey()
-
-        override fun getDataSource() = dataSource
-    }
+    adapter = ComponentAdapter(components)
 }
 
 @Suppress("UNCHECKED_CAST")

@@ -20,4 +20,13 @@ interface IComponent<DataSource> : IGenericType<DataSource> {
      * @return [DataSource] which should be bound into [LayoutRes].
      */
     fun getDataSource(): DataSource
+
+    /**
+     * Unique id for each component.
+     *
+     * Pattern <classname>_ID :: <classHash>_<dataSourceHash>
+     *
+     * @return id
+     */
+    fun getId(): String = "${this::class.simpleName}_ID :: ${this.hashCode()}_${getDataSource().hashCode()}"
 }
