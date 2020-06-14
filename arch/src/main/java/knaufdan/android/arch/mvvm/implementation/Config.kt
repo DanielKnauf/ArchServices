@@ -8,7 +8,7 @@ import knaufdan.android.arch.navigation.ContainerViewId
 internal sealed class Config(
     @LayoutRes val layoutRes: Int,
     val viewModelKey: Int,
-    @StringRes val titleRes: Int
+    @StringRes val activityTitleRes: Int
 ) {
     internal class ActivityConfig(
         layoutRes: Int,

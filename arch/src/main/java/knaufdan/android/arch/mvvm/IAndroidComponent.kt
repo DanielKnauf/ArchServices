@@ -22,5 +22,14 @@ interface IAndroidComponent<ViewModel : IAndroidBaseViewModel> : IGenericType<Vi
      */
     fun getViewModel(): ViewModel
 
-    fun getTitleRes(): Int = IResourceProvider.INVALID_RES_ID
+    /**
+     * Gets the title string resource for setting itself's title (in case of [IBaseActivity]) or
+     * on the corresponding activity (in case of [IBaseFragment]).
+     *
+     * Return [IResourceProvider.INVALID_RES_ID] if you do not want to  set a title or
+     * [IResourceProvider.EMPTY_ID] if you want a blank title.
+     *
+     * @return resource id for the title
+     */
+    fun getActivityTitleRes(): Int = IResourceProvider.INVALID_RES_ID
 }

@@ -34,7 +34,7 @@ abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> : DialogFrag
         Config.DialogConfig(
             layoutRes = getLayoutRes(),
             viewModelKey = getBindingKey(),
-            titleRes = getTitleRes(),
+            titleRes = getActivityTitleRes(),
             dialogStyle = getDialogStyle()
         )
     }
@@ -54,8 +54,8 @@ abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> : DialogFrag
         savedInstanceState: Bundle?
     ): View? =
         config.run {
-            if (titleRes != -1) {
-                activity?.setTitle(titleRes)
+            if (activityTitleRes != -1) {
+                activity?.setTitle(activityTitleRes)
             }
 
             // do only initiate view model on first start

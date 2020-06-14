@@ -33,7 +33,7 @@ abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment()
         Config.FragmentConfig(
             layoutRes = getLayoutRes(),
             viewModelKey = getBindingKey(),
-            titleRes = getTitleRes()
+            titleRes = getActivityTitleRes()
         )
     }
 
@@ -55,8 +55,8 @@ abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment()
         savedInstanceState: Bundle?
     ): View? =
         config.run {
-            if (titleRes != IResourceProvider.INVALID_RES_ID) {
-                activity?.setTitle(titleRes)
+            if (activityTitleRes != IResourceProvider.INVALID_RES_ID) {
+                activity?.setTitle(activityTitleRes)
             }
 
             val isFirstStart = savedInstanceState == null

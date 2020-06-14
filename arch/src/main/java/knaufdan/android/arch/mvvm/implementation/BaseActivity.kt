@@ -31,7 +31,7 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActi
         Config.ActivityConfig(
             layoutRes = getLayoutRes(),
             viewModelKey = getBindingKey(),
-            titleRes = getTitleRes(),
+            titleRes = getActivityTitleRes(),
             fragmentSetup = getFragmentSetup()
         )
     }
@@ -46,8 +46,8 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActi
         config.run {
             setBinding(savedInstanceState)
 
-            if (titleRes != IResourceProvider.INVALID_RES_ID) {
-                setTitle(titleRes)
+            if (activityTitleRes != IResourceProvider.INVALID_RES_ID) {
+                setTitle(activityTitleRes)
             }
 
             fragmentSetup?.apply {
