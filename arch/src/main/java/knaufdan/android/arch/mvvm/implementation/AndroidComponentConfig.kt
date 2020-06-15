@@ -5,40 +5,40 @@ import androidx.annotation.StringRes
 import knaufdan.android.arch.mvvm.implementation.dialog.DialogStyle
 import knaufdan.android.arch.navigation.ContainerViewId
 
-internal sealed class Config(
+internal sealed class AndroidComponentConfig(
     @LayoutRes val layoutRes: Int,
     val viewModelKey: Int,
     @StringRes val activityTitleRes: Int
 ) {
     internal class ActivityConfig(
-        layoutRes: Int,
+        @LayoutRes layoutRes: Int,
         viewModelKey: Int,
-        titleRes: Int,
+        @StringRes activityTitleRes: Int,
         val fragmentSetup: Pair<ContainerViewId, BaseFragment<out AndroidBaseViewModel>?>?
-    ) : Config(
-        layoutRes,
-        viewModelKey,
-        titleRes
+    ) : AndroidComponentConfig(
+        layoutRes = layoutRes,
+        viewModelKey = viewModelKey,
+        activityTitleRes = activityTitleRes
     )
 
     internal class FragmentConfig(
-        layoutRes: Int,
+        @LayoutRes layoutRes: Int,
         viewModelKey: Int,
-        titleRes: Int
-    ) : Config(
-        layoutRes,
-        viewModelKey,
-        titleRes
+        @StringRes activityTitleRes: Int
+    ) : AndroidComponentConfig(
+        layoutRes = layoutRes,
+        viewModelKey = viewModelKey,
+        activityTitleRes = activityTitleRes
     )
 
     internal class DialogConfig(
-        layoutRes: Int,
+        @LayoutRes layoutRes: Int,
         viewModelKey: Int,
-        titleRes: Int,
+        @StringRes activityTitleRes: Int,
         val dialogStyle: DialogStyle = DialogStyle.FULL_WIDTH
-    ) : Config(
-        layoutRes,
-        viewModelKey,
-        titleRes
+    ) : AndroidComponentConfig(
+        layoutRes = layoutRes,
+        viewModelKey = viewModelKey,
+        activityTitleRes = activityTitleRes
     )
 }

@@ -29,11 +29,11 @@ abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment()
         requireActivity() as ViewModelStoreOwner
     }
 
-    private val config: Config.FragmentConfig by lazy {
-        Config.FragmentConfig(
+    private val config: AndroidComponentConfig.FragmentConfig by lazy {
+        AndroidComponentConfig.FragmentConfig(
             layoutRes = getLayoutRes(),
             viewModelKey = getBindingKey(),
-            titleRes = getActivityTitleRes()
+            activityTitleRes = getActivityTitleRes()
         )
     }
 
