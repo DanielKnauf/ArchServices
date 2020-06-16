@@ -28,7 +28,7 @@ interface IAndroidComponent<ViewModel : IAndroidBaseViewModel> : IGenericType<Vi
      *
      * Return
      *  - [IResourceProvider.INVALID_RES_ID] if you do not want to set a title explicitly (app_name will be used instead) or
-     *  - [IResourceProvider.EMPTY_ID] if you want a blank title.
+     *  - [IResourceProvider.EMPTY_STRING_ID] if you want a blank title.
      *
      * @return title resource id
      */
