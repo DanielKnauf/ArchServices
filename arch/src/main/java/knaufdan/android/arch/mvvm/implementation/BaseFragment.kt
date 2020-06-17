@@ -29,11 +29,11 @@ abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment()
         requireActivity() as ViewModelStoreOwner
     }
 
-    private val config: Config.FragmentConfig by lazy {
-        Config.FragmentConfig(
+    private val config: AndroidComponentConfig.FragmentConfig by lazy {
+        AndroidComponentConfig.FragmentConfig(
             layoutRes = getLayoutRes(),
             viewModelKey = getBindingKey(),
-            titleRes = getTitleRes()
+            activityTitleRes = getActivityTitleRes()
         )
     }
 
@@ -55,8 +55,8 @@ abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment()
         savedInstanceState: Bundle?
     ): View? =
         config.run {
-            if (titleRes != IResourceProvider.INVALID_RES_ID) {
-                activity?.setTitle(titleRes)
+            if (activityTitleRes != IResourceProvider.INVALID_RES_ID) {
+                activity?.setTitle(activityTitleRes)
             }
 
             val isFirstStart = savedInstanceState == null

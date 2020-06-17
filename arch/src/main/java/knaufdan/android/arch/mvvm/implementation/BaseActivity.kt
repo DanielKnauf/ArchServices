@@ -27,11 +27,11 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActi
 
     private lateinit var viewModel: ViewModel
 
-    private val config: Config.ActivityConfig by lazy {
-        Config.ActivityConfig(
+    private val config: AndroidComponentConfig.ActivityConfig by lazy {
+        AndroidComponentConfig.ActivityConfig(
             layoutRes = getLayoutRes(),
             viewModelKey = getBindingKey(),
-            titleRes = getTitleRes(),
+            activityTitleRes = getActivityTitleRes(),
             fragmentSetup = getFragmentSetup()
         )
     }
@@ -46,8 +46,8 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActi
         config.run {
             setBinding(savedInstanceState)
 
-            if (titleRes != IResourceProvider.INVALID_RES_ID) {
-                setTitle(titleRes)
+            if (activityTitleRes != IResourceProvider.INVALID_RES_ID) {
+                setTitle(activityTitleRes)
             }
 
             fragmentSetup?.apply {
@@ -80,7 +80,7 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActi
         }
     }
 
-    private fun Config.setBinding(savedInstanceState: Bundle?) {
+    private fun AndroidComponentConfig.setBinding(savedInstanceState: Bundle?) {
         viewModel = ViewModelProvider(this@BaseActivity, viewModelFactory).get(getTypeClass())
 
         lifecycle.addObserver(viewModel)

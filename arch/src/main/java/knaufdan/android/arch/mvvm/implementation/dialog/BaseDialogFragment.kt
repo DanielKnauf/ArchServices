@@ -16,7 +16,7 @@ import javax.inject.Inject
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.arch.mvvm.implementation.AndroidBaseViewModel
-import knaufdan.android.arch.mvvm.implementation.Config
+import knaufdan.android.arch.mvvm.implementation.AndroidComponentConfig
 import knaufdan.android.arch.navigation.NavigationService
 
 abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> : DialogFragment(), IBaseFragment<ViewModel> {
@@ -30,11 +30,11 @@ abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> : DialogFrag
 
     override fun getViewModel(): ViewModel = viewModel
 
-    private val config: Config.DialogConfig by lazy {
-        Config.DialogConfig(
+    private val config: AndroidComponentConfig.DialogConfig by lazy {
+        AndroidComponentConfig.DialogConfig(
             layoutRes = getLayoutRes(),
             viewModelKey = getBindingKey(),
-            titleRes = getTitleRes(),
+            activityTitleRes = getActivityTitleRes(),
             dialogStyle = getDialogStyle()
         )
     }
@@ -54,8 +54,8 @@ abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> : DialogFrag
         savedInstanceState: Bundle?
     ): View? =
         config.run {
-            if (titleRes != -1) {
-                activity?.setTitle(titleRes)
+            if (activityTitleRes != -1) {
+                activity?.setTitle(activityTitleRes)
             }
 
             // do only initiate view model on first start

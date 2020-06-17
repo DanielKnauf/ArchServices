@@ -6,6 +6,7 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import knaufdan.android.core.R
 
 interface IResourceProvider {
     fun getString(
@@ -18,7 +19,9 @@ interface IResourceProvider {
         theme: Resources.Theme? = null
     ): Drawable
 
-    fun getDimension(@DimenRes dimenRes: Int): Float
+    fun getDimension(
+        @DimenRes dimenRes: Int
+    ): Float
 
     fun getColor(
         @ColorRes colorRes: Int,
@@ -27,5 +30,8 @@ interface IResourceProvider {
 
     companion object {
         const val INVALID_RES_ID = 0
+        val EMPTY_STRING_ID: Int by lazy {
+            R.string.resource_provider_empty
+        }
     }
 }
