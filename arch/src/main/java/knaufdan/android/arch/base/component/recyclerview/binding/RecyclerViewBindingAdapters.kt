@@ -1,10 +1,11 @@
-package knaufdan.android.arch.databinding.recyclerview
+package knaufdan.android.arch.base.component.recyclerview.binding
 
 import android.content.Context
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import knaufdan.android.arch.base.component.IComponent
+import knaufdan.android.arch.base.component.recyclerview.implementation.ComponentAdapter
 
 @BindingAdapter(
     value = [
@@ -30,7 +31,10 @@ fun RecyclerView.bindComponents(
 
     layoutManager = context.createLinearLayoutManager(viewOrientation)
 
-    adapter = ComponentAdapter(components)
+    adapter =
+        ComponentAdapter(
+            components
+        )
 }
 
 @Suppress("UNCHECKED_CAST")

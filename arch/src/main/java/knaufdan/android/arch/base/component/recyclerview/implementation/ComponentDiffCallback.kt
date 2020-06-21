@@ -1,8 +1,9 @@
-package knaufdan.android.arch.databinding.recyclerview
+package knaufdan.android.arch.base.component.recyclerview.implementation
 
 import android.annotation.SuppressLint
 import androidx.recyclerview.widget.DiffUtil
 import knaufdan.android.arch.base.component.IComponent
+import knaufdan.android.arch.base.component.recyclerview.IDiffItem
 
 class ComponentDiffCallback : DiffUtil.ItemCallback<IComponent<Any>>() {
     override fun areItemsTheSame(

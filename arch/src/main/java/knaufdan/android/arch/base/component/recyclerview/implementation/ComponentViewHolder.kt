@@ -1,4 +1,4 @@
-package knaufdan.android.arch.databinding.recyclerview
+package knaufdan.android.arch.base.component.recyclerview.implementation
 
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner

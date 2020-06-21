@@ -1,4 +1,4 @@
-package knaufdan.android.arch.base.component
+package knaufdan.android.arch.base.component.binding
 
 import android.animation.LayoutTransition
 import android.transition.TransitionManager
@@ -11,6 +11,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import java.util.Collections.emptyList
 import java.util.WeakHashMap
+import knaufdan.android.arch.base.component.IComponent
+import knaufdan.android.arch.base.component.IComponentViewModel
 import knaufdan.android.arch.base.component.api.ViewTransition
 import knaufdan.android.arch.base.component.api.toAndroidTransition
 import knaufdan.android.arch.utils.findLifecycleOwner
@@ -123,7 +125,11 @@ private fun <DataSource> ViewGroup.addComponent(
             }
 
             (dataSource as? IComponentViewModel)?.run {
-                root.addOnAttachStateChangeListener(createStateChangeListener(this))
+                root.addOnAttachStateChangeListener(
+                    createStateChangeListener(
+                        this
+                    )
+                )
             }
 
             addView(
