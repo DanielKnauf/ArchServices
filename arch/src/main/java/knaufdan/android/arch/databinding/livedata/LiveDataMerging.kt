@@ -23,14 +23,14 @@ fun <FirstData, SecondData, TargetData> merge(
     postOnlyDifferentValues: Boolean = true,
     merging: (FirstData?, SecondData?) -> TargetData
 ): LiveData<TargetData> =
-        MediatorLiveData<TargetData>().apply {
-            bindTo(
-                    firstSource = firstSource,
-                    secondSource = secondSource,
-                    postOnlyDifferentValues = postOnlyDifferentValues,
-                    merging = merging
-            )
-        }
+    MediatorLiveData<TargetData>().apply {
+        bindTo(
+            firstSource = firstSource,
+            secondSource = secondSource,
+            postOnlyDifferentValues = postOnlyDifferentValues,
+            merging = merging
+        )
+    }
 
 /**
  * Uses a [merging] function to combine three [LiveData] sources into a result value which is observed by a created [LiveData] target.
@@ -55,12 +55,12 @@ fun <FirstData, SecondData, ThirdData, TargetData> merge(
     postOnlyDifferentValues: Boolean = true,
     merging: (FirstData?, SecondData?, ThirdData?) -> TargetData
 ): LiveData<TargetData> =
-        MediatorLiveData<TargetData>().apply {
-            bindTo(
-                    firstSource = firstSource,
-                    secondSource = secondSource,
-                    thirdSource = thirdSource,
-                    postOnlyDifferentValues = postOnlyDifferentValues,
-                    merging = merging
-            )
-        }
+    MediatorLiveData<TargetData>().apply {
+        bindTo(
+            firstSource = firstSource,
+            secondSource = secondSource,
+            thirdSource = thirdSource,
+            postOnlyDifferentValues = postOnlyDifferentValues,
+            merging = merging
+        )
+    }

@@ -2,7 +2,6 @@ package knaufdan.android.services.dagger
 
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 import knaufdan.android.core.alarm.IAlarmService
 import knaufdan.android.core.dagger.CoreModule
 import knaufdan.android.services.alarm.AlarmService
@@ -14,6 +13,7 @@ import knaufdan.android.services.userinteraction.audio.AudioService
 import knaufdan.android.services.userinteraction.audio.IAudioService
 import knaufdan.android.services.userinteraction.notification.INotificationService
 import knaufdan.android.services.userinteraction.notification.implementation.NotificationService
+import javax.inject.Singleton
 
 @Module(includes = [CoreModule::class])
 class ServiceModule {
@@ -28,12 +28,12 @@ class ServiceModule {
     @Singleton
     @Provides
     internal fun provideBroadcastService(broadcastService: BroadcastService): IBroadcastService =
-            broadcastService
+        broadcastService
 
     @Singleton
     @Provides
     internal fun provideNotificationService(notificationService: NotificationService): INotificationService =
-            notificationService
+        notificationService
 
     @Singleton
     @Provides

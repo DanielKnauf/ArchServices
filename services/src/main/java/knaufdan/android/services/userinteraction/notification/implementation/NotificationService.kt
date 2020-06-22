@@ -10,13 +10,13 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import javax.inject.Inject
-import javax.inject.Singleton
 import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.resources.IResourceProvider
 import knaufdan.android.services.userinteraction.notification.INotificationService
 import knaufdan.android.services.userinteraction.notification.INotificationServiceConfig
 import knaufdan.android.services.userinteraction.notification.NotificationStyle
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.reflect.KClass
 
 @Singleton

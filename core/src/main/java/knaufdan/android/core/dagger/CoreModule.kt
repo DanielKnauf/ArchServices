@@ -2,13 +2,13 @@ package knaufdan.android.core.dagger
 
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 import knaufdan.android.core.ContextProvider
 import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.preferences.ISharedPrefService
 import knaufdan.android.core.preferences.implementation.SharedPrefService
 import knaufdan.android.core.resources.IResourceProvider
 import knaufdan.android.core.resources.implementation.ResourceProvider
+import javax.inject.Singleton
 
 @Module
 class CoreModule {

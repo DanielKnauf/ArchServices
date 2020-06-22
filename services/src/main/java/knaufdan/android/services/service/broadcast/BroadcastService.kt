@@ -3,8 +3,8 @@ package knaufdan.android.services.service.broadcast
 import android.content.BroadcastReceiver
 import android.content.IntentFilter
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import javax.inject.Inject
 import knaufdan.android.core.IContextProvider
+import javax.inject.Inject
 
 internal class BroadcastService @Inject constructor(private val contextProvider: IContextProvider) :
     IBroadcastService {

@@ -1,3 +1,5 @@
+import com.github.benmanes.gradle.versions.VersionsPlugin
+
 apply plugin: "com.github.ben-manes.versions"
 
 buildscript {
@@ -19,6 +21,8 @@ allprojects {
         google()
         jcenter()
     }
+
+    apply plugin: VersionsPlugin
 }
 
 task clean(type: Delete) {
@@ -28,7 +32,7 @@ task clean(type: Delete) {
 def isNonStable = { String version ->
     return listOf("alpha", "beta", "rc", "cr", "m", "preview")
             .map { qualifier -> Regex("(?i).*[.-]$qualifier[.\\d-]*") }
-            .any { nonStableIdentifier -> nonStableIdentifier.matches(candidate.version) }
+            .any { nonStableIdentifier -> nonStableIdentifier.matches(version) }
 }
 
 dependencyUpdates {

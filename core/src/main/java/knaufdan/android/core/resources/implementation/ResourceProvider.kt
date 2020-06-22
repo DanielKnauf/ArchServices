@@ -3,12 +3,14 @@ package knaufdan.android.core.resources.implementation
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.os.Build
+import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
-import javax.inject.Inject
-import javax.inject.Singleton
+import androidx.annotation.StringRes
 import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.resources.IResourceProvider
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
 internal class ResourceProvider @Inject constructor(
@@ -18,7 +20,7 @@ internal class ResourceProvider @Inject constructor(
         get() = contextProvider.getContext().resources
 
     override fun getString(
-        stringRes: Int,
+        @StringRes stringRes: Int,
         formatArgument: Any?
     ): String =
         if (stringRes.isInvalid()) {
@@ -55,7 +57,7 @@ internal class ResourceProvider @Inject constructor(
         }
 
     override fun getColor(
-        colorRes: Int,
+        @ColorRes colorRes: Int,
         theme: Resources.Theme?
     ): Int =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {

@@ -25,7 +25,7 @@ internal fun <ResultType> Context.showDialog(
                 Log.e(
                     "DialogNavigation",
                     "${fragment.getFragmentTag()} could not be displayed as a ${BaseDialogFragment::class.java.simpleName} because there is already a Dialog displayed. " +
-                            "Please dismiss the displayed dialog first using dismissDialog() in ${INavigationService::class.java.simpleName}"
+                        "Please dismiss the displayed dialog first using dismissDialog() in ${INavigationService::class.java.simpleName}"
                 )
                 return
             }

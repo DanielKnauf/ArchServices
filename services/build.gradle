@@ -23,6 +23,15 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     apply from: "$rootDir/buildSrc/ktlint.gradle.kts"
 }
 
@@ -36,7 +45,6 @@ dependencies {
     //testing
     androidTestImplementation Dependencies.androidX_test_runner
     testImplementation Dependencies.jUnit
-
 
     //dagger2
     implementation Dependencies.dagger_core

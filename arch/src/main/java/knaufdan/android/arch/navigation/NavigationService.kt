@@ -2,17 +2,17 @@ package knaufdan.android.arch.navigation
 
 import android.app.Activity
 import android.os.Bundle
-import javax.inject.Inject
-import javax.inject.Singleton
 import knaufdan.android.arch.mvvm.implementation.AndroidBaseViewModel
 import knaufdan.android.arch.mvvm.implementation.BaseFragment
 import knaufdan.android.arch.mvvm.implementation.dialog.BaseDialogFragment
 import knaufdan.android.arch.mvvm.implementation.dialog.DialogStyle
 import knaufdan.android.core.IContextProvider
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
 internal class NavigationService @Inject constructor(private val contextProvider: IContextProvider) :
-        INavigationService {
+    INavigationService {
 
     override var containerViewId = -1
 
@@ -34,13 +34,13 @@ internal class NavigationService @Inject constructor(private val contextProvider
 
         with(contextProvider.getContext()) {
             if (clearBackStack) replaceFragmentCleanly(
-                    fragment = fragment,
-                    containerViewId = containerViewIdId
+                fragment = fragment,
+                containerViewId = containerViewIdId
             )
             else replaceFragment(
-                    fragment = fragment,
-                    addToBackStack = addToBackStack,
-                    containerViewId = containerViewIdId
+                fragment = fragment,
+                addToBackStack = addToBackStack,
+                containerViewId = containerViewIdId
             )
         }
     }
@@ -50,42 +50,42 @@ internal class NavigationService @Inject constructor(private val contextProvider
         dialogStyle: DialogStyle,
         callback: ((ResultType?) -> Unit)
     ) =
-            contextProvider.getContext().showDialog(
-                    fragment = fragment,
-                    dialogStyle = dialogStyle,
-                    callback = callback
-            )
+        contextProvider.getContext().showDialog(
+            fragment = fragment,
+            dialogStyle = dialogStyle,
+            callback = callback
+        )
 
     override fun dismissDialog(viewModel: AndroidBaseViewModel) =
-            dismissDialog(
-                    viewModel = viewModel,
-                    result = null
-            )
+        dismissDialog(
+            viewModel = viewModel,
+            result = null
+        )
 
     override fun <ResultType> dismissDialog(
         viewModel: AndroidBaseViewModel,
         result: ResultType?
     ) {
         dismissDialog(
-                fragmentTag = viewModel.fragmentTag,
-                result = result
+            fragmentTag = viewModel.fragmentTag,
+            result = result
         )
     }
 
     override fun dismissDialog(fragmentTag: String) =
-            dismissDialog(
-                    fragmentTag = fragmentTag,
-                    result = null
-            )
+        dismissDialog(
+            fragmentTag = fragmentTag,
+            result = null
+        )
 
     override fun <ResultType> dismissDialog(
         fragmentTag: String,
         result: ResultType?
     ) =
-            contextProvider.getContext().dismissDialog(
-                    fragmentTag = fragmentTag,
-                    result = result
-            )
+        contextProvider.getContext().dismissDialog(
+            fragmentTag = fragmentTag,
+            result = result
+        )
 
     override fun onBackPressed() = with(contextProvider.getContext()) {
         if (this is Activity) {
@@ -96,8 +96,8 @@ internal class NavigationService @Inject constructor(private val contextProvider
     internal fun dismissDialogBySystem(
         fragmentTag: String
     ) = contextProvider.getContext().dismissDialog(
-            fragmentTag = fragmentTag,
-            result = null,
-            dismissedBySystem = true
+        fragmentTag = fragmentTag,
+        result = null,
+        dismissedBySystem = true
     )
 }
