@@ -31,10 +31,7 @@ fun RecyclerView.bindComponents(
 
     layoutManager = context.createLinearLayoutManager(viewOrientation)
 
-    adapter =
-        ComponentAdapter(
-            components
-        )
+    adapter = ComponentAdapter(components)
 }
 
 @Suppress("UNCHECKED_CAST")

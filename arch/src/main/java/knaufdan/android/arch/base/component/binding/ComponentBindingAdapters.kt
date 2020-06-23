@@ -126,9 +126,7 @@ private fun <DataSource> ViewGroup.addComponent(
 
             (dataSource as? IComponentViewModel)?.run {
                 root.addOnAttachStateChangeListener(
-                    createStateChangeListener(
-                        this
-                    )
+                    createStateChangeListener(this)
                 )
             }
 
