@@ -1,4 +1,4 @@
-package knaufdan.android.arch.databinding.recyclerview
+package knaufdan.android.arch.base.component.recyclerview.implementation
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
