@@ -25,7 +25,8 @@ internal class NotificationService @Inject constructor(
     private val resourceProvider: IResourceProvider
 ) : INotificationService {
     private val notificationManager
-        get() = contextProvider.getContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        get() = contextProvider.getContext()
+            .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     override fun configure(adjust: INotificationServiceConfig.() -> Unit) = adjust(config)
 
@@ -73,13 +74,15 @@ internal class NotificationService @Inject constructor(
         notificationStyle: NotificationStyle,
         targetClass: KClass<*>
     ): Notification =
-        NotificationCompat.Builder(this, config.channelId)
-            .setSmallIcon(notificationStyle.smallIcon)
+        NotificationCompat.Builder(
+            this,
+            config.channelId
+        ).setSmallIcon(notificationStyle.smallIcon)
             .setContentTitle(resourceProvider.getString(notificationStyle.title))
             .setContentText(resourceProvider.getString(notificationStyle.text))
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(config.priority)
             .setAutoCancel(config.isAutoCancelEnabled)
             .setCategory(CATEGORY_ALARM)
             .setVibrate(longArrayOf())
