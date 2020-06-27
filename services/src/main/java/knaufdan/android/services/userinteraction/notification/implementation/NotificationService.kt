@@ -24,7 +24,7 @@ internal class NotificationService @Inject constructor(
     private val contextProvider: IContextProvider,
     private val resourceProvider: IResourceProvider
 ) : INotificationService {
-    private val notificationManager
+    private val notificationManager: NotificationManager
         get() = contextProvider.getContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     override fun configure(adjust: INotificationServiceConfig.() -> Unit) = adjust(config)
