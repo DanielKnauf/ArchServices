@@ -10,13 +10,13 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import javax.inject.Inject
-import javax.inject.Singleton
 import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.resources.IResourceProvider
 import knaufdan.android.services.userinteraction.notification.INotificationService
 import knaufdan.android.services.userinteraction.notification.INotificationServiceConfig
 import knaufdan.android.services.userinteraction.notification.NotificationStyle
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.reflect.KClass
 
 @Singleton
@@ -24,7 +24,7 @@ internal class NotificationService @Inject constructor(
     private val contextProvider: IContextProvider,
     private val resourceProvider: IResourceProvider
 ) : INotificationService {
-    private val notificationManager
+    private val notificationManager: NotificationManager
         get() = contextProvider.getContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
     override fun configure(adjust: INotificationServiceConfig.() -> Unit) = adjust(config)

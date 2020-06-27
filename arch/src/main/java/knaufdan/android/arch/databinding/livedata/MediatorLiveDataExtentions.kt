@@ -24,8 +24,8 @@ fun <TargetData, SourceData> MediatorLiveData<TargetData>.bindTo(
         val newValue = mapping(value)
 
         postValue(
-                postOnlyDifferentValues = postOnlyDifferentValues,
-                newValue = newValue
+            postOnlyDifferentValues = postOnlyDifferentValues,
+            newValue = newValue
         )
     }
 }
@@ -49,25 +49,25 @@ fun <TargetData, FirstData, SecondData> MediatorLiveData<TargetData>.bindTo(
 ) {
     addSource(firstSource) { value ->
         val newValue = merging(
-                value,
-                secondSource.value
+            value,
+            secondSource.value
         )
 
         postValue(
-                postOnlyDifferentValues = postOnlyDifferentValues,
-                newValue = newValue
+            postOnlyDifferentValues = postOnlyDifferentValues,
+            newValue = newValue
         )
     }
 
     addSource(secondSource) { value ->
         val newValue = merging(
-                firstSource.value,
-                value
+            firstSource.value,
+            value
         )
 
         postValue(
-                postOnlyDifferentValues = postOnlyDifferentValues,
-                newValue = newValue
+            postOnlyDifferentValues = postOnlyDifferentValues,
+            newValue = newValue
         )
     }
 }
@@ -94,40 +94,40 @@ fun <TargetData, FirstData, SecondData, ThirdData> MediatorLiveData<TargetData>.
 ) {
     addSource(firstSource) { value ->
         val newValue = merging(
-                value,
-                secondSource.value,
-                thirdSource.value
+            value,
+            secondSource.value,
+            thirdSource.value
         )
 
         postValue(
-                postOnlyDifferentValues = postOnlyDifferentValues,
-                newValue = newValue
+            postOnlyDifferentValues = postOnlyDifferentValues,
+            newValue = newValue
         )
     }
 
     addSource(secondSource) { value ->
         val newValue = merging(
-                firstSource.value,
-                value,
-                thirdSource.value
+            firstSource.value,
+            value,
+            thirdSource.value
         )
 
         postValue(
-                postOnlyDifferentValues = postOnlyDifferentValues,
-                newValue = newValue
+            postOnlyDifferentValues = postOnlyDifferentValues,
+            newValue = newValue
         )
     }
 
     addSource(thirdSource) { value ->
         val newValue = merging(
-                firstSource.value,
-                secondSource.value,
-                value
+            firstSource.value,
+            secondSource.value,
+            value
         )
 
         postValue(
-                postOnlyDifferentValues = postOnlyDifferentValues,
-                newValue = newValue
+            postOnlyDifferentValues = postOnlyDifferentValues,
+            newValue = newValue
         )
     }
 }

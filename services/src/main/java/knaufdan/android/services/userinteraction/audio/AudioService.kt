@@ -7,9 +7,9 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Handler
+import knaufdan.android.core.IContextProvider
 import javax.inject.Inject
 import javax.inject.Singleton
-import knaufdan.android.core.IContextProvider
 
 @Singleton
 internal class AudioService @Inject constructor(private val contextProvider: IContextProvider) :
@@ -34,21 +34,21 @@ internal class AudioService @Inject constructor(private val contextProvider: ICo
         with(audioManager) {
             if (isMusicActive) {
                 val res: Int =
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            requestAudioFocus(
-                                    AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).run {
-                                        setAudioAttributes(audioAttributes)
-                                        setOnAudioFocusChangeListener(audioFocusChangeListener)
-                                        build()
-                                    }
-                            )
-                        } else {
-                            requestAudioFocus(
-                                    audioFocusChangeListener,
-                                    AudioManager.STREAM_MUSIC,
-                                    AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
-                            )
-                        }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        requestAudioFocus(
+                            AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).run {
+                                setAudioAttributes(audioAttributes)
+                                setOnAudioFocusChangeListener(audioFocusChangeListener)
+                                build()
+                            }
+                        )
+                    } else {
+                        requestAudioFocus(
+                            audioFocusChangeListener,
+                            AudioManager.STREAM_MUSIC,
+                            AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK
+                        )
+                    }
 
                 if (res == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
                     mediaPlayer.start()
@@ -76,10 +76,10 @@ internal class AudioService @Inject constructor(private val contextProvider: ICo
             with(audioManager) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     abandonAudioFocusRequest(
-                            AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).run {
-                                setAudioAttributes(audioAttributes)
-                                build()
-                            }
+                        AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).run {
+                            setAudioAttributes(audioAttributes)
+                            build()
+                        }
                     )
                 } else {
                     abandonAudioFocus(createAudioFocusChangeListener())
@@ -89,19 +89,19 @@ internal class AudioService @Inject constructor(private val contextProvider: ICo
     }
 
     private fun AudioRes.createMediaPlayer() =
-            MediaPlayer.create(
-                    contextProvider.getContext(),
-                    this
-            ).apply {
-                setAudioAttributes(audioAttributes)
-                setOnCompletionListener { releaseAudioFocus() }
-            }
+        MediaPlayer.create(
+            contextProvider.getContext(),
+            this
+        ).apply {
+            setAudioAttributes(audioAttributes)
+            setOnCompletionListener { releaseAudioFocus() }
+        }
 
     private fun MediaPlayer.createAudioFocusChangeListener() =
-            AudioManager.OnAudioFocusChangeListener { focusChange ->
-                // loss of audio focus is indicated by a negative value
-                if (focusChange < 0) this.stop()
-            }
+        AudioManager.OnAudioFocusChangeListener { focusChange ->
+            // loss of audio focus is indicated by a negative value
+            if (focusChange < 0) this.stop()
+        }
 
     companion object {
         private val audioAttributes by lazy {

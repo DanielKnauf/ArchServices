@@ -3,8 +3,8 @@ package knaufdan.android.services.service
 import android.app.Service
 import android.content.Intent
 import android.os.Bundle
-import javax.inject.Inject
 import knaufdan.android.core.IContextProvider
+import javax.inject.Inject
 import kotlin.reflect.KClass
 
 internal class ServiceDispatcher @Inject constructor(private val contextProvider: IContextProvider) : IServiceDispatcher {
@@ -15,8 +15,8 @@ internal class ServiceDispatcher @Inject constructor(private val contextProvider
     ) {
         contextProvider.getContext().apply {
             val intent = Intent(
-                    this,
-                    serviceClass.java
+                this,
+                serviceClass.java
             )
             bundle?.apply {
                 intent.putExtras(this)

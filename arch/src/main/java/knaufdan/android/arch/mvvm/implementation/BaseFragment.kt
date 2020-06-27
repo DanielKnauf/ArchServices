@@ -11,11 +11,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import dagger.android.support.DaggerFragment
-import java.util.WeakHashMap
-import javax.inject.Inject
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.core.resources.IResourceProvider
+import java.util.WeakHashMap
+import javax.inject.Inject
 
 private val bindings: MutableMap<ViewModel, ViewDataBinding> = WeakHashMap()
 

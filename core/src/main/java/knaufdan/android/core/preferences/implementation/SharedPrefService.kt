@@ -5,18 +5,18 @@ import android.util.Log
 import androidx.core.content.edit
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import javax.inject.Inject
-import javax.inject.Singleton
 import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.preferences.ISharedPrefService
 import knaufdan.android.core.preferences.ISharedPrefServiceConfig
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.reflect.KClass
 
 @Singleton
 internal class SharedPrefService @Inject constructor(
     private val contextProvider: IContextProvider
 ) : ISharedPrefService {
-    private val sharedPrefs
+    private val sharedPrefs: SharedPreferences
         get() = contextProvider.getContext().getSharedPreferences(
             config.sharedPrefLocation,
             config.sharedPrefMode
