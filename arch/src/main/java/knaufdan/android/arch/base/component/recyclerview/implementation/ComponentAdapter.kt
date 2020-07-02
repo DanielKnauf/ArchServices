@@ -10,9 +10,7 @@ import knaufdan.android.arch.utils.findLifecycleOwner
 
 class ComponentAdapter(
     components: List<IComponent<Any>>
-) : ListAdapter<IComponent<Any>, ComponentViewHolder>(
-    ComponentDiffCallback()
-) {
+) : ListAdapter<IComponent<Any>, ComponentViewHolder>(ComponentDiffCallback()) {
     // Store data in separate list to lose the reference and prevent error if references changes.
     private var dataSource: MutableList<IComponent<Any>> = components.toMutableList()
         set(value) {
