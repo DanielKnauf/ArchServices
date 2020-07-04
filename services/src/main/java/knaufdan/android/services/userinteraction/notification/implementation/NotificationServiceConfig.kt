@@ -2,6 +2,14 @@ package knaufdan.android.services.userinteraction.notification.implementation
 
 import android.os.Build
 import android.util.Log
+import androidx.core.app.NotificationCompat.PRIORITY_DEFAULT
+import androidx.core.app.NotificationCompat.PRIORITY_HIGH
+import androidx.core.app.NotificationCompat.PRIORITY_LOW
+import androidx.core.app.NotificationCompat.PRIORITY_MIN
+import androidx.core.app.NotificationManagerCompat.IMPORTANCE_DEFAULT
+import androidx.core.app.NotificationManagerCompat.IMPORTANCE_HIGH
+import androidx.core.app.NotificationManagerCompat.IMPORTANCE_LOW
+import androidx.core.app.NotificationManagerCompat.IMPORTANCE_MIN
 import knaufdan.android.services.userinteraction.notification.INotificationServiceConfig
 
 class NotificationServiceConfig : INotificationServiceConfig {
@@ -11,6 +19,8 @@ class NotificationServiceConfig : INotificationServiceConfig {
     var channelImportance: Int = 3
     var isVibrationEnabled: Boolean = false
     var isAutoCancelEnabled: Boolean = false
+    val priority: Int
+        get() = channelImportance.toPriority()
 
     override fun setNotificationChannel(
         channelId: String,
@@ -68,5 +78,14 @@ class NotificationServiceConfig : INotificationServiceConfig {
         internal val EMPTY: NotificationServiceConfig by lazy {
             NotificationServiceConfig()
         }
+
+        private fun Int.toPriority(): Int =
+            when (this) {
+                IMPORTANCE_HIGH -> PRIORITY_HIGH
+                IMPORTANCE_LOW -> PRIORITY_LOW
+                IMPORTANCE_MIN -> PRIORITY_MIN
+                IMPORTANCE_DEFAULT -> PRIORITY_DEFAULT
+                else -> PRIORITY_DEFAULT
+            }
     }
 }

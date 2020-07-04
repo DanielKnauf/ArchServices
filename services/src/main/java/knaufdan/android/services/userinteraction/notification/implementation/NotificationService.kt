@@ -73,13 +73,15 @@ internal class NotificationService @Inject constructor(
         notificationStyle: NotificationStyle,
         targetClass: KClass<*>
     ): Notification =
-        NotificationCompat.Builder(this, config.channelId)
-            .setSmallIcon(notificationStyle.smallIcon)
+        NotificationCompat.Builder(
+            this,
+            config.channelId
+        ).setSmallIcon(notificationStyle.smallIcon)
             .setContentTitle(resourceProvider.getString(notificationStyle.title))
             .setContentText(resourceProvider.getString(notificationStyle.text))
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setPriority(config.priority)
             .setAutoCancel(config.isAutoCancelEnabled)
             .setCategory(CATEGORY_ALARM)
             .setVibrate(longArrayOf())
