@@ -72,8 +72,12 @@ fun View.bindMargins(
     )
 }
 
-@BindingAdapter("fadingDirection")
-fun View.bindFading(fadingDirection: FadingDirection) {
+@BindingAdapter("fade")
+fun View.bindFading(fadingDirection: FadingDirection?) {
+    if (fadingDirection == null) {
+        return
+    }
+
     ObjectAnimator.ofFloat(
         this,
         "alpha",
