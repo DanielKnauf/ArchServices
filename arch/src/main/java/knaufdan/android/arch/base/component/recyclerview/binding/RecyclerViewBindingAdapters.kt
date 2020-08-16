@@ -18,7 +18,7 @@ fun RecyclerView.bindComponents(
     items: List<IComponent<*>>?,
     viewOrientation: ViewOrientation?
 ) {
-    if (items == null || items.isEmpty()) {
+    if (items == null) {
         return
     }
 
