@@ -1,5 +1,6 @@
 package knaufdan.android.arch.databinding.views
 
+import android.animation.ObjectAnimator
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
@@ -68,5 +69,40 @@ fun View.bindMargins(
         marginTop?.toInt() ?: this@bindMargins.marginTop,
         marginRight?.toInt() ?: this@bindMargins.marginRight,
         marginBottom?.toInt() ?: this@bindMargins.marginBottom
+    )
+}
+
+@BindingAdapter("fade")
+fun View.bindFading(fadingDirection: FadingDirection?) {
+    if (fadingDirection == null) {
+        return
+    }
+
+    ObjectAnimator.ofFloat(
+        this,
+        "alpha",
+        fadingDirection.alpha.toFloat()
+    ).apply {
+        duration = fadingDirection.duration.toLong()
+        start()
+    }
+}
+
+sealed class FadingDirection(
+    val alpha: Number,
+    val duration: Number
+) {
+    class In(
+        durationInMillis: Number = 1000
+    ) : FadingDirection(
+        alpha = 1f,
+        duration = durationInMillis
+    )
+
+    class Out(
+        durationInMillis: Number = 1000
+    ) : FadingDirection(
+        alpha = 0f,
+        duration = durationInMillis
     )
 }
