@@ -40,10 +40,10 @@ private inline fun <reified T> List<*>.asListOfType(): List<T>? =
 
 private fun Context.createLinearLayoutManager(viewOrientation: ViewOrientation?) =
     LinearLayoutManager(this).apply {
-        orientation = viewOrientation.toRecyclerOrientation()
+        orientation = viewOrientation.toRecyclerViewOrientation()
     }
 
-private fun ViewOrientation?.toRecyclerOrientation() = this?.run {
+private fun ViewOrientation?.toRecyclerViewOrientation() = this?.run {
     when (this) {
         ViewOrientation.VERTICAL -> RecyclerView.VERTICAL
         ViewOrientation.HORIZONTAL -> RecyclerView.HORIZONTAL
