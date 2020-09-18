@@ -12,9 +12,7 @@ class ComponentViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     private lateinit var component: IComponent<Any>
 
-    fun bind(
-        component: IComponent<Any>
-    ) {
+    fun bind(component: IComponent<Any>) {
         this.component = component
 
         binding.apply {
