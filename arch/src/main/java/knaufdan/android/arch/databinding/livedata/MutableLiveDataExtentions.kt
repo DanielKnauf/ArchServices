@@ -19,8 +19,8 @@ fun <T> MutableLiveData<List<T>>.add(
     }
 
     items.add(
-        index,
-        newItem
+        index = index,
+        element = newItem
     )
 
     value = items
@@ -41,8 +41,8 @@ fun <T> MutableLiveData<List<T>>.addAll(
     }
 
     items.addAll(
-        index,
-        newItems.toList()
+        index = index,
+        elements = newItems.toList()
     )
 
     value = items
