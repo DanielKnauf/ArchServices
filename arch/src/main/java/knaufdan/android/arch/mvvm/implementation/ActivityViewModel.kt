@@ -4,5 +4,5 @@ import androidx.fragment.app.FragmentManager
 import knaufdan.android.arch.mvvm.IActivityViewModel
 
 abstract class ActivityViewModel : AndroidBaseViewModel(), IActivityViewModel {
-    override fun handleBackPressed(fragmentManager: FragmentManager) = false
+    override fun handleBackPressed(fragmentManager: FragmentManager): Boolean = false
 }

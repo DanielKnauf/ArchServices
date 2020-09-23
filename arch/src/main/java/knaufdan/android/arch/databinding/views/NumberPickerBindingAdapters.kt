@@ -25,9 +25,11 @@ fun NumberPicker.setup(
     wrapSelectorWheel = isWrapped
 
     // NOTE: workaround for a bug that rendered the selected value wrong until user scrolled, see also: https://stackoverflow.com/q/27343772/3451975
-    (NumberPicker::class.java.getDeclaredField("mInputText")
-        .apply { isAccessible = true }
-        .get(this) as EditText)
+    (
+        NumberPicker::class.java.getDeclaredField("mInputText")
+            .apply { isAccessible = true }
+            .get(this) as EditText
+        )
         .filters = emptyArray()
 }
 
