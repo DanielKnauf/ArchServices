@@ -13,18 +13,20 @@ sealed class NotificationAction(
     val title: String,
     @DrawableRes val icon: Int,
     val requestCode: Int,
+    val action: String = "",
     val receiverTarget: KClass<out BroadcastReceiver>
 ) {
     class Click(
         title: String,
         @DrawableRes icon: Int,
         requestCode: Int,
-        receiverTarget: KClass<out BroadcastReceiver>,
-        val action: String = ""
+        action: String = "",
+        receiverTarget: KClass<out BroadcastReceiver>
     ) : NotificationAction(
         title = title,
         icon = icon,
         requestCode = requestCode,
+        action = action,
         receiverTarget = receiverTarget
     )
 
@@ -32,6 +34,7 @@ sealed class NotificationAction(
         title: String,
         @DrawableRes icon: Int,
         requestCode: Int,
+        action: String = "",
         receiverTarget: KClass<out BroadcastReceiver>,
         val replyLabel: String,
         val replyKey: String
@@ -39,6 +42,7 @@ sealed class NotificationAction(
         title = title,
         icon = icon,
         requestCode = requestCode,
+        action = action,
         receiverTarget = receiverTarget
     )
 
@@ -80,6 +84,7 @@ sealed class NotificationAction(
                     context.createIntentToStartBroadcastReceiver(
                         receiverTarget = receiverTarget,
                         requestCode = requestCode,
+                        intentAction = action,
                         notificationId = notificationId
                     )
 
