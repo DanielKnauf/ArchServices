@@ -10,5 +10,5 @@ interface INotificationServiceConfig {
 
     fun setVibration(enabled: Boolean)
 
-    fun setAutoCancel(enabled: Boolean)
+    fun setAutoCancel(enabled: Boolean = true)
 }
