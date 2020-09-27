@@ -12,7 +12,6 @@ import javax.inject.Singleton
 
 @Module
 class CoreModule {
-
     @Provides
     @Singleton
     internal fun provideContextProvider(contextProvider: ContextProvider): IContextProvider = contextProvider

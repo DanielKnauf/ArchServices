@@ -13,9 +13,6 @@ class ComponentAdapter(
 ) : ListAdapter<IComponent<Any>, ComponentViewHolder>(ComponentDiffCallback()) {
     // Store data in separate list to lose the reference and prevent error if references changes.
     private var dataSource: MutableList<IComponent<Any>> = components.toMutableList()
-        set(value) {
-            field = value.toMutableList()
-        }
 
     init {
         submitList(dataSource)

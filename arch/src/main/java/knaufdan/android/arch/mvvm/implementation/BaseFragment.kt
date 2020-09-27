@@ -26,7 +26,7 @@ abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment()
     private lateinit var viewModel: ViewModel
 
     private val viewModelStoreOwner: ViewModelStoreOwner by lazy {
-        requireActivity() as ViewModelStoreOwner
+        requireActivity()
     }
 
     private val config: AndroidComponentConfig.FragmentConfig by lazy {
