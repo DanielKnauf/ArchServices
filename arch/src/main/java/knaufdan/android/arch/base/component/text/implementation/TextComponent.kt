@@ -27,9 +27,13 @@ class TextComponent(
 
     override fun areItemsTheSame(other: Any): Boolean =
         other is TextComponent &&
-            other.viewModel == viewModel
+            other.getText() == getText()
 
     override fun areContentsTheSame(other: Any): Boolean =
         other is TextComponent &&
             other.textConfig == textConfig
+
+    companion object {
+        private fun TextComponent.getText(): String = textConfig.text.value.toString()
+    }
 }
