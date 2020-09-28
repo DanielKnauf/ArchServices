@@ -4,6 +4,7 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import androidx.annotation.DrawableRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.RemoteInput
@@ -14,20 +15,23 @@ sealed class NotificationAction(
     @DrawableRes val icon: Int,
     val requestCode: Int,
     val action: String = "",
-    val receiverTarget: KClass<out BroadcastReceiver>
+    val receiverTarget: KClass<out BroadcastReceiver>,
+    val extraData: Bundle = Bundle.EMPTY
 ) {
     class Click(
         title: String,
         @DrawableRes icon: Int,
         requestCode: Int,
         action: String = "",
-        receiverTarget: KClass<out BroadcastReceiver>
+        receiverTarget: KClass<out BroadcastReceiver>,
+        extraData: Bundle = Bundle.EMPTY
     ) : NotificationAction(
         title = title,
         icon = icon,
         requestCode = requestCode,
         action = action,
-        receiverTarget = receiverTarget
+        receiverTarget = receiverTarget,
+        extraData = extraData
     )
 
     class Reply(
@@ -36,6 +40,7 @@ sealed class NotificationAction(
         requestCode: Int,
         action: String = "",
         receiverTarget: KClass<out BroadcastReceiver>,
+        extraData: Bundle = Bundle.EMPTY,
         val replyLabel: String,
         val replyKey: String
     ) : NotificationAction(
@@ -43,7 +48,8 @@ sealed class NotificationAction(
         icon = icon,
         requestCode = requestCode,
         action = action,
-        receiverTarget = receiverTarget
+        receiverTarget = receiverTarget,
+        extraData = extraData
     )
 
     companion object {
@@ -57,7 +63,8 @@ sealed class NotificationAction(
                         receiverTarget = receiverTarget,
                         requestCode = requestCode,
                         intentAction = action,
-                        notificationId = notificationId
+                        notificationId = notificationId,
+                        extraData = extraData
                     )
 
                 NotificationCompat.Action.Builder(
@@ -85,7 +92,8 @@ sealed class NotificationAction(
                         receiverTarget = receiverTarget,
                         requestCode = requestCode,
                         intentAction = action,
-                        notificationId = notificationId
+                        notificationId = notificationId,
+                        extraData = extraData
                     )
 
                 NotificationCompat.Action.Builder(
@@ -102,7 +110,8 @@ sealed class NotificationAction(
             receiverTarget: KClass<out BroadcastReceiver>,
             requestCode: Int = 0,
             intentAction: String = "",
-            notificationId: Int = 0
+            notificationId: Int = 0,
+            extraData: Bundle
         ): PendingIntent =
             Intent(
                 this,
@@ -118,6 +127,7 @@ sealed class NotificationAction(
                     KEY_NOTIFICATION_REQUEST_CODE,
                     requestCode
                 )
+                putExtras(extraData)
 
                 PendingIntent.getBroadcast(
                     this@createIntentToStartBroadcastReceiver,
