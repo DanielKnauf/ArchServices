@@ -1,3 +1,7 @@
-include(":core", ":arch", ":services")
+include(
+    ":core",
+    ":arch",
+    ":services"
+)
 
 rootProject.name = "ArchServices"
