@@ -6,6 +6,7 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
 
     dependencies {
@@ -13,6 +14,7 @@ buildscript {
         classpath(Dependencies.kotlin_gradle_plugin)
         classpath(Dependencies.kotlin_android_extensions)
         classpath(Dependencies.dependency_updates)
+        classpath("com.github.dcendents:android-maven-gradle-plugin:2.1")
     }
 }
 
@@ -20,6 +22,8 @@ allprojects {
     repositories {
         google()
         jcenter()
+        mavenCentral()
+        maven(url = "https://jitpack.io")
     }
 
     apply(plugin = "com.github.ben-manes.versions")
