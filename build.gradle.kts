@@ -2,6 +2,8 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 apply(plugin = "com.github.ben-manes.versions")
 
+group = "com.github.DanielKnauf"
+
 buildscript {
     repositories {
         google()
