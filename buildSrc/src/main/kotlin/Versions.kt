@@ -2,7 +2,7 @@ object Versions {
     const val gradle_version = "4.0.0"
     const val kotlin_version = "1.4.10"
 
-    const val androidx_core_version = "1.4.0"
+    const val androidx_core_version = "1.3.2"
     const val appcompat_version = "1.2.0"
     const val lifecycle_version = "2.2.0"
     const val broadcast_manager_version = "1.0.0"
@@ -21,4 +21,7 @@ object Versions {
     //maintenance
     const val ktLint_version = "0.39.0"
     const val dependency_updates_version = "0.28.0"
+
+    //jitpack
+    const val android_maven_version = "2.1"
 }

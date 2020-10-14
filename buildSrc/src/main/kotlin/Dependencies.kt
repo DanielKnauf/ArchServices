@@ -1,3 +1,4 @@
+import Versions.android_maven_version
 import Versions.androidx_core_version
 import Versions.appcompat_version
 import Versions.broadcast_manager_version
@@ -9,10 +10,10 @@ import Versions.jUnit_version
 import Versions.kotlin_version
 import Versions.ktLint_version
 import Versions.lifecycle_version
-import Versions.recyclerView_version
-import Versions.test_runner_version
 import Versions.picasso_version
+import Versions.recyclerView_version
 import Versions.retrofit_version
+import Versions.test_runner_version
 
 object Dependencies {
     val gradle = "com.android.tools.build:gradle:$gradle_version"
@@ -54,4 +55,8 @@ object Dependencies {
     val dependency_updates =
         "com.github.ben-manes:gradle-versions-plugin:$dependency_updates_version"
     val ktLint = "com.pinterest:ktlint:$ktLint_version"
+
+    //jitpack
+    val android_maven_plugin =
+        "com.github.dcendents:android-maven-gradle-plugin:$android_maven_version"
 }

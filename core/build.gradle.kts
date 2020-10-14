@@ -1,9 +1,12 @@
 plugins {
     id("com.android.library")
+    id("com.github.dcendents.android-maven")
     kotlin("android")
     kotlin("android.extensions")
     kotlin("kapt")
 }
+
+group = Constants.group_name
 
 android {
     compileSdkVersion(29)
