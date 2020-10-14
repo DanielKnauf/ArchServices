@@ -26,6 +26,7 @@ allprojects {
         maven(url = "https://jitpack.io")
     }
 
+    apply(plugin = "maven-publish")
     apply(plugin = "com.github.ben-manes.versions")
 }
 
