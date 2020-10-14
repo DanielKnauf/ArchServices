@@ -21,4 +21,7 @@ object Versions {
     //maintenance
     const val ktLint_version = "0.39.0"
     const val dependency_updates_version = "0.28.0"
+
+    //jitpack
+    const val android_maven_version = "2.1"
 }
