@@ -29,6 +29,10 @@ allprojects {
     apply(plugin = "com.github.ben-manes.versions")
 }
 
+subprojects{
+    apply { plugin("maven") }
+}
+
 tasks.register("clean", Delete::class) {
     delete(rootProject.buildDir)
 }
