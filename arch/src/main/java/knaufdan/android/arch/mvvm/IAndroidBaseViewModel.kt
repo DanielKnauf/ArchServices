@@ -13,5 +13,5 @@ interface IAndroidBaseViewModel : LifecycleObserver {
      *
      * Note that this is called before the [IAndroidBaseViewModel] is bound to the layout.
      */
-    fun onFirstStart(bundle: Bundle?)
+    fun onFirstStart(bundle: Bundle?) = Unit
 }

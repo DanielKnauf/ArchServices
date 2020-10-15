@@ -1,7 +1,7 @@
 package knaufdan.android.arch.mvvm
 
-import knaufdan.android.arch.base.IGenericType
 import knaufdan.android.core.resources.IResourceProvider
+import knaufdan.android.core.util.IGenericType
 
 typealias LayoutRes = Int
 typealias BindingKey = Int

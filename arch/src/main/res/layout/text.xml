@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="fm"
+            type="androidx.fragment.app.FragmentManager" />
+
+        <variable
             name="viewModel"
             type="knaufdan.android.arch.base.component.text.implementation.TextViewModel" />
     </data>

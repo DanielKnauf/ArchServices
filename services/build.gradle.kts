@@ -54,11 +54,6 @@ dependencies {
     //google
     "implementation"(Dependencies.gson)
 
-    //lifecycle
-    "implementation"(Dependencies.androidX_lifecycle_viewModel)
-    "implementation"(Dependencies.androidX_lifecycle_extensions)
-    "kapt"(Dependencies.androidX_lifecycle_compiler)
-
     //testing
     "androidTestImplementation"(Dependencies.androidX_test_runner)
     "testImplementation"(Dependencies.jUnit)
@@ -73,4 +68,6 @@ dependencies {
     //kotlin
     "implementation"(Dependencies.kotlin_reflect)
     "implementation"(Dependencies.kotlin_stdlib)
+
+    "implementation"(project(":core"))
 }
