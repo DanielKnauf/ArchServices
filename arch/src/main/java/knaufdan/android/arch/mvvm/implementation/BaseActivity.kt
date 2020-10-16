@@ -93,7 +93,10 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> :
             viewModel.onFirstStart(intent.extras)
         }
 
-        DataBindingUtil.setContentView<ViewDataBinding>(this@BaseActivity, layoutRes).apply {
+        DataBindingUtil.setContentView<ViewDataBinding>(
+            this@BaseActivity,
+            layoutRes
+        ).apply {
             lifecycleOwner = this@BaseActivity
             setVariable(viewModelKey, viewModel)
             setVariable(BR.fm, supportFragmentManager)

@@ -146,7 +146,8 @@ internal class NotificationService(
                     KEY_NOTIFICATION_ID,
                     notificationId
                 )
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
 
                 PendingIntent.getActivity(
                     this@createIntentToOpenApp,
