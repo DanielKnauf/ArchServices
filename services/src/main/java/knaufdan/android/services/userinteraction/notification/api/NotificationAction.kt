@@ -118,7 +118,9 @@ sealed class NotificationAction(
                 receiverTarget.java
             ).run {
                 action = intentAction
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+
                 putExtra(
                     KEY_NOTIFICATION_ID,
                     notificationId
