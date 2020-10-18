@@ -1,10 +1,9 @@
 package knaufdan.android.arch.mvvm
 
+import knaufdan.android.arch.base.BindingKey
 import knaufdan.android.arch.base.IGenericType
+import knaufdan.android.arch.base.LayoutRes
 import knaufdan.android.core.resources.IResourceProvider
-
-typealias LayoutRes = Int
-typealias BindingKey = Int
 
 interface IAndroidComponent<ViewModel : IAndroidBaseViewModel> : IGenericType<ViewModel> {
     /**
