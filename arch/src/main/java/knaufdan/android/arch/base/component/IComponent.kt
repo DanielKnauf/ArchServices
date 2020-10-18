@@ -1,5 +1,7 @@
 package knaufdan.android.arch.base.component
 
+import knaufdan.android.arch.base.BindingKey
+import knaufdan.android.arch.base.LayoutRes
 import knaufdan.android.core.util.IGenericType
 
 interface IComponent<DataSource> : IGenericType<DataSource> {
