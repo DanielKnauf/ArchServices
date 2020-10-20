@@ -1,9 +1,8 @@
 package knaufdan.android.arch.base.component
 
+import knaufdan.android.arch.base.BindingKey
 import knaufdan.android.arch.base.IGenericType
-
-typealias LayoutRes = Int
-typealias BindingKey = Int
+import knaufdan.android.arch.base.LayoutRes
 
 interface IComponent<DataSource> : IGenericType<DataSource> {
     /**
