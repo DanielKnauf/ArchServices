@@ -40,6 +40,10 @@ android {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
 
+    buildFeatures {
+        dataBinding = true
+    }
+
     apply(from = "$rootDir/buildSrc/ktlint.gradle.kts")
 }
 
@@ -48,20 +52,16 @@ dependencies {
 
     //androidX
     "implementation"(Dependencies.androidX_app_compat)
-    "implementation"(Dependencies.androidX_localbroadcast_manager)
+    "implementation"(Dependencies.androidX_recyclerView)
     "implementation"(Dependencies.androidX_core_ktx)
-
-    //google
-    "implementation"(Dependencies.gson)
 
     //lifecycle
     "implementation"(Dependencies.androidX_lifecycle_viewModel)
     "implementation"(Dependencies.androidX_lifecycle_extensions)
     "kapt"(Dependencies.androidX_lifecycle_compiler)
 
-    //testing
-    "androidTestImplementation"(Dependencies.androidX_test_runner)
-    "testImplementation"(Dependencies.jUnit)
+    //picasso
+    "implementation"(Dependencies.picasso)
 
     //dagger2
     "implementation"(Dependencies.dagger_core)
@@ -70,7 +70,17 @@ dependencies {
     "kapt"(Dependencies.dagger_compiler)
     "kapt"(Dependencies.dagger_android_processor)
 
+    //testing
+    "androidTestImplementation"(Dependencies.androidX_test_runner)
+    "testImplementation"(Dependencies.jUnit)
+
+    //retrofit
+    "implementation"(Dependencies.retrofit_core)
+    "implementation"(Dependencies.retrofit_gson)
+
     //kotlin
     "implementation"(Dependencies.kotlin_reflect)
     "implementation"(Dependencies.kotlin_stdlib)
+
+    "implementation"(project(":core"))
 }
