@@ -1,12 +1,9 @@
 package knaufdan.android.services.userinteraction.notification
 
-import kotlin.reflect.KClass
+import knaufdan.android.services.userinteraction.notification.api.NotificationConfig
 
 interface INotificationService {
     fun configure(adjust: INotificationServiceConfig.() -> Unit)
 
-    fun sendNotification(
-        notificationStyle: NotificationStyle,
-        targetClass: KClass<*>
-    )
+    fun sendNotification(notificationConfig: NotificationConfig)
 }

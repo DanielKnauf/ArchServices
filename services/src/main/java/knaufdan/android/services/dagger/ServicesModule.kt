@@ -2,6 +2,7 @@ package knaufdan.android.services.dagger
 
 import dagger.Module
 import dagger.Provides
+import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.alarm.IAlarmService
 import knaufdan.android.core.dagger.CoreModule
 import knaufdan.android.services.alarm.AlarmService
@@ -16,7 +17,7 @@ import knaufdan.android.services.userinteraction.notification.implementation.Not
 import javax.inject.Singleton
 
 @Module(includes = [CoreModule::class])
-class ServiceModule {
+class ServicesModule {
     @Singleton
     @Provides
     internal fun provideAlarmService(alarmService: AlarmService): IAlarmService = alarmService
@@ -32,8 +33,8 @@ class ServiceModule {
 
     @Singleton
     @Provides
-    internal fun provideNotificationService(notificationService: NotificationService): INotificationService =
-        notificationService
+    internal fun provideNotificationService(contextProvider: IContextProvider): INotificationService =
+        NotificationService(contextProvider)
 
     @Singleton
     @Provides

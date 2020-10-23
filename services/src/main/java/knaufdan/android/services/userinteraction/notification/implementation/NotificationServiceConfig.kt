@@ -44,28 +44,28 @@ class NotificationServiceConfig : INotificationServiceConfig {
         this.isAutoCancelEnabled = enabled
     }
 
-    fun isValid(): Boolean {
+    fun validate(): Boolean {
         val needAdditionalChannelInfo = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 
         return when {
             channelId.isBlank() -> {
                 Log.e(
                     this::class.simpleName,
-                    "ChannelId is missing. Add channelId via setNotificationChannel()"
+                    "ChannelId is blank - add channelId via setNotificationChannel()"
                 )
                 false
             }
             needAdditionalChannelInfo && channelName.isBlank() -> {
                 Log.e(
                     this::class.simpleName,
-                    "ChannelName is missing : $channelName. It is needed since Andrpid O, add channelName via setNotificationChannel()"
+                    "ChannelName is blank - since Android O (26) a channel name must be provided, set it via setNotificationChannel()"
                 )
                 false
             }
             needAdditionalChannelInfo && channelDescription.isBlank() -> {
                 Log.e(
                     this::class.simpleName,
-                    "ChannelDescription is missing : $channelDescription. It is needed since Andrpid O, add channelDescription via setNotificationChannel()"
+                    "ChannelDescription is blank - since Android O (26) a channel description must be provided, set it via setNotificationChannel()"
                 )
                 false
             }
