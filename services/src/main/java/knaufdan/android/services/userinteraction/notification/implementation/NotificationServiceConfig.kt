@@ -51,21 +51,21 @@ class NotificationServiceConfig : INotificationServiceConfig {
             channelId.isBlank() -> {
                 Log.e(
                     this::class.simpleName,
-                    "ChannelId is blank. Add channelId via setNotificationChannel()"
+                    "ChannelId is blank - add channelId via setNotificationChannel()"
                 )
                 false
             }
             needAdditionalChannelInfo && channelName.isBlank() -> {
                 Log.e(
                     this::class.simpleName,
-                    "ChannelName is blank : $channelName. Since Android O a channel name must be provided, set it via setNotificationChannel()"
+                    "ChannelName is blank - since Android O (26) a channel name must be provided, set it via setNotificationChannel()"
                 )
                 false
             }
             needAdditionalChannelInfo && channelDescription.isBlank() -> {
                 Log.e(
                     this::class.simpleName,
-                    "ChannelDescription is blank : $channelDescription. Since Android O a channel description must be provided, set it via setNotificationChannel()"
+                    "ChannelDescription is blank - since Android O (26) a channel description must be provided, set it via setNotificationChannel()"
                 )
                 false
             }
