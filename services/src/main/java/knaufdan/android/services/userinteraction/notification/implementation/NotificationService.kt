@@ -144,12 +144,12 @@ internal class NotificationService(
                 activityTarget.java
             ).run {
                 putExtra(
-                    getString(R.string.notification_api_id_key),
+                    getString(R.string.notification_api_key_id),
                     notificationId
                 )
 
                 putExtra(
-                    getString(R.string.notification_api_request_code_key),
+                    getString(R.string.notification_api_key_request_code),
                     requestCode
                 )
 

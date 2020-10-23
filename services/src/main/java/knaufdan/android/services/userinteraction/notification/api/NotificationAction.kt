@@ -123,12 +123,12 @@ sealed class NotificationAction(
                 flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
 
                 putExtra(
-                    getString(R.string.notification_api_id_key),
+                    getString(R.string.notification_api_key_id),
                     notificationId
                 )
 
                 putExtra(
-                    getString(R.string.notification_api_request_code_key),
+                    getString(R.string.notification_api_key_request_code),
                     requestCode
                 )
 
