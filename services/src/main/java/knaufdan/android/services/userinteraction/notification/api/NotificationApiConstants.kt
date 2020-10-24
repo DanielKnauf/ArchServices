@@ -1,4 +1,0 @@
-package knaufdan.android.services.userinteraction.notification.api
-
-const val KEY_NOTIFICATION_ID = "knaufdan_archservices_key_notification_id"
-const val KEY_NOTIFICATION_REQUEST_CODE = "knaufdan_archservices_key_notification_request_code"

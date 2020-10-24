@@ -8,6 +8,7 @@ import android.os.Bundle
 import androidx.annotation.DrawableRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.RemoteInput
+import knaufdan.android.services.R
 import kotlin.reflect.KClass
 
 sealed class NotificationAction(
@@ -57,7 +58,7 @@ sealed class NotificationAction(
             context: Context,
             notificationId: Int
         ): NotificationCompat.Action =
-            kotlin.run {
+            run {
                 val replyPendingIntent: PendingIntent =
                     context.createIntentToStartBroadcastReceiver(
                         receiverTarget = receiverTarget,
@@ -118,15 +119,19 @@ sealed class NotificationAction(
                 receiverTarget.java
             ).run {
                 action = intentAction
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+
+                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+
                 putExtra(
-                    KEY_NOTIFICATION_ID,
+                    getString(R.string.notification_api_key_id),
                     notificationId
                 )
+
                 putExtra(
-                    KEY_NOTIFICATION_REQUEST_CODE,
+                    getString(R.string.notification_api_key_request_code),
                     requestCode
                 )
+
                 putExtras(extraData)
 
                 PendingIntent.getBroadcast(
