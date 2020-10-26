@@ -1,4 +1,4 @@
-package knaufdan.android.core.util
+package knaufdan.android.core.common
 
 import java.lang.reflect.ParameterizedType
 

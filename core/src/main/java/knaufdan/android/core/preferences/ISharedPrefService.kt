@@ -2,8 +2,6 @@ package knaufdan.android.core.preferences
 
 import kotlin.reflect.KClass
 
-typealias Key = String
-
 interface ISharedPrefService {
     fun configure(adjust: ISharedPrefServiceConfig.() -> Unit)
 
