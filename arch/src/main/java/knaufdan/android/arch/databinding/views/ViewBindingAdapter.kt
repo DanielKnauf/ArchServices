@@ -1,6 +1,7 @@
 package knaufdan.android.arch.databinding.views
 
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
@@ -10,10 +11,16 @@ import androidx.core.view.marginRight
 import androidx.core.view.marginTop
 import androidx.core.view.postDelayed
 import androidx.databinding.BindingAdapter
+import knaufdan.android.core.resources.IResourceProvider
 
-@BindingAdapter(value = ["backgroundResource"])
+@SuppressLint("UseCompatLoadingForDrawables")
+@BindingAdapter("backgroundResource")
 fun View.bindBackgroundResource(@DrawableRes background: Int) {
-    if (background != -1) setBackground(context.getDrawable(background))
+    if (background == IResourceProvider.INVALID_RES_ID) {
+        return
+    }
+
+    setBackground(context.getDrawable(background))
 }
 
 @BindingAdapter(
@@ -70,6 +77,15 @@ fun View.bindMargins(
         marginRight?.toInt() ?: this@bindMargins.marginRight,
         marginBottom?.toInt() ?: this@bindMargins.marginBottom
     )
+}
+
+@BindingAdapter("gone")
+fun View.bindGone(gone: Boolean) {
+    visibility =
+        when (gone) {
+            true -> View.GONE
+            else -> View.VISIBLE
+        }
 }
 
 @BindingAdapter("fade")
