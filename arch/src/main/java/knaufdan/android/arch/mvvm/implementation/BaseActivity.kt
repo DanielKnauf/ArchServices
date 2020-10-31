@@ -6,6 +6,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import dagger.android.support.DaggerAppCompatActivity
+import knaufdan.android.arch.BR
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseActivity
 import knaufdan.android.arch.mvvm.IBaseFragment
@@ -14,7 +15,9 @@ import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.resources.IResourceProvider
 import javax.inject.Inject
 
-abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActivity(), IBaseActivity<ViewModel> {
+abstract class BaseActivity<ViewModel : ActivityViewModel> :
+    DaggerAppCompatActivity(),
+    IBaseActivity<ViewModel> {
 
     @Inject
     lateinit var contextProvider: IContextProvider
@@ -96,6 +99,7 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> : DaggerAppCompatActi
         ).apply {
             lifecycleOwner = this@BaseActivity
             setVariable(viewModelKey, viewModel)
+            setVariable(BR.fm, supportFragmentManager)
             executePendingBindings()
         }
     }

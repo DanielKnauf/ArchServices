@@ -54,6 +54,9 @@ dependencies {
     "implementation"(Dependencies.androidX_app_compat)
     "implementation"(Dependencies.androidX_recyclerView)
     "implementation"(Dependencies.androidX_core_ktx)
+    "implementation"(Dependencies.android_material_design)
+    "implementation"(Dependencies.androidX_legacy_support)
+    "implementation"(Dependencies.androidX_viewPager2)
 
     //lifecycle
     "implementation"(Dependencies.androidX_lifecycle_viewModel)

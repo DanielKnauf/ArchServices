@@ -2,11 +2,16 @@ object Versions {
     const val gradle_version = "4.0.0"
     const val kotlin_version = "1.4.10"
 
+    const val design_version = "1.1.0-alpha07"
+
     const val androidx_core_version = "1.3.2"
     const val appcompat_version = "1.2.0"
     const val lifecycle_version = "2.2.0"
     const val broadcast_manager_version = "1.0.0"
     const val recyclerView_version = "1.0.0"
+    const val legacy_support_version = "1.0.0"
+    const val view_pager_2_version = "1.0.0"
+
     const val dagger_version = "2.29.1"
     const val gson_version = "2.8.6"
 

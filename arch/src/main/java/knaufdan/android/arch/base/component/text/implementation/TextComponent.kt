@@ -19,7 +19,7 @@ class TextComponent(
         )
     }
 
-    override fun getLayoutRes(): LayoutRes = R.layout.text
+    override fun getLayoutRes(): LayoutRes = R.layout.core_text
 
     override fun getBindingKey(): BindingKey = BR.viewModel
 

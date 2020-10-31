@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import dagger.android.support.DaggerFragment
+import knaufdan.android.arch.BR
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.core.resources.IResourceProvider
@@ -72,6 +73,7 @@ abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment()
                     false
                 ).apply {
                     setVariable(viewModelKey, viewModel)
+                    setVariable(BR.fm, childFragmentManager)
                 }
             }.run {
                 lifecycleOwner = this@BaseFragment
