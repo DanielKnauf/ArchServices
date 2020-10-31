@@ -3,7 +3,7 @@ package knaufdan.android.arch.network
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import knaufdan.android.core.util.IGenericType
+import knaufdan.android.core.common.IGenericType
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

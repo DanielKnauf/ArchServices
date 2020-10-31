@@ -10,7 +10,7 @@ import knaufdan.android.core.preferences.ISharedPrefServiceConfig.Companion.DEFA
 
 class SharedPrefServiceConfig : ISharedPrefServiceConfig {
     var sharedPrefLocation = DEFAULT_LOCATION
-    var sharedPrefMode: Int = DEFAULT_MODE
+    var sharedPrefMode = DEFAULT_MODE
 
     override fun setLocation(location: String) {
         if (location.isBlank()) {
@@ -34,11 +34,12 @@ class SharedPrefServiceConfig : ISharedPrefServiceConfig {
             SharedPrefServiceConfig()
         }
 
-        private val validModes = listOf(
-            MODE_PRIVATE,
-            MODE_APPEND,
-            MODE_ENABLE_WRITE_AHEAD_LOGGING,
-            MODE_NO_LOCALIZED_COLLATORS // require API 24
-        )
+        private val validModes =
+            listOf(
+                MODE_PRIVATE,
+                MODE_APPEND,
+                MODE_ENABLE_WRITE_AHEAD_LOGGING,
+                MODE_NO_LOCALIZED_COLLATORS // require API 24
+            )
     }
 }
