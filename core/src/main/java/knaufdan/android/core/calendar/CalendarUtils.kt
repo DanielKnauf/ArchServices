@@ -27,9 +27,10 @@ fun getTimeOfDay(): Pair<Hour, Minute> =
     }
 
 fun Triple<DayOfMonth, Month, Year>.daysBetween(other: Triple<DayOfMonth, Month, Year>): Int {
-    if ((other.third == this.third && other.second < this.second) ||
+    if (
+        ((other.third == this.third) && (other.second < this.second)) ||
         (other.third < this.third) ||
-        (other.third == this.third && other.second == this.second && other.first < this.first)
+        ((other.third == this.third) && (other.second == this.second) && (other.first < this.first))
     ) {
         return 0
     }

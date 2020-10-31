@@ -8,6 +8,13 @@ fun Calendar.getMonth(): Month = get(Calendar.MONTH)
 
 fun Calendar.getYear(): Year = get(Calendar.YEAR)
 
-fun Calendar.getHour(): Hour = get(Calendar.HOUR_OF_DAY)
+fun Calendar.getHour(
+    is24Hours: Boolean = true
+): Hour =
+    if (is24Hours) {
+        get(Calendar.HOUR_OF_DAY)
+    } else {
+        get(Calendar.HOUR)
+    }
 
 fun Calendar.getMinute(): Minute = get(Calendar.MINUTE)
