@@ -1,6 +1,5 @@
 package knaufdan.android.services.userinteraction.notification.implementation
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Notification
 import android.app.Notification.CATEGORY_ALARM
@@ -11,11 +10,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import knaufdan.android.core.IContextProvider
+import knaufdan.android.services.R
 import knaufdan.android.services.userinteraction.notification.INotificationService
 import knaufdan.android.services.userinteraction.notification.INotificationServiceConfig
-import knaufdan.android.services.userinteraction.notification.api.KEY_NOTIFICATION_ID
 import knaufdan.android.services.userinteraction.notification.api.NotificationAction
 import knaufdan.android.services.userinteraction.notification.api.NotificationAction.Companion.toAndroidClick
 import knaufdan.android.services.userinteraction.notification.api.NotificationAction.Companion.toAndroidReply
@@ -44,7 +44,9 @@ internal class NotificationService(
             return
         }
 
-        createNotificationChannel()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel()
+        }
 
         notificationConfig.buildNotification().apply {
             notificationManager.notify(
@@ -54,13 +56,8 @@ internal class NotificationService(
         }
     }
 
-    @SuppressLint("ObsoleteSdkInt")
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel() {
-        val isNotRequiredPerSDK = Build.VERSION.SDK_INT < Build.VERSION_CODES.O
-        if (isNotRequiredPerSDK) {
-            return
-        }
-
         val isAlreadyConfigure =
             notificationManager.getNotificationChannel(config.channelId) != null
         if (isAlreadyConfigure) {
@@ -103,7 +100,8 @@ internal class NotificationService(
             setContentIntent(
                 context.createIntentToOpenApp(
                     activityTarget = activityTarget,
-                    notificationId = notificationConfig.id
+                    notificationId = notificationConfig.id,
+                    requestCode = notificationConfig.requestCode
                 )
             )
         }
@@ -120,14 +118,16 @@ internal class NotificationService(
     private fun List<NotificationAction>.toAndroidActions(notificationId: Int): List<NotificationCompat.Action> =
         map { action ->
             when (action) {
-                is NotificationAction.Click -> action.toAndroidClick(
-                    context = context,
-                    notificationId = notificationId
-                )
-                is NotificationAction.Reply -> action.toAndroidReply(
-                    context = context,
-                    notificationId = notificationId
-                )
+                is NotificationAction.Click ->
+                    action.toAndroidClick(
+                        context = context,
+                        notificationId = notificationId
+                    )
+                is NotificationAction.Reply ->
+                    action.toAndroidReply(
+                        context = context,
+                        notificationId = notificationId
+                    )
             }
         }
 
@@ -136,22 +136,28 @@ internal class NotificationService(
 
         private fun Context.createIntentToOpenApp(
             activityTarget: KClass<out Activity>,
-            notificationId: Int
+            notificationId: Int,
+            requestCode: Int
         ): PendingIntent =
             Intent(
                 this,
                 activityTarget.java
             ).run {
                 putExtra(
-                    KEY_NOTIFICATION_ID,
+                    getString(R.string.notification_api_key_id),
                     notificationId
+                )
+
+                putExtra(
+                    getString(R.string.notification_api_key_request_code),
+                    requestCode
                 )
 
                 flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
 
                 PendingIntent.getActivity(
                     this@createIntentToOpenApp,
-                    0,
+                    requestCode,
                     this,
                     PendingIntent.FLAG_UPDATE_CURRENT
                 )

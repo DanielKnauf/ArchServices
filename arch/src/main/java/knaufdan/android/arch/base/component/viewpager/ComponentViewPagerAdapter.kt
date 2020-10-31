@@ -27,4 +27,18 @@ class ComponentViewPagerAdapter(
             fragmentManager.fragmentFactory = this
             instantiate()
         }
+
+    override fun equals(other: Any?): Boolean {
+        if (other is ComponentViewPagerAdapter) {
+            return hasSameItems(other.items)
+        }
+
+        return false
+    }
+
+    override fun hashCode(): Int = items.hashCode()
+
+    fun hasSameItems(
+        otherItems: List<IComponent<IComponentViewModel>>
+    ): Boolean = otherItems.toTypedArray() contentDeepEquals items.toTypedArray()
 }

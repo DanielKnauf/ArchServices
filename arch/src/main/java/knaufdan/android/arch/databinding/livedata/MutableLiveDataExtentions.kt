@@ -2,7 +2,7 @@ package knaufdan.android.arch.databinding.livedata
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.MutableLiveData
-import knaufdan.android.core.util.extensions.validateIndex
+import knaufdan.android.core.common.extensions.validateIndex
 
 @MainThread
 fun <T> MutableLiveData<List<T>>.add(

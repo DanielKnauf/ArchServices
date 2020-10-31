@@ -5,12 +5,14 @@ import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel
+import knaufdan.android.arch.base.component.viewpager.ViewPagerOrientation.Companion.toAndroidOrientation
 import knaufdan.android.arch.utils.findLifecycleOwner
 
 @BindingAdapter(
     value = [
         "components",
         "fragmentManager",
+        "orientation",
         "onPageSelected"
     ],
     requireAll = false
@@ -18,25 +20,35 @@ import knaufdan.android.arch.utils.findLifecycleOwner
 fun ViewPager2.bindPages(
     components: List<IComponent<IComponentViewModel>>,
     fragmentManager: FragmentManager,
+    viewPagerOrientation: ViewPagerOrientation?,
     listener: OnPageSelectedListener?
 ) {
     val lifecycleOwner = context.findLifecycleOwner() ?: return
 
-    val adapter = ComponentViewPagerAdapter(
-        fragmentManager = fragmentManager,
-        components = components,
-        lifecycleOwner = lifecycleOwner
-    )
+    val hasSameItems =
+        adapter?.run {
+            this is ComponentViewPagerAdapter && hasSameItems(components)
+        } ?: false
+
+    val needsNewAdapter = !hasSameItems
+    if (needsNewAdapter) {
+        this.adapter =
+            ComponentViewPagerAdapter(
+                fragmentManager = fragmentManager,
+                components = components,
+                lifecycleOwner = lifecycleOwner
+            )
+    }
 
     listener?.run {
         this@bindPages.registerOnPageChangeCallback(
-            OnPageChanceCallback(listener = this)
+            OnPageChanceCallback(
+                listener = this
+            )
         )
     }
 
-    this.adapter = adapter
-
-    orientation = ViewPager2.ORIENTATION_HORIZONTAL
+    setOrientation(viewPagerOrientation)
 }
 
 interface OnPageSelectedListener {
@@ -50,4 +62,13 @@ private class OnPageChanceCallback(
         listener.onPageSelected(position)
         super.onPageSelected(position)
     }
+}
+
+private fun ViewPager2.setOrientation(viewPagerOrientation: ViewPagerOrientation?) {
+    val androidOrientation = viewPagerOrientation.toAndroidOrientation()
+    if (orientation == androidOrientation) {
+        return
+    }
+
+    orientation = androidOrientation
 }

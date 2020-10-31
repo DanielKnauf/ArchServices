@@ -11,8 +11,6 @@ import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel
 import java.util.WeakHashMap
 
-private val bindings: MutableMap<IComponentViewModel, ViewDataBinding> = WeakHashMap()
-
 class ComponentFragment(
     component: IComponent<IComponentViewModel>
 ) : Fragment() {
@@ -54,5 +52,9 @@ class ComponentFragment(
     override fun onPause() {
         super.onPause()
         viewModel.onDetach()
+    }
+
+    companion object {
+        private val bindings: MutableMap<IComponentViewModel, ViewDataBinding> = WeakHashMap()
     }
 }
