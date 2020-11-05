@@ -1,7 +1,6 @@
 package knaufdan.android.arch.databinding.views
 
 import android.animation.ObjectAnimator
-import android.annotation.SuppressLint
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
@@ -13,7 +12,15 @@ import androidx.core.view.postDelayed
 import androidx.databinding.BindingAdapter
 import knaufdan.android.core.resources.IResourceProvider
 
-@SuppressLint("UseCompatLoadingForDrawables")
+@BindingAdapter("height")
+fun View.bindHeight(
+    height: Number
+) {
+    layoutParams = layoutParams.apply {
+        this.height = height.toInt()
+    }
+}
+
 @BindingAdapter("backgroundResource")
 fun View.bindBackgroundResource(@DrawableRes background: Int) {
     if (background == IResourceProvider.INVALID_RES_ID) {
@@ -30,7 +37,7 @@ fun View.bindBackgroundResource(@DrawableRes background: Int) {
     ],
     requireAll = false
 )
-fun View.setFocus(
+fun View.bindFocus(
     focused: Boolean,
     focusDelay: Number?
 ) {

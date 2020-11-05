@@ -1,17 +1,18 @@
-package knaufdan.android.arch.base.component.text.implementation
+package knaufdan.android.arch.base.component.common.text.implementation
 
 import knaufdan.android.arch.BR
 import knaufdan.android.arch.R
 import knaufdan.android.arch.base.BindingKey
 import knaufdan.android.arch.base.LayoutRes
-import knaufdan.android.arch.base.component.text.ITextComponent
-import knaufdan.android.arch.base.component.text.TextConfig
+import knaufdan.android.arch.base.component.common.text.ITextComponent
+import knaufdan.android.arch.base.component.common.text.TextConfig
+import knaufdan.android.arch.base.component.recyclerview.IDiffItem
 import knaufdan.android.core.resources.IResourceProvider
 
 class TextComponent(
     private val textConfig: TextConfig,
     resourceProvider: IResourceProvider
-) : ITextComponent {
+) : ITextComponent, IDiffItem {
     private val viewModel: TextViewModel by lazy {
         TextViewModel(
             textConfig = textConfig,
@@ -19,7 +20,7 @@ class TextComponent(
         )
     }
 
-    override fun getLayoutRes(): LayoutRes = R.layout.core_text
+    override fun getLayoutRes(): LayoutRes = R.layout.arch_text
 
     override fun getBindingKey(): BindingKey = BR.viewModel
 
