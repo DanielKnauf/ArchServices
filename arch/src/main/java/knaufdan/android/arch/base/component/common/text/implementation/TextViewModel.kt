@@ -1,6 +1,6 @@
-package knaufdan.android.arch.base.component.text.implementation
+package knaufdan.android.arch.base.component.common.text.implementation
 
-import knaufdan.android.arch.base.component.text.TextConfig
+import knaufdan.android.arch.base.component.common.text.TextConfig
 import knaufdan.android.core.resources.IResourceProvider
 
 class TextViewModel(

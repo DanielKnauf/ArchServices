@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="knaufdan.android.arch.base.component.text.implementation.TextViewModel" />
+            type="knaufdan.android.arch.base.component.common.text.implementation.TextViewModel" />
     </data>
 
     <TextView
