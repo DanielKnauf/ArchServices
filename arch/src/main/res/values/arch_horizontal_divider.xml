@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- dimens -->
+    <!-- dimensions -->
     <dimen name="arch_horizontal_divider_default_height">0.5dp</dimen>
     <dimen name="arch_horizontal_divider_default_margin">0dp</dimen>
 
