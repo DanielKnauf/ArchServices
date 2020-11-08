@@ -22,6 +22,7 @@
             app:marginLeft="@{viewModel.marginLeft}"
             app:marginRight="@{viewModel.marginRight}"
             tools:ignore="RtlHardcoded" />
+        
     </FrameLayout>
 
 </layout>

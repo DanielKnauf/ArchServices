@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <!-- strings -->
-    <string name="notification_api_key_id">knaufdan_archservices_key_notification_id</string>
-    <string name="notification_api_key_request_code">knaufdan_archservices_key_notification_request_code</string>
-
-</resources>
