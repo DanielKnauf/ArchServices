@@ -16,7 +16,7 @@ interface IDiffItem {
      *
      * @param other item to which [IDiffItem] is compared to
      *
-     * @return true if the content of [IDiffItem] and [other] are the equal
+     * @return true if contents of [IDiffItem] and [other] are the equal
      */
     fun areContentsTheSame(other: Any): Boolean
 }
