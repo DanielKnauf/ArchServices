@@ -44,11 +44,6 @@ class ComponentAdapter(
         )
     }
 
-    override fun onViewRecycled(holder: ComponentViewHolder) {
-        holder.binding.unbind()
-        super.onViewRecycled(holder)
-    }
-
     override fun getItemViewType(position: Int): LayoutRes = dataSource[position].getLayoutRes()
 
     override fun submitList(list: List<IComponent<Any>>?) {
