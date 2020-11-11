@@ -13,20 +13,29 @@ import androidx.recyclerview.widget.RecyclerView
 )
 fun RecyclerView.bindSmoothScrollToTop(
     scroll: Boolean,
-    scrollDelay: Number = 0
+    scrollDelay: Number?
 ) {
     val stay = !scroll
     if (stay) {
         return
     }
 
-    val delay = scrollDelay.toLong()
+    val delay = scrollDelay?.toLong() ?: 0
     if (delay.toInt() > 0) {
         postDelayed(delay) {
-            smoothScrollToPosition(0)
+            bindSmoothScrollToPosition(0)
         }
         return
     }
 
-    smoothScrollToPosition(0)
+    bindSmoothScrollToPosition(0)
+}
+
+@BindingAdapter("smoothScrollToPosition")
+fun RecyclerView.bindSmoothScrollToPosition(position: Int) {
+    val numItems = adapter?.itemCount ?: 0
+
+    if (position in 0 until numItems) {
+        smoothScrollToPosition(position)
+    }
 }
