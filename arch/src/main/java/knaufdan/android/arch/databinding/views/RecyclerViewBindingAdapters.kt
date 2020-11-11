@@ -21,7 +21,7 @@ fun RecyclerView.bindSmoothScrollToTop(
     }
 
     val delay = scrollDelay?.toLong() ?: 0
-    if (delay.toInt() > 0) {
+    if (delay > 0) {
         postDelayed(delay) {
             bindSmoothScrollToPosition(0)
         }
