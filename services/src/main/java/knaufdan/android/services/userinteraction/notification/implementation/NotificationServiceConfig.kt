@@ -18,7 +18,6 @@ class NotificationServiceConfig : INotificationServiceConfig {
     var channelDescription: String = ""
     var channelImportance: Int = 3
     var isVibrationEnabled: Boolean = false
-    var isAutoCancelEnabled: Boolean = false
     val priority: Int
         get() = channelImportance.toPriority()
 
@@ -31,6 +30,7 @@ class NotificationServiceConfig : INotificationServiceConfig {
         this.channelId = channelId
         this.channelName = channelName
         this.channelDescription = channelDescription
+
         if (channelImportance in 0..5) {
             this.channelImportance = channelImportance
         }
@@ -38,10 +38,6 @@ class NotificationServiceConfig : INotificationServiceConfig {
 
     override fun setVibration(enabled: Boolean) {
         this.isVibrationEnabled = enabled
-    }
-
-    override fun setAutoCancel(enabled: Boolean) {
-        this.isAutoCancelEnabled = enabled
     }
 
     fun validate(): Boolean {
