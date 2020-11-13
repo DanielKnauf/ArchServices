@@ -7,12 +7,12 @@ interface INotificationServiceConfig {
     /**
      * Sets all parameters needed to create a notification channel.
      *
-     * NOTE: Starting with Android O [26] a [channelName] and [channelDescription] are mandatory and must be not blank.
+     * NOTE: Starting with Android O [26] a [channelName] and [channelDescription] are mandatory and must not be blank.
      *
-     * @param channelId id of the channel
-     * @param channelName displayed name of the channel
-     * @param channelDescription displayed description of the channel
-     * @param channelImportance importance level of the channel
+     * @param channelId given id
+     * @param channelName displayed name in user system preferences
+     * @param channelDescription displayed description in user system preferences
+     * @param channelImportance importance level
      */
     fun setNotificationChannel(
         channelId: String,
