@@ -1,11 +1,14 @@
-package knaufdan.android.arch.base.component.viewpager
+package knaufdan.android.arch.base.component.viewpager.binding
 
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel
-import knaufdan.android.arch.base.component.viewpager.ViewPagerOrientation.Companion.toAndroidOrientation
+import knaufdan.android.arch.base.component.viewpager.IComponentAdapter
+import knaufdan.android.arch.base.component.viewpager.implementation.ComponentAdapter
+import knaufdan.android.arch.base.component.viewpager.implementation.ViewPagerOrientation
+import knaufdan.android.arch.base.component.viewpager.implementation.ViewPagerOrientation.Companion.toAndroidOrientation
 import knaufdan.android.arch.utils.findLifecycleOwner
 
 @BindingAdapter(
@@ -27,13 +30,13 @@ fun ViewPager2.bindPages(
 
     val hasSameItems =
         adapter?.run {
-            this is ComponentViewPagerAdapter && hasSameItems(components)
+            this is IComponentAdapter && hasSameItems(components)
         } ?: false
 
     val needsNewAdapter = !hasSameItems
     if (needsNewAdapter) {
-        this.adapter =
-            ComponentViewPagerAdapter(
+        adapter =
+            ComponentAdapter(
                 fragmentManager = fragmentManager,
                 components = components,
                 lifecycleOwner = lifecycleOwner
