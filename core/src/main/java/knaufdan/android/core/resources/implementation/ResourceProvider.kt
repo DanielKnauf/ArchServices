@@ -3,14 +3,10 @@ package knaufdan.android.core.resources.implementation
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.os.Build
-import androidx.annotation.ColorRes
-import androidx.annotation.DimenRes
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
-import knaufdan.android.core.IContextProvider
-import knaufdan.android.core.resources.IResourceProvider
 import javax.inject.Inject
 import javax.inject.Singleton
+import knaufdan.android.core.IContextProvider
+import knaufdan.android.core.resources.IResourceProvider
 
 @Singleton
 internal class ResourceProvider @Inject constructor(
@@ -20,7 +16,7 @@ internal class ResourceProvider @Inject constructor(
         get() = contextProvider.getContext().resources
 
     override fun getString(
-        @StringRes stringRes: Int,
+        stringRes: Int,
         formatArgument: Any?
     ): String =
         if (stringRes.isInvalid()) {
@@ -39,7 +35,7 @@ internal class ResourceProvider @Inject constructor(
         }
 
     override fun getDrawable(
-        @DrawableRes drawableRes: Int,
+        drawableRes: Int,
         theme: Resources.Theme?
     ): Drawable =
         resources.getDrawable(
@@ -47,17 +43,15 @@ internal class ResourceProvider @Inject constructor(
             theme
         )
 
-    override fun getDimension(
-        @DimenRes dimenRes: Int
-    ): Float =
+    override fun getDimension(dimenRes: Int): Float =
         if (dimenRes.isInvalid()) {
-            0f
+            -1f
         } else {
             resources.getDimension(dimenRes)
         }
 
     override fun getColor(
-        @ColorRes colorRes: Int,
+        colorRes: Int,
         theme: Resources.Theme?
     ): Int =
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -67,6 +61,13 @@ internal class ResourceProvider @Inject constructor(
             )
         } else {
             resources.getColor(colorRes)
+        }
+
+    override fun getInt(intRes: Int): Int =
+        if (intRes.isInvalid()) {
+            -1
+        } else {
+            resources.getInteger(intRes)
         }
 
     companion object {
