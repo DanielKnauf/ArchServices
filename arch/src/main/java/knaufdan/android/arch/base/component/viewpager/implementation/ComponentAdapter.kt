@@ -1,4 +1,4 @@
-package knaufdan.android.arch.base.component.viewpager
+package knaufdan.android.arch.base.component.viewpager.implementation
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -7,15 +7,16 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel
 import knaufdan.android.arch.base.component.fragment.ComponentFragmentFactory
+import knaufdan.android.arch.base.component.viewpager.IComponentAdapter
 
-class ComponentViewPagerAdapter(
+class ComponentAdapter(
     private val fragmentManager: FragmentManager,
     components: List<IComponent<IComponentViewModel>>,
     lifecycleOwner: LifecycleOwner
-) : FragmentStateAdapter(fragmentManager, lifecycleOwner.lifecycle) {
+) : FragmentStateAdapter(fragmentManager, lifecycleOwner.lifecycle), IComponentAdapter {
     /**
      * Generate a new list to not reference the given one.
-     * Otherwise [ComponentViewPagerAdapter] gets new items whenever the referenced list is updated
+     * Otherwise [ComponentAdapter] gets new items whenever the referenced list is updated
      * but is not notified about the data change.
      */
     private val items = components.toList()
@@ -29,7 +30,7 @@ class ComponentViewPagerAdapter(
         }
 
     override fun equals(other: Any?): Boolean {
-        if (other is ComponentViewPagerAdapter) {
+        if (other is ComponentAdapter) {
             return hasSameItems(other.items)
         }
 
@@ -38,7 +39,7 @@ class ComponentViewPagerAdapter(
 
     override fun hashCode(): Int = items.hashCode()
 
-    fun hasSameItems(
+    override fun hasSameItems(
         otherItems: List<IComponent<IComponentViewModel>>
     ): Boolean = otherItems.toTypedArray() contentDeepEquals items.toTypedArray()
 }
