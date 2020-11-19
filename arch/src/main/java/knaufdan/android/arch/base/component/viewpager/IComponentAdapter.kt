@@ -9,7 +9,7 @@ interface IComponentAdapter {
      *
      * @param otherItems list of components which are compared to [IComponentAdapter]s' items
      *
-     * @return true if both lists are [contentDeepEquals]
+     * @return true if both lists contain same items
      */
     fun hasSameItems(otherItems: List<IComponent<IComponentViewModel>>): Boolean
 }
