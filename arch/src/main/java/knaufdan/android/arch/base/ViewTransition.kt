@@ -1,4 +1,4 @@
-package knaufdan.android.arch.base.component.api
+package knaufdan.android.arch.base
 
 import android.transition.Fade
 import android.transition.Slide

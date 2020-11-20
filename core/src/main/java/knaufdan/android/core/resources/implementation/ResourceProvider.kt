@@ -3,10 +3,10 @@ package knaufdan.android.core.resources.implementation
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.os.Build
-import javax.inject.Inject
-import javax.inject.Singleton
 import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.resources.IResourceProvider
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
 internal class ResourceProvider @Inject constructor(

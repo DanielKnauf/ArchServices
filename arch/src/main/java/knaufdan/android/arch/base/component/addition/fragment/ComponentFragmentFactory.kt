@@ -1,4 +1,4 @@
-package knaufdan.android.arch.base.component.fragment
+package knaufdan.android.arch.base.component.addition.fragment
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentFactory

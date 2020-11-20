@@ -1,14 +1,14 @@
-package knaufdan.android.arch.base.component.viewpager.binding
+package knaufdan.android.arch.base.component.addition.viewpager.binding
 
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel
-import knaufdan.android.arch.base.component.viewpager.IComponentAdapter
-import knaufdan.android.arch.base.component.viewpager.implementation.ComponentAdapter
-import knaufdan.android.arch.base.component.viewpager.implementation.ViewPagerOrientation
-import knaufdan.android.arch.base.component.viewpager.implementation.ViewPagerOrientation.Companion.toAndroidOrientation
+import knaufdan.android.arch.base.component.addition.viewpager.IComponentAdapter
+import knaufdan.android.arch.base.component.addition.viewpager.implementation.ComponentAdapter
+import knaufdan.android.arch.base.component.addition.viewpager.implementation.ViewPagerOrientation
+import knaufdan.android.arch.base.component.addition.viewpager.implementation.ViewPagerOrientation.Companion.toAndroidOrientation
 import knaufdan.android.arch.utils.findLifecycleOwner
 
 @BindingAdapter(
@@ -52,6 +52,24 @@ fun ViewPager2.bindPages(
     }
 
     setOrientation(viewPagerOrientation)
+}
+
+@BindingAdapter(
+    "selectedPage"
+)
+fun ViewPager2.bindPage(index: Int) {
+    val count = adapter?.itemCount ?: return
+
+    if (index !in 0 until count) {
+        return
+    }
+
+    val currentIndex = currentItem
+    if (currentIndex == index) {
+        return
+    }
+
+    currentItem = index
 }
 
 interface OnPageSelectedListener {

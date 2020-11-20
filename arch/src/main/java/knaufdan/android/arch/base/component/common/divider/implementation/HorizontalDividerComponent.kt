@@ -4,9 +4,9 @@ import knaufdan.android.arch.BR
 import knaufdan.android.arch.R
 import knaufdan.android.arch.base.BindingKey
 import knaufdan.android.arch.base.LayoutRes
+import knaufdan.android.arch.base.component.addition.recyclerview.IDiffItem
 import knaufdan.android.arch.base.component.common.divider.HorizontalDividerConfig
 import knaufdan.android.arch.base.component.common.divider.IHorizontalDividerComponent
-import knaufdan.android.arch.base.component.recyclerview.IDiffItem
 import knaufdan.android.core.resources.IResourceProvider
 
 class HorizontalDividerComponent(

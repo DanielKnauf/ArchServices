@@ -1,4 +1,4 @@
-package knaufdan.android.arch.base.component.viewpager.implementation
+package knaufdan.android.arch.base.component.addition.viewpager.implementation
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -6,8 +6,8 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel
-import knaufdan.android.arch.base.component.fragment.ComponentFragmentFactory
-import knaufdan.android.arch.base.component.viewpager.IComponentAdapter
+import knaufdan.android.arch.base.component.addition.fragment.ComponentFragmentFactory
+import knaufdan.android.arch.base.component.addition.viewpager.IComponentAdapter
 
 class ComponentAdapter(
     private val fragmentManager: FragmentManager,

@@ -1,4 +1,4 @@
-package knaufdan.android.arch.base.component.recyclerview.binding
+package knaufdan.android.arch.base.component.addition.recyclerview.binding
 
 import android.content.Context
 import androidx.databinding.BindingAdapter
@@ -9,8 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import knaufdan.android.arch.base.ViewOrientation
 import knaufdan.android.arch.base.component.IComponent
-import knaufdan.android.arch.base.component.recyclerview.RecyclerViewSnapHelper
-import knaufdan.android.arch.base.component.recyclerview.implementation.ComponentAdapter
+import knaufdan.android.arch.base.component.addition.recyclerview.RecyclerViewSnapHelper
+import knaufdan.android.arch.base.component.addition.recyclerview.implementation.ComponentAdapter
 
 @BindingAdapter(
     value = [
