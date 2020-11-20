@@ -1,4 +1,4 @@
-package knaufdan.android.arch.base.component.fragment
+package knaufdan.android.arch.base.component.addition.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
+import knaufdan.android.arch.BR
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel
 import java.util.WeakHashMap
@@ -36,6 +37,7 @@ class ComponentFragment(
                 container,
                 false
             ).apply {
+                setVariable(BR.fm, childFragmentManager)
                 setVariable(viewModelKey, viewModel)
             }
         }.run {

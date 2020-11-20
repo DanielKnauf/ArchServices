@@ -1,4 +1,4 @@
-package knaufdan.android.arch.base.component.binding
+package knaufdan.android.arch.base.component.addition.viewgroup
 
 import android.animation.LayoutTransition
 import android.transition.TransitionManager
@@ -9,10 +9,10 @@ import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import knaufdan.android.arch.base.ViewTransition
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel
-import knaufdan.android.arch.base.component.api.ViewTransition
-import knaufdan.android.arch.base.component.api.toAndroidTransition
+import knaufdan.android.arch.base.toAndroidTransition
 import knaufdan.android.arch.utils.findLifecycleOwner
 import java.util.Collections.emptyList
 import java.util.WeakHashMap
@@ -71,7 +71,7 @@ fun ViewGroup.bindComponents(
             return@forEachIndexed
         }
 
-        if (newComponent.getId() == oldComponents[index].getId()) {
+        if (newComponent.getID() == oldComponents[index].getID()) {
             return@forEachIndexed
         }
 

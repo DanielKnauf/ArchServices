@@ -1,4 +1,4 @@
-package knaufdan.android.arch.base.component.viewpager.binding
+package knaufdan.android.arch.base.component.addition.viewpager.binding
 
 import androidx.databinding.BindingAdapter
 import androidx.viewpager2.widget.ViewPager2

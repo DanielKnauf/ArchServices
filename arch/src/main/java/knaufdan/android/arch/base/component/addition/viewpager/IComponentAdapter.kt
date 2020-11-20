@@ -1,4 +1,4 @@
-package knaufdan.android.arch.base.component.viewpager
+package knaufdan.android.arch.base.component.addition.viewpager
 
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel

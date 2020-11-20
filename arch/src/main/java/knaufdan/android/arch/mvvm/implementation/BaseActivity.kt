@@ -1,5 +1,6 @@
 package knaufdan.android.arch.mvvm.implementation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
@@ -39,7 +40,7 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> :
         )
     }
 
-    override fun getViewModel(): ViewModel = viewModel
+    override fun getDataSource(): ViewModel = viewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +81,14 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> :
     override fun FragmentManager.notifyBackPressed() = fragments.forEach { fragment ->
         if (fragment is IBaseFragment<*>) {
             fragment.setBackPressed(isBackPressed = true)
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        intent?.run {
+            viewModel.onNewIntent(this)
         }
     }
 
