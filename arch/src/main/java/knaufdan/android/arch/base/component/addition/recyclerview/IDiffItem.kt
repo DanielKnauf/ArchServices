@@ -1,4 +1,4 @@
-package knaufdan.android.arch.base.component.recyclerview
+package knaufdan.android.arch.base.component.addition.recyclerview
 
 interface IDiffItem {
     /**

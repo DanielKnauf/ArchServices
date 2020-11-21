@@ -1,4 +1,4 @@
-package knaufdan.android.arch.base.component.viewpager.implementation
+package knaufdan.android.arch.base.component.addition.viewpager.implementation
 
 import androidx.viewpager2.widget.ViewPager2
 
