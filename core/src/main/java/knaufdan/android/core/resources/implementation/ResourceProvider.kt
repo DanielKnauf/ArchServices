@@ -45,7 +45,7 @@ internal class ResourceProvider @Inject constructor(
 
     override fun getDimension(dimenRes: Int): Float =
         if (dimenRes.isInvalid()) {
-            -1f
+            0f
         } else {
             resources.getDimension(dimenRes)
         }
@@ -65,7 +65,7 @@ internal class ResourceProvider @Inject constructor(
 
     override fun getInt(intRes: Int): Int =
         if (intRes.isInvalid()) {
-            -1
+            0
         } else {
             resources.getInteger(intRes)
         }
