@@ -145,6 +145,8 @@ internal class NotificationService(
                 this,
                 activityTarget.java
             ).run {
+                action = getString(R.string.notification_api_action_open_app)
+
                 putExtra(
                     getString(R.string.notification_api_key_id),
                     notificationId
