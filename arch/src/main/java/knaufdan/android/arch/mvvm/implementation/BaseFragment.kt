@@ -58,8 +58,8 @@ abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment()
                 activity?.setTitle(activityTitleRes)
             }
 
-            // do only initiate view model on first start
-            if (savedInstanceState == null) {
+            val isFirstStart = savedInstanceState == null
+            if (isFirstStart) {
                 viewModel.onFirstStart(arguments)
             }
 
