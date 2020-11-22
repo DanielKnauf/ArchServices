@@ -1,4 +1,4 @@
-name: Android CI
+name: ArchServices CI
 
 on: [push, pull_request]
 
@@ -14,4 +14,4 @@ jobs:
       with:
         java-version: 1.8
     - name: Verify ktLint
-      run: ./gradlew ktLintVerify
+      run: ./gradlew ktLintCheck
