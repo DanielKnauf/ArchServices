@@ -1,6 +1,6 @@
-name: ArchServices CI
+name: On Push CI
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
   build:
