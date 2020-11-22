@@ -10,25 +10,35 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import dagger.android.support.AndroidSupportInjection
+import knaufdan.android.arch.BR
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.arch.mvvm.implementation.AndroidBaseViewModel
 import knaufdan.android.arch.mvvm.implementation.AndroidComponentConfig
 import knaufdan.android.arch.navigation.NavigationService
+import knaufdan.android.core.resources.IResourceProvider
+import java.util.WeakHashMap
 import javax.inject.Inject
 
-abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> : DialogFragment(), IBaseFragment<ViewModel> {
+abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> :
+    DialogFragment(),
+    IBaseFragment<ViewModel> {
 
     @Inject
     internal lateinit var viewModelFactory: ViewModelFactory
+
     @Inject
     internal lateinit var navigationService: NavigationService
 
     private lateinit var viewModel: ViewModel
 
-    override fun getViewModel(): ViewModel = viewModel
+    private val viewModelStoreOwner: ViewModelStoreOwner by lazy {
+        requireActivity()
+    }
 
     private val config: AndroidComponentConfig.DialogConfig by lazy {
         AndroidComponentConfig.DialogConfig(
@@ -39,11 +49,13 @@ abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> : DialogFrag
         )
     }
 
+    override fun getDataSource(): ViewModel = viewModel
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         AndroidSupportInjection.inject(this)
 
-        viewModel = ViewModelProvider(this, viewModelFactory).get(getTypeClass())
+        viewModel = ViewModelProvider(viewModelStoreOwner, viewModelFactory).get(getTypeClass())
         viewModel.fragmentTag = getFragmentTag()
         lifecycle.addObserver(viewModel)
     }
@@ -54,27 +66,29 @@ abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> : DialogFrag
         savedInstanceState: Bundle?
     ): View? =
         config.run {
-            if (activityTitleRes != -1) {
+            if (activityTitleRes != IResourceProvider.INVALID_RES_ID) {
                 activity?.setTitle(activityTitleRes)
             }
 
-            // do only initiate view model on first start
-            if (savedInstanceState == null) {
+            val isFirstStart = savedInstanceState == null
+            if (isFirstStart) {
                 viewModel.onFirstStart(arguments)
             }
 
-            val binding: ViewDataBinding =
-                DataBindingUtil.inflate(
+            bindings.getOrPut(viewModel) {
+                DataBindingUtil.inflate<ViewDataBinding>(
                     inflater,
                     layoutRes,
                     container,
                     false
-                )
-
-            binding.run {
-                setVariable(viewModelKey, viewModel)
+                ).apply {
+                    setVariable(viewModelKey, viewModel)
+                    setVariable(BR.fm, childFragmentManager)
+                }
+            }.run {
+                lifecycleOwner = this@BaseDialogFragment
                 executePendingBindings()
-                binding.root
+                root
             }
         }
 
@@ -106,5 +120,6 @@ abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> : DialogFrag
 
     companion object {
         const val KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN = "KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN"
+        private val bindings: MutableMap<ViewModel, ViewDataBinding> = WeakHashMap()
     }
 }

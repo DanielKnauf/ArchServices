@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?><!--suppress XmlUnusedNamespaceDeclaration -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="knaufdan.android.arch.base.component.common.divider.implementation.HorizontalDividerViewModel" />
+    </data>
+
+    <FrameLayout
+        style="@style/arch_horizontal_divider_container"
+        android:background="@{viewModel.background}">
+
+        <View
+            style="@style/arch_horizontal_divider_line"
+            android:layout_height="wrap_content"
+            app:height="@{viewModel.height}"
+            android:background="@{viewModel.color}"
+            app:marginLeft="@{viewModel.marginLeft}"
+            app:marginRight="@{viewModel.marginRight}"
+            tools:ignore="RtlHardcoded" />
+        
+    </FrameLayout>
+
+</layout>

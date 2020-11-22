@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.IntegerRes
 import androidx.annotation.StringRes
 import knaufdan.android.core.R
 
@@ -26,6 +27,10 @@ interface IResourceProvider {
     fun getColor(
         @ColorRes colorRes: Int,
         theme: Resources.Theme? = null
+    ): Int
+
+    fun getInt(
+        @IntegerRes intRes: Int
     ): Int
 
     companion object {

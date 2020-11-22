@@ -18,8 +18,6 @@ import knaufdan.android.core.resources.IResourceProvider
 import java.util.WeakHashMap
 import javax.inject.Inject
 
-private val bindings: MutableMap<ViewModel, ViewDataBinding> = WeakHashMap()
-
 abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment(), IBaseFragment<ViewModel> {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
@@ -38,7 +36,7 @@ abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment()
         )
     }
 
-    override fun getViewModel(): ViewModel = viewModel
+    override fun getDataSource(): ViewModel = viewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -84,5 +82,9 @@ abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment()
 
     override fun setBackPressed(isBackPressed: Boolean) {
         viewModel.isBackPressed = isBackPressed
+    }
+
+    companion object {
+        private val bindings: MutableMap<ViewModel, ViewDataBinding> = WeakHashMap()
     }
 }

@@ -39,7 +39,7 @@ internal class NotificationService(
         if (hasInvalidConfig) {
             Log.e(
                 this::class.simpleName,
-                "Current NotificationServiceConfig is not valid, no notification could be shown : $config"
+                "Current NotificationServiceConfig [$config] is not valid, thus no notification could be shown."
             )
             return
         }
@@ -83,10 +83,11 @@ internal class NotificationService(
             setSmallIcon(style.smallIcon)
             setContentTitle(style.title)
             setContentText(style.text)
+            setStyle(NotificationCompat.BigTextStyle().bigText(style.bigText))
             setDefaults(NotificationCompat.DEFAULT_ALL)
             setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             priority = config.priority
-            setAutoCancel(config.isAutoCancelEnabled)
+            setAutoCancel(isAutoCancelEnabled)
             setCategory(CATEGORY_ALARM)
             setVibrate(longArrayOf())
             setOnNotificationClicked(this@buildNotification)
@@ -97,6 +98,7 @@ internal class NotificationService(
     private fun NotificationCompat.Builder.setOnNotificationClicked(notificationConfig: NotificationConfig): NotificationCompat.Builder =
         run {
             val activityTarget = notificationConfig.interaction.activityTarget ?: return@run this
+
             setContentIntent(
                 context.createIntentToOpenApp(
                     activityTarget = activityTarget,
@@ -143,6 +145,8 @@ internal class NotificationService(
                 this,
                 activityTarget.java
             ).run {
+                action = getString(R.string.notification_api_action_open_app)
+
                 putExtra(
                     getString(R.string.notification_api_key_id),
                     notificationId
