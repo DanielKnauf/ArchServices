@@ -1,4 +1,4 @@
-package knaufdan.android.arch.databinding.views
+package knaufdan.android.arch.databinding.view
 
 import androidx.core.view.postDelayed
 import androidx.databinding.BindingAdapter
