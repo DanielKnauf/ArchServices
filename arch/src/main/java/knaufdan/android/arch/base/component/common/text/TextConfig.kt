@@ -7,7 +7,7 @@ import androidx.annotation.DimenRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import knaufdan.android.arch.R
-import knaufdan.android.arch.databinding.views.TextGravity
+import knaufdan.android.arch.databinding.view.TextGravity
 
 data class TextConfig(
     val text: LiveData<Spannable>,

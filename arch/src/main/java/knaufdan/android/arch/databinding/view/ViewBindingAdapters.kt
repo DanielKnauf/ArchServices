@@ -1,9 +1,10 @@
-package knaufdan.android.arch.databinding.views
+package knaufdan.android.arch.databinding.view
 
 import android.animation.ObjectAnimator
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import androidx.core.view.marginBottom
 import androidx.core.view.marginLeft
 import androidx.core.view.marginRight
@@ -21,13 +22,15 @@ fun View.bindHeight(
     }
 }
 
-@BindingAdapter("backgroundResource")
+@BindingAdapter("background")
 fun View.bindBackgroundResource(@DrawableRes background: Int) {
     if (background == IResourceProvider.INVALID_RES_ID) {
         return
     }
 
-    setBackground(context.getDrawable(background))
+    val drawable = ContextCompat.getDrawable(context, background) ?: return
+
+    setBackground(drawable)
 }
 
 @BindingAdapter(
@@ -45,7 +48,7 @@ fun View.bindFocus(
         return
     }
 
-    val performFocus = {
+    val updateFocus = {
         if (focused) {
             requestFocus()
         } else {
@@ -54,12 +57,12 @@ fun View.bindFocus(
     }
 
     if (focusDelay == null) {
-        performFocus()
+        updateFocus()
         return
     }
 
-    this.postDelayed(focusDelay.toLong()) {
-        performFocus()
+    postDelayed(focusDelay.toLong()) {
+        updateFocus()
     }
 }
 

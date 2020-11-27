@@ -1,11 +1,13 @@
-package knaufdan.android.arch.databinding.views
+package knaufdan.android.arch.databinding.view
 
 import android.os.Build
 import android.text.Html
 import android.view.Gravity
 import android.widget.TextView
 import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
+import knaufdan.android.core.resources.IResourceProvider
 
 @BindingAdapter(value = ["onTextClicked"])
 fun TextView.onTextViewClicked(
@@ -14,6 +16,10 @@ fun TextView.onTextViewClicked(
     setOnClickListener {
         onTextClicked.onClick(text.toString())
     }
+}
+
+interface IOnTextClickedListener {
+    fun onClick(s: String)
 }
 
 @BindingAdapter(value = ["number"])
@@ -27,12 +33,11 @@ fun TextView.bindNumber(
 fun TextView.bindTextColor(
     @ColorRes textColorRes: Int
 ) {
-    val color =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            context.resources.getColor(textColorRes, null)
-        } else {
-            context.resources.getColor(textColorRes)
-        }
+    if (textColorRes == IResourceProvider.INVALID_RES_ID) {
+        return
+    }
+
+    val color = ContextCompat.getColor(context, textColorRes)
 
     setTextColor(color)
 }
@@ -40,13 +45,23 @@ fun TextView.bindTextColor(
 @BindingAdapter(
     value = ["textGravity"]
 )
-fun TextView.bindTextGravity(gravity: TextGravity) {
-    this.gravity = when (gravity) {
-        TextGravity.CENTER -> Gravity.CENTER
-        TextGravity.CENTER_HORIZONTAL -> Gravity.CENTER_HORIZONTAL
-        TextGravity.CENTER_VERTICAL -> Gravity.CENTER_VERTICAL
-        TextGravity.DEFAULT -> Gravity.NO_GRAVITY
-    }
+fun TextView.bindTextGravity(
+    gravity: TextGravity
+) {
+    this.gravity =
+        when (gravity) {
+            TextGravity.CENTER -> Gravity.CENTER
+            TextGravity.CENTER_HORIZONTAL -> Gravity.CENTER_HORIZONTAL
+            TextGravity.CENTER_VERTICAL -> Gravity.CENTER_VERTICAL
+            TextGravity.DEFAULT -> Gravity.NO_GRAVITY
+        }
+}
+
+enum class TextGravity {
+    CENTER,
+    CENTER_VERTICAL,
+    CENTER_HORIZONTAL,
+    DEFAULT
 }
 
 @BindingAdapter(value = ["htmlText"])
@@ -64,15 +79,4 @@ fun TextView.bindHtmlText(
         }
 
     setText(formattedText)
-}
-
-interface IOnTextClickedListener {
-    fun onClick(s: String)
-}
-
-enum class TextGravity {
-    DEFAULT,
-    CENTER,
-    CENTER_VERTICAL,
-    CENTER_HORIZONTAL
 }
