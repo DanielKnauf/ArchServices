@@ -10,13 +10,12 @@ import dagger.android.support.DaggerAppCompatActivity
 import knaufdan.android.arch.BR
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseActivity
-import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.resources.IResourceProvider
 import javax.inject.Inject
 
-abstract class BaseActivity<ViewModel : ActivityViewModel> :
+abstract class BaseActivity<ViewModel : BaseActivityViewModel> :
     DaggerAppCompatActivity(),
     IBaseActivity<ViewModel> {
 
@@ -40,7 +39,7 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> :
         )
     }
 
-    override fun getDataSource(): ViewModel = viewModel
+    override fun getViewModel(): ViewModel = viewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,17 +49,16 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> :
         config.run {
             setBinding(savedInstanceState)
 
-            if (activityTitleRes != IResourceProvider.INVALID_RES_ID) {
+            val hasTitleResource = activityTitleRes != IResourceProvider.INVALID_RES_ID
+            if (hasTitleResource) {
                 setTitle(activityTitleRes)
             }
 
             fragmentSetup?.apply {
-                navigationService.containerViewId = first
-
                 val isNotFirstStart = savedInstanceState != null
-                if (isNotFirstStart) {
-                    return
-                }
+                if (isNotFirstStart) return
+
+                navigationService.containerViewId = first
 
                 showInitialFragment(
                     savedInstanceState = savedInstanceState,
@@ -72,16 +70,10 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> :
 
     override fun onBackPressed() {
         supportFragmentManager.notifyBackPressed()
-        if (viewModel.handleBackPressed(supportFragmentManager)) {
-            return
-        }
-        super.onBackPressed()
-    }
 
-    override fun FragmentManager.notifyBackPressed() = fragments.forEach { fragment ->
-        if (fragment is IBaseFragment<*>) {
-            fragment.setBackPressed(isBackPressed = true)
-        }
+        if (viewModel.handleBackPressed(supportFragmentManager)) return
+
+        super.onBackPressed()
     }
 
     override fun onNewIntent(intent: Intent?) {
@@ -97,9 +89,9 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> :
 
         lifecycle.addObserver(viewModel)
 
-        val isFirstStart = savedInstanceState == null
-        if (isFirstStart) {
-            viewModel.onFirstStart(intent.extras)
+        val isInitialized = savedInstanceState == null
+        if (isInitialized) {
+            viewModel.onInitialization(intent.extras)
         }
 
         DataBindingUtil.setContentView<ViewDataBinding>(
@@ -114,7 +106,7 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> :
     }
 
     private fun showInitialFragment(
-        initialFragment: BaseFragment<out AndroidBaseViewModel>?,
+        initialFragment: BaseFragment<out BaseFragmentViewModel>?,
         savedInstanceState: Bundle?
     ) {
         initialFragment?.apply {
@@ -126,4 +118,11 @@ abstract class BaseActivity<ViewModel : ActivityViewModel> :
             )
         }
     }
+
+    private fun FragmentManager.notifyBackPressed() =
+        fragments
+            .filterIsInstance(BaseFragment::class.java)
+            .forEach { fragment ->
+                fragment.setBackPressed(isBackPressed = true)
+            }
 }

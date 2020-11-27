@@ -14,7 +14,7 @@ internal sealed class AndroidComponentConfig(
         @LayoutRes layoutRes: Int,
         viewModelKey: Int,
         @StringRes activityTitleRes: Int,
-        val fragmentSetup: Pair<ContainerViewId, BaseFragment<out AndroidBaseViewModel>?>?
+        val fragmentSetup: Pair<ContainerViewId, BaseFragment<out BaseFragmentViewModel>?>?
     ) : AndroidComponentConfig(
         layoutRes = layoutRes,
         viewModelKey = viewModelKey,

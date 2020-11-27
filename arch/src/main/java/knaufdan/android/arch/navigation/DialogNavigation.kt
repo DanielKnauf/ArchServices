@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
-import knaufdan.android.arch.mvvm.implementation.AndroidBaseViewModel
+import knaufdan.android.arch.mvvm.implementation.BaseFragmentViewModel
 import knaufdan.android.arch.mvvm.implementation.dialog.BaseDialogFragment
 import knaufdan.android.arch.mvvm.implementation.dialog.BaseDialogFragment.Companion.KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN
 import knaufdan.android.arch.mvvm.implementation.dialog.DialogStyle
@@ -14,7 +14,7 @@ typealias FragmentTag = String
 private val fragmentConversations: MutableMap<FragmentTag, FragmentConversation<*>> = mutableMapOf()
 
 internal fun <ResultType> Context.showDialog(
-    fragment: BaseDialogFragment<out AndroidBaseViewModel>,
+    fragment: BaseDialogFragment<out BaseFragmentViewModel>,
     dialogStyle: DialogStyle,
     callback: ((ResultType?) -> Unit)
 ) {

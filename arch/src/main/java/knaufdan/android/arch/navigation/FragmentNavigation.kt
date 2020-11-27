@@ -2,11 +2,11 @@ package knaufdan.android.arch.navigation
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
-import knaufdan.android.arch.mvvm.implementation.AndroidBaseViewModel
 import knaufdan.android.arch.mvvm.implementation.BaseFragment
+import knaufdan.android.arch.mvvm.implementation.BaseFragmentViewModel
 
 internal fun Context.replaceFragmentCleanly(
-    fragment: BaseFragment<out AndroidBaseViewModel>,
+    fragment: BaseFragment<out BaseFragmentViewModel>,
     containerViewId: ContainerViewId
 ) {
     if (this is AppCompatActivity) {
@@ -20,7 +20,7 @@ internal fun Context.replaceFragmentCleanly(
 }
 
 internal fun Context.replaceFragment(
-    fragment: BaseFragment<out AndroidBaseViewModel>,
+    fragment: BaseFragment<out BaseFragmentViewModel>,
     addToBackStack: Boolean,
     containerViewId: ContainerViewId
 ) {
