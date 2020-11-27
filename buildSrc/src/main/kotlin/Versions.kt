@@ -1,6 +1,6 @@
 object Versions {
     const val gradle_version = "4.0.0"
-    const val kotlin_version = "1.4.10"
+    const val kotlin_version = "1.4.20"
 
     const val design_version = "1.1.0-alpha07"
 
@@ -18,6 +18,8 @@ object Versions {
     const val picasso_version = "2.71828"
 
     const val retrofit_version = "2.9.0"
+
+    const val room_version = "2.2.5"
 
     //testing
     const val jUnit_version = "4.13"
