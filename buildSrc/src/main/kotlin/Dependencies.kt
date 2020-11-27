@@ -17,6 +17,7 @@ import Versions.recyclerView_version
 import Versions.retrofit_version
 import Versions.test_runner_version
 import Versions.view_pager_2_version
+import Versions.room_version
 
 object Dependencies {
     val gradle = "com.android.tools.build:gradle:$gradle_version"
@@ -24,7 +25,7 @@ object Dependencies {
     val kotlin_gradle_plugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     val kotlin_android_extensions = "org.jetbrains.kotlin:kotlin-android-extensions:$kotlin_version"
     val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     val android_material_design = "com.google.android.material:material:$design_version"
 
@@ -53,6 +54,11 @@ object Dependencies {
     val gson = "com.google.code.gson:gson:$gson_version"
 
     val picasso = "com.squareup.picasso:picasso:$picasso_version"
+
+    //room
+    const val androidX_room = "androidx.room:room-runtime:$room_version"
+    const val androidX_room_ktx = "androidx.room:room-ktx:$room_version"
+    const val androidX_room_compiler = "androidx.room:room-compiler:$room_version"
 
     //retrofit
     val retrofit_core = "com.squareup.retrofit2:retrofit:$retrofit_version"
