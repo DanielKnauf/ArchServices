@@ -17,14 +17,14 @@ import dagger.android.support.AndroidSupportInjection
 import knaufdan.android.arch.BR
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseFragment
-import knaufdan.android.arch.mvvm.implementation.AndroidBaseViewModel
 import knaufdan.android.arch.mvvm.implementation.AndroidComponentConfig
+import knaufdan.android.arch.mvvm.implementation.BaseFragmentViewModel
 import knaufdan.android.arch.navigation.NavigationService
 import knaufdan.android.core.resources.IResourceProvider
 import java.util.WeakHashMap
 import javax.inject.Inject
 
-abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> :
+abstract class BaseDialogFragment<ViewModel : BaseFragmentViewModel> :
     DialogFragment(),
     IBaseFragment<ViewModel> {
 
@@ -49,7 +49,7 @@ abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> :
         )
     }
 
-    override fun getDataSource(): ViewModel = viewModel
+    override fun getViewModel(): ViewModel = viewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -70,9 +70,9 @@ abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> :
                 activity?.setTitle(activityTitleRes)
             }
 
-            val isFirstStart = savedInstanceState == null
-            if (isFirstStart) {
-                viewModel.onFirstStart(arguments)
+            val isInitialized = savedInstanceState == null
+            if (isInitialized) {
+                viewModel.onInitialization(arguments)
             }
 
             bindings.getOrPut(viewModel) {
@@ -105,6 +105,7 @@ abstract class BaseDialogFragment<ViewModel : AndroidBaseViewModel> :
 
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
+
         navigationService.dismissDialogBySystem(fragmentTag = getFragmentTag())
     }
 

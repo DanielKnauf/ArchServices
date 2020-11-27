@@ -5,5 +5,6 @@
     <dimen name="spacing">8dp</dimen>
     <dimen name="spacing_double">16dp</dimen>
     <dimen name="spacing_triple">24dp</dimen>
+    <dimen name="spacing_quadruple">36dp</dimen>
 
 </resources>

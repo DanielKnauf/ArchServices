@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.arch.navigation.NavigationService
+import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.dagger.CoreModule
 import javax.inject.Singleton
 
@@ -14,9 +15,12 @@ import javax.inject.Singleton
     ]
 )
 class ArchModule {
-
     @Provides
     @Singleton
-    internal fun provideNavigator(navigationService: NavigationService): INavigationService =
-        navigationService
+    internal fun provideNavigator(
+        contextProvider: IContextProvider
+    ): INavigationService =
+        NavigationService(
+            contextProvider = contextProvider
+        )
 }

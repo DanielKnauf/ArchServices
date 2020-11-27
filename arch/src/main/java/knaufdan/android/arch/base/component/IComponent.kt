@@ -2,7 +2,6 @@ package knaufdan.android.arch.base.component
 
 import knaufdan.android.arch.base.BindingKey
 import knaufdan.android.arch.base.LayoutRes
-import knaufdan.android.core.common.IGenericType
 
 /**
  * A component defines a user interface element.
@@ -21,7 +20,7 @@ import knaufdan.android.core.common.IGenericType
  * can be received within the [LayoutRes] by placing a <variable> with name (fm) and
  * type (androidx.fragment.app.FragmentManager).
  */
-interface IComponent<DataSource> : IGenericType<DataSource> {
+interface IComponent<DataSource> {
     /**
      * @return layout in which [DataSource] should be bound.
      */
@@ -38,12 +37,10 @@ interface IComponent<DataSource> : IGenericType<DataSource> {
     fun getDataSource(): DataSource
 
     /**
-     * Unique id for each component.
+     * Id pattern: <classname>_ID :: <classHash>_<dataSourceHash>
      *
-     * Pattern <classname>_ID :: <classHash>_<dataSourceHash>
-     *
-     * @return id
+     * @return unique id for each component.
      */
-    fun getID(): String =
+    fun getId(): String =
         "${this::class.simpleName}_ID :: ${this.hashCode()}_${getDataSource().hashCode()}"
 }
