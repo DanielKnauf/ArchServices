@@ -2,7 +2,6 @@ plugins {
     id("com.android.library")
     id("com.github.dcendents.android-maven")
     kotlin("android")
-    kotlin("android.extensions")
     kotlin("kapt")
 }
 
@@ -70,4 +69,9 @@ dependencies {
     "implementation"(Dependencies.kotlin_stdlib)
 
     "implementation"(project(":core"))
+
+    //room
+    "implementation"(Dependencies.androidX_room)
+    "implementation"(Dependencies.androidX_room_ktx)
+    "kapt"(Dependencies.androidX_room_compiler)
 }
