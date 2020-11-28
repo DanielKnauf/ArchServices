@@ -6,14 +6,14 @@ import knaufdan.android.arch.mvvm.implementation.BaseActivity
 
 interface IActivityViewModel : IAndroidBaseViewModel {
     /**
-     * Is called on [BaseActivity.onBackPressed].
+     * Called on [BaseActivity.onBackPressed].
      *
-     * @return true if the backPress event is fully handled and must not be forwarded via [super.onBackPressed].
+     * @return true if the back press event is fully handled and must not be forwarded via [super.onBackPressed].
      */
     fun handleBackPressed(fragmentManager: FragmentManager): Boolean = false
 
     /**
-     * Is called on [BaseActivity.onNewIntent].
+     * Called on [BaseActivity.onNewIntent].
      *
      * @param intent which was started for the [BaseActivity].
      */
