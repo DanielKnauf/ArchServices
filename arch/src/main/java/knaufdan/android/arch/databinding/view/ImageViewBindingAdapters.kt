@@ -1,4 +1,4 @@
-package knaufdan.android.arch.databinding.views
+package knaufdan.android.arch.databinding.view
 
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
@@ -62,18 +62,21 @@ private fun RequestCreator.applyTransformation(
     resizeHeight: Int = -1,
     scaleType: ScaleType? = ScaleType.CENTER_INSIDE,
     onlyScaleDown: Boolean = false
-) = this.apply {
-    if (resizeWidth > 0 || resizeHeight > 0) {
-        resize(resizeWidth, resizeHeight)
+) =
+    apply {
+        if (resizeWidth > 0 || resizeHeight > 0) {
+            resize(resizeWidth, resizeHeight)
 
-        when (scaleType) {
-            ScaleType.CENTER_INSIDE -> centerInside()
-            ScaleType.CENTER_CROP -> centerCrop()
+            when (scaleType) {
+                ScaleType.CENTER_INSIDE -> centerInside()
+                ScaleType.CENTER_CROP -> centerCrop()
+            }
+
+            if (onlyScaleDown) {
+                onlyScaleDown()
+            }
         }
-
-        if (onlyScaleDown) onlyScaleDown()
     }
-}
 
 enum class ScaleType {
     CENTER_INSIDE,

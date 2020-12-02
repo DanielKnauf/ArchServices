@@ -1,4 +1,4 @@
-package knaufdan.android.arch.databinding.views
+package knaufdan.android.arch.databinding.view
 
 import android.widget.EditText
 import android.widget.NumberPicker
@@ -34,9 +34,13 @@ fun NumberPicker.setup(
 }
 
 @BindingAdapter("suffixes")
-fun NumberPicker.configureFormatter(suffixes: Suffixes) {
+fun NumberPicker.configureFormatter(
+    suffixes: Suffixes
+) {
     val oldFormatter = numberPickerFormatters[this]
-    if (oldFormatter != null) {
+
+    val hasFormatter = oldFormatter != null
+    if (hasFormatter) {
         return
     }
 

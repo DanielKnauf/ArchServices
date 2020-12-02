@@ -13,12 +13,16 @@ import androidx.lifecycle.ViewModelStoreOwner
 import dagger.android.support.DaggerFragment
 import knaufdan.android.arch.BR
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
+import knaufdan.android.arch.mvvm.IBaseActivity
 import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.core.resources.IResourceProvider
 import java.util.WeakHashMap
 import javax.inject.Inject
 
-abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment(), IBaseFragment<ViewModel> {
+abstract class BaseFragment<ViewModel : BaseFragmentViewModel> :
+    DaggerFragment(),
+    IBaseFragment<ViewModel> {
+
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
@@ -36,7 +40,7 @@ abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment()
         )
     }
 
-    override fun getDataSource(): ViewModel = viewModel
+    override fun getViewModel(): ViewModel = viewModel
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -45,7 +49,7 @@ abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment()
         viewModel.fragmentTag = getFragmentTag()
         lifecycle.addObserver(viewModel)
 
-        setBackPressed(isBackPressed = false)
+        setBackPressed(false)
     }
 
     override fun onCreateView(
@@ -54,13 +58,14 @@ abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment()
         savedInstanceState: Bundle?
     ): View? =
         config.run {
-            if (activityTitleRes != IResourceProvider.INVALID_RES_ID) {
+            val hasTitleResource = activityTitleRes != IResourceProvider.INVALID_RES_ID
+            if (hasTitleResource) {
                 activity?.setTitle(activityTitleRes)
             }
 
-            val isFirstStart = savedInstanceState == null
-            if (isFirstStart) {
-                viewModel.onFirstStart(arguments)
+            val isInitialized = savedInstanceState == null
+            if (isInitialized) {
+                viewModel.onInitialization(arguments)
             }
 
             bindings.getOrPut(viewModel) {
@@ -80,7 +85,13 @@ abstract class BaseFragment<ViewModel : AndroidBaseViewModel> : DaggerFragment()
             }
         }
 
-    override fun setBackPressed(isBackPressed: Boolean) {
+    /**
+     * Is set to true whenever [androidx.appcompat.app.AppCompatActivity.onBackPressed]
+     * is called on the corresponding [IBaseActivity].
+     *
+     * @param isBackPressed indicates whether corresponding [IBaseActivity] was back pressed or not..
+     */
+    internal fun setBackPressed(isBackPressed: Boolean) {
         viewModel.isBackPressed = isBackPressed
     }
 

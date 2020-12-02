@@ -14,7 +14,7 @@ class ComponentDiffCallback : DiffUtil.ItemCallback<IComponent<Any>>() {
             return oldItem.areItemsTheSame(newItem)
         }
 
-        return oldItem.getID() == newItem.getID()
+        return oldItem.getId() == newItem.getId()
     }
 
     @SuppressLint("DiffUtilEquals")

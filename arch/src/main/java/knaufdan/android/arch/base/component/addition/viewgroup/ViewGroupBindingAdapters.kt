@@ -71,7 +71,7 @@ fun ViewGroup.bindComponents(
             return@forEachIndexed
         }
 
-        if (newComponent.getID() == oldComponents[index].getID()) {
+        if (newComponent.getId() == oldComponents[index].getId()) {
             return@forEachIndexed
         }
 

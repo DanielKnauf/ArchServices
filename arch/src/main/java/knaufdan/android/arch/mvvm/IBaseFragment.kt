@@ -1,12 +1,12 @@
 package knaufdan.android.arch.mvvm
 
-typealias FragmentTag = String
+import knaufdan.android.arch.mvvm.implementation.BaseFragmentViewModel
 
-interface IBaseFragment<ViewModel : IAndroidBaseViewModel> : IAndroidComponent<ViewModel> {
-    fun setBackPressed(isBackPressed: Boolean) = Unit
-
+interface IBaseFragment<ViewModel : BaseFragmentViewModel> : IAndroidComponent<ViewModel> {
     /**
-     * @return [FragmentTag] which is used to identify the fragment in the [FragmentStack]. Per default the simple className is used.
+     * NOTE: As default the simple className is used.
+     *
+     * @return [FragmentTag] which is used to identify the fragment in the fragment stack.
      */
     fun getFragmentTag(): FragmentTag = this::class.java.simpleName
 }
