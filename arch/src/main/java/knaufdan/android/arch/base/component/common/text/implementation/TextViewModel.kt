@@ -7,6 +7,8 @@ class TextViewModel(
     private val textConfig: TextConfig,
     resourceProvider: IResourceProvider
 ) {
+    val textLayoutWidth = textConfig.textLayoutWidth
+
     val text = textConfig.text
 
     val textSize = resourceProvider.getDimension(textConfig.textSize)
