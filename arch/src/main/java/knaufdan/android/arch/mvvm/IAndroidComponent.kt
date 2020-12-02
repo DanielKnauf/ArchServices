@@ -2,10 +2,11 @@ package knaufdan.android.arch.mvvm
 
 import knaufdan.android.arch.base.BindingKey
 import knaufdan.android.arch.base.LayoutRes
+import knaufdan.android.arch.mvvm.implementation.AndroidBaseViewModel
 import knaufdan.android.core.common.IGenericType
 import knaufdan.android.core.resources.IResourceProvider
 
-interface IAndroidComponent<ViewModel : IAndroidBaseViewModel> : IGenericType<ViewModel> {
+interface IAndroidComponent<ViewModel : AndroidBaseViewModel> : IGenericType<ViewModel> {
     /**
      * @return layout in which [ViewModel] should be bound.
      */

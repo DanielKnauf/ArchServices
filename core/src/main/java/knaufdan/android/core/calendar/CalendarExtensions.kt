@@ -4,7 +4,7 @@ import java.util.Calendar
 
 fun Calendar.getDayOfMonth(): DayOfMonth = get(Calendar.DAY_OF_MONTH)
 
-fun Calendar.getMonth(): Month = get(Calendar.MONTH)
+fun Calendar.getMonth(): Month = get(Calendar.MONTH) + 1
 
 fun Calendar.getYear(): Year = get(Calendar.YEAR)
 
