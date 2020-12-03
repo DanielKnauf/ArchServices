@@ -10,16 +10,31 @@ import androidx.core.view.marginLeft
 import androidx.core.view.marginRight
 import androidx.core.view.marginTop
 import androidx.core.view.postDelayed
+import androidx.core.view.updateLayoutParams
 import androidx.databinding.BindingAdapter
 import knaufdan.android.core.resources.IResourceProvider
+
+@BindingAdapter("layout_width")
+fun View.bindLayoutWidth(
+    layoutWidth: LayoutWidth = LayoutWidth.DEFAULT
+) {
+    val updatedWidth =
+        when (layoutWidth) {
+            LayoutWidth.WRAP_CONTENT -> ViewGroup.LayoutParams.WRAP_CONTENT
+            LayoutWidth.MATCH_PARENT -> ViewGroup.LayoutParams.MATCH_PARENT
+            LayoutWidth.DEFAULT -> return
+        }
+
+    updateLayoutParams {
+        width = updatedWidth
+    }
+}
 
 @BindingAdapter("height")
 fun View.bindHeight(
     height: Number
 ) {
-    layoutParams = layoutParams.apply {
-        this.height = height.toInt()
-    }
+    updateLayoutParams { this.height = height.toInt() }
 }
 
 @BindingAdapter("background")
@@ -112,6 +127,12 @@ fun View.bindFading(fadingDirection: FadingDirection?) {
         duration = fadingDirection.duration.toLong()
         start()
     }
+}
+
+enum class LayoutWidth {
+    WRAP_CONTENT,
+    MATCH_PARENT,
+    DEFAULT
 }
 
 sealed class FadingDirection(
