@@ -7,10 +7,12 @@ import androidx.annotation.DimenRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import knaufdan.android.arch.R
+import knaufdan.android.arch.databinding.view.LayoutWidth
 import knaufdan.android.arch.databinding.view.TextGravity
 
 data class TextConfig(
     val text: LiveData<Spannable>,
+    val textLayoutWidth: LayoutWidth = LayoutWidth.DEFAULT,
     @DimenRes val textSize: Int = R.dimen.default_text_size,
     @ColorRes val textColor: Int = R.color.default_text_color,
     val textGravity: TextGravity = TextGravity.DEFAULT,
@@ -22,6 +24,7 @@ data class TextConfig(
 ) {
     constructor(
         text: Spannable,
+        textLayoutWidth: LayoutWidth = LayoutWidth.DEFAULT,
         @DimenRes textSize: Int = R.dimen.default_text_size,
         @ColorRes textColor: Int = R.color.default_text_color,
         textGravity: TextGravity = TextGravity.DEFAULT,
@@ -32,6 +35,7 @@ data class TextConfig(
         onTextClicked: (text: String) -> Unit = {}
     ) : this(
         text = MutableLiveData(text),
+        textLayoutWidth = textLayoutWidth,
         textSize = textSize,
         textColor = textColor,
         textGravity = textGravity,
@@ -44,6 +48,7 @@ data class TextConfig(
 
     constructor(
         text: String,
+        textLayoutWidth: LayoutWidth = LayoutWidth.DEFAULT,
         @DimenRes textSize: Int = R.dimen.default_text_size,
         @ColorRes textColor: Int = R.color.default_text_color,
         textGravity: TextGravity = TextGravity.DEFAULT,
@@ -54,6 +59,7 @@ data class TextConfig(
         onTextClicked: (text: String) -> Unit = {}
     ) : this(
         text = MutableLiveData(SpannableString(text) as Spannable),
+        textLayoutWidth = textLayoutWidth,
         textSize = textSize,
         textColor = textColor,
         textGravity = textGravity,
