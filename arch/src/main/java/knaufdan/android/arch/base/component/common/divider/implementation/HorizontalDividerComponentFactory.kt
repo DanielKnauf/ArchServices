@@ -8,7 +8,7 @@ import knaufdan.android.core.resources.IResourceProvider
 class HorizontalDividerComponentFactory(
     private val resourceProvider: IResourceProvider
 ) : IHorizontalDividerComponentFactory {
-    override fun create(config: HorizontalDividerConfig): IHorizontalDividerComponent =
+    override fun get(config: HorizontalDividerConfig): IHorizontalDividerComponent =
         HorizontalDividerComponent(
             config = config,
             resourceProvider = resourceProvider

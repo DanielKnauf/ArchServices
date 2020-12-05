@@ -18,6 +18,7 @@
         android:text="@{viewModel.text}"
         android:textColor="@{viewModel.textColor}"
         android:textSize="@{viewModel.textSize}"
+        app:layout_width="@{viewModel.textLayoutWidth}"
         app:marginBottom="@{viewModel.marginBottom}"
         app:marginLeft="@{viewModel.marginLeft}"
         app:marginRight="@{viewModel.marginRight}"

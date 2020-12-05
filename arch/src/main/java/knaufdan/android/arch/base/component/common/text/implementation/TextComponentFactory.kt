@@ -8,7 +8,7 @@ import knaufdan.android.core.resources.IResourceProvider
 internal class TextComponentFactory(
     private val resourceProvider: IResourceProvider
 ) : ITextComponentFactory {
-    override fun create(
+    override fun get(
         textConfig: TextConfig
     ): ITextComponent = TextComponent(
         textConfig = textConfig,
