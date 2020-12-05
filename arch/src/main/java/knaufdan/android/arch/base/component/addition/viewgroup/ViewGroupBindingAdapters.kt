@@ -120,6 +120,7 @@ private fun <DataSource> ViewGroup.addComponent(
 
             transition?.run {
                 layoutTransition = LayoutTransition()
+
                 TransitionManager.beginDelayedTransition(
                     this@addComponent,
                     transition.toAndroidTransition()
