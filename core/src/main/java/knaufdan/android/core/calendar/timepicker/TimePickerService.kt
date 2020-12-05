@@ -14,13 +14,9 @@ class TimePickerService(
         onCancelClicked: () -> Unit,
         is24HourView: Boolean
     ) {
-        val listener = TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-            onTimeSelected(hourOfDay to minute)
-        }
-
         TimePickerDialog(
             contextProvider.getContext(),
-            listener,
+            { _, hour, minute -> onTimeSelected(hour to minute) },
             time.first,
             time.second,
             is24HourView
