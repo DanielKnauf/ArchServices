@@ -13,7 +13,7 @@ abstract class BaseRepository<Api> : IGenericType<Api> {
     private val className: String by lazy {
         this::class.java.simpleName
     }
-    protected val api by lazy {
+    protected val api: Api by lazy {
         getRepositoryConfig().createApi()
     }
 
@@ -47,7 +47,7 @@ abstract class BaseRepository<Api> : IGenericType<Api> {
 
     private fun RepositoryConfig.createApi(): Api {
         if (baseUrl.isBlank()) {
-            throw IllegalArgumentException("BaseUrl for service $className is blank - please set baseUrl via serviceConfig")
+            throw IllegalArgumentException("BaseUrl for repository $className is blank. Could not create ${getTypeClass().simpleName} - please set baseUrl via [getRepositoryConfig]")
         }
 
         return Retrofit.Builder()
