@@ -1,22 +1,22 @@
 package knaufdan.android.arch.network
 
-sealed class CallState<R> {
-    class Loading<R> : CallState<R>()
+sealed class CallState<ResultType> {
+    class Loading<ResultType> : CallState<ResultType>()
 
-    class Success<R>(
-        val result: R
-    ) : CallState<R>()
+    class Success<ResultType>(
+        val result: ResultType
+    ) : CallState<ResultType>()
 
-    class SuccessEmpty<R> : CallState<R>()
+    class SuccessEmpty<ResultType> : CallState<ResultType>()
 
-    class Error<R>(
+    class Error<ResultType>(
         val code: Int = UNKNOWN_CODE,
         val message: String = ""
-    ) : CallState<R>()
+    ) : CallState<ResultType>()
 
-    class Failure<R>(
+    class Failure<ResultType>(
         val throwable: Throwable = UnknownError()
-    ) : CallState<R>()
+    ) : CallState<ResultType>()
 
     companion object {
         const val UNKNOWN_CODE = 0
