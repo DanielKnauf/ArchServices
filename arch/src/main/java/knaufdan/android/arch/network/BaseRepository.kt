@@ -62,7 +62,7 @@ abstract class BaseRepository<Api> : IGenericType<Api> {
             mapping: ((ResponseType) -> LocalType),
             onCallStateChanged: (CallState<LocalType>) -> Unit
         ) {
-            onCallStateChanged(CallState.Loading())
+            onCallStateChanged(CallState.Loading)
 
             enqueue(
                 object : Callback<ResponseType> {
@@ -92,7 +92,7 @@ abstract class BaseRepository<Api> : IGenericType<Api> {
             mapping: ((ResponseType) -> LocalType)
         ): CallState<LocalType> {
             if (isSuccessful) {
-                val body = body() ?: return CallState.SuccessEmpty()
+                val body = body() ?: return CallState.SuccessEmpty
 
                 return CallState.Success(mapping(body))
             }
