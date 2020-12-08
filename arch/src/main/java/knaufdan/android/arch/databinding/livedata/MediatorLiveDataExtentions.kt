@@ -9,7 +9,7 @@ import androidx.lifecycle.MediatorLiveData
  * @param TargetData the type of data hold by target
  * @param source the added [LiveData] source
  * @param SourceData the type of data hold by [source]
- * @param distinctUntilChanged if true results equals to current value of [MediatorLiveData] target are discarded
+ * @param distinctUntilChanged if true results equal to current value of [MediatorLiveData] target are discarded
  * @param mapping the function used to determine the value posted
  */
 fun <TargetData, SourceData> MediatorLiveData<TargetData>.subscribeTo(
@@ -24,7 +24,7 @@ fun <TargetData, SourceData> MediatorLiveData<TargetData>.subscribeTo(
         val newValue = mapping(value)
 
         postValue(
-            postOnlyDifferentValues = distinctUntilChanged,
+            distinctUntilChanged = distinctUntilChanged,
             newValue = newValue
         )
     }
@@ -38,7 +38,7 @@ fun <TargetData, SourceData> MediatorLiveData<TargetData>.subscribeTo(
  * @param FirstData the type of data hold by [firstSource]
  * @param secondSource the second added [LiveData] source
  * @param SecondData the type of data hold by [secondSource]
- * @param distinctUntilChanged if true results equals to current value of [MediatorLiveData] target are discarded
+ * @param distinctUntilChanged if true results equal to current value of [MediatorLiveData] target are discarded
  * @param merging the function used to determine the value posted
  */
 fun <TargetData, FirstData, SecondData> MediatorLiveData<TargetData>.subscribeTo(
@@ -54,7 +54,7 @@ fun <TargetData, FirstData, SecondData> MediatorLiveData<TargetData>.subscribeTo
         )
 
         postValue(
-            postOnlyDifferentValues = distinctUntilChanged,
+            distinctUntilChanged = distinctUntilChanged,
             newValue = newValue
         )
     }
@@ -66,7 +66,7 @@ fun <TargetData, FirstData, SecondData> MediatorLiveData<TargetData>.subscribeTo
         )
 
         postValue(
-            postOnlyDifferentValues = distinctUntilChanged,
+            distinctUntilChanged = distinctUntilChanged,
             newValue = newValue
         )
     }
@@ -82,7 +82,7 @@ fun <TargetData, FirstData, SecondData> MediatorLiveData<TargetData>.subscribeTo
  * @param SecondData the type of data hold by [secondSource]
  * @param thirdSource the second added [LiveData] source
  * @param ThirdData the type of data hold by [thirdSource]
- * @param distinctUntilChanged if true results equals to current value of [MediatorLiveData] target are discarded
+ * @param distinctUntilChanged if true results equal to current value of [MediatorLiveData] target are discarded
  * @param merging the function used to determine the value posted
  */
 fun <TargetData, FirstData, SecondData, ThirdData> MediatorLiveData<TargetData>.subscribeTo(
@@ -100,7 +100,7 @@ fun <TargetData, FirstData, SecondData, ThirdData> MediatorLiveData<TargetData>.
         )
 
         postValue(
-            postOnlyDifferentValues = distinctUntilChanged,
+            distinctUntilChanged = distinctUntilChanged,
             newValue = newValue
         )
     }
@@ -113,7 +113,7 @@ fun <TargetData, FirstData, SecondData, ThirdData> MediatorLiveData<TargetData>.
         )
 
         postValue(
-            postOnlyDifferentValues = distinctUntilChanged,
+            distinctUntilChanged = distinctUntilChanged,
             newValue = newValue
         )
     }
@@ -126,17 +126,17 @@ fun <TargetData, FirstData, SecondData, ThirdData> MediatorLiveData<TargetData>.
         )
 
         postValue(
-            postOnlyDifferentValues = distinctUntilChanged,
+            distinctUntilChanged = distinctUntilChanged,
             newValue = newValue
         )
     }
 }
 
 private fun <Target> MediatorLiveData<Target>.postValue(
-    postOnlyDifferentValues: Boolean,
+    distinctUntilChanged: Boolean,
     newValue: Target
 ) {
-    if (postOnlyDifferentValues && value == newValue) {
+    if (distinctUntilChanged && value == newValue) {
         return
     }
 
