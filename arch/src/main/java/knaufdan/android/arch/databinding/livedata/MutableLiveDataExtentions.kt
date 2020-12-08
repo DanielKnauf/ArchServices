@@ -6,65 +6,107 @@ import knaufdan.android.core.common.extensions.validateIndex
 
 @MainThread
 fun <T> MutableLiveData<List<T>>.add(
-    newItem: T,
+    element: T,
     index: Int = UNSPECIFIED_INDEX
 ) {
-    val items = value?.toMutableList() ?: mutableListOf()
+    val list = value?.toMutableList() ?: mutableListOf()
 
-    val isInvalidIndex = !items.validateIndex(index)
+    val isInvalidIndex = !list.validateIndex(index)
     if (isInvalidIndex) {
-        items.add(newItem)
-        value = items
+        list.add(element)
+
+        value = list
+
         return
     }
 
-    items.add(
+    list.add(
         index = index,
-        element = newItem
+        element = element
     )
 
-    value = items
+    value = list
 }
 
 @MainThread
 fun <T> MutableLiveData<List<T>>.addAll(
-    vararg newItems: T,
+    vararg elements: T,
     index: Int = UNSPECIFIED_INDEX
 ) {
-    val items = value?.toMutableList() ?: mutableListOf()
+    val list = value?.toMutableList() ?: mutableListOf()
 
-    val isInvalidIndex = !items.validateIndex(index)
+    val isInvalidIndex = !list.validateIndex(index)
     if (isInvalidIndex) {
-        items.addAll(newItems)
-        value = items
+        list.addAll(elements)
+
+        value = list
+
         return
     }
 
-    items.addAll(
+    list.addAll(
         index = index,
-        elements = newItems.toList()
+        elements = elements.toList()
     )
 
-    value = items
+    value = list
+}
+
+@MainThread
+fun <T> MutableLiveData<List<T>>.addAll(
+    elements: List<T>,
+    index: Int = UNSPECIFIED_INDEX
+) {
+    val list = value?.toMutableList() ?: mutableListOf()
+
+    val isInvalidIndex = !list.validateIndex(index)
+    if (isInvalidIndex) {
+
+        list.addAll(elements)
+
+        value = list
+
+        return
+    }
+
+    list.addAll(
+        index = index,
+        elements = elements
+    )
+
+    value = list
 }
 
 @MainThread
 fun <T> MutableLiveData<List<T>>.remove(index: Int) {
-    val items = value?.toMutableList() ?: return
+    val list = value?.toMutableList() ?: return
 
-    val isInvalidIndex = !items.validateIndex(index)
+    val isInvalidIndex = !list.validateIndex(index)
     if (isInvalidIndex) {
         return
     }
 
-    items.removeAt(index)
+    list.removeAt(index)
 
-    value = items
+    value = list
 }
 
 @MainThread
 fun <T> MutableLiveData<List<T>>.clear() {
     value = emptyList()
 }
+
+@MainThread
+fun <T> MutableLiveData<List<T>>.forEachIndexed(
+    action: (index: Int, item: T) -> Unit
+) {
+    value?.forEachIndexed(action)
+}
+
+@MainThread
+fun <T> MutableLiveData<List<T>>.isEmpty(): Boolean = value?.isEmpty() ?: true
+
+@MainThread
+fun <T> MutableLiveData<List<T>>.lastIndex(): Int = if (isEmpty()) 0 else value?.lastIndex ?: 0
 
 private const val UNSPECIFIED_INDEX = -1
