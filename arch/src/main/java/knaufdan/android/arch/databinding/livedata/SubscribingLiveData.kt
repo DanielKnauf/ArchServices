@@ -3,13 +3,13 @@ package knaufdan.android.arch.databinding.livedata
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 
-class SubscribingLiveData<SourceType, TargetType>(
-    private val source: LiveData<SourceType>,
-    private val mapping: (SourceType) -> TargetType = { value ->
+open class SubscribingLiveData<Source, Target>(
+    private val source: LiveData<Source>,
+    private val mapping: (Source) -> Target = { value ->
         @Suppress("UNCHECKED_CAST")
-        value as TargetType
+        value as Target
     }
-) : MediatorLiveData<TargetType>() {
+) : MediatorLiveData<Target>() {
     override fun onActive() {
         super.onActive()
 
