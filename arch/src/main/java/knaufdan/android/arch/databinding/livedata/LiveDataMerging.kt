@@ -12,7 +12,7 @@ import androidx.lifecycle.MediatorLiveData
  * @param FirstData the type of data hold by [firstSource]
  * @param secondSource the second [LiveData] source
  * @param SecondData the type of data hold by [secondSource]
- * @param distinctUntilChanged if true results equals to current value of [MediatorLiveData] target are discarded
+ * @param distinctUntilChanged if true results equal to current value of [MediatorLiveData] target are discarded
  * @param merging the function used to determine the result posted
  *
  * @return [LiveData] observing the result of the [merging] function
@@ -43,7 +43,7 @@ fun <FirstData, SecondData, TargetData> merge(
  * @param SecondData the type of data hold by [secondSource]
  * @param thirdSource the second [LiveData] source
  * @param ThirdData the type of data hold by [thirdSource]
- * @param distinctUntilChanged if true results equals to current value of [MediatorLiveData] target are discarded
+ * @param distinctUntilChanged if true results equal to current value of [MediatorLiveData] target are discarded
  * @param merging the function used to determine the result posted
  *
  * @return [LiveData] observing the result of the [merging] function
