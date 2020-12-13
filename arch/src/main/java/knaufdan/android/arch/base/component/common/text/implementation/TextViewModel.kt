@@ -17,6 +17,8 @@ class TextViewModel(
 
     val textGravity = textConfig.textGravity
 
+    val lineSpacingExtra = resourceProvider.getDimension(textConfig.lineSpacingExtra)
+
     val marginTop = resourceProvider.getDimension(textConfig.marginTop)
 
     val marginBottom = resourceProvider.getDimension(textConfig.marginBottom)
