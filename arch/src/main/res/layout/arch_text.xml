@@ -15,10 +15,11 @@
 
     <TextView
         style="@style/arch_text"
+        android:lineSpacingExtra="@{viewModel.lineSpacingExtra}"
         android:text="@{viewModel.text}"
         android:textColor="@{viewModel.textColor}"
         android:textSize="@{viewModel.textSize}"
-        android:lineSpacingExtra="@{viewModel.lineSpacingExtra}"
+        app:background="@{viewModel.background}"
         app:layout_width="@{viewModel.textLayoutWidth}"
         app:marginBottom="@{viewModel.marginBottom}"
         app:marginLeft="@{viewModel.marginLeft}"

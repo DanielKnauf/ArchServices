@@ -4,11 +4,13 @@ import android.text.Spannable
 import android.text.SpannableString
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
+import androidx.annotation.DrawableRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import knaufdan.android.arch.R
 import knaufdan.android.arch.databinding.view.LayoutWidth
 import knaufdan.android.arch.databinding.view.TextGravity
+import knaufdan.android.core.resources.IResourceProvider
 
 data class TextConfig(
     val text: LiveData<Spannable>,
@@ -21,6 +23,7 @@ data class TextConfig(
     @DimenRes val marginBottom: Int = R.dimen.arch_text_default_margin_horizontal,
     @DimenRes val marginLeft: Int = R.dimen.arch_text_default_margin_vertical,
     @DimenRes val marginRight: Int = R.dimen.arch_text_default_margin_vertical,
+    @DrawableRes val background: Int = IResourceProvider.INVALID_RES_ID,
     val onTextClicked: (text: String) -> Unit = {}
 ) {
     constructor(
@@ -34,6 +37,7 @@ data class TextConfig(
         @DimenRes marginBottom: Int = R.dimen.arch_text_default_margin_horizontal,
         @DimenRes marginLeft: Int = R.dimen.arch_text_default_margin_vertical,
         @DimenRes marginRight: Int = R.dimen.arch_text_default_margin_vertical,
+        @DrawableRes background: Int = IResourceProvider.INVALID_RES_ID,
         onTextClicked: (text: String) -> Unit = {}
     ) : this(
         text = MutableLiveData(text),
@@ -46,6 +50,7 @@ data class TextConfig(
         marginBottom = marginBottom,
         marginLeft = marginLeft,
         marginRight = marginRight,
+        background = background,
         onTextClicked = onTextClicked
     )
 
@@ -60,6 +65,7 @@ data class TextConfig(
         @DimenRes marginBottom: Int = R.dimen.arch_text_default_margin_horizontal,
         @DimenRes marginLeft: Int = R.dimen.arch_text_default_margin_vertical,
         @DimenRes marginRight: Int = R.dimen.arch_text_default_margin_vertical,
+        @DrawableRes background: Int = IResourceProvider.INVALID_RES_ID,
         onTextClicked: (text: String) -> Unit = {}
     ) : this(
         text = MutableLiveData(SpannableString(text) as Spannable),
@@ -72,6 +78,7 @@ data class TextConfig(
         marginBottom = marginBottom,
         marginLeft = marginLeft,
         marginRight = marginRight,
+        background = background,
         onTextClicked = onTextClicked
     )
 
@@ -91,6 +98,7 @@ data class TextConfig(
         if (marginBottom != other.marginBottom) return false
         if (marginLeft != other.marginLeft) return false
         if (marginRight != other.marginRight) return false
+        if (background != other.background) return false
 
         return true
     }

@@ -27,6 +27,8 @@ class TextViewModel(
 
     val marginRight = resourceProvider.getDimension(textConfig.marginRight)
 
+    val background = textConfig.background
+
     fun onTextClicked(text: String) {
         textConfig.onTextClicked(text)
     }
