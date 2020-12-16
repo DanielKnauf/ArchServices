@@ -38,7 +38,7 @@ fun View.bindHeight(
 }
 
 @BindingAdapter("background")
-fun View.bindBackgroundResource(@DrawableRes background: Int) {
+fun View.bindBackground(@DrawableRes background: Int) {
     if (background == IResourceProvider.INVALID_RES_ID) {
         return
     }
