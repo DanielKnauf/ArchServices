@@ -17,6 +17,8 @@ class TextViewModel(
 
     val textGravity = textConfig.textGravity
 
+    val lineSpacingExtra = resourceProvider.getDimension(textConfig.lineSpacingExtra)
+
     val marginTop = resourceProvider.getDimension(textConfig.marginTop)
 
     val marginBottom = resourceProvider.getDimension(textConfig.marginBottom)
@@ -24,6 +26,8 @@ class TextViewModel(
     val marginLeft = resourceProvider.getDimension(textConfig.marginLeft)
 
     val marginRight = resourceProvider.getDimension(textConfig.marginRight)
+
+    val background = textConfig.background
 
     fun onTextClicked(text: String) {
         textConfig.onTextClicked(text)
