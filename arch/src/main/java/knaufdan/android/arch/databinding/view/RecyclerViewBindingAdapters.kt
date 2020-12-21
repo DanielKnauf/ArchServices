@@ -37,13 +37,16 @@ fun RecyclerView.bindSmoothScrollToPosition(
     position: Int,
     scrollDelay: Number?
 ) {
-    val smoothScrollingToPosition = {
-        val numItems = adapter?.itemCount ?: 0
+    val smoothScrollingToPosition =
+        {
+            if (isAttachedToWindow && isShown) {
+                val numItems = adapter?.itemCount ?: 0
 
-        if (position in 0 until numItems) {
-            smoothScrollToPosition(position)
+                if (position in 0 until numItems) {
+                    smoothScrollToPosition(position)
+                }
+            }
         }
-    }
 
     val delay = scrollDelay?.toLong() ?: 0
     if (delay > 0) {
