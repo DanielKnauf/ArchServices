@@ -20,22 +20,38 @@ fun RecyclerView.bindSmoothScrollToTop(
         return
     }
 
+    bindSmoothScrollToPosition(
+        position = 0,
+        scrollDelay = scrollDelay
+    )
+}
+
+@BindingAdapter(
+    value = [
+        "smoothScrollToPosition",
+        "smoothScrollToPositionDelay"
+    ],
+    requireAll = false
+)
+fun RecyclerView.bindSmoothScrollToPosition(
+    position: Int,
+    scrollDelay: Number?
+) {
+    val smoothScrollingToPosition = {
+        val numItems = adapter?.itemCount ?: 0
+
+        if (position in 0 until numItems) {
+            smoothScrollToPosition(position)
+        }
+    }
+
     val delay = scrollDelay?.toLong() ?: 0
     if (delay > 0) {
         postDelayed(delay) {
-            bindSmoothScrollToPosition(0)
+            smoothScrollingToPosition()
         }
         return
     }
 
-    bindSmoothScrollToPosition(0)
-}
-
-@BindingAdapter("smoothScrollToPosition")
-fun RecyclerView.bindSmoothScrollToPosition(position: Int) {
-    val numItems = adapter?.itemCount ?: 0
-
-    if (position in 0 until numItems) {
-        smoothScrollToPosition(position)
-    }
+    smoothScrollingToPosition()
 }
