@@ -9,21 +9,21 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.SnapHelper
 import knaufdan.android.arch.base.ViewOrientation
 import knaufdan.android.arch.base.component.IComponent
-import knaufdan.android.arch.base.component.addition.recyclerview.RecyclerViewSnapHelper
+import knaufdan.android.arch.base.component.addition.recyclerview.RecyclerViewSnapBehavior
 import knaufdan.android.arch.base.component.addition.recyclerview.implementation.ComponentAdapter
 
 @BindingAdapter(
     value = [
         "components",
         "orientation",
-        "snapHelper"
+        "snapBehavior"
     ],
     requireAll = false
 )
 fun RecyclerView.bindComponents(
     items: List<IComponent<*>>?,
     viewOrientation: ViewOrientation?,
-    snapHelper: RecyclerViewSnapHelper?
+    snapBehavior: RecyclerViewSnapBehavior?
 ) {
     if (items == null) {
         return
@@ -40,7 +40,7 @@ fun RecyclerView.bindComponents(
 
     adapter = ComponentAdapter(components)
 
-    setSnapHelper(snapHelper)
+    setSnapHelper(snapBehavior)
 }
 
 @Suppress("UNCHECKED_CAST")
@@ -59,14 +59,14 @@ private fun ViewOrientation?.toRecyclerViewOrientation() =
         else -> RecyclerView.VERTICAL
     }
 
-private fun RecyclerView.setSnapHelper(snapHelper: RecyclerViewSnapHelper?) {
-    val androidSnapHelper = snapHelper?.toAndroidSnapHelper() ?: return
+private fun RecyclerView.setSnapHelper(snapBehavior: RecyclerViewSnapBehavior?) {
+    val androidSnapHelper = snapBehavior?.toAndroidSnapHelper() ?: return
 
     androidSnapHelper.attachToRecyclerView(this)
 }
 
-private fun RecyclerViewSnapHelper.toAndroidSnapHelper(): SnapHelper =
+private fun RecyclerViewSnapBehavior.toAndroidSnapHelper(): SnapHelper =
     when (this) {
-        RecyclerViewSnapHelper.LINEAR -> LinearSnapHelper()
-        RecyclerViewSnapHelper.PAGER -> PagerSnapHelper()
+        RecyclerViewSnapBehavior.SNAP_AFTER_SCROLLING -> LinearSnapHelper()
+        RecyclerViewSnapBehavior.SNAP_EACH_ITEM -> PagerSnapHelper()
     }
