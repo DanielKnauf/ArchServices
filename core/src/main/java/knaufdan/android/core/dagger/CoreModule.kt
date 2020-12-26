@@ -16,15 +16,22 @@ import javax.inject.Singleton
 class CoreModule {
     @Provides
     @Singleton
-    internal fun provideContextProvider(contextProvider: ContextProvider): IContextProvider = contextProvider
+    internal fun provideContextProvider(contextProvider: ContextProvider): IContextProvider =
+        contextProvider
 
     @Provides
     @Singleton
-    internal fun provideResourceProvider(resourceProvider: ResourceProvider): IResourceProvider = resourceProvider
+    internal fun provideResourceProvider(
+        contextProvider: IContextProvider
+    ): IResourceProvider =
+        ResourceProvider(
+            contextProvider = contextProvider
+        )
 
     @Provides
     @Singleton
-    internal fun provideSharedPrefService(sharedPrefService: SharedPrefService): ISharedPrefService = sharedPrefService
+    internal fun provideSharedPrefService(sharedPrefService: SharedPrefService): ISharedPrefService =
+        sharedPrefService
 
     @Provides
     @Singleton
