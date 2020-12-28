@@ -5,7 +5,6 @@ import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
 import knaufdan.android.core.IContextProvider
-import knaufdan.android.core.common.extensions.toArray
 import knaufdan.android.core.resources.IResourceProvider
 
 internal class ResourceProvider(
@@ -18,27 +17,18 @@ internal class ResourceProvider(
 
     override fun getString(
         stringRes: Int,
-        formatArgument: Any?
-    ): String =
-        getString(
-            stringRes = stringRes,
-            formatArgument?.toArray() ?: emptyArray<Any>()
-        )
-
-    override fun getString(
-        stringRes: Int,
         vararg formatArguments: Any
     ): String =
         if (stringRes.isValid()) {
             context.run {
-                if (formatArguments.isNotEmpty()) {
-                    return@run getString(
-                        stringRes,
-                        formatArguments
-                    )
+                if (formatArguments.isEmpty()) {
+                    return@run getString(stringRes)
                 }
 
-                getString(stringRes)
+                getString(
+                    stringRes,
+                    *formatArguments
+                )
             }
         } else ""
 

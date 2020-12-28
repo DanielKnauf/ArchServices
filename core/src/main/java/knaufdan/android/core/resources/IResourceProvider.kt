@@ -13,19 +13,6 @@ interface IResourceProvider {
      * NOTE: if [stringRes] is [INVALID_RES_ID] an empty string is returned.
      *
      * @param stringRes resource id for the format string
-     * @param formatArgument which will be used for substitution
-     * @return string associated with the resource, formatted and
-     *         stripped of styled text information.
-     */
-    fun getString(
-        @StringRes stringRes: Int,
-        formatArgument: Any? = null
-    ): String
-
-    /**
-     * NOTE: if [stringRes] is [INVALID_RES_ID] an empty string is returned.
-     *
-     * @param stringRes resource id for the format string
      * @param formatArguments which will be used for substitution
      * @return string associated with the resource, formatted and
      *         stripped of styled text information.
