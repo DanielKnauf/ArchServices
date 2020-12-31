@@ -23,4 +23,14 @@ fun Calendar.getHour(
         get(Calendar.HOUR)
     }
 
+fun Calendar.setHour(hour: Hour): Calendar =
+    apply {
+        set(Calendar.HOUR_OF_DAY, hour)
+    }
+
 fun Calendar.getMinute(): Minute = get(Calendar.MINUTE)
+
+fun Calendar.setMinute(minute: Minute): Calendar =
+    apply {
+        set(Calendar.MINUTE, minute)
+    }
