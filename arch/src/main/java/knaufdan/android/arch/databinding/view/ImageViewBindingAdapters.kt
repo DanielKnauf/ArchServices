@@ -6,6 +6,14 @@ import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
+import knaufdan.android.core.resources.IResourceProvider
+
+@BindingAdapter("src")
+fun ImageView.bindSrc(@DrawableRes imageRes: Int) {
+    if (imageRes == IResourceProvider.INVALID_RES_ID) return
+
+    setImageResource(imageRes)
+}
 
 @BindingAdapter(
     value = [
