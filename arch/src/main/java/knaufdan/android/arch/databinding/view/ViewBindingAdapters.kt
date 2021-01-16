@@ -145,7 +145,7 @@ fun View.bindFading(
         alpha
     ).apply {
         duration = fadeDuration?.toLong() ?: 0
-        
+
         start()
     }
 }
