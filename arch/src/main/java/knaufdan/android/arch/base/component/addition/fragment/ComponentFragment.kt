@@ -29,7 +29,7 @@ class ComponentFragment(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? =
+    ): View =
         bindings.getOrPut(viewModel) {
             DataBindingUtil.inflate<ViewDataBinding>(
                 inflater,
@@ -52,8 +52,9 @@ class ComponentFragment(
     }
 
     override fun onPause() {
-        super.onPause()
         viewModel.onDetach()
+
+        super.onPause()
     }
 
     companion object {
