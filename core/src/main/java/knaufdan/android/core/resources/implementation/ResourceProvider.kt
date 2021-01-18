@@ -1,76 +1,56 @@
 package knaufdan.android.core.resources.implementation
 
+import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
-import android.os.Build
+import androidx.core.content.ContextCompat
 import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.resources.IResourceProvider
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-internal class ResourceProvider @Inject constructor(
+internal class ResourceProvider(
     private val contextProvider: IContextProvider
 ) : IResourceProvider {
+    private val context: Context
+        get() = contextProvider.getContext()
     private val resources: Resources
-        get() = contextProvider.getContext().resources
+        get() = context.resources
 
     override fun getString(
         stringRes: Int,
-        formatArgument: Any?
+        vararg formatArguments: Any
     ): String =
-        if (stringRes.isInvalid()) {
-            ""
-        } else {
-            contextProvider.getContext().run {
-                if (formatArgument != null) {
-                    getString(
-                        stringRes,
-                        formatArgument
-                    )
-                } else {
-                    getString(stringRes)
+        if (stringRes.isValid()) {
+            context.run {
+                if (formatArguments.isEmpty()) {
+                    return@run getString(stringRes)
                 }
-            }
-        }
 
-    override fun getDrawable(
-        drawableRes: Int,
-        theme: Resources.Theme?
-    ): Drawable =
-        resources.getDrawable(
-            drawableRes,
-            theme
-        )
+                getString(
+                    stringRes,
+                    *formatArguments
+                )
+            }
+        } else ""
+
+    override fun getDrawable(drawableRes: Int): Drawable =
+        ContextCompat.getDrawable(
+            context,
+            drawableRes
+        ) ?: throw Throwable("Could not get drawable for resource id: $drawableRes")
 
     override fun getDimension(dimenRes: Int): Float =
-        if (dimenRes.isInvalid()) {
-            0f
-        } else {
-            resources.getDimension(dimenRes)
-        }
+        if (dimenRes.isValid()) resources.getDimension(dimenRes) else 0f
 
-    override fun getColor(
-        colorRes: Int,
-        theme: Resources.Theme?
-    ): Int =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            resources.getColor(
-                colorRes,
-                theme
-            )
-        } else {
-            resources.getColor(colorRes)
-        }
+    override fun getColor(colorRes: Int): Int =
+        ContextCompat.getColor(
+            context,
+            colorRes
+        )
 
     override fun getInt(intRes: Int): Int =
-        if (intRes.isInvalid()) {
-            0
-        } else {
-            resources.getInteger(intRes)
-        }
+        if (intRes.isValid()) resources.getInteger(intRes) else 0
 
     companion object {
-        private fun Int.isInvalid(): Boolean = this == IResourceProvider.INVALID_RES_ID
+        private fun Int.isValid(): Boolean = this != IResourceProvider.INVALID_RES_ID
     }
 }
