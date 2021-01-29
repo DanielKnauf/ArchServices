@@ -21,6 +21,7 @@
         android:textSize="@{viewModel.textSize}"
         app:background="@{viewModel.background}"
         app:layout_width="@{viewModel.textLayoutWidth}"
+        app:layout_height="@{viewModel.textLayoutHeight}"
         app:marginBottom="@{viewModel.marginBottom}"
         app:marginLeft="@{viewModel.marginLeft}"
         app:marginRight="@{viewModel.marginRight}"
