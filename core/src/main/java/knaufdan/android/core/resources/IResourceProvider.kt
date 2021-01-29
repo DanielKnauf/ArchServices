@@ -15,7 +15,7 @@ interface IResourceProvider {
      * @param stringRes resource id for the format string
      * @param formatArguments which will be used for substitution
      * @return string associated with the resource, formatted and
-     *         stripped of styled text information.
+     *         stripped of styled text information
      */
     fun getString(
         @StringRes stringRes: Int,
@@ -23,7 +23,7 @@ interface IResourceProvider {
     ): String
 
     /**
-     * @throws Throwable if no drawable is associated with [drawableRes]
+     * @throws IllegalArgumentException if no drawable is associated with [drawableRes]
      * @param drawableRes resource id for the drawable
      * @return drawable associated with the resource
      */
@@ -54,6 +54,7 @@ interface IResourceProvider {
 
     companion object {
         const val INVALID_RES_ID = 0
+
         val EMPTY_STRING_ID: Int by lazy {
             R.string.resource_provider_empty
         }

@@ -36,7 +36,7 @@ internal class ResourceProvider(
         ContextCompat.getDrawable(
             context,
             drawableRes
-        ) ?: throw Throwable("Could not get drawable for resource id: $drawableRes")
+        ) ?: throw IllegalArgumentException("Could not get drawable for resource id: $drawableRes")
 
     override fun getDimension(dimenRes: Int): Float =
         if (dimenRes.isValid()) resources.getDimension(dimenRes) else 0f
