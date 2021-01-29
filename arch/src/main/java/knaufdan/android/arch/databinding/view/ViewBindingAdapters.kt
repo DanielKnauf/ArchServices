@@ -113,18 +113,39 @@ fun View.bindGone(gone: Boolean) {
         }
 }
 
-@BindingAdapter("fade")
-fun View.bindFading(fadingDirection: FadingDirection?) {
-    if (fadingDirection == null) {
-        return
-    }
+@BindingAdapter("invisible")
+fun View.bindInvisible(invisible: Boolean) {
+    visibility =
+        when (invisible) {
+            true -> View.INVISIBLE
+            else -> View.VISIBLE
+        }
+}
+
+@BindingAdapter(
+    value = [
+        "fadeDirection",
+        "fadeDuration"
+    ],
+    requireAll = false
+)
+fun View.bindFading(
+    direction: FadeDirection,
+    fadeDuration: Number?
+) {
+    val alpha =
+        when (direction) {
+            FadeDirection.In -> 1f
+            FadeDirection.Out -> 0f
+        }
 
     ObjectAnimator.ofFloat(
         this,
         "alpha",
-        fadingDirection.alpha.toFloat()
+        alpha
     ).apply {
-        duration = fadingDirection.duration.toLong()
+        duration = fadeDuration?.toLong() ?: 0
+
         start()
     }
 }
@@ -135,21 +156,7 @@ enum class LayoutWidth {
     DEFAULT
 }
 
-sealed class FadingDirection(
-    val alpha: Number,
-    val duration: Number
-) {
-    class In(
-        durationInMillis: Number = 1000
-    ) : FadingDirection(
-        alpha = 1f,
-        duration = durationInMillis
-    )
-
-    class Out(
-        durationInMillis: Number = 1000
-    ) : FadingDirection(
-        alpha = 0f,
-        duration = durationInMillis
-    )
+enum class FadeDirection {
+    In,
+    Out
 }
