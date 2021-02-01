@@ -25,6 +25,10 @@ fun RecyclerView.bindComponents(
     viewOrientation: ViewOrientation?,
     snapBehavior: RecyclerViewSnapBehavior?
 ) {
+    if (layoutManager == null) {
+        layoutManager = context.createLinearLayoutManager(viewOrientation)
+    }
+
     if (items == null) {
         return
     }
@@ -35,8 +39,6 @@ fun RecyclerView.bindComponents(
         submitList(components)
         return
     }
-
-    layoutManager = context.createLinearLayoutManager(viewOrientation)
 
     adapter = ComponentAdapter(components)
 
