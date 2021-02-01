@@ -27,7 +27,7 @@ class HorizontalDividerComponent(
     override fun getDataSource(): HorizontalDividerViewModel = viewModel
 
     override fun areItemsTheSame(other: Any): Boolean =
-        other is IHorizontalDividerComponent
+        other is HorizontalDividerComponent
 
     override fun areContentsTheSame(other: Any): Boolean =
         other is HorizontalDividerComponent && other.viewModel.config == viewModel.config
