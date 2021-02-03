@@ -16,17 +16,33 @@ import knaufdan.android.core.resources.IResourceProvider
 
 @BindingAdapter("layout_width")
 fun View.bindLayoutWidth(
-    layoutWidth: LayoutWidth = LayoutWidth.DEFAULT
+    layoutWidth: LayoutBehavior = LayoutBehavior.DEFAULT
 ) {
     val updatedWidth =
         when (layoutWidth) {
-            LayoutWidth.WRAP_CONTENT -> ViewGroup.LayoutParams.WRAP_CONTENT
-            LayoutWidth.MATCH_PARENT -> ViewGroup.LayoutParams.MATCH_PARENT
-            LayoutWidth.DEFAULT -> return
+            LayoutBehavior.WRAP_CONTENT -> ViewGroup.LayoutParams.WRAP_CONTENT
+            LayoutBehavior.MATCH_PARENT -> ViewGroup.LayoutParams.MATCH_PARENT
+            LayoutBehavior.DEFAULT -> return
         }
 
     updateLayoutParams {
         width = updatedWidth
+    }
+}
+
+@BindingAdapter("layout_height")
+fun View.bindLayoutHeight(
+    layoutHeight: LayoutBehavior = LayoutBehavior.DEFAULT
+) {
+    val updatedWidth =
+        when (layoutHeight) {
+            LayoutBehavior.WRAP_CONTENT -> ViewGroup.LayoutParams.WRAP_CONTENT
+            LayoutBehavior.MATCH_PARENT -> ViewGroup.LayoutParams.MATCH_PARENT
+            LayoutBehavior.DEFAULT -> return
+        }
+
+    updateLayoutParams {
+        height = updatedWidth
     }
 }
 
@@ -150,7 +166,7 @@ fun View.bindFading(
     }
 }
 
-enum class LayoutWidth {
+enum class LayoutBehavior {
     WRAP_CONTENT,
     MATCH_PARENT,
     DEFAULT
