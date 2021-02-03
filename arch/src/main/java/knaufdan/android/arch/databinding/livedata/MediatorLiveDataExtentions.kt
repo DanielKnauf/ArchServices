@@ -5,20 +5,20 @@ import androidx.lifecycle.MediatorLiveData
 
 /**
  * [MediatorLiveData] listens to changes of [source]. New values of [MediatorLiveData] are determined by
- * [mapping] function from [Source] to [Target] and posted asynchronously.
+ * [mapping] function from [SourceType] to [TargetType] and posted asynchronously.
  *
  * @param source [LiveData] added as source
- * @param Source type of data hold by [source]
- * @param Target type of data hold by target
+ * @param SourceType type of data hold by [source]
+ * @param TargetType type of data hold by target
  * @param distinctUntilChanged if true [mapping] results equal to current value of [MediatorLiveData] are discarded
  * @param mapping function used to determine new value based on [source] value
  */
-fun <Source, Target> MediatorLiveData<Target>.subscribeTo(
-    source: LiveData<Source>,
+fun <SourceType, TargetType> MediatorLiveData<TargetType>.subscribeTo(
+    source: LiveData<SourceType>,
     distinctUntilChanged: Boolean = true,
-    mapping: (Source) -> Target = { value ->
+    mapping: (SourceType) -> TargetType = { value ->
         @Suppress("UNCHECKED_CAST")
-        value as Target
+        value as TargetType
     }
 ) {
     addSource(source) { value ->
@@ -31,21 +31,21 @@ fun <Source, Target> MediatorLiveData<Target>.subscribeTo(
 
 /**
  * [MediatorLiveData] listens to changes of [firstSource] and [secondSource]. New values of [MediatorLiveData] are
- * determined by [merging] function from [FirstSource] as well as [SecondSource] to [Target] and posted asynchronously.
+ * determined by [merging] function from [FirstSourceType] as well as [SecondSourceType] to [TargetType] and posted asynchronously.
  *
  * @param firstSource [LiveData] added as first source
- * @param FirstSource type of data hold by [firstSource]
+ * @param FirstSourceType type of data hold by [firstSource]
  * @param secondSource [LiveData] added as second source
- * @param SecondSource type of data hold by [secondSource]
- * @param Target type of data hold by target
+ * @param SecondSourceType type of data hold by [secondSource]
+ * @param TargetType type of data hold by target
  * @param distinctUntilChanged if true [merging] results equal to current value of [MediatorLiveData] are discarded
  * @param merging function used to determine new value based on [firstSource] and [secondSource] values
  */
-fun <FirstSource, SecondSource, Target> MediatorLiveData<Target>.subscribeTo(
-    firstSource: LiveData<FirstSource>,
-    secondSource: LiveData<SecondSource>,
+fun <FirstSourceType, SecondSourceType, TargetType> MediatorLiveData<TargetType>.subscribeTo(
+    firstSource: LiveData<FirstSourceType>,
+    secondSource: LiveData<SecondSourceType>,
     distinctUntilChanged: Boolean = true,
-    merging: (FirstSource?, SecondSource?) -> Target
+    merging: (FirstSourceType?, SecondSourceType?) -> TargetType
 ) {
     addSource(firstSource) { value ->
         val newValue =
@@ -76,25 +76,25 @@ fun <FirstSource, SecondSource, Target> MediatorLiveData<Target>.subscribeTo(
 
 /**
  * MediatorLiveData] listens to changes of [firstSource], [secondSource] and [thirdSource]. New values of [MediatorLiveData]
- * are determined by [merging] function from [FirstSource], [SecondSource] as well as [ThirdSource] to [Target]
+ * are determined by [merging] function from [FirstSourceType], [SecondSourceType] as well as [ThirdSourceType] to [TargetType]
  * and posted asynchronously.
  *
  * @param firstSource [LiveData] added as first source
- * @param FirstSource type of data hold by [firstSource]
+ * @param FirstSourceType type of data hold by [firstSource]
  * @param secondSource [LiveData] added as second source
- * @param SecondSource type of data hold by [secondSource]
+ * @param SecondSourceType type of data hold by [secondSource]
  * @param thirdSource [LiveData] added as third source
- * @param ThirdSource type of data hold by [thirdSource]
- * @param Target type of data hold by target
+ * @param ThirdSourceType type of data hold by [thirdSource]
+ * @param TargetType type of data hold by target
  * @param distinctUntilChanged if true [merging] results equal to current value of [MediatorLiveData] are discarded
  * @param merging function used to determine new value based on [firstSource], [secondSource] and [thirdSource] values
  */
-fun <FirstSource, SecondSource, ThirdSource, Target> MediatorLiveData<Target>.subscribeTo(
-    firstSource: LiveData<FirstSource>,
-    secondSource: LiveData<SecondSource>,
-    thirdSource: LiveData<ThirdSource>,
+fun <FirstSourceType, SecondSourceType, ThirdSourceType, TargetType> MediatorLiveData<TargetType>.subscribeTo(
+    firstSource: LiveData<FirstSourceType>,
+    secondSource: LiveData<SecondSourceType>,
+    thirdSource: LiveData<ThirdSourceType>,
     distinctUntilChanged: Boolean = true,
-    merging: (FirstSource?, SecondSource?, ThirdSource?) -> Target
+    merging: (FirstSourceType?, SecondSourceType?, ThirdSourceType?) -> TargetType
 ) {
     addSource(firstSource) { value ->
         val newValue =
@@ -139,9 +139,9 @@ fun <FirstSource, SecondSource, ThirdSource, Target> MediatorLiveData<Target>.su
     }
 }
 
-private fun <Target> MediatorLiveData<Target>.postValue(
+private fun <TargetType> MediatorLiveData<TargetType>.postValue(
     distinctUntilChanged: Boolean,
-    newValue: Target
+    newValue: TargetType
 ) {
     val value = value ?: postValue(newValue)
 
