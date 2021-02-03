@@ -4,26 +4,27 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 
 /**
- * Uses a [merging] function to combine the value of two [LiveData] sources into a result value which is observed by a created [LiveData] target.
- * Each time one source value changes, the [merging] functions is called to determine the new value which is posted onto the target.
+ * Creates a new [LiveData] [subscribeTo] [firstSource] and [secondSource]. Each time one source value changes,
+ * new values are determined by [merging] [FirstSourceType] and [SecondSourceType] into [TargetType] and posted
+ * asynchronously.
  *
- * @param Target the type of data hold by the returned [LiveData]
- * @param firstSource the first [LiveData] source
- * @param FirstSource the type of data hold by [firstSource]
- * @param secondSource the second [LiveData] source
- * @param SecondSource the type of data hold by [secondSource]
- * @param distinctUntilChanged if true results equal to current value of [MediatorLiveData] target are discarded
- * @param merging the function used to determine the result posted
+ * @param firstSource [LiveData] added as first source
+ * @param FirstSourceType type of data hold by [firstSource]
+ * @param secondSource [LiveData] added as second source
+ * @param SecondSourceType type of data hold by [secondSource]
+ * @param TargetType type of data hold by the returned [LiveData]
+ * @param distinctUntilChanged if true [merging] results equal to current value of returned [LiveData] are discarded
+ * @param merging function used to determine new value based on [firstSource] and [secondSource] values
  *
- * @return [LiveData] observing the result of the [merging] function
+ * @return [LiveData] containing the result of [merging] values of [firstSource] and [secondSource]
  */
-fun <FirstSource, SecondSource, Target> merge(
-    firstSource: LiveData<FirstSource>,
-    secondSource: LiveData<SecondSource>,
+fun <FirstSourceType, SecondSourceType, TargetType> merge(
+    firstSource: LiveData<FirstSourceType>,
+    secondSource: LiveData<SecondSourceType>,
     distinctUntilChanged: Boolean = true,
-    merging: (FirstSource?, SecondSource?) -> Target
-): LiveData<Target> =
-    MediatorLiveData<Target>().apply {
+    merging: (FirstSourceType?, SecondSourceType?) -> TargetType
+): LiveData<TargetType> =
+    MediatorLiveData<TargetType>().apply {
         subscribeTo(
             firstSource = firstSource,
             secondSource = secondSource,
@@ -33,29 +34,30 @@ fun <FirstSource, SecondSource, Target> merge(
     }
 
 /**
- * Uses a [merging] function to combine three [LiveData] sources into a result value which is observed by a created [LiveData] target.
- * Each time one source value changes, the [merging] functions is called to determine the new value which is posted onto the target.
+ * Creates a new [LiveData] [subscribeTo] [firstSource], [secondSource] and [thirdSource]. Each time one source value changes,
+ * new values are determined by [merging] [FirstSourceType], [SecondSourceType] and [ThirdSourceType] into [TargetType] and posted
+ * asynchronously.
  *
- * @param Target the type of data hold by the returned [LiveData]
- * @param firstSource the first [LiveData] source
- * @param FirstSource the type of data hold by [firstSource]
- * @param secondSource the second [LiveData] source
- * @param SecondSource the type of data hold by [secondSource]
- * @param thirdSource the second [LiveData] source
- * @param ThirdSource the type of data hold by [thirdSource]
- * @param distinctUntilChanged if true results equal to current value of [MediatorLiveData] target are discarded
- * @param merging the function used to determine the result posted
+ * @param firstSource [LiveData] added as first source
+ * @param FirstSourceType type of data hold by [firstSource]
+ * @param secondSource [LiveData] added as second source
+ * @param SecondSourceType type of data hold by [secondSource]
+ * @param thirdSource [LiveData] added as third source
+ * @param ThirdSourceType type of data hold by [thirdSource]
+ * @param TargetType type of data hold by the returned [LiveData]
+ * @param distinctUntilChanged if true [merging] results equal to current value of returned [LiveData] are discarded
+ * @param merging function used to determine new value based on [firstSource], [secondSource] and [thirdSource] values
  *
- * @return [LiveData] observing the result of the [merging] function
+ * @return [LiveData] containing the result of [merging] values of [firstSource], [secondSource] and [thirdSource]
  */
-fun <FirstSource, SecondSource, ThirdSource, Target> merge(
-    firstSource: LiveData<FirstSource>,
-    secondSource: LiveData<SecondSource>,
-    thirdSource: LiveData<ThirdSource>,
+fun <FirstSourceType, SecondSourceType, ThirdSourceType, TargetType> merge(
+    firstSource: LiveData<FirstSourceType>,
+    secondSource: LiveData<SecondSourceType>,
+    thirdSource: LiveData<ThirdSourceType>,
     distinctUntilChanged: Boolean = true,
-    merging: (FirstSource?, SecondSource?, ThirdSource?) -> Target
-): LiveData<Target> =
-    MediatorLiveData<Target>().apply {
+    merging: (FirstSourceType?, SecondSourceType?, ThirdSourceType?) -> TargetType
+): LiveData<TargetType> =
+    MediatorLiveData<TargetType>().apply {
         subscribeTo(
             firstSource = firstSource,
             secondSource = secondSource,
