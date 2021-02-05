@@ -8,13 +8,14 @@ import androidx.annotation.DrawableRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import knaufdan.android.arch.R
-import knaufdan.android.arch.databinding.view.LayoutWidth
+import knaufdan.android.arch.databinding.view.LayoutBehavior
 import knaufdan.android.arch.databinding.view.TextGravity
 import knaufdan.android.core.resources.IResourceProvider
 
 data class TextConfig(
     val text: LiveData<Spannable>,
-    val textLayoutWidth: LayoutWidth = LayoutWidth.DEFAULT,
+    val textLayoutWidth: LayoutBehavior = LayoutBehavior.DEFAULT,
+    val textLayoutHeight: LayoutBehavior = LayoutBehavior.DEFAULT,
     @DimenRes val textSize: Int = R.dimen.arch_text_default_text_size,
     @ColorRes val textColor: Int = R.color.arch_text_default_text_color,
     val textGravity: TextGravity = TextGravity.DEFAULT,
@@ -28,7 +29,8 @@ data class TextConfig(
 ) {
     constructor(
         text: Spannable,
-        textLayoutWidth: LayoutWidth = LayoutWidth.DEFAULT,
+        textLayoutWidth: LayoutBehavior = LayoutBehavior.DEFAULT,
+        textLayoutHeight: LayoutBehavior = LayoutBehavior.DEFAULT,
         @DimenRes textSize: Int = R.dimen.arch_text_default_text_size,
         @ColorRes textColor: Int = R.color.arch_text_default_text_color,
         textGravity: TextGravity = TextGravity.DEFAULT,
@@ -42,6 +44,7 @@ data class TextConfig(
     ) : this(
         text = MutableLiveData(text),
         textLayoutWidth = textLayoutWidth,
+        textLayoutHeight = textLayoutHeight,
         textSize = textSize,
         textColor = textColor,
         textGravity = textGravity,
@@ -56,7 +59,8 @@ data class TextConfig(
 
     constructor(
         text: String,
-        textLayoutWidth: LayoutWidth = LayoutWidth.DEFAULT,
+        textLayoutWidth: LayoutBehavior = LayoutBehavior.DEFAULT,
+        textLayoutHeight: LayoutBehavior = LayoutBehavior.DEFAULT,
         @DimenRes textSize: Int = R.dimen.arch_text_default_text_size,
         @ColorRes textColor: Int = R.color.arch_text_default_text_color,
         textGravity: TextGravity = TextGravity.DEFAULT,
@@ -70,6 +74,7 @@ data class TextConfig(
     ) : this(
         text = MutableLiveData(SpannableString(text) as Spannable),
         textLayoutWidth = textLayoutWidth,
+        textLayoutHeight = textLayoutHeight,
         textSize = textSize,
         textColor = textColor,
         textGravity = textGravity,
