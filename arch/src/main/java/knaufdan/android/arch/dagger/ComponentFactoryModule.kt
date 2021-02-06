@@ -4,6 +4,8 @@ import dagger.Module
 import dagger.Provides
 import knaufdan.android.arch.base.component.common.divider.IHorizontalDividerComponentFactory
 import knaufdan.android.arch.base.component.common.divider.implementation.HorizontalDividerComponentFactory
+import knaufdan.android.arch.base.component.common.info.IInfoComponentFactory
+import knaufdan.android.arch.base.component.common.info.implementation.InfoComponentFactory
 import knaufdan.android.arch.base.component.common.text.ITextComponentFactory
 import knaufdan.android.arch.base.component.common.text.implementation.TextComponentFactory
 import knaufdan.android.core.resources.IResourceProvider
@@ -25,6 +27,15 @@ class ComponentFactoryModule {
         resourceProvider: IResourceProvider
     ): IHorizontalDividerComponentFactory =
         HorizontalDividerComponentFactory(
+            resourceProvider = resourceProvider
+        )
+
+    @Provides
+    @Singleton
+    fun provideInfoComponentFactory(
+        resourceProvider: IResourceProvider
+    ): IInfoComponentFactory =
+        InfoComponentFactory(
             resourceProvider = resourceProvider
         )
 }

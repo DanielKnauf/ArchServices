@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="knaufdan.android.arch.base.component.common.info.implementation.InfoViewModel" />
+    </data>
+
+    <LinearLayout
+        style="@style/ArchInfoContainer"
+        app:background="@{viewModel.background}"
+        app:layout_height="@{viewModel.textLayoutHeight}"
+        app:layout_width="@{viewModel.textLayoutWidth}"
+        app:marginBottom="@{viewModel.marginBottom}"
+        app:marginLeft="@{viewModel.marginLeft}"
+        app:marginRight="@{viewModel.marginRight}"
+        app:marginTop="@{viewModel.marginTop}">
+
+        <TextView
+            style="@style/ArchInfoText"
+            android:lineSpacingExtra="@{viewModel.lineSpacingExtra}"
+            android:text="@{viewModel.text}"
+            android:textColor="@{viewModel.textColor}"
+            android:textSize="@{viewModel.textSize}"
+            app:textGravity="@{viewModel.textGravity}" />
+
+        <Button
+            style="@style/ArchInfoButton"
+            android:onClick="@{_ -> viewModel.onButtonClicked()}"
+            android:text="@{viewModel.buttonText}"
+            app:marginLeft="@{viewModel.buttonMarginLeft}"
+            app:marginRight="@{viewModel.buttonMarginRight}"
+            app:marginTop="@{viewModel.buttonMarginTop}" />
+
+    </LinearLayout>
+
+</layout>
