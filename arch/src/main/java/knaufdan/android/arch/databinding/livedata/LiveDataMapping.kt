@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package knaufdan.android.arch.databinding.livedata
 
 import androidx.lifecycle.LiveData
@@ -21,11 +23,10 @@ fun <SourceType, TargetType> map(
     mapping: (SourceType) -> TargetType
 ): LiveData<TargetType> =
     SubscribingLiveData(
-        source = source,
+        source = { source },
         distinctUntilChanged = distinctUntilChanged,
         mapping = mapping
     )
-
 
 /**
  * Creates a new [LiveData] subscribing to [firstSource] and [secondSource]. Each time one source value changes,
@@ -49,8 +50,8 @@ fun <FirstSourceType, SecondSourceType, TargetType> map(
     mapping: (FirstSourceType?, SecondSourceType?) -> TargetType
 ): LiveData<TargetType> =
     SubscribingLiveDataTwoSources(
-        firstSource = firstSource,
-        secondSource = secondSource,
+        firstSource = { firstSource },
+        secondSource = { secondSource },
         distinctUntilChanged = distinctUntilChanged,
         mapping = mapping
     )

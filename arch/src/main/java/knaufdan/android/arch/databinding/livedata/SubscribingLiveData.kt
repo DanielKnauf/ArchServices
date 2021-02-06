@@ -5,6 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 
 open class SubscribingLiveData<Source, Target>(
     private val source: () -> LiveData<Source>,
+    private val distinctUntilChanged: Boolean = true,
     private val mapping: (Source) -> Target = { value ->
         @Suppress("UNCHECKED_CAST")
         value as Target
@@ -19,6 +20,7 @@ open class SubscribingLiveData<Source, Target>(
 
         subscribeTo(
             source = activeSource,
+            distinctUntilChanged = distinctUntilChanged,
             mapping = mapping
         )
     }
