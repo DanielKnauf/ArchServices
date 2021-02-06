@@ -28,7 +28,7 @@ fun <FirstSource, SecondSource, Target> merge(
             firstSource = firstSource,
             secondSource = secondSource,
             distinctUntilChanged = distinctUntilChanged,
-            merging = merging
+            mapping = merging
         )
     }
 
@@ -61,6 +61,6 @@ fun <FirstSource, SecondSource, ThirdSource, Target> merge(
             secondSource = secondSource,
             thirdSource = thirdSource,
             distinctUntilChanged = distinctUntilChanged,
-            merging = merging
+            mapping = merging
         )
     }
