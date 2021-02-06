@@ -7,7 +7,7 @@ class SubscribingLiveDataTwoSources<FirstSource, SecondSource, Target>(
     private val firstSource: () -> LiveData<FirstSource>,
     private val secondSource: () -> LiveData<SecondSource>,
     private val distinctUntilChanged: Boolean = true,
-    private val merging: (FirstSource?, SecondSource?) -> Target
+    private val mapping: (FirstSource?, SecondSource?) -> Target
 ) : MediatorLiveData<Target>() {
     private lateinit var activeFirstSource: LiveData<FirstSource>
     private lateinit var activeSecondSource: LiveData<SecondSource>
@@ -22,7 +22,7 @@ class SubscribingLiveDataTwoSources<FirstSource, SecondSource, Target>(
             firstSource = activeFirstSource,
             secondSource = activeSecondSource,
             distinctUntilChanged = distinctUntilChanged,
-            merging = merging
+            mapping = mapping
         )
     }
 
