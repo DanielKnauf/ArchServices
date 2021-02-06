@@ -4,28 +4,27 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 
 /**
- * Adds the [source] to the calling [MediatorLiveData] target. The posted value is determined by the [mapping] function.
+ * [MediatorLiveData] listens to changes of [source]. New values of [MediatorLiveData] are determined by
+ * [mapping] function from [SourceType] to [TargetType] and posted asynchronously.
  *
- * @param source the added [LiveData] source
- * @param Source the type of data hold by [source]
- * @param Target the type of data hold by target
- * @param distinctUntilChanged if true results equal to current value of [MediatorLiveData] target are discarded
- * @param mapping the function used to determine the value posted
+ * @param source [LiveData] added as source
+ * @param SourceType type of data hold by [source]
+ * @param TargetType type of data hold by target
+ * @param distinctUntilChanged if true [mapping] results equal to current value of [MediatorLiveData] are discarded
+ * @param mapping function used to determine new value based on [source] value
  */
-fun <Source, Target> MediatorLiveData<Target>.subscribeTo(
-    source: LiveData<Source>,
+fun <SourceType, TargetType> MediatorLiveData<TargetType>.subscribeTo(
+    source: LiveData<SourceType>,
     distinctUntilChanged: Boolean = true,
-    mapping: (Source) -> Target = { value ->
+    mapping: (SourceType) -> TargetType = { value ->
         @Suppress("UNCHECKED_CAST")
-        value as Target
+        value as TargetType
     }
 ) {
     addSource(source) { value ->
-        val newValue = mapping(value)
-
         postValue(
             distinctUntilChanged = distinctUntilChanged,
-            newValue = newValue
+            newValue = mapping(value)
         )
     }
 }
@@ -141,10 +140,12 @@ fun <FirstSourceType, SecondSourceType, ThirdSourceType, TargetType> MediatorLiv
     }
 }
 
-private fun <Target> MediatorLiveData<Target>.postValue(
+private fun <TargetType> MediatorLiveData<TargetType>.postValue(
     distinctUntilChanged: Boolean,
-    newValue: Target
+    newValue: TargetType
 ) {
+    val value = value ?: postValue(newValue)
+
     if (distinctUntilChanged && value == newValue) {
         return
     }
