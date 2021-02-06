@@ -14,7 +14,7 @@
     </data>
 
     <TextView
-        style="@style/arch_text"
+        style="@style/ArchText"
         android:lineSpacingExtra="@{viewModel.lineSpacingExtra}"
         android:text="@{viewModel.text}"
         android:textColor="@{viewModel.textColor}"
