@@ -43,9 +43,9 @@ fun <Source, Target> MediatorLiveData<Target>.subscribeTo(
  * @param distinctUntilChanged if true [mapping] results equal to current value of [MediatorLiveData] are discarded
  * @param mapping function used to determine new value based on [firstSource] and [secondSource] values
  */
-fun <FirstSource, SecondSource, Target> MediatorLiveData<Target>.subscribeTo(
-    firstSource: LiveData<FirstSource>,
-    secondSource: LiveData<SecondSource>,
+fun <FirstSourceType, SecondSourceType, TargetType> MediatorLiveData<TargetType>.subscribeTo(
+    firstSource: LiveData<FirstSourceType>,
+    secondSource: LiveData<SecondSourceType>,
     distinctUntilChanged: Boolean = true,
     mapping: (FirstSourceType?, SecondSourceType?) -> TargetType
 ) {
@@ -91,10 +91,10 @@ fun <FirstSource, SecondSource, Target> MediatorLiveData<Target>.subscribeTo(
  * @param distinctUntilChanged if true [mapping] results equal to current value of [MediatorLiveData] are discarded
  * @param mapping function used to determine new value based on [firstSource], [secondSource] and [thirdSource] values
  */
-fun <FirstSource, SecondSource, ThirdSource, Target> MediatorLiveData<Target>.subscribeTo(
-    firstSource: LiveData<FirstSource>,
-    secondSource: LiveData<SecondSource>,
-    thirdSource: LiveData<ThirdSource>,
+fun <FirstSourceType, SecondSourceType, ThirdSourceType, TargetType> MediatorLiveData<TargetType>.subscribeTo(
+    firstSource: LiveData<FirstSourceType>,
+    secondSource: LiveData<SecondSourceType>,
+    thirdSource: LiveData<ThirdSourceType>,
     distinctUntilChanged: Boolean = true,
     mapping: (FirstSourceType?, SecondSourceType?, ThirdSourceType?) -> TargetType
 ) {
