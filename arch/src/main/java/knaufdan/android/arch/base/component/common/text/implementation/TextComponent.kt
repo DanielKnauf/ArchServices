@@ -28,13 +28,9 @@ class TextComponent(
 
     override fun areItemsTheSame(other: Any): Boolean =
         other is TextComponent &&
-            other.getText() == getText()
+            other.textConfig.hashCode() == textConfig.hashCode()
 
     override fun areContentsTheSame(other: Any): Boolean =
         other is TextComponent &&
-            other.textConfig == textConfig
-
-    companion object {
-        private fun TextComponent.getText(): String = textConfig.text.value.toString()
-    }
+            this.textConfig == other.textConfig
 }
