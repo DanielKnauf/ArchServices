@@ -22,7 +22,7 @@ class SubscribingLiveDataTwoSources<FirstSource, SecondSource, Target>(
             firstSource = activeFirstSource,
             secondSource = activeSecondSource,
             distinctUntilChanged = distinctUntilChanged,
-            merging = merging
+            mapping = merging
         )
     }
 
