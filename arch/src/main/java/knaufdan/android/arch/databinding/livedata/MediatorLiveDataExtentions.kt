@@ -31,25 +31,27 @@ fun <Source, Target> MediatorLiveData<Target>.subscribeTo(
 }
 
 /**
- * Adds all sources to the calling [MediatorLiveData] target. The posted value is determined by the [merging] function.
+ * [MediatorLiveData] listens to changes of [firstSource] and [secondSource]. New values of [MediatorLiveData] are
+ * determined by [mapping] function from [FirstSourceType] as well as [SecondSourceType] to [TargetType] and
+ * posted asynchronously.
  *
- * @param firstSource the first added [LiveData] source
- * @param FirstSource the type of data hold by [firstSource]
- * @param secondSource the second added [LiveData] source
- * @param SecondSource the type of data hold by [secondSource]
- * @param Target the type of data hold by target
- * @param distinctUntilChanged if true results equal to current value of [MediatorLiveData] target are discarded
- * @param merging the function used to determine the value posted
+ * @param firstSource [LiveData] added as first source
+ * @param FirstSourceType type of data hold by [firstSource]
+ * @param secondSource [LiveData] added as second source
+ * @param SecondSourceType type of data hold by [secondSource]
+ * @param TargetType type of data hold by target
+ * @param distinctUntilChanged if true [mapping] results equal to current value of [MediatorLiveData] are discarded
+ * @param mapping function used to determine new value based on [firstSource] and [secondSource] values
  */
 fun <FirstSource, SecondSource, Target> MediatorLiveData<Target>.subscribeTo(
     firstSource: LiveData<FirstSource>,
     secondSource: LiveData<SecondSource>,
     distinctUntilChanged: Boolean = true,
-    merging: (FirstSource?, SecondSource?) -> Target
+    mapping: (FirstSourceType?, SecondSourceType?) -> TargetType
 ) {
     addSource(firstSource) { value ->
         val newValue =
-            merging(
+            mapping(
                 value,
                 secondSource.value
             )
@@ -62,7 +64,7 @@ fun <FirstSource, SecondSource, Target> MediatorLiveData<Target>.subscribeTo(
 
     addSource(secondSource) { value ->
         val newValue =
-            merging(
+            mapping(
                 firstSource.value,
                 value
             )
@@ -75,28 +77,30 @@ fun <FirstSource, SecondSource, Target> MediatorLiveData<Target>.subscribeTo(
 }
 
 /**
- * Adds all sources to the calling [MediatorLiveData] target. The posted value is determined by the [merging] function.
+ * MediatorLiveData] listens to changes of [firstSource], [secondSource] and [thirdSource]. New values of [MediatorLiveData]
+ * are determined by [mapping] function from [FirstSourceType], [SecondSourceType] as well as [ThirdSourceType] to [TargetType]
+ * and posted asynchronously.
  *
- * @param firstSource the first added [LiveData] source
- * @param FirstSource the type of data hold by [firstSource]
- * @param secondSource the second added [LiveData] source
- * @param SecondSource the type of data hold by [secondSource]
- * @param thirdSource the second added [LiveData] source
- * @param ThirdSource the type of data hold by [thirdSource]
- * @param Target the type of data hold by target
- * @param distinctUntilChanged if true results equal to current value of [MediatorLiveData] target are discarded
- * @param merging the function used to determine the value posted
+ * @param firstSource [LiveData] added as first source
+ * @param FirstSourceType type of data hold by [firstSource]
+ * @param secondSource [LiveData] added as second source
+ * @param SecondSourceType type of data hold by [secondSource]
+ * @param thirdSource [LiveData] added as third source
+ * @param ThirdSourceType type of data hold by [thirdSource]
+ * @param TargetType type of data hold by target
+ * @param distinctUntilChanged if true [mapping] results equal to current value of [MediatorLiveData] are discarded
+ * @param mapping function used to determine new value based on [firstSource], [secondSource] and [thirdSource] values
  */
 fun <FirstSource, SecondSource, ThirdSource, Target> MediatorLiveData<Target>.subscribeTo(
     firstSource: LiveData<FirstSource>,
     secondSource: LiveData<SecondSource>,
     thirdSource: LiveData<ThirdSource>,
     distinctUntilChanged: Boolean = true,
-    merging: (FirstSource?, SecondSource?, ThirdSource?) -> Target
+    mapping: (FirstSourceType?, SecondSourceType?, ThirdSourceType?) -> TargetType
 ) {
     addSource(firstSource) { value ->
         val newValue =
-            merging(
+            mapping(
                 value,
                 secondSource.value,
                 thirdSource.value
@@ -110,7 +114,7 @@ fun <FirstSource, SecondSource, ThirdSource, Target> MediatorLiveData<Target>.su
 
     addSource(secondSource) { value ->
         val newValue =
-            merging(
+            mapping(
                 firstSource.value,
                 value,
                 thirdSource.value
@@ -124,7 +128,7 @@ fun <FirstSource, SecondSource, ThirdSource, Target> MediatorLiveData<Target>.su
 
     addSource(thirdSource) { value ->
         val newValue =
-            merging(
+            mapping(
                 firstSource.value,
                 secondSource.value,
                 value
