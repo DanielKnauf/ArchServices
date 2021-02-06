@@ -5,29 +5,27 @@ import androidx.lifecycle.MediatorLiveData
 
 open class SubscribingLiveData<Source, Target>(
     private val source: () -> LiveData<Source>,
+class SubscribingLiveData<Source, Target>(
+    private val source: LiveData<Source>,
     private val distinctUntilChanged: Boolean = true,
     private val mapping: (Source) -> Target = { value ->
         @Suppress("UNCHECKED_CAST")
         value as Target
     }
 ) : MediatorLiveData<Target>() {
-    private lateinit var activeSource: LiveData<Source>
-
     override fun onActive() {
         super.onActive()
 
-        activeSource = source()
-
         subscribeTo(
-            source = activeSource,
+            source = source,
             distinctUntilChanged = distinctUntilChanged,
             mapping = mapping
         )
     }
 
     override fun onInactive() {
-        super.onInactive()
+        removeSource(source)
 
-        removeSource(activeSource)
+        super.onInactive()
     }
 }
