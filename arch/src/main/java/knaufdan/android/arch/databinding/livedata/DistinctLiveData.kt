@@ -18,7 +18,7 @@ import androidx.lifecycle.MutableLiveData
  */
 class DistinctLiveData<T>(
     value: T,
-    private val onActivated: () -> Unit = {},
+    private val onActivated: DistinctLiveData<T>.() -> Unit = {},
     private val onInactivated: () -> Unit = {}
 ) : MutableLiveData<T>(value) {
     override fun postValue(value: T) {
@@ -44,8 +44,8 @@ class DistinctLiveData<T>(
     }
 
     override fun onInactive() {
-        super.onInactive()
-
         onInactivated()
+
+        super.onInactive()
     }
 }
