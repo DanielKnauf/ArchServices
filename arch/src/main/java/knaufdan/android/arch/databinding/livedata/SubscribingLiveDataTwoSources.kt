@@ -4,32 +4,26 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 
 class SubscribingLiveDataTwoSources<FirstSource, SecondSource, Target>(
-    private val firstSource: () -> LiveData<FirstSource>,
-    private val secondSource: () -> LiveData<SecondSource>,
+    private val firstSource: LiveData<FirstSource>,
+    private val secondSource: LiveData<SecondSource>,
     private val distinctUntilChanged: Boolean = true,
     private val mapping: (FirstSource?, SecondSource?) -> Target
 ) : MediatorLiveData<Target>() {
-    private lateinit var activeFirstSource: LiveData<FirstSource>
-    private lateinit var activeSecondSource: LiveData<SecondSource>
-
     override fun onActive() {
         super.onActive()
 
-        activeFirstSource = firstSource()
-        activeSecondSource = secondSource()
-
         subscribeTo(
-            firstSource = activeFirstSource,
-            secondSource = activeSecondSource,
+            firstSource = firstSource,
+            secondSource = secondSource,
             distinctUntilChanged = distinctUntilChanged,
             mapping = mapping
         )
     }
 
     override fun onInactive() {
-        super.onInactive()
+        removeSource(firstSource)
+        removeSource(secondSource)
 
-        removeSource(activeFirstSource)
-        removeSource(activeSecondSource)
+        super.onInactive()
     }
 }
