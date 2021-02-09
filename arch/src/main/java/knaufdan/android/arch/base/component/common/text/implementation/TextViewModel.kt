@@ -7,28 +7,17 @@ class TextViewModel(
     private val textConfig: TextConfig,
     resourceProvider: IResourceProvider
 ) {
-    val textLayoutWidth = textConfig.textLayoutWidth
-
-    val textLayoutHeight = textConfig.textLayoutHeight
-
+    val layoutWidth = textConfig.layoutWidth
+    val layoutHeight = textConfig.layoutHeight
     val text = textConfig.text
-
     val textSize = resourceProvider.getDimension(textConfig.textSize)
-
     val textColor = resourceProvider.getColor(textConfig.textColor)
-
     val textGravity = textConfig.textGravity
-
     val lineSpacingExtra = resourceProvider.getDimension(textConfig.lineSpacingExtra)
-
     val marginTop = resourceProvider.getDimension(textConfig.marginTop)
-
     val marginBottom = resourceProvider.getDimension(textConfig.marginBottom)
-
     val marginLeft = resourceProvider.getDimension(textConfig.marginLeft)
-
     val marginRight = resourceProvider.getDimension(textConfig.marginRight)
-
     val background = textConfig.background
 
     fun onTextClicked(text: String) {

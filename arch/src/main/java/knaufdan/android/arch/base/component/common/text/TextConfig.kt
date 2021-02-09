@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package knaufdan.android.arch.base.component.common.text
 
 import android.text.Spannable
@@ -14,8 +16,8 @@ import knaufdan.android.core.resources.IResourceProvider
 
 data class TextConfig(
     val text: LiveData<Spannable>,
-    val textLayoutWidth: LayoutBehavior = LayoutBehavior.DEFAULT,
-    val textLayoutHeight: LayoutBehavior = LayoutBehavior.DEFAULT,
+    val layoutWidth: LayoutBehavior = LayoutBehavior.DEFAULT,
+    val layoutHeight: LayoutBehavior = LayoutBehavior.DEFAULT,
     @DimenRes val textSize: Int = R.dimen.arch_text_default_text_size,
     @ColorRes val textColor: Int = R.color.arch_text_default_text_color,
     val textGravity: TextGravity = TextGravity.DEFAULT,
@@ -29,8 +31,8 @@ data class TextConfig(
 ) {
     constructor(
         text: Spannable,
-        textLayoutWidth: LayoutBehavior = LayoutBehavior.DEFAULT,
-        textLayoutHeight: LayoutBehavior = LayoutBehavior.DEFAULT,
+        layoutWidth: LayoutBehavior = LayoutBehavior.DEFAULT,
+        layoutHeight: LayoutBehavior = LayoutBehavior.DEFAULT,
         @DimenRes textSize: Int = R.dimen.arch_text_default_text_size,
         @ColorRes textColor: Int = R.color.arch_text_default_text_color,
         textGravity: TextGravity = TextGravity.DEFAULT,
@@ -43,8 +45,8 @@ data class TextConfig(
         onTextClicked: (text: String) -> Unit = {}
     ) : this(
         text = MutableLiveData(text),
-        textLayoutWidth = textLayoutWidth,
-        textLayoutHeight = textLayoutHeight,
+        layoutWidth = layoutWidth,
+        layoutHeight = layoutHeight,
         textSize = textSize,
         textColor = textColor,
         textGravity = textGravity,
@@ -59,8 +61,8 @@ data class TextConfig(
 
     constructor(
         text: String,
-        textLayoutWidth: LayoutBehavior = LayoutBehavior.DEFAULT,
-        textLayoutHeight: LayoutBehavior = LayoutBehavior.DEFAULT,
+        layoutWidth: LayoutBehavior = LayoutBehavior.DEFAULT,
+        layoutHeight: LayoutBehavior = LayoutBehavior.DEFAULT,
         @DimenRes textSize: Int = R.dimen.arch_text_default_text_size,
         @ColorRes textColor: Int = R.color.arch_text_default_text_color,
         textGravity: TextGravity = TextGravity.DEFAULT,
@@ -73,8 +75,8 @@ data class TextConfig(
         onTextClicked: (text: String) -> Unit = {}
     ) : this(
         text = MutableLiveData(SpannableString(text) as Spannable),
-        textLayoutWidth = textLayoutWidth,
-        textLayoutHeight = textLayoutHeight,
+        layoutWidth = layoutWidth,
+        layoutHeight = layoutHeight,
         textSize = textSize,
         textColor = textColor,
         textGravity = textGravity,
@@ -94,7 +96,8 @@ data class TextConfig(
         other as TextConfig
 
         if (text.value.toString() != other.text.value.toString()) return false
-        if (textLayoutWidth != other.textLayoutWidth) return false
+        if (layoutWidth != other.layoutWidth) return false
+        if (layoutHeight != other.layoutHeight) return false
         if (textSize != other.textSize) return false
         if (textColor != other.textColor) return false
         if (textGravity != other.textGravity) return false
@@ -110,7 +113,8 @@ data class TextConfig(
 
     override fun hashCode(): Int {
         var result = text.value.hashCode()
-        result = 31 * result + textLayoutWidth.hashCode()
+        result = 31 * result + layoutWidth.hashCode()
+        result = 31 * result + layoutHeight.hashCode()
         result = 31 * result + textSize
         result = 31 * result + textColor
         result = 31 * result + textGravity.hashCode()
@@ -119,6 +123,7 @@ data class TextConfig(
         result = 31 * result + marginBottom
         result = 31 * result + marginLeft
         result = 31 * result + marginRight
+
         return result
     }
 }
