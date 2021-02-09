@@ -14,14 +14,14 @@
     </data>
 
     <TextView
-        style="@style/arch_text"
+        style="@style/ArchText"
         android:lineSpacingExtra="@{viewModel.lineSpacingExtra}"
         android:text="@{viewModel.text}"
         android:textColor="@{viewModel.textColor}"
         android:textSize="@{viewModel.textSize}"
         app:background="@{viewModel.background}"
-        app:layout_width="@{viewModel.textLayoutWidth}"
-        app:layout_height="@{viewModel.textLayoutHeight}"
+        app:layout_width="@{viewModel.layoutWidth}"
+        app:layout_height="@{viewModel.layoutHeight}"
         app:marginBottom="@{viewModel.marginBottom}"
         app:marginLeft="@{viewModel.marginLeft}"
         app:marginRight="@{viewModel.marginRight}"
