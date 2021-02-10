@@ -12,11 +12,10 @@ import knaufdan.android.arch.utils.findLifecycleOwner
 class ComponentAdapter(
     components: List<IComponent<Any>>
 ) : ListAdapter<IComponent<Any>, ComponentViewHolder>(ComponentDiffCallback()) {
-    // Store data in separate list to lose the reference and prevent error if referenced data changes.
-    private var dataSource: List<IComponent<Any>> = components.toList()
+    private lateinit var dataSource: List<IComponent<Any>>
 
     init {
-        submitList(dataSource)
+        submitList(components)
     }
 
     override fun onCreateViewHolder(
@@ -44,10 +43,13 @@ class ComponentAdapter(
         )
     }
 
-    override fun getItemViewType(position: Int): LayoutRes = dataSource[position].getLayoutRes()
+    override fun getItemViewType(position: Int): LayoutRes =
+        dataSource[position].getLayoutRes()
 
     override fun submitList(list: List<IComponent<Any>>?) {
+        // Store data in separate list to lose the reference and prevent error if referenced data changes.
         dataSource = list?.toList() ?: return
+
         super.submitList(dataSource)
     }
 
