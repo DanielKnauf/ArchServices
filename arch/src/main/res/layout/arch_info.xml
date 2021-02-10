@@ -17,7 +17,11 @@
         app:marginBottom="@{viewModel.marginBottom}"
         app:marginLeft="@{viewModel.marginLeft}"
         app:marginRight="@{viewModel.marginRight}"
-        app:marginTop="@{viewModel.marginTop}">
+        app:marginTop="@{viewModel.marginTop}"
+        app:paddingBottom="@{viewModel.paddingBottom}"
+        app:paddingLeft="@{viewModel.paddingLeft}"
+        app:paddingRight="@{viewModel.paddingRight}"
+        app:paddingTop="@{viewModel.paddingTop}">
 
         <TextView
             style="@style/ArchInfoText"
