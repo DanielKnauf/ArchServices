@@ -14,6 +14,10 @@ class InfoViewModel(
     val textColor = resourceProvider.getColor(infoConfig.textColor)
     val textGravity = infoConfig.textGravity
     val lineSpacingExtra = resourceProvider.getDimension(infoConfig.lineSpacingExtra)
+    val paddingTop = resourceProvider.getDimension(infoConfig.paddingTop)
+    val paddingBottom = resourceProvider.getDimension(infoConfig.paddingBottom)
+    val paddingLeft = resourceProvider.getDimension(infoConfig.paddingLeft)
+    val paddingRight = resourceProvider.getDimension(infoConfig.paddingRight)
     val marginTop = resourceProvider.getDimension(infoConfig.marginTop)
     val marginBottom = resourceProvider.getDimension(infoConfig.marginBottom)
     val marginLeft = resourceProvider.getDimension(infoConfig.marginLeft)
