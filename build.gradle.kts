@@ -12,11 +12,11 @@ buildscript {
     }
 
     dependencies {
-        classpath(Dependencies.gradle)
-        classpath(Dependencies.kotlin_gradle_plugin)
-        classpath(Dependencies.kotlin_android_extensions)
-        classpath(Dependencies.dependency_updates)
-        classpath(Dependencies.android_maven_plugin)
+        classpath(Plugins.gradle)
+        classpath(Plugins.kotlinGradle)
+        classpath(Plugins.kotlinAndroidExtensions)
+        classpath(Plugins.dependencyUpdates)
+        classpath(Plugins.androidMaven)
     }
 }
 
@@ -32,7 +32,7 @@ allprojects {
     apply(plugin = "com.github.ben-manes.versions")
 }
 
-subprojects{
+subprojects {
     apply { plugin("maven") }
 }
 
@@ -49,6 +49,6 @@ fun isNonStable(version: String): Boolean {
 tasks.named("dependencyUpdates", DependencyUpdatesTask::class.java).configure {
     // disallow release candidates as upgradable versions from stable versions
     rejectVersionIf {
-        isNonStable(candidate.version) && !isNonStable(currentVersion)
+        isNonStable(candidate.version)
     }
 }
