@@ -99,6 +99,29 @@ fun View.bindFocus(
 
 @BindingAdapter(
     value = [
+        "paddingTop",
+        "paddingBottom",
+        "paddingLeft",
+        "paddingRight"
+    ],
+    requireAll = false
+)
+fun View.bindPadding(
+    paddingTop: Number?,
+    paddingBottom: Number?,
+    paddingLeft: Number?,
+    paddingRight: Number?
+) {
+    this.setPadding(
+        paddingLeft?.toInt() ?: this.paddingLeft,
+        paddingTop?.toInt() ?: this.paddingTop,
+        paddingRight?.toInt() ?: this.paddingRight,
+        paddingBottom?.toInt() ?: this.paddingBottom
+    )
+}
+
+@BindingAdapter(
+    value = [
         "marginTop",
         "marginBottom",
         "marginLeft",

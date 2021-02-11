@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- colors -->
+    <color name="arch_info_default_info_text_color">#808080</color>
+
+    <!-- dimensions -->
+    <dimen name="arch_info_default_info_text_size">14sp</dimen>
+    <dimen name="arch_info_default_padding_horizontal">0dp</dimen>
+    <dimen name="arch_info_default_padding_vertical">0dp</dimen>
+    <dimen name="arch_info_default_margin_horizontal">0dp</dimen>
+    <dimen name="arch_info_default_margin_vertical">0dp</dimen>
+    <dimen name="arch_info_default_line_spacing_extra">0dp</dimen>
+
+    <!-- styles -->
+    <style name="ArchInfoContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="ArchInfoText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="ArchInfoButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+</resources>
