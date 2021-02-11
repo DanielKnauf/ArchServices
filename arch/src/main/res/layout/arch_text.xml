@@ -20,13 +20,17 @@
         android:textColor="@{viewModel.textColor}"
         android:textSize="@{viewModel.textSize}"
         app:background="@{viewModel.background}"
-        app:layout_width="@{viewModel.layoutWidth}"
         app:layout_height="@{viewModel.layoutHeight}"
+        app:layout_width="@{viewModel.layoutWidth}"
         app:marginBottom="@{viewModel.marginBottom}"
         app:marginLeft="@{viewModel.marginLeft}"
         app:marginRight="@{viewModel.marginRight}"
         app:marginTop="@{viewModel.marginTop}"
         app:onTextClicked="@{viewModel::onTextClicked}"
+        app:paddingBottom="@{viewModel.paddingBottom}"
+        app:paddingLeft="@{viewModel.paddingLeft}"
+        app:paddingRight="@{viewModel.paddingRight}"
+        app:paddingTop="@{viewModel.paddingTop}"
         app:textGravity="@{viewModel.textGravity}" />
 
 </layout>
