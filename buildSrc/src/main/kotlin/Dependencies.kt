@@ -27,24 +27,24 @@ object Dependencies {
     val androidX_app_compat = "androidx.appcompat:appcompat:$appcompat_version"
 
     object AndroidX {
-        val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$vAndroidXLifecycle"
-        val extensions = "androidx.lifecycle:lifecycle-extensions:$vAndroidXLifecycleExtensions"
-        val compiler = "androidx.lifecycle:lifecycle-compiler:$vAndroidXLifecycle"
-        val recyclerView = "androidx.recyclerview:recyclerview:$vRecyclerView"
-        val viewPager2 = "androidx.viewpager2:viewpager2:$vViewPager2"
-        val legacy_support = "androidx.legacy:legacy-support-v4:$vLegacySupport"
-        val localbroadcastManager = "androidx.localbroadcastmanager:localbroadcastmanager:$vBroadcastManager"
+        const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:$vAndroidXLifecycle"
+        const val extensions = "androidx.lifecycle:lifecycle-extensions:$vAndroidXLifecycleExtensions"
+        const val compiler = "androidx.lifecycle:lifecycle-compiler:$vAndroidXLifecycle"
+        const val recyclerView = "androidx.recyclerview:recyclerview:$vRecyclerView"
+        const val viewPager2 = "androidx.viewpager2:viewpager2:$vViewPager2"
+        const val legacySupport = "androidx.legacy:legacy-support-v4:$vLegacySupport"
+        const val localBroadcastManager = "androidx.localbroadcastmanager:localbroadcastmanager:$vBroadcastManager"
     }
 
     val jUnit = "junit:junit:$vJUnit"
     val androidX_test_runner = "androidx.test:runner:$test_runner_version"
 
     object Dagger {
-        val core = "com.google.dagger:dagger:$vDagger"
-        val android = "com.google.dagger:dagger-android:$vDagger"
-        val androidSupport = "com.google.dagger:dagger-android-support:$vDagger"
-        val compiler = "com.google.dagger:dagger-compiler:$vDagger"
-        val androidProcessor = "com.google.dagger:dagger-android-processor:$vDagger"
+        const val core = "com.google.dagger:dagger:$vDagger"
+        const val android = "com.google.dagger:dagger-android:$vDagger"
+        const val androidSupport = "com.google.dagger:dagger-android-support:$vDagger"
+        const val compiler = "com.google.dagger:dagger-compiler:$vDagger"
+        const val androidProcessor = "com.google.dagger:dagger-android-processor:$vDagger"
     }
 
     val gson = "com.google.code.gson:gson:$gson_version"
