@@ -75,6 +75,7 @@ fun TextView.bindHtmlText(
                 Html.FROM_HTML_MODE_COMPACT
             )
         } else {
+            @Suppress("DEPRECATION")
             Html.fromHtml(text)
         }
 

@@ -43,6 +43,7 @@ internal class AudioService @Inject constructor(private val contextProvider: ICo
                             }
                         )
                     } else {
+                        @Suppress("DEPRECATION")
                         requestAudioFocus(
                             audioFocusChangeListener,
                             AudioManager.STREAM_MUSIC,
@@ -82,6 +83,7 @@ internal class AudioService @Inject constructor(private val contextProvider: ICo
                         }
                     )
                 } else {
+                    @Suppress("DEPRECATION")
                     abandonAudioFocus(createAudioFocusChangeListener())
                 }
             }

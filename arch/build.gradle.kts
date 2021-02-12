@@ -47,42 +47,42 @@ android {
 }
 
 dependencies {
-    "implementation"(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     //androidX
-    "implementation"(Dependencies.androidX_app_compat)
-    "implementation"(Dependencies.androidX_recyclerView)
-    "implementation"(Dependencies.androidX_core_ktx)
-    "implementation"(Dependencies.android_material_design)
-    "implementation"(Dependencies.androidX_legacy_support)
-    "implementation"(Dependencies.androidX_viewPager2)
+    implementation(Dependencies.androidX_app_compat)
+    implementation(Dependencies.AndroidX.recyclerView)
+    implementation(Dependencies.androidX_core_ktx)
+    implementation(Dependencies.android_material_design)
+    implementation(Dependencies.AndroidX.legacySupport)
+    implementation(Dependencies.AndroidX.viewPager2)
 
     //lifecycle
-    "implementation"(Dependencies.androidX_lifecycle_viewModel)
-    "implementation"(Dependencies.androidX_lifecycle_extensions)
-    "kapt"(Dependencies.androidX_lifecycle_compiler)
+    implementation(Dependencies.AndroidX.viewModel)
+    implementation(Dependencies.AndroidX.extensions)
+    kapt(Dependencies.AndroidX.compiler)
 
     //picasso
-    "implementation"(Dependencies.picasso)
+    implementation(Dependencies.picasso)
 
     //dagger2
-    "implementation"(Dependencies.dagger_core)
-    "implementation"(Dependencies.dagger_android)
-    "implementation"(Dependencies.dagger_android_support)
-    "kapt"(Dependencies.dagger_compiler)
-    "kapt"(Dependencies.dagger_android_processor)
+    implementation(Dependencies.Dagger.core)
+    implementation(Dependencies.Dagger.android)
+    implementation(Dependencies.Dagger.androidSupport)
+    kapt(Dependencies.Dagger.compiler)
+    kapt(Dependencies.Dagger.androidProcessor)
 
     //testing
-    "androidTestImplementation"(Dependencies.androidX_test_runner)
-    "testImplementation"(Dependencies.jUnit)
+    androidTestImplementation(Dependencies.androidX_test_runner)
+    testImplementation(Dependencies.jUnit)
 
     //retrofit
-    "implementation"(Dependencies.retrofit_core)
-    "implementation"(Dependencies.retrofit_gson)
+    implementation(Dependencies.retrofit_core)
+    implementation(Dependencies.retrofit_gson)
 
     //kotlin
-    "implementation"(Dependencies.kotlin_reflect)
-    "implementation"(Dependencies.kotlin_stdlib)
+    implementation(Dependencies.kotlin_reflect)
+    implementation(Dependencies.kotlin_stdlib)
 
-    "implementation"(project(":core"))
+    implementation(project(":core"))
 }

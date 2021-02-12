@@ -43,33 +43,33 @@ android {
 }
 
 dependencies {
-    "implementation"(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
     //androidX
-    "implementation"(Dependencies.androidX_app_compat)
-    "implementation"(Dependencies.androidX_localbroadcast_manager)
-    "implementation"(Dependencies.androidX_core_ktx)
+    implementation(Dependencies.androidX_app_compat)
+    implementation(Dependencies.AndroidX.localBroadcastManager)
+    implementation(Dependencies.androidX_core_ktx)
 
     //google
-    "implementation"(Dependencies.gson)
+    implementation(Dependencies.gson)
 
     //lifecycle
-    "implementation"(Dependencies.androidX_lifecycle_viewModel)
-    "implementation"(Dependencies.androidX_lifecycle_extensions)
-    "kapt"(Dependencies.androidX_lifecycle_compiler)
+    implementation(Dependencies.AndroidX.viewModel)
+    implementation(Dependencies.AndroidX.extensions)
+    kapt(Dependencies.AndroidX.compiler)
 
     //testing
-    "androidTestImplementation"(Dependencies.androidX_test_runner)
-    "testImplementation"(Dependencies.jUnit)
+    androidTestImplementation(Dependencies.androidX_test_runner)
+    testImplementation(Dependencies.jUnit)
 
     //dagger2
-    "implementation"(Dependencies.dagger_core)
-    "implementation"(Dependencies.dagger_android)
-    "implementation"(Dependencies.dagger_android_support)
-    "kapt"(Dependencies.dagger_compiler)
-    "kapt"(Dependencies.dagger_android_processor)
+    implementation(Dependencies.Dagger.core)
+    implementation(Dependencies.Dagger.android)
+    implementation(Dependencies.Dagger.androidSupport)
+    kapt(Dependencies.Dagger.compiler)
+    kapt(Dependencies.Dagger.androidProcessor)
 
     //kotlin
-    "implementation"(Dependencies.kotlin_reflect)
-    "implementation"(Dependencies.kotlin_stdlib)
+    implementation(Dependencies.kotlin_reflect)
+    implementation(Dependencies.kotlin_stdlib)
 }
