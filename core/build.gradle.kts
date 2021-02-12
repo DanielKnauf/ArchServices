@@ -47,7 +47,7 @@ dependencies {
 
     //androidX
     implementation(Dependencies.androidX_app_compat)
-    implementation(Dependencies.AndroidX.localbroadcastManager)
+    implementation(Dependencies.AndroidX.localBroadcastManager)
     implementation(Dependencies.androidX_core_ktx)
 
     //google
