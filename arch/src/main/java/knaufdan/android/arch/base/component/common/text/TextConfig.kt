@@ -22,6 +22,10 @@ data class TextConfig(
     @ColorRes val textColor: Int = R.color.arch_text_default_text_color,
     val textGravity: TextGravity = TextGravity.DEFAULT,
     @DimenRes val lineSpacingExtra: Int = R.dimen.arch_text_default_line_spacing_extra,
+    @DimenRes val paddingTop: Int = R.dimen.arch_text_default_padding_vertical,
+    @DimenRes val paddingBottom: Int = R.dimen.arch_text_default_padding_vertical,
+    @DimenRes val paddingLeft: Int = R.dimen.arch_text_default_padding_horizontal,
+    @DimenRes val paddingRight: Int = R.dimen.arch_text_default_padding_horizontal,
     @DimenRes val marginTop: Int = R.dimen.arch_text_default_margin_horizontal,
     @DimenRes val marginBottom: Int = R.dimen.arch_text_default_margin_horizontal,
     @DimenRes val marginLeft: Int = R.dimen.arch_text_default_margin_vertical,
@@ -37,6 +41,10 @@ data class TextConfig(
         @ColorRes textColor: Int = R.color.arch_text_default_text_color,
         textGravity: TextGravity = TextGravity.DEFAULT,
         @DimenRes lineSpacingExtra: Int = R.dimen.arch_text_default_line_spacing_extra,
+        @DimenRes paddingTop: Int = R.dimen.arch_text_default_padding_vertical,
+        @DimenRes paddingBottom: Int = R.dimen.arch_text_default_padding_vertical,
+        @DimenRes paddingLeft: Int = R.dimen.arch_text_default_padding_horizontal,
+        @DimenRes paddingRight: Int = R.dimen.arch_text_default_padding_horizontal,
         @DimenRes marginTop: Int = R.dimen.arch_text_default_margin_horizontal,
         @DimenRes marginBottom: Int = R.dimen.arch_text_default_margin_horizontal,
         @DimenRes marginLeft: Int = R.dimen.arch_text_default_margin_vertical,
@@ -51,6 +59,10 @@ data class TextConfig(
         textColor = textColor,
         textGravity = textGravity,
         lineSpacingExtra = lineSpacingExtra,
+        paddingTop = paddingTop,
+        paddingBottom = paddingBottom,
+        paddingLeft = paddingLeft,
+        paddingRight = paddingRight,
         marginTop = marginTop,
         marginBottom = marginBottom,
         marginLeft = marginLeft,
@@ -67,6 +79,10 @@ data class TextConfig(
         @ColorRes textColor: Int = R.color.arch_text_default_text_color,
         textGravity: TextGravity = TextGravity.DEFAULT,
         @DimenRes lineSpacingExtra: Int = R.dimen.arch_text_default_line_spacing_extra,
+        @DimenRes paddingTop: Int = R.dimen.arch_text_default_padding_vertical,
+        @DimenRes paddingBottom: Int = R.dimen.arch_text_default_padding_vertical,
+        @DimenRes paddingLeft: Int = R.dimen.arch_text_default_padding_horizontal,
+        @DimenRes paddingRight: Int = R.dimen.arch_text_default_padding_horizontal,
         @DimenRes marginTop: Int = R.dimen.arch_text_default_margin_horizontal,
         @DimenRes marginBottom: Int = R.dimen.arch_text_default_margin_horizontal,
         @DimenRes marginLeft: Int = R.dimen.arch_text_default_margin_vertical,
@@ -81,6 +97,10 @@ data class TextConfig(
         textColor = textColor,
         textGravity = textGravity,
         lineSpacingExtra = lineSpacingExtra,
+        paddingTop = paddingTop,
+        paddingBottom = paddingBottom,
+        paddingLeft = paddingLeft,
+        paddingRight = paddingRight,
         marginTop = marginTop,
         marginBottom = marginBottom,
         marginLeft = marginLeft,
@@ -102,6 +122,10 @@ data class TextConfig(
         if (textColor != other.textColor) return false
         if (textGravity != other.textGravity) return false
         if (lineSpacingExtra != other.lineSpacingExtra) return false
+        if (paddingTop != other.paddingTop) return false
+        if (paddingBottom != other.paddingBottom) return false
+        if (paddingLeft != other.paddingLeft) return false
+        if (paddingRight != other.paddingRight) return false
         if (marginTop != other.marginTop) return false
         if (marginBottom != other.marginBottom) return false
         if (marginLeft != other.marginLeft) return false
@@ -119,6 +143,10 @@ data class TextConfig(
         result = 31 * result + textColor
         result = 31 * result + textGravity.hashCode()
         result = 31 * result + lineSpacingExtra
+        result = 31 * result + paddingTop
+        result = 31 * result + paddingBottom
+        result = 31 * result + paddingLeft
+        result = 31 * result + paddingRight
         result = 31 * result + marginTop
         result = 31 * result + marginBottom
         result = 31 * result + marginLeft

@@ -14,6 +14,10 @@ class TextViewModel(
     val textColor = resourceProvider.getColor(textConfig.textColor)
     val textGravity = textConfig.textGravity
     val lineSpacingExtra = resourceProvider.getDimension(textConfig.lineSpacingExtra)
+    val paddingTop = resourceProvider.getDimension(textConfig.paddingTop)
+    val paddingBottom = resourceProvider.getDimension(textConfig.paddingBottom)
+    val paddingLeft = resourceProvider.getDimension(textConfig.paddingLeft)
+    val paddingRight = resourceProvider.getDimension(textConfig.paddingRight)
     val marginTop = resourceProvider.getDimension(textConfig.marginTop)
     val marginBottom = resourceProvider.getDimension(textConfig.marginBottom)
     val marginLeft = resourceProvider.getDimension(textConfig.marginLeft)
