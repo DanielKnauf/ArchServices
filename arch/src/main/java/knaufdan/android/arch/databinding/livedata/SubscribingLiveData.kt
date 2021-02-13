@@ -13,7 +13,7 @@ import androidx.lifecycle.MediatorLiveData
  *
  * @param source [LiveData] added as source
  * @param SourceType type of data hold by [source]
- * @param TargetType type of data hold by target
+ * @param TargetType type of data hold by SubscribingLiveData
  * @param distinctUntilChanged if true [mapping] results equal to current value are discarded
  * @param mapping function used to determine new value based on [source] value
  */
