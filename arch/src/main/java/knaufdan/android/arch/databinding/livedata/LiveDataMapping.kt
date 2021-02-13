@@ -49,7 +49,7 @@ fun <FirstSourceType, SecondSourceType, TargetType> map(
     distinctUntilChanged: Boolean = true,
     mapping: (FirstSourceType?, SecondSourceType?) -> TargetType
 ): LiveData<TargetType> =
-    SubscribingLiveDataTwoSources(
+    SubscribingLiveDataTwo(
         firstSource = firstSource,
         secondSource = secondSource,
         distinctUntilChanged = distinctUntilChanged,

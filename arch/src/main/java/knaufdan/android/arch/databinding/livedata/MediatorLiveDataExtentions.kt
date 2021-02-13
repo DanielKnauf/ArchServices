@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 
 /**
- * [MediatorLiveData] listens to changes of [source]. New values of [MediatorLiveData] are determined by
- * [mapping] function from [SourceType] to [TargetType] and posted asynchronously.
+ * [MediatorLiveData] receiver listens to changes of [source]. New values of [MediatorLiveData]
+ * are determined by [mapping] function from [SourceType] to [TargetType] and posted asynchronously.
  *
  * @param source [LiveData] added as source
  * @param SourceType type of data hold by [source]
@@ -30,9 +30,9 @@ fun <SourceType, TargetType> MediatorLiveData<TargetType>.subscribeTo(
 }
 
 /**
- * [MediatorLiveData] listens to changes of [firstSource] and [secondSource]. New values of [MediatorLiveData] are
- * determined by [mapping] function from [FirstSourceType] as well as [SecondSourceType] to [TargetType] and
- * posted asynchronously.
+ * [MediatorLiveData] receiver listens to changes of [firstSource] and [secondSource].
+ * New values of [MediatorLiveData] are determined by [mapping] function from [FirstSourceType]
+ * as well as [SecondSourceType] to [TargetType] and posted asynchronously.
  *
  * @param firstSource [LiveData] added as first source
  * @param FirstSourceType type of data hold by [firstSource]
@@ -76,9 +76,9 @@ fun <FirstSourceType, SecondSourceType, TargetType> MediatorLiveData<TargetType>
 }
 
 /**
- * MediatorLiveData] listens to changes of [firstSource], [secondSource] and [thirdSource]. New values of [MediatorLiveData]
- * are determined by [mapping] function from [FirstSourceType], [SecondSourceType] as well as [ThirdSourceType] to [TargetType]
- * and posted asynchronously.
+ * [MediatorLiveData] receiver listens to changes of [firstSource], [secondSource] and [thirdSource].
+ * New values of [MediatorLiveData] are determined by [mapping] function from [FirstSourceType],
+ * [SecondSourceType] as well as [ThirdSourceType] to [TargetType] and posted asynchronously.
  *
  * @param firstSource [LiveData] added as first source
  * @param FirstSourceType type of data hold by [firstSource]
