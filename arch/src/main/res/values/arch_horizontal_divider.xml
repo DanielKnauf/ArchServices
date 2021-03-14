@@ -10,12 +10,12 @@
     <color name="arch_horizontal_divider_background_default_color">@android:color/white</color>
 
     <!-- style -->
-    <style name="arch_horizontal_divider_container">
+    <style name="ArchHorizontalDividerContainer">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
-    <style name="arch_horizontal_divider_line">
+    <style name="ArchHorizontalDividerLine">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>

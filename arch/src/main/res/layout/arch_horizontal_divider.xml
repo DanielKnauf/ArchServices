@@ -11,7 +11,7 @@
     </data>
 
     <FrameLayout
-        style="@style/arch_horizontal_divider_container"
+        style="@style/ArchHorizontalDividerContainer"
         android:background="@{viewModel.background}"
         app:marginLeft="@{viewModel.marginLeft}"
         app:marginRight="@{viewModel.marginRight}"
@@ -19,7 +19,7 @@
         app:paddingRight="@{viewModel.paddingRight}">
 
         <View
-            style="@style/arch_horizontal_divider_line"
+            style="@style/ArchHorizontalDividerLine"
             android:background="@{viewModel.color}"
             app:height="@{viewModel.height}" />
 
