@@ -11,18 +11,18 @@
     </data>
 
     <FrameLayout
-        style="@style/arch_horizontal_divider_container"
-        android:background="@{viewModel.background}">
+        style="@style/ArchHorizontalDividerContainer"
+        android:background="@{viewModel.background}"
+        app:marginLeft="@{viewModel.marginLeft}"
+        app:marginRight="@{viewModel.marginRight}"
+        app:paddingLeft="@{viewModel.paddingLeft}"
+        app:paddingRight="@{viewModel.paddingRight}">
 
         <View
-            style="@style/arch_horizontal_divider_line"
-            android:layout_height="wrap_content"
-            app:height="@{viewModel.height}"
+            style="@style/ArchHorizontalDividerLine"
             android:background="@{viewModel.color}"
-            app:marginLeft="@{viewModel.marginLeft}"
-            app:marginRight="@{viewModel.marginRight}"
-            tools:ignore="RtlHardcoded" />
-        
+            app:height="@{viewModel.height}" />
+
     </FrameLayout>
 
 </layout>
