@@ -1,4 +1,4 @@
-package knaufdan.android.arch.base.component.common.info
+package knaufdan.android.arch.base.component.base.info
 
 import android.text.Spannable
 import android.text.SpannableString

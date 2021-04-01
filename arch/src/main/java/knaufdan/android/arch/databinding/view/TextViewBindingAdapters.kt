@@ -1,5 +1,6 @@
 package knaufdan.android.arch.databinding.view
 
+import android.graphics.Typeface
 import android.os.Build
 import android.text.Html
 import android.view.Gravity
@@ -9,7 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import knaufdan.android.core.resources.IResourceProvider
 
-@BindingAdapter(value = ["onTextClicked"])
+@BindingAdapter("onTextClicked")
 fun TextView.onTextViewClicked(
     onTextClicked: IOnTextClickedListener
 ) {
@@ -22,14 +23,14 @@ interface IOnTextClickedListener {
     fun onClick(s: String)
 }
 
-@BindingAdapter(value = ["number"])
+@BindingAdapter("number")
 fun TextView.bindNumber(
     number: Int?
 ) {
     text = number?.toString() ?: ""
 }
 
-@BindingAdapter(value = ["textColor"])
+@BindingAdapter("textColor")
 fun TextView.bindTextColor(
     @ColorRes textColorRes: Int
 ) {
@@ -42,9 +43,7 @@ fun TextView.bindTextColor(
     setTextColor(color)
 }
 
-@BindingAdapter(
-    value = ["textGravity"]
-)
+@BindingAdapter("textGravity")
 fun TextView.bindTextGravity(
     gravity: TextGravity
 ) {
@@ -64,7 +63,32 @@ enum class TextGravity {
     DEFAULT
 }
 
-@BindingAdapter(value = ["htmlText"])
+@BindingAdapter("textStyle")
+fun TextView.bindTextStyle(
+    textStyle: TextStyle
+) {
+    this.setTypeface(
+        typeface,
+        textStyle.toTypeFace()
+    )
+}
+
+enum class TextStyle {
+    DEFAULT,
+    BOLD,
+    ITALIC,
+    BOLD_ITALIC
+}
+
+private fun TextStyle.toTypeFace(): Int =
+    when (this) {
+        TextStyle.DEFAULT -> Typeface.NORMAL
+        TextStyle.BOLD -> Typeface.BOLD
+        TextStyle.ITALIC -> Typeface.ITALIC
+        TextStyle.BOLD_ITALIC -> Typeface.BOLD_ITALIC
+    }
+
+@BindingAdapter("htmlText")
 fun TextView.bindHtmlText(
     text: String
 ) {

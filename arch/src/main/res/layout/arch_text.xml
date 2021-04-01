@@ -10,7 +10,7 @@
 
         <variable
             name="viewModel"
-            type="knaufdan.android.arch.base.component.common.text.implementation.TextViewModel" />
+            type="knaufdan.android.arch.base.component.base.text.implementation.TextViewModel" />
     </data>
 
     <TextView
@@ -31,6 +31,7 @@
         app:paddingLeft="@{viewModel.paddingLeft}"
         app:paddingRight="@{viewModel.paddingRight}"
         app:paddingTop="@{viewModel.paddingTop}"
-        app:textGravity="@{viewModel.textGravity}" />
+        app:textGravity="@{viewModel.textGravity}"
+        app:textStyle="@{viewModel.textStyle}" />
 
 </layout>

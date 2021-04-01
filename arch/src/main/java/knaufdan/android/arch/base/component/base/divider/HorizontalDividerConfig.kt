@@ -1,4 +1,4 @@
-package knaufdan.android.arch.base.component.common.divider
+package knaufdan.android.arch.base.component.base.divider
 
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes

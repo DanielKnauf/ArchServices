@@ -1,8 +1,8 @@
-package knaufdan.android.arch.base.component.common.info.implementation
+package knaufdan.android.arch.base.component.base.info.implementation
 
-import knaufdan.android.arch.base.component.common.info.IInfoComponent
-import knaufdan.android.arch.base.component.common.info.IInfoComponentFactory
-import knaufdan.android.arch.base.component.common.info.InfoConfig
+import knaufdan.android.arch.base.component.base.info.IInfoComponent
+import knaufdan.android.arch.base.component.base.info.IInfoComponentFactory
+import knaufdan.android.arch.base.component.base.info.InfoConfig
 import knaufdan.android.core.resources.IResourceProvider
 
 class InfoComponentFactory(

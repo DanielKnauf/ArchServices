@@ -50,14 +50,23 @@ fun View.bindLayoutHeight(
 fun View.bindHeight(
     height: Number
 ) {
+    if (height == 0) return
+
     updateLayoutParams { this.height = height.toInt() }
+}
+
+@BindingAdapter("width")
+fun View.bindWidth(
+    width: Number
+) {
+    if (width == 0) return
+
+    updateLayoutParams { this.width = width.toInt() }
 }
 
 @BindingAdapter("background")
 fun View.bindBackground(@DrawableRes background: Int) {
-    if (background == IResourceProvider.INVALID_RES_ID) {
-        return
-    }
+    if (background == IResourceProvider.INVALID_RES_ID) return
 
     val drawable = ContextCompat.getDrawable(context, background) ?: return
 

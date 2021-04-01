@@ -1,4 +1,4 @@
-package knaufdan.android.arch.base.component.common.divider
+package knaufdan.android.arch.base.component.base.divider
 
 interface IHorizontalDividerComponentFactory {
     fun get(config: HorizontalDividerConfig): IHorizontalDividerComponent
