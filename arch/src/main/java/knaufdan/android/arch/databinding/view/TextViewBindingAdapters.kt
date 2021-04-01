@@ -38,7 +38,11 @@ fun TextView.bindTextColor(
         return
     }
 
-    val color = ContextCompat.getColor(context, textColorRes)
+    val color =
+        ContextCompat.getColor(
+            context,
+            textColorRes
+        )
 
     setTextColor(color)
 }
@@ -67,7 +71,7 @@ enum class TextGravity {
 fun TextView.bindTextStyle(
     textStyle: TextStyle
 ) {
-    this.setTypeface(
+    setTypeface(
         typeface,
         textStyle.toTypeFace()
     )

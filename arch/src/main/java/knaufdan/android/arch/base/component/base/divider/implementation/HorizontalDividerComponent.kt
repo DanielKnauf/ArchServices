@@ -10,7 +10,7 @@ import knaufdan.android.arch.base.component.base.divider.IHorizontalDividerCompo
 import knaufdan.android.core.resources.IResourceProvider
 
 class HorizontalDividerComponent(
-    private val config: HorizontalDividerConfig,
+    config: HorizontalDividerConfig,
     resourceProvider: IResourceProvider
 ) : IHorizontalDividerComponent, IDiffItem {
     private val viewModel: HorizontalDividerViewModel by lazy {
