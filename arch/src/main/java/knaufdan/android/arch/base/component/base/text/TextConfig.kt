@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package knaufdan.android.arch.base.component.common.text
+package knaufdan.android.arch.base.component.base.text
 
 import android.text.Spannable
 import android.text.SpannableString
@@ -12,6 +12,7 @@ import androidx.lifecycle.MutableLiveData
 import knaufdan.android.arch.R
 import knaufdan.android.arch.databinding.view.LayoutBehavior
 import knaufdan.android.arch.databinding.view.TextGravity
+import knaufdan.android.arch.databinding.view.TextStyle
 import knaufdan.android.core.resources.IResourceProvider
 
 data class TextConfig(
@@ -20,6 +21,7 @@ data class TextConfig(
     val layoutHeight: LayoutBehavior = LayoutBehavior.DEFAULT,
     @DimenRes val textSize: Int = R.dimen.arch_text_default_text_size,
     @ColorRes val textColor: Int = R.color.arch_text_default_text_color,
+    val textStyle: TextStyle = TextStyle.DEFAULT,
     val textGravity: TextGravity = TextGravity.DEFAULT,
     @DimenRes val lineSpacingExtra: Int = R.dimen.arch_text_default_line_spacing_extra,
     @DimenRes val paddingTop: Int = R.dimen.arch_text_default_padding_vertical,
@@ -39,6 +41,7 @@ data class TextConfig(
         layoutHeight: LayoutBehavior = LayoutBehavior.DEFAULT,
         @DimenRes textSize: Int = R.dimen.arch_text_default_text_size,
         @ColorRes textColor: Int = R.color.arch_text_default_text_color,
+        textStyle: TextStyle = TextStyle.DEFAULT,
         textGravity: TextGravity = TextGravity.DEFAULT,
         @DimenRes lineSpacingExtra: Int = R.dimen.arch_text_default_line_spacing_extra,
         @DimenRes paddingTop: Int = R.dimen.arch_text_default_padding_vertical,
@@ -57,6 +60,7 @@ data class TextConfig(
         layoutHeight = layoutHeight,
         textSize = textSize,
         textColor = textColor,
+        textStyle = textStyle,
         textGravity = textGravity,
         lineSpacingExtra = lineSpacingExtra,
         paddingTop = paddingTop,
@@ -77,6 +81,7 @@ data class TextConfig(
         layoutHeight: LayoutBehavior = LayoutBehavior.DEFAULT,
         @DimenRes textSize: Int = R.dimen.arch_text_default_text_size,
         @ColorRes textColor: Int = R.color.arch_text_default_text_color,
+        textStyle: TextStyle = TextStyle.DEFAULT,
         textGravity: TextGravity = TextGravity.DEFAULT,
         @DimenRes lineSpacingExtra: Int = R.dimen.arch_text_default_line_spacing_extra,
         @DimenRes paddingTop: Int = R.dimen.arch_text_default_padding_vertical,
@@ -95,6 +100,7 @@ data class TextConfig(
         layoutHeight = layoutHeight,
         textSize = textSize,
         textColor = textColor,
+        textStyle = textStyle,
         textGravity = textGravity,
         lineSpacingExtra = lineSpacingExtra,
         paddingTop = paddingTop,
@@ -120,6 +126,7 @@ data class TextConfig(
         if (layoutHeight != other.layoutHeight) return false
         if (textSize != other.textSize) return false
         if (textColor != other.textColor) return false
+        if (textStyle != other.textStyle) return false
         if (textGravity != other.textGravity) return false
         if (lineSpacingExtra != other.lineSpacingExtra) return false
         if (paddingTop != other.paddingTop) return false
@@ -141,6 +148,7 @@ data class TextConfig(
         result = 31 * result + layoutHeight.hashCode()
         result = 31 * result + textSize
         result = 31 * result + textColor
+        result = 31 * result + textStyle.hashCode()
         result = 31 * result + textGravity.hashCode()
         result = 31 * result + lineSpacingExtra
         result = 31 * result + paddingTop

@@ -1,12 +1,12 @@
-package knaufdan.android.arch.base.component.common.info.implementation
+package knaufdan.android.arch.base.component.base.info.implementation
 
 import knaufdan.android.arch.BR
 import knaufdan.android.arch.R
 import knaufdan.android.arch.base.BindingKey
 import knaufdan.android.arch.base.LayoutRes
 import knaufdan.android.arch.base.component.addition.recyclerview.IDiffItem
-import knaufdan.android.arch.base.component.common.info.IInfoComponent
-import knaufdan.android.arch.base.component.common.info.InfoConfig
+import knaufdan.android.arch.base.component.base.info.IInfoComponent
+import knaufdan.android.arch.base.component.base.info.InfoConfig
 import knaufdan.android.core.resources.IResourceProvider
 
 class InfoComponent(
@@ -15,7 +15,7 @@ class InfoComponent(
 ) : IInfoComponent, IDiffItem {
     private val viewModel by lazy {
         InfoViewModel(
-            infoConfig = infoConfig,
+            config = infoConfig,
             resourceProvider = resourceProvider
         )
     }

@@ -1,12 +1,13 @@
-package knaufdan.android.arch.base.component.common.divider.implementation
+package knaufdan.android.arch.base.component.base.divider.implementation
 
-import knaufdan.android.arch.base.component.common.divider.HorizontalDividerConfig
+import knaufdan.android.arch.base.component.IComponentViewModel
+import knaufdan.android.arch.base.component.base.divider.HorizontalDividerConfig
 import knaufdan.android.core.resources.IResourceProvider
 
 class HorizontalDividerViewModel(
-    val config: HorizontalDividerConfig,
+    config: HorizontalDividerConfig,
     resourceProvider: IResourceProvider
-) {
+) : IComponentViewModel {
     val height = resourceProvider.getDimension(config.height)
     val marginLeft = resourceProvider.getDimension(config.marginLeft)
     val marginRight = resourceProvider.getDimension(config.marginRight)
