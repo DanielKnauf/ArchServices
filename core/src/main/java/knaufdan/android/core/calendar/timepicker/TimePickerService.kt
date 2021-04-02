@@ -28,4 +28,25 @@ class TimePickerService(
             show()
         }
     }
+
+    override fun showTimePicker(
+        config: TimePickerConfig,
+        onTimeSelected: (Pair<Hour, Minute>) -> Unit,
+        onCancelClicked: () -> Unit
+    ) {
+        TimePickerDialog(
+            contextProvider.getContext(),
+            config.theme,
+            { _, hour, minute -> onTimeSelected(hour to minute) },
+            config.initialTime.first,
+            config.initialTime.second,
+            config.is24HourView
+        ).apply {
+            setOnCancelListener {
+                onCancelClicked()
+            }
+
+            show()
+        }
+    }
 }
