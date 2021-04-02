@@ -5,7 +5,7 @@ import knaufdan.android.core.calendar.Minute
 
 interface ITimePickerService {
     @Deprecated(
-        message = "With release 0.6.0, removed with 0.7.0",
+        message = "With release 0.5.0, removed with 0.6.0",
         replaceWith = ReplaceWith("showTimePicker(config, onTimeSelected, onCancelClicked)")
     )
     fun showTimePicker(
