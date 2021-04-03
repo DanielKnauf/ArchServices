@@ -7,14 +7,10 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import knaufdan.android.core.IContextProvider
-import knaufdan.android.core.alarm.IAlarmService
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-internal class AlarmService @Inject constructor(private val contextProvider: IContextProvider) :
-    IAlarmService {
-
+internal class AlarmService constructor(
+    private val contextProvider: IContextProvider
+) : IAlarmService {
     /**
      * Sets up an alarm which is triggered after a period of time.
      *

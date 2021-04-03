@@ -1,6 +1,7 @@
 package knaufdan.android.services.userinteraction.notification
 
 import knaufdan.android.services.userinteraction.notification.api.NotificationConfig
+import knaufdan.android.services.userinteraction.notification.api.NotificationId
 
 /**
  * Provides functionality to configure a notification channel and send notifications through it.
@@ -28,4 +29,11 @@ interface INotificationService {
      * @param notificationConfig contains styling and interactions of notification
      */
     fun sendNotification(notificationConfig: NotificationConfig)
+
+    /**
+     * Cancels a shown notification.
+     *
+     * @param notificationId of the notification to be canceled
+     */
+    fun cancelNotification(notificationId: NotificationId)
 }
