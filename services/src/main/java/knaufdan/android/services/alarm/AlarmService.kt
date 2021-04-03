@@ -22,6 +22,9 @@ internal class AlarmService @Inject constructor(private val contextProvider: ICo
      * @param extras
      * @param broadcastReceiverType - the receiver to which the intent is sent to.
      */
+internal class AlarmService(
+    private val contextProvider: IContextProvider
+) : IAlarmService {
     override fun setAlarm(
         timeToWakeFromNow: Long,
         extras: Bundle?,
