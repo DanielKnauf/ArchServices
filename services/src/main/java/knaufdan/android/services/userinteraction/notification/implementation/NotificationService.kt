@@ -1,27 +1,24 @@
 package knaufdan.android.services.userinteraction.notification.implementation
 
-import android.app.Activity
 import android.app.Notification
 import android.app.Notification.CATEGORY_ALARM
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import knaufdan.android.core.IContextProvider
-import knaufdan.android.services.R
 import knaufdan.android.services.userinteraction.notification.INotificationService
 import knaufdan.android.services.userinteraction.notification.INotificationServiceConfig
 import knaufdan.android.services.userinteraction.notification.api.NotificationAction
 import knaufdan.android.services.userinteraction.notification.api.NotificationAction.Companion.toAndroidClick
 import knaufdan.android.services.userinteraction.notification.api.NotificationAction.Companion.toAndroidReply
 import knaufdan.android.services.userinteraction.notification.api.NotificationConfig
+import knaufdan.android.services.userinteraction.notification.api.NotificationId
+import knaufdan.android.services.userinteraction.notification.createIntentToOpenActivity
 import javax.inject.Singleton
-import kotlin.reflect.KClass
 
 @Singleton
 internal class NotificationService(
@@ -56,6 +53,10 @@ internal class NotificationService(
         }
     }
 
+    override fun cancelNotification(notificationId: NotificationId) {
+        notificationManager.cancel(notificationId)
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel() {
         val isAlreadyConfigure =
@@ -88,6 +89,7 @@ internal class NotificationService(
             setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             priority = config.priority
             setAutoCancel(isAutoCancelEnabled)
+            setAutoCancelTime(autoCancelAfterMillis)
             setCategory(CATEGORY_ALARM)
             setVibrate(longArrayOf())
             setOnNotificationClicked(this@buildNotification)
@@ -95,12 +97,19 @@ internal class NotificationService(
             build()
         }
 
+    private fun NotificationCompat.Builder.setAutoCancelTime(timeInMillis: Long) =
+        run {
+            if (timeInMillis == NotificationConfig.NO_AUTO_CANCEL_TIME_SET) return@run this
+
+            setTimeoutAfter(timeInMillis)
+        }
+
     private fun NotificationCompat.Builder.setOnNotificationClicked(notificationConfig: NotificationConfig): NotificationCompat.Builder =
         run {
             val activityTarget = notificationConfig.interaction.activityTarget ?: return@run this
 
             setContentIntent(
-                context.createIntentToOpenApp(
+                context.createIntentToOpenActivity(
                     activityTarget = activityTarget,
                     notificationId = notificationConfig.id,
                     requestCode = notificationConfig.requestCode
@@ -133,38 +142,10 @@ internal class NotificationService(
             }
         }
 
+    /**
+     * TODO: hold keys as const instead of string res
+     */
     companion object {
         private val config: NotificationServiceConfig = NotificationServiceConfig.EMPTY
-
-        private fun Context.createIntentToOpenApp(
-            activityTarget: KClass<out Activity>,
-            notificationId: Int,
-            requestCode: Int
-        ): PendingIntent =
-            Intent(
-                this,
-                activityTarget.java
-            ).run {
-                action = getString(R.string.notification_api_action_open_app)
-
-                putExtra(
-                    getString(R.string.notification_api_key_id),
-                    notificationId
-                )
-
-                putExtra(
-                    getString(R.string.notification_api_key_request_code),
-                    requestCode
-                )
-
-                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
-
-                PendingIntent.getActivity(
-                    this@createIntentToOpenApp,
-                    requestCode,
-                    this,
-                    PendingIntent.FLAG_UPDATE_CURRENT
-                )
-            }
     }
 }

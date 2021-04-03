@@ -8,7 +8,8 @@ import android.os.Bundle
 import androidx.annotation.DrawableRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.RemoteInput
-import knaufdan.android.services.R
+import knaufdan.android.services.userinteraction.notification.NOTIFICATION_DATA_KEY_NOTIFICATION_ID
+import knaufdan.android.services.userinteraction.notification.NOTIFICATION_DATA_KEY_REQUEST_CODE
 import kotlin.reflect.KClass
 
 sealed class NotificationAction(
@@ -123,12 +124,12 @@ sealed class NotificationAction(
                 flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
 
                 putExtra(
-                    getString(R.string.notification_api_key_id),
+                    NOTIFICATION_DATA_KEY_NOTIFICATION_ID,
                     notificationId
                 )
 
                 putExtra(
-                    getString(R.string.notification_api_key_request_code),
+                    NOTIFICATION_DATA_KEY_REQUEST_CODE,
                     requestCode
                 )
 
