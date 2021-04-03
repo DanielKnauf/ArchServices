@@ -11,10 +11,9 @@ import knaufdan.android.core.alarm.IAlarmService
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
-internal class AlarmService @Inject constructor(private val contextProvider: IContextProvider) :
-    IAlarmService {
-
+internal class AlarmService constructor(
+    private val contextProvider: IContextProvider
+) : IAlarmService {
     /**
      * Sets up an alarm which is triggered after a period of time.
      *
@@ -22,9 +21,6 @@ internal class AlarmService @Inject constructor(private val contextProvider: ICo
      * @param extras
      * @param broadcastReceiverType - the receiver to which the intent is sent to.
      */
-internal class AlarmService(
-    private val contextProvider: IContextProvider
-) : IAlarmService {
     override fun setAlarm(
         timeToWakeFromNow: Long,
         extras: Bundle?,
