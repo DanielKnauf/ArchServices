@@ -1,10 +1,9 @@
-package knaufdan.android.core.alarm
+package knaufdan.android.services.alarm
 
 import android.content.BroadcastReceiver
 import android.os.Bundle
 
 interface IAlarmService {
-
     fun setAlarm(
         timeToWakeFromNow: Long,
         extras: Bundle?,
