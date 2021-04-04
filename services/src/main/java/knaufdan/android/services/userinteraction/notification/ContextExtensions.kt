@@ -7,21 +7,21 @@ import android.content.Intent
 import kotlin.reflect.KClass
 
 /**
- * Creates a [PendingIntent] to navigate to [activityTarget].
- * [Intent] inside created [PendingIntent] is configured by
- * calling[configureForOpeningApp] and [putNotificationId].
+ * Creates a [PendingIntent] to navigate to [activity].
+ * Included [Intent] is configured by [configureForOpeningApp]
+ * and [putNotificationId].
  *
- * @param activityTarget to navigate to
+ * @param activity to navigate to
  * @param notificationId id of the related notification
  * @param requestCode associated with the [PendingIntent]
- * @return [PendingIntent] configured to open [activityTarget]
+ * @return [PendingIntent] configured to open [activity]
  */
 fun Context.createIntentToOpenActivity(
-    activityTarget: KClass<out Activity>,
+    activity: KClass<out Activity>,
     notificationId: Int,
     requestCode: Int
 ): PendingIntent =
-    buildActivityIntent(activityTarget)
+    buildActivityIntent(activity)
         .configureForOpeningApp(requestCode)
         .putNotificationId(notificationId)
         .toPendingIntentForOpenApp(
@@ -30,29 +30,28 @@ fun Context.createIntentToOpenActivity(
         )
 
 /**
- * Creates a [PendingIntent] to navigate to [activityTarget].
- * [Intent] inside created [PendingIntent] is configured by
- * calling[configureForOpeningApp].
+ * Creates a [PendingIntent] to navigate to [activity].
+ * Included [Intent] is configured by [configureForOpeningApp].
  *
- * @param activityTarget to navigate to
+ * @param activity to navigate to
  * @param requestCode associated with the [PendingIntent]
- * @return [PendingIntent] configured to open [activityTarget]
+ * @return [PendingIntent] configured to open [activity]
  */
 fun Context.createIntentToOpenActivity(
-    activityTarget: KClass<out Activity>,
+    activity: KClass<out Activity>,
     requestCode: Int
 ): PendingIntent =
-    buildActivityIntent(activityTarget)
+    buildActivityIntent(activity)
         .configureForOpeningApp(requestCode)
         .toPendingIntentForOpenApp(
             context = this@createIntentToOpenActivity,
             requestCode = requestCode
         )
 
-private fun Context.buildActivityIntent(activityTarget: KClass<out Activity>): Intent =
+private fun Context.buildActivityIntent(activity: KClass<out Activity>): Intent =
     Intent(
         this,
-        activityTarget.java
+        activity.java
     )
 
 private fun Intent.toPendingIntentForOpenApp(

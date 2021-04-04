@@ -28,12 +28,25 @@ interface INotificationService {
      *
      * @param notificationConfig contains styling and interactions of notification
      */
+    @Deprecated(
+        message = "With release 0.5.0, removed with 0.7.0",
+        replaceWith = ReplaceWith("showNotification(notificationConfig: NotificationConfig)")
+    )
     fun sendNotification(notificationConfig: NotificationConfig)
 
     /**
-     * Cancels a shown notification.
+     * Shows a notification through the configured notification channel.
      *
-     * @param notificationId of the notification to be canceled
+     * NOTE: [configure] must be called before showing notifications otherwise all will be blocked.
+     *
+     * @param notificationConfig contains styling and interactions of notification
      */
-    fun cancelNotification(notificationId: NotificationId)
+    fun showNotification(notificationConfig: NotificationConfig)
+
+    /**
+     * Hides a shown notification with [notificationId].
+     *
+     * @param notificationId of notification to be hidden
+     */
+    fun hideNotification(notificationId: NotificationId)
 }

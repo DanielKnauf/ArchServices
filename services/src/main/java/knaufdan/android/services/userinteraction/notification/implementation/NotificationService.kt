@@ -36,6 +36,28 @@ internal class NotificationService(
         if (hasInvalidConfig) {
             Log.e(
                 this::class.simpleName,
+                "Current NotificationServiceConfig [$config] is not valid, thus no notification could be sent."
+            )
+            return
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel()
+        }
+
+        notificationConfig.buildNotification().apply {
+            notificationManager.notify(
+                notificationConfig.id,
+                this
+            )
+        }
+    }
+
+    override fun showNotification(notificationConfig: NotificationConfig) {
+        val hasInvalidConfig = !config.validate()
+        if (hasInvalidConfig) {
+            Log.e(
+                this::class.simpleName,
                 "Current NotificationServiceConfig [$config] is not valid, thus no notification could be shown."
             )
             return
@@ -53,7 +75,7 @@ internal class NotificationService(
         }
     }
 
-    override fun cancelNotification(notificationId: NotificationId) {
+    override fun hideNotification(notificationId: NotificationId) {
         notificationManager.cancel(notificationId)
     }
 
@@ -110,7 +132,7 @@ internal class NotificationService(
 
             setContentIntent(
                 context.createIntentToOpenActivity(
-                    activityTarget = activityTarget,
+                    activity = activityTarget,
                     notificationId = notificationConfig.id,
                     requestCode = notificationConfig.requestCode
                 )
@@ -142,9 +164,6 @@ internal class NotificationService(
             }
         }
 
-    /**
-     * TODO: hold keys as const instead of string res
-     */
     companion object {
         private val config: NotificationServiceConfig = NotificationServiceConfig.EMPTY
     }

@@ -10,7 +10,7 @@ import knaufdan.android.arch.base.component.base.divider.IHorizontalDividerCompo
 import knaufdan.android.core.resources.IResourceProvider
 
 class HorizontalDividerComponent(
-    config: HorizontalDividerConfig,
+    private val config: HorizontalDividerConfig,
     resourceProvider: IResourceProvider
 ) : IHorizontalDividerComponent, IDiffItem {
     private val viewModel: HorizontalDividerViewModel by lazy {
@@ -30,5 +30,6 @@ class HorizontalDividerComponent(
         other is HorizontalDividerComponent
 
     override fun areContentsTheSame(other: Any): Boolean =
-        other is HorizontalDividerComponent
+        other is HorizontalDividerComponent &&
+            other.config == this.config
 }
