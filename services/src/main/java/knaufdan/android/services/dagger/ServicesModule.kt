@@ -3,9 +3,9 @@ package knaufdan.android.services.dagger
 import dagger.Module
 import dagger.Provides
 import knaufdan.android.core.IContextProvider
-import knaufdan.android.core.alarm.IAlarmService
 import knaufdan.android.core.dagger.CoreModule
 import knaufdan.android.services.alarm.AlarmService
+import knaufdan.android.services.alarm.IAlarmService
 import knaufdan.android.services.service.IServiceDispatcher
 import knaufdan.android.services.service.ServiceDispatcher
 import knaufdan.android.services.service.broadcast.BroadcastService
@@ -18,9 +18,12 @@ import javax.inject.Singleton
 
 @Module(includes = [CoreModule::class])
 class ServicesModule {
-    @Singleton
     @Provides
-    internal fun provideAlarmService(alarmService: AlarmService): IAlarmService = alarmService
+    @Singleton
+    internal fun provideAlarmService(contextProvider: IContextProvider): IAlarmService =
+        AlarmService(
+            contextProvider = contextProvider
+        )
 
     @Singleton
     @Provides
@@ -34,9 +37,12 @@ class ServicesModule {
     @Singleton
     @Provides
     internal fun provideNotificationService(contextProvider: IContextProvider): INotificationService =
-        NotificationService(contextProvider)
+        NotificationService(
+            contextProvider = contextProvider
+        )
 
     @Singleton
     @Provides
-    internal fun provideServiceDispatcher(serviceDispatcher: ServiceDispatcher): IServiceDispatcher = serviceDispatcher
+    internal fun provideServiceDispatcher(serviceDispatcher: ServiceDispatcher): IServiceDispatcher =
+        serviceDispatcher
 }

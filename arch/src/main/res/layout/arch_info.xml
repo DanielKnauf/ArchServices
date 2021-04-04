@@ -6,14 +6,14 @@
 
         <variable
             name="viewModel"
-            type="knaufdan.android.arch.base.component.common.info.implementation.InfoViewModel" />
+            type="knaufdan.android.arch.base.component.base.info.implementation.InfoViewModel" />
     </data>
 
     <LinearLayout
         style="@style/ArchInfoContainer"
         app:background="@{viewModel.background}"
-        app:layout_height="@{viewModel.textLayoutHeight}"
-        app:layout_width="@{viewModel.textLayoutWidth}"
+        app:layout_height="@{viewModel.containerLayoutHeight}"
+        app:layout_width="@{viewModel.containerLayoutWidth}"
         app:marginBottom="@{viewModel.marginBottom}"
         app:marginLeft="@{viewModel.marginLeft}"
         app:marginRight="@{viewModel.marginRight}"

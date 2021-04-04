@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="knaufdan.android.arch.base.component.base.button.implementation.ButtonViewModel" />
+    </data>
+
+    <FrameLayout
+        style="@style/ArchButtonContainer"
+        app:layout_height="@{viewModel.containerLayoutHeight}"
+        app:layout_width="@{viewModel.containerLayoutWidth}"
+        app:marginTop="@{viewModel.marginTop}">
+
+        <Button
+            style="@style/ArchButton"
+            android:onClick="@{_ -> viewModel.onButtonClicked()}"
+            app:background="@{viewModel.background}"
+            app:height="@{viewModel.height}"
+            app:width="@{viewModel.width}" />
+
+    </FrameLayout>
+
+</layout>

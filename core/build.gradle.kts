@@ -50,6 +50,8 @@ dependencies {
     implementation(Dependencies.AndroidX.localBroadcastManager)
     implementation(Dependencies.androidX_core_ktx)
 
+    implementation(Dependencies.android_material_design)
+
     //google
     implementation(Dependencies.gson)
 

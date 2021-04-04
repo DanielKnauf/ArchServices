@@ -1,6 +1,7 @@
 package knaufdan.android.services.userinteraction.notification
 
 import knaufdan.android.services.userinteraction.notification.api.NotificationConfig
+import knaufdan.android.services.userinteraction.notification.api.NotificationId
 
 /**
  * Provides functionality to configure a notification channel and send notifications through it.
@@ -27,5 +28,25 @@ interface INotificationService {
      *
      * @param notificationConfig contains styling and interactions of notification
      */
+    @Deprecated(
+        message = "With release 0.5.0, removed with 0.7.0",
+        replaceWith = ReplaceWith("showNotification(notificationConfig: NotificationConfig)")
+    )
     fun sendNotification(notificationConfig: NotificationConfig)
+
+    /**
+     * Shows a notification through the configured notification channel.
+     *
+     * NOTE: [configure] must be called before showing notifications otherwise all will be blocked.
+     *
+     * @param notificationConfig contains styling and interactions of notification
+     */
+    fun showNotification(notificationConfig: NotificationConfig)
+
+    /**
+     * Hides a shown notification with [notificationId].
+     *
+     * @param notificationId of notification to be hidden
+     */
+    fun hideNotification(notificationId: NotificationId)
 }
