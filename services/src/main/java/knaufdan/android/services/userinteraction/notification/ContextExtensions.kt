@@ -8,8 +8,8 @@ import kotlin.reflect.KClass
 
 /**
  * Creates a [PendingIntent] to navigate to [activity].
- * Included [Intent] is configured by calling
- * [configureForOpeningApp] and [putNotificationId].
+ * Included [Intent] is configured by [configureForOpeningApp]
+ * and [putNotificationId].
  *
  * @param activity to navigate to
  * @param notificationId id of the related notification
@@ -31,7 +31,7 @@ fun Context.createIntentToOpenActivity(
 
 /**
  * Creates a [PendingIntent] to navigate to [activity].
- * Included [Intent] is configured by calling [configureForOpeningApp].
+ * Included [Intent] is configured by [configureForOpeningApp].
  *
  * @param activity to navigate to
  * @param requestCode associated with the [PendingIntent]

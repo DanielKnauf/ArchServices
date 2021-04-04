@@ -164,9 +164,6 @@ internal class NotificationService(
             }
         }
 
-    /**
-     * TODO: hold keys as const instead of string res
-     */
     companion object {
         private val config: NotificationServiceConfig = NotificationServiceConfig.EMPTY
     }
