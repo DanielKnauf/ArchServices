@@ -3,7 +3,6 @@
 package knaufdan.android.core.calendar
 
 import java.util.Calendar
-import java.util.concurrent.TimeUnit
 
 val today: Triple<DayOfMonth, Month, Year>
     get() = Triple(
@@ -12,46 +11,37 @@ val today: Triple<DayOfMonth, Month, Year>
         third = getTodayYear()
     )
 
-val rightNow: Calendar
+val now: Calendar
     get() = Calendar.getInstance()
 
-fun getTodayDayOfMonth(): DayOfMonth = rightNow.getDayOfMonth()
+val nowInMillis: Long
+    get() = now.timeInMillis
 
-fun getTodayMonth(): Month = rightNow.getMonth()
+fun getTodayDayOfWeek(): Day = now.getDayOfWeek()
 
-fun getTodayYear(): Year = rightNow.getYear()
+fun getTodayDayOfMonth(): DayOfMonth = now.getDayOfMonth()
+
+fun getTodayMonth(): Month = now.getMonth()
+
+fun getTodayYear(): Year = now.getYear()
 
 fun getTimeOfDay(): Pair<Hour, Minute> =
-    rightNow.run {
-        getHour() to getMinute()
-    }
+    now.run { getHour() to getMinute() }
 
-fun Triple<DayOfMonth, Month, Year>.daysBetween(other: Triple<DayOfMonth, Month, Year>): Int {
-    if (
-        ((other.third == this.third) && (other.second < this.second)) ||
-        (other.third < this.third) ||
-        ((other.third == this.third) && (other.second == this.second) && (other.first < this.first))
-    ) {
-        return 0
-    }
+/**
+ * NOTE: result is always a positive value, regardless of [other] is set in the future
+ * or past.
+ *
+ * @return days between calling date and other date.
+ */
+fun Triple<DayOfMonth, Month, Year>.daysBetween(other: Triple<DayOfMonth, Month, Year>): Int =
+    toCalendar().getDaysBetween(other.toCalendar().timeInMillis)
 
-    val cal = rightNow.apply {
+fun Triple<DayOfMonth, Month, Year>.toCalendar(): Calendar =
+    now.apply {
         set(
             third,
             second,
             first
         )
     }
-
-    val otherCal = rightNow.apply {
-        set(
-            other.third,
-            other.second,
-            other.first
-        )
-    }
-
-    val timeBetween = otherCal.timeInMillis - cal.timeInMillis
-
-    return TimeUnit.MILLISECONDS.toDays(timeBetween).toInt()
-}
