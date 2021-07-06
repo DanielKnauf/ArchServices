@@ -29,7 +29,7 @@ fun getTimeOfDay(): Pair<Hour, Minute> =
     now.run { getHour() to getMinute() }
 
 /**
- * NOTE: result is always a positive value, regardless of [other] is set in the future
+ * NOTE: result is always a positive value, regardless if [other] is set in the future
  * or past.
  *
  * @return days between calling date and other date.

@@ -6,13 +6,13 @@ import java.util.concurrent.TimeUnit
 fun Calendar.getDayOfWeek(): Day =
     get(Calendar.DAY_OF_WEEK).run {
         when (this) {
-            1 -> Day.Sunday
-            2 -> Day.Monday
-            3 -> Day.Tuesday
-            4 -> Day.Wednesday
-            5 -> Day.Thursday
-            6 -> Day.Friday
-            7 -> Day.Saturday
+            Calendar.SUNDAY -> Day.Sunday
+            Calendar.MONDAY -> Day.Monday
+            Calendar.TUESDAY -> Day.Tuesday
+            Calendar.WEDNESDAY -> Day.Wednesday
+            Calendar.THURSDAY -> Day.Thursday
+            Calendar.FRIDAY -> Day.Friday
+            Calendar.SATURDAY -> Day.Saturday
             else -> throw IllegalStateException("Invalid weekday index = $this")
         }
     }
@@ -26,7 +26,7 @@ fun Calendar.getDayOfMonth(): DayOfMonth = get(Calendar.DAY_OF_MONTH)
 fun Calendar.getMonth(): Month = get(Calendar.MONTH)
 
 /**
- * @return corrected month in [Calendar] starting with 1 (January).
+ * @return corrected [Calendar] month, starting with 1 (January).
  */
 fun Calendar.getCorrectedMonth(): Month = getMonth() + 1
 
@@ -56,10 +56,10 @@ fun Calendar.addDay(): Calendar =
     }
 
 /**
- * NOTE: result is always a positive value, regardless of [otherTimeStamp] is set in the future
+ * NOTE: result is always a positive value, regardless if [otherTimeStamp] is set in the future
  * or past.
  *
- * @return days between calling [Calendar] and [otherTimeStamp]
+ * @return days between calling [Calendar] and [otherTimeStamp].
  */
 fun Calendar.getDaysBetween(otherTimeStamp: Long): Int =
     when {
