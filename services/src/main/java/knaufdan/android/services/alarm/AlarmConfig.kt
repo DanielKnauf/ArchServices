@@ -7,7 +7,7 @@ import kotlin.reflect.KClass
  * Configuration to define an alarm with [IAlarmService].
  *
  * @param requestCode private request code for the sender.
- * @param action action name specifying the action which should be performed.
+ * @param action name specifying the action which should be performed.
  * @param timeToWake time in milliseconds at which the alarm is triggered.
  * @param receiver [BroadcastReceiver] class to which the intent is sent to.
  */
