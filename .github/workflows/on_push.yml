@@ -15,5 +15,5 @@ jobs:
         java-version: 1.8
     - name: Clean
       run: ./gradlew clean
-    - name: Fix ktLint
-      run: ./gradlew ktLintFix
+    - name: Check ktLint
+      run: ./gradlew ktLintCheck
