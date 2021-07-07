@@ -3,17 +3,17 @@ package knaufdan.android.services.alarm
 import android.os.Bundle
 
 /**
- * Allows to setup and cancel alarms to wake up an application at a point in time.
+ * Sets and cancels alarms to wake up an application at a point in time.
  *
  * Alarms can be set as a one time event with [setOneTimeAlarm] or repeating events with
- * [setRepeatingAlarm] and canceled by calling [cancelAlarm].
+ * [setRepeatingAlarm] and canceled with [cancelAlarm].
  */
 interface IAlarmService {
 
     /**
      * Sets up an alarm which is triggered on a specific point in time.
      *
-     * NOTE: [AlarmConfig.timeToWake] must be greater then current,
+     * NOTE: [AlarmConfig.timeToWake] must be greater than the current time,
      * otherwise the alarm will not be set up.
      *
      * @param config defining the alarm to setup.
@@ -29,7 +29,7 @@ interface IAlarmService {
      * after a period of time. The alarm is never triggered earlier than the defined point in time,
      * but never exactly on it.
      *
-     * NOTE: [AlarmConfig.timeToWake] must be greater then current,
+     * NOTE: [AlarmConfig.timeToWake] must be greater than the current time,
      * otherwise the alarm will not be set up.
      *
      * @param config defining the alarm to setup.
