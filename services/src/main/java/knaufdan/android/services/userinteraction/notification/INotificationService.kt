@@ -17,7 +17,7 @@ interface INotificationService {
      * NOTE: valid config (corresponding to the used Android version) must be configured before calling [sendNotification]
      *       otherwise all notifications will be blocked.
      *
-     * @param adjust extension function block on [INotificationServiceConfig] to configure [INotificationService] notification channel
+     * @param adjust extension function block on [INotificationServiceConfig] to configure [INotificationService] notification channel.
      */
     fun configure(adjust: INotificationServiceConfig.() -> Unit)
 
@@ -26,7 +26,7 @@ interface INotificationService {
      *
      * NOTE: [configure] must be called before sending notifications otherwise all will be blocked.
      *
-     * @param notificationConfig contains styling and interactions of notification
+     * @param notificationConfig contains styling and interactions of notification.
      */
     @Deprecated(
         message = "With release 0.5.0, removed with 0.7.0",
@@ -39,14 +39,14 @@ interface INotificationService {
      *
      * NOTE: [configure] must be called before showing notifications otherwise all will be blocked.
      *
-     * @param notificationConfig contains styling and interactions of notification
+     * @param notificationConfig contains styling and interactions of notification.
      */
     fun showNotification(notificationConfig: NotificationConfig)
 
     /**
      * Hides a shown notification with [notificationId].
      *
-     * @param notificationId of notification to be hidden
+     * @param notificationId of notification to be hidden.
      */
     fun hideNotification(notificationId: NotificationId)
 }
