@@ -59,7 +59,7 @@ fun Calendar.addDay(): Calendar =
  * NOTE: result is always a positive value, regardless if [otherTimeStamp] is set in the future
  * or past.
  *
- * @return days between calling [Calendar] and [otherTimeStamp].
+ * @return days between receiving [Calendar] and [otherTimeStamp].
  */
 fun Calendar.getDaysBetween(otherTimeStamp: Long): Int =
     when {

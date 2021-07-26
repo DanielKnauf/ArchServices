@@ -32,7 +32,7 @@ fun getTimeOfDay(): Pair<Hour, Minute> =
  * NOTE: result is always a positive value, regardless if [other] is set in the future
  * or past.
  *
- * @return days between calling date and other date.
+ * @return days between receiving date and other date.
  */
 fun Triple<DayOfMonth, Month, Year>.daysBetween(other: Triple<DayOfMonth, Month, Year>): Int =
     toCalendar().getDaysBetween(other.toCalendar().timeInMillis)
