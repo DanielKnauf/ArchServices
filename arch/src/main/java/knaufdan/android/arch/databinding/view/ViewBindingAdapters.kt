@@ -89,16 +89,13 @@ fun View.bindFocus(
     focused: Boolean,
     focusDelay: Number?
 ) {
-    if (focused == this.hasFocus()) {
+    if (focused == hasFocus()) {
         return
     }
 
     val updateFocus = {
-        if (focused) {
-            requestFocus()
-        } else {
-            clearFocus()
-        }
+        if (focused) requestFocus()
+        else clearFocus()
     }
 
     if (focusDelay == null) {
