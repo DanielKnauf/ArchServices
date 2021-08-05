@@ -1,10 +1,13 @@
 package knaufdan.android.arch.databinding.view
 
 import android.animation.ObjectAnimator
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.core.view.marginBottom
 import androidx.core.view.marginLeft
 import androidx.core.view.marginRight
@@ -12,6 +15,8 @@ import androidx.core.view.marginTop
 import androidx.core.view.postDelayed
 import androidx.core.view.updateLayoutParams
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
+import knaufdan.android.arch.R
 import knaufdan.android.core.resources.IResourceProvider
 
 @BindingAdapter("layout_width")
@@ -75,7 +80,7 @@ fun View.bindBackground(@DrawableRes background: Int) {
 
 @BindingAdapter(
     value = [
-        "setFocus",
+        "focus",
         "focusDelay"
     ],
     requireAll = false
@@ -84,16 +89,13 @@ fun View.bindFocus(
     focused: Boolean,
     focusDelay: Number?
 ) {
-    if (focused == this.hasFocus()) {
+    if (focused == hasFocus()) {
         return
     }
 
     val updateFocus = {
-        if (focused) {
-            requestFocus()
-        } else {
-            clearFocus()
-        }
+        if (focused) requestFocus()
+        else clearFocus()
     }
 
     if (focusDelay == null) {
@@ -170,6 +172,44 @@ fun View.bindInvisible(invisible: Boolean) {
         }
 }
 
+@BindingAdapter("showKeyboard")
+fun View.bindShowKeyboard(show: Boolean?) {
+    show ?: return
+
+    val inputMethodManager =
+        (context.getSystemService(INPUT_METHOD_SERVICE) as? InputMethodManager) ?: return
+
+    if (show) inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+    else inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+}
+
+@BindingAdapter(
+    value = [
+        "scrolledElevation",
+        "scrolledElevationHeight"
+    ],
+    requireAll = false
+)
+fun View.bindScrolledElevation(
+    recyclerView: RecyclerView,
+    elevationHeight: Float?
+) {
+    recyclerView.addOnScrollListener(
+        object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val height =
+                    elevationHeight ?: resources.getDimension(R.dimen.arch_default_elevation)
+
+                elevation =
+                    if (recyclerView.canScrollVertically(-1)) height
+                    else 0f
+            }
+        }
+    )
+}
+
 @BindingAdapter(
     value = [
         "fadeDirection",
@@ -181,18 +221,25 @@ fun View.bindFading(
     direction: FadeDirection,
     fadeDuration: Number?
 ) {
-    val alpha =
+    val targetAlpha =
         when (direction) {
+            FadeDirection.STAY -> return
             FadeDirection.In -> 1f
             FadeDirection.Out -> 0f
         }
 
+    if (alpha == targetAlpha) return
+
     ObjectAnimator.ofFloat(
         this,
         "alpha",
-        alpha
+        targetAlpha
     ).apply {
         duration = fadeDuration?.toLong() ?: 0
+
+        addUpdateListener { animator ->
+            this@bindFading.isVisible = (animator.animatedValue as? Float) != 0F
+        }
 
         start()
     }
@@ -205,6 +252,7 @@ enum class LayoutBehavior {
 }
 
 enum class FadeDirection {
+    STAY,
     In,
     Out
 }
