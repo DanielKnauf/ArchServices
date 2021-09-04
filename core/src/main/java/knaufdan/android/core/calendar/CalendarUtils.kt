@@ -3,6 +3,7 @@
 package knaufdan.android.core.calendar
 
 import java.util.Calendar
+import java.util.Date
 
 val today: Triple<DayOfMonth, Month, Year>
     get() = Triple(
@@ -16,6 +17,12 @@ val now: Calendar
 
 val nowInMillis: Long
     get() = now.timeInMillis
+
+fun calendar(timeInMillis: Long): Calendar =
+    now.apply { this.timeInMillis = timeInMillis }
+
+fun calendar(day: DayOfMonth, month: Month, year: Year): Calendar =
+    now.apply { set(year, month, day) }
 
 fun getTodayDayOfWeek(): Day = now.getDayOfWeek()
 
@@ -44,4 +51,9 @@ fun Triple<DayOfMonth, Month, Year>.toCalendar(): Calendar =
             second,
             first
         )
+    }
+
+fun Date.toCalendar(): Calendar =
+    now.apply {
+        timeInMillis = this@toCalendar.time
     }
