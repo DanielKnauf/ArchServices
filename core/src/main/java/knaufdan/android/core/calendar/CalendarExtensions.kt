@@ -26,7 +26,7 @@ fun Calendar.getDayOfMonth(): DayOfMonth = get(Calendar.DAY_OF_MONTH)
 fun Calendar.getMonth(): Month = get(Calendar.MONTH)
 
 /**
- * @return corrected [Calendar] month, starting with 1 (January).
+ * @return corrected [Calendar] month, starting at 1 (January).
  */
 fun Calendar.getMonthCorrected(): Month = getMonth() + 1
 
