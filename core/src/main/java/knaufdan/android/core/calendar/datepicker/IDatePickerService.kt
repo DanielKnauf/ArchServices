@@ -6,11 +6,11 @@ interface IDatePickerService {
 
     /**
      * Displays a dialog for picking a specific date.
-     * Per default the selected date is the current day and user can pick a day on a calender sheet.
+     * Per default the selected date is the current day and users can pick a day on a calender sheet.
      *
      * @param config [DatePickerConfig] to configure the displayed dialog
-     * @param onCancelClicked called when the dialog is canceled via back button, a touch outside
-     * the dialog or click on the negative button
+     * @param onCancelClicked called when the dialog is canceled via back button, touching outside
+     * the dialog or clicking on the negative button
      * @param onDateSelected called with the selected date when the positive button is clicked
      */
     fun showDatePicker(
