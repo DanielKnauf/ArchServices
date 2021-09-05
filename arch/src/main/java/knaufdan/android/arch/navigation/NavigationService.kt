@@ -3,6 +3,7 @@ package knaufdan.android.arch.navigation
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import knaufdan.android.arch.mvvm.implementation.BaseFragment
 import knaufdan.android.arch.mvvm.implementation.BaseFragmentViewModel
@@ -26,13 +27,10 @@ internal class NavigationService(
         addToBackStack: Boolean,
         containerViewIdId: ContainerViewId,
         clearBackStack: Boolean,
-        vararg bundleParameter: Pair<BundleKey, BundleValue>
+        vararg params: Pair<String, Any?>
     ) {
-        val bundle = fragment.arguments ?: Bundle()
-        bundle.apply {
-            bundleParameter.forEach { parameter ->
-                putParameter(parameter)
-            }
+        (fragment.arguments ?: Bundle()).apply {
+            putAll(bundleOf(*params))
 
             fragment.arguments = this
         }
