@@ -12,8 +12,8 @@ import java.util.Calendar
  * Used in [IDatePickerService.showDatePicker] to configure the displayed date picker.
  *
  * @param initialDate date initially selected
- * @param inputMode defines the way users can select a date, either [INPUT_MODE_CALENDAR]
- * or [INPUT_MODE_TEXT]
+ * @param inputMode defines how users can select a date,
+ * either by calendar sheet with [INPUT_MODE_CALENDAR] or text with [INPUT_MODE_TEXT]
  * @param theme style to customize the displayed date picker
  */
 data class DatePickerConfig(
