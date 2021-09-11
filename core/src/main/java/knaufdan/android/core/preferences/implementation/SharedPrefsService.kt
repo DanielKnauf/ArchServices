@@ -4,38 +4,45 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.core.content.edit
 import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
+import com.google.gson.GsonBuilder
 import knaufdan.android.core.IContextProvider
-import knaufdan.android.core.preferences.ISharedPrefService
-import knaufdan.android.core.preferences.ISharedPrefServiceConfig
+import knaufdan.android.core.preferences.ISharedPrefsService
+import knaufdan.android.core.preferences.ISharedPrefsServiceConfig
+import knaufdan.android.core.preferences.Key
+import knaufdan.android.core.preferences.serializeconfig.DaySerializeConfig
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.reflect.KClass
 
 @Singleton
-internal class SharedPrefService @Inject constructor(
-    private val contextProvider: IContextProvider
-) : ISharedPrefService {
+internal class SharedPrefsService @Inject constructor(
+    private val contextProvider: IContextProvider,
+) : ISharedPrefsService {
+
     private val sharedPrefs: SharedPreferences
         get() = contextProvider.getContext().getSharedPreferences(
             config.sharedPrefLocation,
             config.sharedPrefMode
         )
+
     private val gson: Gson by lazy {
-        Gson()
+        GsonBuilder()
+            .apply {
+                serializeConfigs.forEach { config ->
+                    registerTypeAdapter(config.getTypeClass(), config.serializer)
+                    registerTypeAdapter(config.getTypeClass(), config.deserializer)
+                }
+            }
+            .create()
     }
 
-    override fun configure(adjust: ISharedPrefServiceConfig.() -> Unit) = adjust(
-        config
-    )
+    override fun configure(adjust: ISharedPrefsServiceConfig.() -> Unit) = adjust(config)
 
     override fun putJson(
         key: String,
-        value: Any?
+        value: Any?,
     ) {
-        if (value == null) {
-            return
-        }
+        value ?: return
 
         put(
             key = key,
@@ -45,11 +52,9 @@ internal class SharedPrefService @Inject constructor(
 
     override fun put(
         key: String,
-        value: Any?
+        value: Any?,
     ) {
-        if (value == null) {
-            return
-        }
+        value ?: return
 
         sharedPrefs.edit {
             putValue(
@@ -61,46 +66,52 @@ internal class SharedPrefService @Inject constructor(
 
     override fun <T : Any> getJson(
         key: String,
-        targetClass: KClass<T>
+        targetClass: KClass<T>,
     ): T? =
-        try {
-            getString(key).run {
-                gson.fromJson(this, targetClass.java)
-            }
-        } catch (e: JsonSyntaxException) {
-            println(e)
-            null
-        }
+        runCatching {
+            getString(key).run { gson.fromJson(this, targetClass.java) }
+        }.getOrNull()
 
     override fun getString(
         key: String,
-        defaultValue: String
+        defaultValue: String,
     ): String = sharedPrefs.getString(key, defaultValue) ?: defaultValue
 
     override fun getLong(
         key: String,
-        defaultValue: Long
+        defaultValue: Long,
     ): Long = sharedPrefs.getLong(key, defaultValue)
 
     override fun getInt(
         key: String,
-        defaultValue: Int
+        defaultValue: Int,
     ): Int = sharedPrefs.getInt(key, defaultValue)
 
+    override fun getBoolean(
+        key: Key,
+        defaultValue: Boolean,
+    ): Boolean = sharedPrefs.getBoolean(key, defaultValue)
+
     companion object {
-        private val config = SharedPrefServiceConfig.EMPTY
+
+        private val config = SharedPrefsServiceConfig.EMPTY
+
+        private val serializeConfigs = listOf(
+            DaySerializeConfig
+        )
 
         private fun SharedPreferences.Editor.putValue(
             key: String,
-            value: Any
+            value: Any,
         ) {
             when (value) {
+                is Boolean -> putBoolean(key, value)
                 is Int -> putInt(key, value)
                 is Long -> putLong(key, value)
                 is String -> putString(key, value)
                 is Enum<*> -> putString(key, value.name)
                 else -> Log.e(
-                    "${SharedPrefService::class.simpleName}",
+                    "${SharedPrefsService::class.simpleName}",
                     "Could not store value of class ${value::class} to key $key."
                 )
             }
