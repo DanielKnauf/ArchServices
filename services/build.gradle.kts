@@ -74,4 +74,6 @@ dependencies {
     implementation(Dependencies.androidX_room)
     implementation(Dependencies.androidX_room_ktx)
     kapt(Dependencies.androidX_room_compiler)
+
+    implementation(Libs.uCrop)
 }
