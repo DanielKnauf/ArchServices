@@ -143,9 +143,7 @@ internal class NotificationService(
         apply {
             notificationConfig.interaction.actions
                 .toAndroidActions(notificationConfig.id)
-                .forEach { action ->
-                    addAction(action)
-                }
+                .forEach(::addAction)
         }
 
     private fun List<NotificationAction>.toAndroidActions(notificationId: Int): List<NotificationCompat.Action> =
