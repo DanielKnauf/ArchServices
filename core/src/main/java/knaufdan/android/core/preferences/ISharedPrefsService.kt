@@ -2,8 +2,9 @@ package knaufdan.android.core.preferences
 
 import kotlin.reflect.KClass
 
-interface ISharedPrefService {
-    fun configure(adjust: ISharedPrefServiceConfig.() -> Unit)
+interface ISharedPrefsService {
+
+    fun configure(adjust: ISharedPrefsServiceConfig.() -> Unit)
 
     fun putJson(
         key: Key,
@@ -27,11 +28,16 @@ interface ISharedPrefService {
 
     fun getLong(
         key: Key,
-        defaultValue: Long = 0
+        defaultValue: Long = 0L
     ): Long
 
     fun getInt(
         key: Key,
         defaultValue: Int = 0
     ): Int
+
+    fun getBoolean(
+        key: Key,
+        defaultValue: Boolean = false
+    ): Boolean
 }
