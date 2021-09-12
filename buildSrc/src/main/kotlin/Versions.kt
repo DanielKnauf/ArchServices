@@ -1,5 +1,5 @@
 object Versions {
-    const val vGradle = "4.1.2"
+    const val vGradle = "4.2.1"
     const val vKotlin = "1.5.30-M1"
 
     const val vMaterial = "1.4.0"
