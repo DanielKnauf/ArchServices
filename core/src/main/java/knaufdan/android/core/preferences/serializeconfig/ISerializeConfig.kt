@@ -2,9 +2,11 @@ package knaufdan.android.core.preferences.serializeconfig
 
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonSerializer
-import knaufdan.android.core.common.IGenericType
+import kotlin.reflect.KClass
 
-interface ISerializeConfig<T> : IGenericType<T> {
+interface ISerializeConfig<T : Any> {
+
+    val clazz: KClass<T>
 
     val serializer: JsonSerializer<T>
 

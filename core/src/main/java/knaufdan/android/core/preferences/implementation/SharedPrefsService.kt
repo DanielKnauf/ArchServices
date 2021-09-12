@@ -29,8 +29,8 @@ internal class SharedPrefsService @Inject constructor(
         GsonBuilder()
             .apply {
                 serializeConfigs.forEach { config ->
-                    registerTypeAdapter(config.getTypeClass(), config.serializer)
-                    registerTypeAdapter(config.getTypeClass(), config.deserializer)
+                    registerTypeAdapter(config.clazz.java, config.serializer)
+                    registerTypeAdapter(config.clazz.java, config.deserializer)
                 }
             }
             .create()

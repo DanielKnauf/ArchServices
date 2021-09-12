@@ -5,10 +5,13 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonSerializer
 import knaufdan.android.core.calendar.Day
 import knaufdan.android.core.calendar.Day.Companion.toDay
+import kotlin.reflect.KClass
 
 object DaySerializeConfig : ISerializeConfig<Day> {
 
     private const val PROPERTY_NAME = "day_name"
+
+    override val clazz: KClass<Day> by lazy { Day::class }
 
     override val serializer: JsonSerializer<Day> by lazy {
         JsonSerializer<Day> { day, _, _ ->
