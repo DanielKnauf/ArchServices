@@ -40,7 +40,7 @@ internal class SharedPrefsService @Inject constructor(
 
     override fun putJson(
         key: String,
-        value: Any?,
+        value: Any?
     ) {
         value ?: return
 
@@ -52,7 +52,7 @@ internal class SharedPrefsService @Inject constructor(
 
     override fun put(
         key: String,
-        value: Any?,
+        value: Any?
     ) {
         value ?: return
 
@@ -66,7 +66,7 @@ internal class SharedPrefsService @Inject constructor(
 
     override fun <T : Any> getJson(
         key: String,
-        targetClass: KClass<T>,
+        targetClass: KClass<T>
     ): T? =
         runCatching {
             getString(key).run { gson.fromJson(this, targetClass.java) }
@@ -74,22 +74,22 @@ internal class SharedPrefsService @Inject constructor(
 
     override fun getString(
         key: String,
-        defaultValue: String,
+        defaultValue: String
     ): String = sharedPrefs.getString(key, defaultValue) ?: defaultValue
 
     override fun getLong(
         key: String,
-        defaultValue: Long,
+        defaultValue: Long
     ): Long = sharedPrefs.getLong(key, defaultValue)
 
     override fun getInt(
         key: String,
-        defaultValue: Int,
+        defaultValue: Int
     ): Int = sharedPrefs.getInt(key, defaultValue)
 
     override fun getBoolean(
         key: Key,
-        defaultValue: Boolean,
+        defaultValue: Boolean
     ): Boolean = sharedPrefs.getBoolean(key, defaultValue)
 
     companion object {
@@ -102,7 +102,7 @@ internal class SharedPrefsService @Inject constructor(
 
         private fun SharedPreferences.Editor.putValue(
             key: String,
-            value: Any,
+            value: Any
         ) {
             when (value) {
                 is Boolean -> putBoolean(key, value)
