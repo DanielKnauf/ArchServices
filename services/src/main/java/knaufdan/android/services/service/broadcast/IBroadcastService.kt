@@ -16,11 +16,11 @@ interface IBroadcastService {
 
     fun <T : BroadcastReceiver> sendBroadcast(
         receiver: KClass<T>,
-        action: String
+        action: IntentAction
     )
 
     fun sendBroadcast(
-        action: String,
+        action: IntentAction,
         configure: Intent.() -> Unit
     )
 }

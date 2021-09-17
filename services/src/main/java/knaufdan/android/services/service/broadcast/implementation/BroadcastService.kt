@@ -8,6 +8,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import knaufdan.android.core.IContextProvider
 import knaufdan.android.services.service.broadcast.ActionBroadcastReceiver
 import knaufdan.android.services.service.broadcast.IBroadcastService
+import knaufdan.android.services.service.broadcast.IntentAction
 import kotlin.reflect.KClass
 
 internal class BroadcastService(
@@ -30,14 +31,13 @@ internal class BroadcastService(
             }
     }
 
-    override fun unregisterLocalBroadcastReceiver(broadcastReceiver: BroadcastReceiver) {
+    override fun unregisterLocalBroadcastReceiver(broadcastReceiver: BroadcastReceiver) =
         localBroadcastManager.unregisterReceiver(broadcastReceiver)
-    }
 
     override fun <T : BroadcastReceiver> sendBroadcast(
         receiver: KClass<T>,
-        action: String
-    ) {
+        action: IntentAction
+    ) =
         context.sendBroadcast(
             Intent(
                 context,
@@ -46,9 +46,9 @@ internal class BroadcastService(
                 this.action = action
             }
         )
-    }
 
-    override fun sendBroadcast(action: String, configure: Intent.() -> Unit) {
-        context.sendBroadcast(Intent(action).apply(configure))
-    }
+    override fun sendBroadcast(
+        action: IntentAction,
+        configure: Intent.() -> Unit
+    ) = context.sendBroadcast(Intent(action).apply(configure))
 }

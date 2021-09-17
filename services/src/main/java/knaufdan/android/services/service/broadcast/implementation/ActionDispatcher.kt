@@ -4,12 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import knaufdan.android.services.service.broadcast.Action
 import knaufdan.android.services.service.broadcast.ActionBroadcastReceiver
+import knaufdan.android.services.service.broadcast.IntentAction
 
 class ActionDispatcher<E : Enum<E>>(
     forActions: Array<E>,
-    private val actor: (action: Action, extras: Bundle?) -> Unit
+    private val actor: (action: IntentAction, extras: Bundle?) -> Unit
 ) : ActionBroadcastReceiver(forActions.map(Enum<E>::name)) {
 
     override fun onReceive(
@@ -21,7 +21,7 @@ class ActionDispatcher<E : Enum<E>>(
             ?: logError("- Intent has no action. Intent == $intent")
     }
 
-    private fun Action.evaluateAction(extras: Bundle?) {
+    private fun IntentAction.evaluateAction(extras: Bundle?) {
         if (forActions.contains(this)) actor(this, extras)
         else logError("- action $this not registered for this receiver.")
     }
