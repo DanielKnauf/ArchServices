@@ -8,8 +8,8 @@ import knaufdan.android.services.alarm.IAlarmService
 import knaufdan.android.services.alarm.implementation.AlarmService
 import knaufdan.android.services.service.IServiceDispatcher
 import knaufdan.android.services.service.ServiceDispatcher
-import knaufdan.android.services.service.broadcast.BroadcastService
 import knaufdan.android.services.service.broadcast.IBroadcastService
+import knaufdan.android.services.service.broadcast.implementation.BroadcastService
 import knaufdan.android.services.userinteraction.audio.AudioService
 import knaufdan.android.services.userinteraction.audio.IAudioService
 import knaufdan.android.services.userinteraction.notification.INotificationService
@@ -25,16 +25,17 @@ class ServicesModule {
             contextProvider = contextProvider
         )
 
-    @Singleton
     @Provides
+    @Singleton
     internal fun provideAudioService(audioService: AudioService): IAudioService = audioService
 
-    @Singleton
     @Provides
-    internal fun provideBroadcastService(broadcastService: BroadcastService): IBroadcastService =
-        broadcastService
-
     @Singleton
+    fun provideBroadcastService(
+        contextProvider: IContextProvider
+    ): IBroadcastService =
+        BroadcastService(contextProvider)
+
     @Provides
     internal fun provideNotificationService(contextProvider: IContextProvider): INotificationService =
         NotificationService(
