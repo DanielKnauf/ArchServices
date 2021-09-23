@@ -2,6 +2,7 @@ package knaufdan.android.arch.databinding.view
 
 import androidx.core.view.postDelayed
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
 @BindingAdapter(
@@ -57,4 +58,15 @@ fun RecyclerView.bindSmoothScrollToPosition(
     }
 
     smoothScrollingToPosition()
+}
+
+@BindingAdapter("lm")
+fun RecyclerView.bindLayoutManager(newLayoutManager: RecyclerView.LayoutManager) {
+    val scrollPosition =
+        (layoutManager as? LinearLayoutManager)
+            ?.findFirstCompletelyVisibleItemPosition()
+            ?: 0
+
+    layoutManager = newLayoutManager
+    scrollToPosition(scrollPosition)
 }

@@ -4,10 +4,12 @@ import dagger.Module
 import dagger.Provides
 import knaufdan.android.core.ContextProvider
 import knaufdan.android.core.IContextProvider
+import knaufdan.android.core.calendar.datepicker.IDatePickerService
+import knaufdan.android.core.calendar.datepicker.implementation.DatePickerService
 import knaufdan.android.core.calendar.timepicker.ITimePickerService
 import knaufdan.android.core.calendar.timepicker.TimePickerService
-import knaufdan.android.core.preferences.ISharedPrefService
-import knaufdan.android.core.preferences.implementation.SharedPrefService
+import knaufdan.android.core.preferences.ISharedPrefsService
+import knaufdan.android.core.preferences.implementation.SharedPrefsService
 import knaufdan.android.core.resources.IResourceProvider
 import knaufdan.android.core.resources.implementation.ResourceProvider
 import javax.inject.Singleton
@@ -30,7 +32,7 @@ class CoreModule {
 
     @Provides
     @Singleton
-    internal fun provideSharedPrefService(sharedPrefService: SharedPrefService): ISharedPrefService =
+    internal fun provideSharedPrefService(sharedPrefService: SharedPrefsService): ISharedPrefsService =
         sharedPrefService
 
     @Provides
@@ -39,6 +41,15 @@ class CoreModule {
         contextProvider: IContextProvider
     ): ITimePickerService =
         TimePickerService(
+            contextProvider = contextProvider
+        )
+
+    @Provides
+    @Singleton
+    fun provideDatePickerService(
+        contextProvider: IContextProvider
+    ): IDatePickerService =
+        DatePickerService(
             contextProvider = contextProvider
         )
 }

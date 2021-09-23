@@ -17,14 +17,14 @@ interface INavigationService {
      * @param containerViewIdId id of viewGroup in which the [fragment] is placed.
      * @param addToBackStack if true the [fragment] is added to the Fragment-Backstack.
      * @param clearBackStack clears backStack before placing [fragment] into the [containerViewIdId].
-     * @param bundleParameter parameters which should be put in the bundle of the [fragment].
+     * @param params parameters which should be put in the bundle of the [fragment].
      */
     fun goToFragment(
         fragment: BaseFragment<out BaseFragmentViewModel>,
         addToBackStack: Boolean,
         containerViewIdId: ContainerViewId = containerViewId,
         clearBackStack: Boolean = false,
-        vararg bundleParameter: Pair<BundleKey, BundleValue> = emptyArray()
+        vararg params: Pair<String, Any?> = emptyArray()
     )
 
     /**

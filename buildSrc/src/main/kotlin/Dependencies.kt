@@ -2,7 +2,7 @@ import Versions.androidx_core_version
 import Versions.appcompat_version
 import Versions.vBroadcastManager
 import Versions.vDagger
-import Versions.design_version
+import Versions.vMaterial
 import Versions.gson_version
 import Versions.vKotlin
 import Versions.ktLint_version
@@ -21,7 +21,7 @@ object Dependencies {
     val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:$vKotlin"
     val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$vKotlin"
 
-    val android_material_design = "com.google.android.material:material:$design_version"
+    val android_material_design = "com.google.android.material:material:$vMaterial"
 
     val androidX_core_ktx = "androidx.core:core-ktx:$androidx_core_version"
     val androidX_app_compat = "androidx.appcompat:appcompat:$appcompat_version"

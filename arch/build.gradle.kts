@@ -56,6 +56,9 @@ dependencies {
     implementation(Dependencies.android_material_design)
     implementation(Dependencies.AndroidX.legacySupport)
     implementation(Dependencies.AndroidX.viewPager2)
+    implementation(Libs.AndroidX.constraintLayout)
+    implementation(Libs.AndroidX.fragment)
+    implementation(Libs.AndroidX.paging)
 
     //lifecycle
     implementation(Dependencies.AndroidX.viewModel)
@@ -83,6 +86,13 @@ dependencies {
     //kotlin
     implementation(Dependencies.kotlin_reflect)
     implementation(Dependencies.kotlin_stdlib)
+
+    //navigation
+    implementation(Libs.AndroidX.navigationFragment)
+    implementation(Libs.AndroidX.navigationUi)
+
+    //
+    implementation(Libs.liveDataKit)
 
     implementation(project(":core"))
 }

@@ -2,7 +2,8 @@ package knaufdan.android.core.common
 
 import java.lang.reflect.ParameterizedType
 
-interface IGenericType <Type> {
+interface IGenericType<Type> {
+
     /**
      * @return class of [Type]
      */
