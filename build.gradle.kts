@@ -46,9 +46,8 @@ fun isNonStable(version: String): Boolean {
         .any { nonStableIdentifier -> nonStableIdentifier.matches(version) }
 }
 
-tasks.named("dependencyUpdates", DependencyUpdatesTask::class.java).configure {
-    // disallow release candidates as upgradable versions from stable versions
+tasks.withType<DependencyUpdatesTask> {
     rejectVersionIf {
-        isNonStable(candidate.version)
+        isNonStable(candidate.version) && !isNonStable(currentVersion)
     }
 }
