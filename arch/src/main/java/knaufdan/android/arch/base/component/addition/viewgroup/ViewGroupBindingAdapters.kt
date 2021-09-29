@@ -1,7 +1,6 @@
 package knaufdan.android.arch.base.component.addition.viewgroup
 
 import android.animation.LayoutTransition
-import android.transition.TransitionManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +8,7 @@ import android.view.ViewGroup
 import androidx.databinding.BindingAdapter
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.transition.TransitionManager
 import knaufdan.android.arch.base.ViewTransition
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel
@@ -30,9 +30,7 @@ fun ViewGroup.bindComponent(
     component: IComponent<*>?,
     transition: ViewTransition?
 ) {
-    if (component == null) {
-        return
-    }
+    if (component == null) return
 
     bindComponents(
         components = listOf(component),
@@ -51,15 +49,11 @@ fun ViewGroup.bindComponents(
     components: List<IComponent<*>>?,
     transition: ViewTransition?
 ) {
-    if (components == null) {
-        return
-    }
+    if (components == null) return
 
     val newComponents = components.toList()
     val oldComponents = parentComponents[this] ?: emptyList()
-    if (oldComponents.contentDeepEquals(newComponents)) {
-        return
-    }
+    if (oldComponents.contentDeepEquals(newComponents)) return
 
     val oldSize = oldComponents.size
     newComponents.forEachIndexed { index, newComponent ->
@@ -85,9 +79,7 @@ fun ViewGroup.bindComponents(
     }
 
     val newSize = newComponents.size
-    if (newSize < oldSize) {
-        removeViews(newSize, oldSize - newSize)
-    }
+    if (newSize < oldSize) removeViews(newSize, oldSize - newSize)
 
     parentComponents[this] = newComponents
 }
@@ -157,6 +149,7 @@ private fun createStateChangeListener(
     viewModel: IComponentViewModel
 ): View.OnAttachStateChangeListener =
     object : View.OnAttachStateChangeListener {
+
         override fun onViewAttachedToWindow(v: View?) {
             viewModel.onAttach()
         }

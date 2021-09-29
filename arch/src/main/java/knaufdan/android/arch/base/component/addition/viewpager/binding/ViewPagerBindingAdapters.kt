@@ -72,6 +72,16 @@ fun ViewPager2.bindPage(index: Int) {
     currentItem = index
 }
 
+@BindingAdapter("isSwipeEnabled")
+fun ViewPager2.bindSwipeEnabled(isEnabled: Boolean) {
+    isUserInputEnabled = isEnabled
+}
+
+@BindingAdapter("offscreenPageLimit")
+fun ViewPager2.bindOffscreenPageLimit(limit: Int) {
+    offscreenPageLimit = limit
+}
+
 interface OnPageSelectedListener {
     fun onPageSelected(index: Int)
 }
