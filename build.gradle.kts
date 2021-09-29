@@ -2,7 +2,7 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 apply(plugin = "com.github.ben-manes.versions")
 
-group = Constants.group_name
+group = Constants.GROUP_NAME
 
 buildscript {
     repositories {
@@ -12,11 +12,11 @@ buildscript {
     }
 
     dependencies {
-        classpath(Plugins.gradle)
-        classpath(Plugins.kotlinGradle)
-        classpath(Plugins.kotlinAndroidExtensions)
-        classpath(Plugins.dependencyUpdates)
-        classpath(Plugins.androidMaven)
+        classpath(Plugins.Android.gradle)
+        classpath(Plugins.Kotlin.androidExtensions)
+        classpath(Plugins.Kotlin.gradlePlugin)
+        classpath(Plugins.Other.androidMavenPlugin)
+        classpath(Plugins.Other.dependencyUpdates)
     }
 }
 
