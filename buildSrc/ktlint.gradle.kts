@@ -1,7 +1,7 @@
 val ktlint by configurations.creating
 
 dependencies {
-    ktlint(Dependencies.ktLint)
+    ktlint(Libs.ktLint)
 }
 
 task("ktLintCheck", JavaExec::class) {
