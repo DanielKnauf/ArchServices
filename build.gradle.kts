@@ -7,7 +7,7 @@ group = Constants.GROUP_NAME
 buildscript {
     repositories {
         google()
-        jcenter()
+        gradlePluginPortal()
         mavenCentral()
     }
 
@@ -23,9 +23,8 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
-        maven(url = "https://jitpack.io")
+        maven(url = Constants.JIT_PACK_URL)
     }
 
     apply(plugin = "maven-publish")
@@ -36,9 +35,7 @@ subprojects {
     apply { plugin("maven") }
 }
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
-}
+tasks.register("clean", Delete::class) { delete(rootProject.buildDir) }
 
 fun isNonStable(version: String): Boolean {
     return listOf("alpha", "beta", "rc", "cr", "m", "preview")
