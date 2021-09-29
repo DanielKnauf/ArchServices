@@ -1,3 +1,4 @@
 object Constants {
-    const val group_name = "com.github.DanielKnauf"
+    const val GROUP_NAME = "com.github.DanielKnauf"
+    const val JIT_PACK_URL = "https://jitpack.io"
 }
