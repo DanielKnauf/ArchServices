@@ -16,4 +16,6 @@
     <string name="core_calendar_sunday">Sonntag</string>
     <string name="core_calendar_sunday_short">So.</string>
 
+    <string name="core_calendar_day_picker_title">Tag</string>
+
 </resources>
