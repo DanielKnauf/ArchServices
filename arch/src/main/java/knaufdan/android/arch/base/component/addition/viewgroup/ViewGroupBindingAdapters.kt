@@ -105,7 +105,7 @@ private fun <DataSource> ViewGroup.addComponent(
             context.findLifecycleOwner()?.apply {
                 lifecycleOwner = this
 
-                // lifecycle on childs
+                // lifecycle on children
             }
 
             executePendingBindings()
