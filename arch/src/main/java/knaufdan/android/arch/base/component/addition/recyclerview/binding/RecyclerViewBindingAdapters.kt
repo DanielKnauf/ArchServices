@@ -3,10 +3,7 @@ package knaufdan.android.arch.base.component.addition.recyclerview.binding
 import android.content.Context
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.LinearSnapHelper
-import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.SnapHelper
 import knaufdan.android.arch.base.ViewOrientation
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.addition.recyclerview.RecyclerViewSnapBehavior
@@ -29,10 +26,7 @@ fun RecyclerView.bindComponents(
         layoutManager = context.createLinearLayoutManager(viewOrientation)
     }
 
-    if (items == null) {
-        return
-    }
-
+    if (items == null) return
     val components = items.asListOfType<IComponent<Any>>() ?: return
 
     (adapter as? ComponentAdapter)?.run {
@@ -59,16 +53,4 @@ private fun ViewOrientation?.toRecyclerViewOrientation() =
         ViewOrientation.VERTICAL -> RecyclerView.VERTICAL
         ViewOrientation.HORIZONTAL -> RecyclerView.HORIZONTAL
         else -> RecyclerView.VERTICAL
-    }
-
-private fun RecyclerView.setSnapHelper(snapBehavior: RecyclerViewSnapBehavior?) {
-    val androidSnapHelper = snapBehavior?.toAndroidSnapHelper() ?: return
-
-    androidSnapHelper.attachToRecyclerView(this)
-}
-
-private fun RecyclerViewSnapBehavior.toAndroidSnapHelper(): SnapHelper =
-    when (this) {
-        RecyclerViewSnapBehavior.SNAP_AFTER_SCROLLING -> LinearSnapHelper()
-        RecyclerViewSnapBehavior.SNAP_EACH_ITEM -> PagerSnapHelper()
     }

@@ -1,17 +1,17 @@
 package knaufdan.android.arch.base
 
-import android.transition.Fade
-import android.transition.Slide
-import android.transition.Transition
-import android.transition.Visibility
 import android.view.Gravity
+import androidx.transition.Fade
+import androidx.transition.Slide
+import androidx.transition.Transition
+import androidx.transition.Visibility
 
 enum class ViewTransition {
     FADE_IN_OUT,
     FADE_IN,
     FADE_OUT,
-    SLIDE_BOTTOM,
-    SLIDE_TOP
+    SLIDE_UP,
+    SLIDE_DOWN
 }
 
 internal fun ViewTransition.toAndroidTransition(): Transition =
@@ -19,6 +19,6 @@ internal fun ViewTransition.toAndroidTransition(): Transition =
         ViewTransition.FADE_IN_OUT -> Fade()
         ViewTransition.FADE_IN -> Fade(Visibility.MODE_IN)
         ViewTransition.FADE_OUT -> Fade(Visibility.MODE_OUT)
-        ViewTransition.SLIDE_BOTTOM -> Slide(Gravity.BOTTOM)
-        ViewTransition.SLIDE_TOP -> Slide(Gravity.TOP)
+        ViewTransition.SLIDE_UP -> Slide(Gravity.BOTTOM)
+        ViewTransition.SLIDE_DOWN -> Slide(Gravity.TOP)
     }

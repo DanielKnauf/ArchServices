@@ -5,15 +5,19 @@ import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.view.marginBottom
+import androidx.core.view.marginEnd
 import androidx.core.view.marginLeft
 import androidx.core.view.marginRight
+import androidx.core.view.marginStart
 import androidx.core.view.marginTop
 import androidx.core.view.postDelayed
 import androidx.core.view.updateLayoutParams
+import androidx.core.view.updatePadding
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import knaufdan.android.arch.R
@@ -55,8 +59,6 @@ fun View.bindLayoutHeight(
 fun View.bindHeight(
     height: Number
 ) {
-    if (height == 0) return
-
     updateLayoutParams { this.height = height.toInt() }
 }
 
@@ -64,8 +66,6 @@ fun View.bindHeight(
 fun View.bindWidth(
     width: Number
 ) {
-    if (width == 0) return
-
     updateLayoutParams { this.width = width.toInt() }
 }
 
@@ -76,6 +76,15 @@ fun View.bindBackground(@DrawableRes background: Int) {
     val drawable = ContextCompat.getDrawable(context, background) ?: return
 
     setBackground(drawable)
+}
+
+@BindingAdapter("backgroundColor")
+fun View.bindBackgroundColor(@ColorInt color: Int?) {
+    when (color) {
+        null -> return
+        IResourceProvider.INVALID_RES_ID -> return
+        else -> setBackgroundColor(color)
+    }
 }
 
 @BindingAdapter(
@@ -89,9 +98,7 @@ fun View.bindFocus(
     focused: Boolean,
     focusDelay: Number?
 ) {
-    if (focused == hasFocus()) {
-        return
-    }
+    if (focused == hasFocus()) return
 
     val updateFocus = {
         if (focused) requestFocus()
@@ -103,9 +110,7 @@ fun View.bindFocus(
         return
     }
 
-    postDelayed(focusDelay.toLong()) {
-        updateFocus()
-    }
+    postDelayed(focusDelay.toLong()) { updateFocus() }
 }
 
 @BindingAdapter(
@@ -123,11 +128,11 @@ fun View.bindPadding(
     paddingLeft: Number?,
     paddingRight: Number?
 ) {
-    this.setPadding(
-        paddingLeft?.toInt() ?: this.paddingLeft,
-        paddingTop?.toInt() ?: this.paddingTop,
-        paddingRight?.toInt() ?: this.paddingRight,
-        paddingBottom?.toInt() ?: this.paddingBottom
+    updatePadding(
+        left = paddingLeft?.toInt() ?: this.paddingLeft,
+        top = paddingTop?.toInt() ?: this.paddingTop,
+        right = paddingRight?.toInt() ?: this.paddingRight,
+        bottom = paddingBottom?.toInt() ?: this.paddingBottom
     )
 }
 
@@ -146,12 +151,18 @@ fun View.bindMargins(
     marginLeft: Number?,
     marginRight: Number?
 ) {
-    (layoutParams as? ViewGroup.MarginLayoutParams)?.setMargins(
-        marginLeft?.toInt() ?: this@bindMargins.marginLeft,
-        marginTop?.toInt() ?: this@bindMargins.marginTop,
-        marginRight?.toInt() ?: this@bindMargins.marginRight,
-        marginBottom?.toInt() ?: this@bindMargins.marginBottom
-    )
+    (layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
+
+        marginStart = marginLeft?.toInt() ?: this@bindMargins.marginStart
+        marginEnd = marginRight?.toInt() ?: this@bindMargins.marginEnd
+
+        setMargins(
+            marginLeft?.toInt() ?: this@bindMargins.marginLeft,
+            marginTop?.toInt() ?: this@bindMargins.marginTop,
+            marginRight?.toInt() ?: this@bindMargins.marginRight,
+            marginBottom?.toInt() ?: this@bindMargins.marginBottom
+        )
+    }
 }
 
 @BindingAdapter("gone")
@@ -224,8 +235,8 @@ fun View.bindFading(
     val targetAlpha =
         when (direction) {
             FadeDirection.STAY -> return
-            FadeDirection.In -> 1f
-            FadeDirection.Out -> 0f
+            FadeDirection.IN -> 1f
+            FadeDirection.OUT -> 0f
         }
 
     if (alpha == targetAlpha) return
@@ -235,24 +246,12 @@ fun View.bindFading(
         "alpha",
         targetAlpha
     ).apply {
-        duration = fadeDuration?.toLong() ?: 0
+        fadeDuration?.toLong()?.let(this::setDuration)
 
         addUpdateListener { animator ->
-            this@bindFading.isVisible = (animator.animatedValue as? Float) != 0F
+            this@bindFading.isVisible = (animator.animatedValue as? Float) != 0f
         }
 
         start()
     }
-}
-
-enum class LayoutBehavior {
-    WRAP_CONTENT,
-    MATCH_PARENT,
-    DEFAULT
-}
-
-enum class FadeDirection {
-    STAY,
-    In,
-    Out
 }
