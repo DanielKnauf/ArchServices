@@ -2,30 +2,29 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 apply(plugin = "com.github.ben-manes.versions")
 
-group = Constants.group_name
+group = Constants.GROUP_NAME
 
 buildscript {
     repositories {
         google()
-        jcenter()
+        gradlePluginPortal()
         mavenCentral()
     }
 
     dependencies {
-        classpath(Plugins.gradle)
-        classpath(Plugins.kotlinGradle)
-        classpath(Plugins.kotlinAndroidExtensions)
-        classpath(Plugins.dependencyUpdates)
-        classpath(Plugins.androidMaven)
+        classpath(Plugins.Android.gradle)
+        classpath(Plugins.Kotlin.androidExtensions)
+        classpath(Plugins.Kotlin.gradlePlugin)
+        classpath(Plugins.Other.androidMavenPlugin)
+        classpath(Plugins.Other.dependencyUpdates)
     }
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
         mavenCentral()
-        maven(url = "https://jitpack.io")
+        maven(url = Constants.JIT_PACK_URL)
     }
 
     apply(plugin = "maven-publish")
@@ -36,9 +35,7 @@ subprojects {
     apply { plugin("maven") }
 }
 
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
-}
+tasks.register("clean", Delete::class) { delete(rootProject.buildDir) }
 
 fun isNonStable(version: String): Boolean {
     return listOf("alpha", "beta", "rc", "cr", "m", "preview")
@@ -46,9 +43,8 @@ fun isNonStable(version: String): Boolean {
         .any { nonStableIdentifier -> nonStableIdentifier.matches(version) }
 }
 
-tasks.named("dependencyUpdates", DependencyUpdatesTask::class.java).configure {
-    // disallow release candidates as upgradable versions from stable versions
+tasks.withType<DependencyUpdatesTask> {
     rejectVersionIf {
-        isNonStable(candidate.version)
+        isNonStable(candidate.version) && !isNonStable(currentVersion)
     }
 }

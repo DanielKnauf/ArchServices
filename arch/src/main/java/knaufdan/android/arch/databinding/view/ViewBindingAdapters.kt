@@ -235,8 +235,8 @@ fun View.bindFading(
     val targetAlpha =
         when (direction) {
             FadeDirection.STAY -> return
-            FadeDirection.In -> 1f
-            FadeDirection.Out -> 0f
+            FadeDirection.IN -> 1f
+            FadeDirection.OUT -> 0f
         }
 
     if (alpha == targetAlpha) return
