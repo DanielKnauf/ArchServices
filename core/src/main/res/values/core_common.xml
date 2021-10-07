@@ -7,4 +7,8 @@
     <dimen name="spacing_triple">24dp</dimen>
     <dimen name="spacing_quadruple">36dp</dimen>
 
+    <!-- strings -->
+    <string name="core_dialog_action_confirm">@android:string/ok</string>
+    <string name="core_dialog_action_cancel">@android:string/cancel</string>
+
 </resources>

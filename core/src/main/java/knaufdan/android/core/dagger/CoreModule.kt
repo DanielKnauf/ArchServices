@@ -6,6 +6,8 @@ import knaufdan.android.core.ContextProvider
 import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.calendar.datepicker.IDatePickerService
 import knaufdan.android.core.calendar.datepicker.implementation.DatePickerService
+import knaufdan.android.core.calendar.daypicker.IDayPickerService
+import knaufdan.android.core.calendar.daypicker.implementation.DayPickerService
 import knaufdan.android.core.calendar.timepicker.ITimePickerService
 import knaufdan.android.core.calendar.timepicker.TimePickerService
 import knaufdan.android.core.preferences.ISharedPrefsService
@@ -51,5 +53,16 @@ class CoreModule {
     ): IDatePickerService =
         DatePickerService(
             contextProvider = contextProvider
+        )
+
+    @Provides
+    @Singleton
+    fun provideDayPickerService(
+        contextProvider: IContextProvider,
+        resourceProvider: IResourceProvider
+    ): IDayPickerService =
+        DayPickerService(
+            contextProvider = contextProvider,
+            resourceProvider = resourceProvider
         )
 }
