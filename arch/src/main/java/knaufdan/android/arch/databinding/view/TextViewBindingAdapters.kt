@@ -20,7 +20,7 @@ fun TextView.onTextViewClicked(
 }
 
 interface IOnTextClickedListener {
-    fun onClick(s: String)
+    fun onClick(text: String)
 }
 
 @BindingAdapter("number")

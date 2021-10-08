@@ -10,28 +10,28 @@
 
         <variable
             name="viewModel"
-            type="knaufdan.android.arch.base.component.base.text.implementation.TextViewModel" />
+            type="knaufdan.android.arch.base.component.common.text.implementation.TextViewModel" />
     </data>
 
     <TextView
         style="@style/ArchText"
         android:lineSpacingExtra="@{viewModel.lineSpacingExtra}"
-        android:text="@{viewModel.text}"
+        android:text="@{viewModel.config.text}"
         android:textColor="@{viewModel.textColor}"
         android:textSize="@{viewModel.textSize}"
-        app:background="@{viewModel.background}"
-        app:layout_height="@{viewModel.layoutHeight}"
-        app:layout_width="@{viewModel.layoutWidth}"
+        app:background="@{viewModel.config.background}"
+        app:layout_height="@{viewModel.config.layoutHeight}"
+        app:layout_width="@{viewModel.config.layoutWidth}"
         app:marginBottom="@{viewModel.marginBottom}"
         app:marginLeft="@{viewModel.marginLeft}"
         app:marginRight="@{viewModel.marginRight}"
         app:marginTop="@{viewModel.marginTop}"
-        app:onTextClicked="@{viewModel::onTextClicked}"
+        app:onTextClicked="@{t -> viewModel.config.onTextClicked.invoke(t)}"
         app:paddingBottom="@{viewModel.paddingBottom}"
         app:paddingLeft="@{viewModel.paddingLeft}"
         app:paddingRight="@{viewModel.paddingRight}"
         app:paddingTop="@{viewModel.paddingTop}"
-        app:textGravity="@{viewModel.textGravity}"
-        app:textStyle="@{viewModel.textStyle}" />
+        app:textGravity="@{viewModel.config.textGravity}"
+        app:textStyle="@{viewModel.config.textStyle}" />
 
 </layout>

@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="knaufdan.android.arch.base.component.base.divider.implementation.HorizontalDividerViewModel" />
+            type="knaufdan.android.arch.base.component.common.divider.implementation.HorizontalDividerViewModel" />
     </data>
 
     <FrameLayout

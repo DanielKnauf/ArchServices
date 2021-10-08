@@ -6,19 +6,19 @@
 
         <variable
             name="viewModel"
-            type="knaufdan.android.arch.base.component.base.button.implementation.ButtonViewModel" />
+            type="knaufdan.android.arch.base.component.common.button.implementation.ButtonViewModel" />
     </data>
 
     <FrameLayout
         style="@style/ArchButtonContainer"
-        app:layout_height="@{viewModel.containerLayoutHeight}"
-        app:layout_width="@{viewModel.containerLayoutWidth}"
+        app:layout_height="@{viewModel.config.layoutHeight}"
+        app:layout_width="@{viewModel.config.layoutWidth}"
         app:marginTop="@{viewModel.marginTop}">
 
         <Button
             style="@style/ArchButton"
-            android:onClick="@{_ -> viewModel.onButtonClicked()}"
-            app:background="@{viewModel.background}"
+            android:onClick="@{_ -> viewModel.config.onButtonClicked.invoke()}"
+            app:background="@{viewModel.config.background}"
             app:height="@{viewModel.height}"
             app:width="@{viewModel.width}" />
 
