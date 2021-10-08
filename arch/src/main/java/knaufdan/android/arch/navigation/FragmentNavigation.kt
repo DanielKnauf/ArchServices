@@ -2,6 +2,7 @@ package knaufdan.android.arch.navigation
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.commit
 import knaufdan.android.arch.mvvm.implementation.BaseFragment
 import knaufdan.android.arch.mvvm.implementation.BaseFragmentViewModel
 
@@ -27,18 +28,16 @@ internal fun Context.replaceFragment(
     check(containerViewId != -1) { "Could not replace ${fragment.getFragmentTag()}, missing fragmentContainer (id = $containerViewId)" }
 
     if (this is AppCompatActivity) {
-        supportFragmentManager.beginTransaction().apply {
+        supportFragmentManager.commit {
+            setReorderingAllowed(true)
+
             replace(
                 containerViewId,
                 fragment,
                 fragment.getFragmentTag()
             )
 
-            if (addToBackStack) {
-                addToBackStack(null)
-            }
-
-            commit()
+            if (addToBackStack) addToBackStack(null)
         }
     }
 }

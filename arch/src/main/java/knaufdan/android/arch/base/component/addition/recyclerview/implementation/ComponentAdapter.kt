@@ -33,20 +33,12 @@ class ComponentAdapter(
     override fun onBindViewHolder(
         holder: ComponentViewHolder,
         position: Int
-    ) {
-        holder.bind(getItem(position))
-    }
+    ) = holder.bind(getItem(position))
 
     override fun getItemViewType(position: Int): LayoutRes =
         getItem(position).getLayoutRes()
 
-    override fun onViewAttachedToWindow(holder: ComponentViewHolder) {
-        super.onViewAttachedToWindow(holder)
-        holder.onAttach()
-    }
+    override fun onViewAttachedToWindow(holder: ComponentViewHolder) = holder.onAttach()
 
-    override fun onViewDetachedFromWindow(holder: ComponentViewHolder) {
-        super.onViewDetachedFromWindow(holder)
-        holder.onDetach()
-    }
+    override fun onViewDetachedFromWindow(holder: ComponentViewHolder) = holder.onDetach()
 }

@@ -1,5 +1,6 @@
 package knaufdan.android.arch.databinding.view
 
+import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
@@ -7,6 +8,13 @@ import androidx.databinding.BindingAdapter
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
 import knaufdan.android.core.resources.IResourceProvider
+
+@BindingAdapter("src")
+fun ImageView.bindSrc(bitmap: Bitmap?) {
+    bitmap ?: return
+
+    setImageBitmap(bitmap)
+}
 
 @BindingAdapter("src")
 fun ImageView.bindSrc(@DrawableRes imageRes: Int) {
