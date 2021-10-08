@@ -15,6 +15,7 @@ import javax.inject.Singleton
 
 @Module
 class ComponentFactoryModule {
+
     @Provides
     @Singleton
     fun provideTextComponentFactory(

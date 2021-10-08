@@ -9,7 +9,7 @@ import knaufdan.android.core.calendar.datepicker.implementation.DatePickerServic
 import knaufdan.android.core.calendar.daypicker.IDayPickerService
 import knaufdan.android.core.calendar.daypicker.implementation.DayPickerService
 import knaufdan.android.core.calendar.timepicker.ITimePickerService
-import knaufdan.android.core.calendar.timepicker.TimePickerService
+import knaufdan.android.core.calendar.timepicker.implementation.TimePickerService
 import knaufdan.android.core.preferences.ISharedPrefsService
 import knaufdan.android.core.preferences.implementation.SharedPrefsService
 import knaufdan.android.core.resources.IResourceProvider
