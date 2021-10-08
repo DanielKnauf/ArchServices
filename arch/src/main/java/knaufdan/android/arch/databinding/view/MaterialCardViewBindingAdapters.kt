@@ -5,8 +5,8 @@ import androidx.databinding.BindingAdapter
 import com.google.android.material.card.MaterialCardView
 
 @BindingAdapter("strokeColor")
-fun MaterialCardView.bindStrokeColor(@ColorInt colorRes: Int) {
-    strokeColor = colorRes
+fun MaterialCardView.bindStrokeColor(@ColorInt strokeColor: Int) {
+    this.strokeColor = strokeColor
     invalidate()
 }
 
