@@ -9,7 +9,7 @@ import knaufdan.android.core.resources.IResourceProvider
 /**
  * Used in [ITimePickerService.showTimePicker] to configure the displayed time picker.
  *
- * @param initialTime hours and minutes initially selected
+ * @param initialTime hour and minutes initially selected
  * @param is24HourView defines if clock is displayed as 12 hours (am/pm) or 24 hours
  * @param theme style to customize the displayed date picker
  */

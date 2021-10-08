@@ -6,7 +6,7 @@ import knaufdan.android.core.calendar.Minute
 interface ITimePickerService {
 
     /**
-     * Displays a dialog for picking a specific time.
+     * Displays a dialog for picking a specific time (hour and minutes).
      * Per default the selected time is the current time of the day. Users can pick hours and
      * minutes from a clock or by typing.
      *
