@@ -2,14 +2,16 @@ package knaufdan.android.arch.dagger
 
 import dagger.Module
 import dagger.Provides
-import knaufdan.android.arch.base.component.base.button.IButtonComponentFactory
-import knaufdan.android.arch.base.component.base.button.implementation.ButtonComponentFactory
-import knaufdan.android.arch.base.component.base.divider.IHorizontalDividerComponentFactory
-import knaufdan.android.arch.base.component.base.divider.implementation.HorizontalDividerComponentFactory
-import knaufdan.android.arch.base.component.base.info.IInfoComponentFactory
-import knaufdan.android.arch.base.component.base.info.implementation.InfoComponentFactory
-import knaufdan.android.arch.base.component.base.text.ITextComponentFactory
-import knaufdan.android.arch.base.component.base.text.implementation.TextComponentFactory
+import knaufdan.android.arch.base.component.common.button.IButtonComponentFactory
+import knaufdan.android.arch.base.component.common.button.implementation.ButtonComponentFactory
+import knaufdan.android.arch.base.component.common.divider.IHorizontalDividerComponentFactory
+import knaufdan.android.arch.base.component.common.divider.implementation.HorizontalDividerComponentFactory
+import knaufdan.android.arch.base.component.common.info.IInfoComponentFactory
+import knaufdan.android.arch.base.component.common.info.implementation.InfoComponentFactory
+import knaufdan.android.arch.base.component.common.progress.IProgressComponentFactory
+import knaufdan.android.arch.base.component.common.progress.implementation.ProgressComponentFactory
+import knaufdan.android.arch.base.component.common.text.ITextComponentFactory
+import knaufdan.android.arch.base.component.common.text.implementation.TextComponentFactory
 import knaufdan.android.core.resources.IResourceProvider
 import javax.inject.Singleton
 
@@ -18,11 +20,12 @@ class ComponentFactoryModule {
 
     @Provides
     @Singleton
-    fun provideTextComponentFactory(
+    fun provideButtonComponentFactory(
         resourceProvider: IResourceProvider
-    ): ITextComponentFactory = TextComponentFactory(
-        resourceProvider = resourceProvider
-    )
+    ): IButtonComponentFactory =
+        ButtonComponentFactory(
+            resourceProvider = resourceProvider
+        )
 
     @Provides
     @Singleton
@@ -44,10 +47,14 @@ class ComponentFactoryModule {
 
     @Provides
     @Singleton
-    fun provideButtonComponentFactory(
+    fun provideProgressComponentFactory(): IProgressComponentFactory =
+        ProgressComponentFactory()
+
+    @Provides
+    @Singleton
+    fun provideTextComponentFactory(
         resourceProvider: IResourceProvider
-    ): IButtonComponentFactory =
-        ButtonComponentFactory(
-            resourceProvider = resourceProvider
-        )
+    ): ITextComponentFactory = TextComponentFactory(
+        resourceProvider = resourceProvider
+    )
 }
