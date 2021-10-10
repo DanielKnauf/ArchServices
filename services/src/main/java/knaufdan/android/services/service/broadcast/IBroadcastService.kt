@@ -7,7 +7,7 @@ import kotlin.reflect.KClass
 
 /**
  * [IBroadcastService] is an injectable service providing functionality for (un-)registering
- * [BroadcastReceiver] at the [LocalBroadcastManager] and send out Intents to [BroadcastReceiver].
+ * [BroadcastReceiver] at the [LocalBroadcastManager] and sending out Intents to [BroadcastReceiver].
  */
 interface IBroadcastService {
 
@@ -20,7 +20,7 @@ interface IBroadcastService {
     fun registerLocalBroadcastReceiver(receiver: ActionBroadcastReceiver)
 
     /**
-     * Unregister [BroadcastReceiver] from the LocalBroadcastManager
+     * Unregisters [BroadcastReceiver] from the LocalBroadcastManager
      *
      * @param receiver [BroadcastReceiver] to unregister.
      */
