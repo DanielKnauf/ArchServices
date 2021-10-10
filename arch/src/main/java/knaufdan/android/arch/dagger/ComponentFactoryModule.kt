@@ -47,7 +47,7 @@ class ComponentFactoryModule {
 
     @Provides
     @Singleton
-    fun provideLoadingComponentFactory(): IProgressComponentFactory =
+    fun provideProgressComponentFactory(): IProgressComponentFactory =
         ProgressComponentFactory()
 
     @Provides
