@@ -22,17 +22,17 @@ internal class BroadcastService(
         LocalBroadcastManager.getInstance(context)
     }
 
-    override fun registerLocalBroadcastReceiver(actionBroadcastReceiver: ActionBroadcastReceiver) {
+    override fun registerLocalBroadcastReceiver(receiver: ActionBroadcastReceiver) {
         IntentFilter()
             .apply {
-                actionBroadcastReceiver.forActions.forEach(::addAction)
+                receiver.forActions.forEach(::addAction)
 
-                localBroadcastManager.registerReceiver(actionBroadcastReceiver, this)
+                localBroadcastManager.registerReceiver(receiver, this)
             }
     }
 
-    override fun unregisterLocalBroadcastReceiver(broadcastReceiver: BroadcastReceiver) =
-        localBroadcastManager.unregisterReceiver(broadcastReceiver)
+    override fun unregisterLocalBroadcastReceiver(receiver: BroadcastReceiver) =
+        localBroadcastManager.unregisterReceiver(receiver)
 
     override fun <T : BroadcastReceiver> sendBroadcast(
         receiver: KClass<T>,
@@ -42,9 +42,7 @@ internal class BroadcastService(
             Intent(
                 context,
                 receiver.java
-            ).apply {
-                this.action = action
-            }
+            ).setAction(action)
         )
 
     override fun sendBroadcast(
