@@ -6,7 +6,7 @@ import Libs.Retrofit.addRetrofit
 
 plugins {
     id("com.android.library")
-    // id("com.github.dcendents.android-maven")
+    id("com.github.dcendents.android-maven")
     kotlin("android")
     kotlin("kapt")
 }
@@ -68,6 +68,7 @@ dependencies {
     implementation(Libs.AndroidX.legacySupport)
     implementation(Libs.AndroidX.paging)
     implementation(Libs.AndroidX.recyclerView)
+    implementation(Libs.AndroidX.transition)
     implementation(Libs.AndroidX.viewPager2)
     androidTestImplementation(Libs.AndroidX.testRunner)
 
