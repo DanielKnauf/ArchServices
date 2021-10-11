@@ -18,6 +18,7 @@ object Versions {
         const val vRoom = "2.3.0"
         const val vPaging = "3.0.1"
         const val vTestRunner = "1.4.0"
+        const val vTransition = "1.4.1"
         const val vViewPager2 = "1.0.0"
     }
 

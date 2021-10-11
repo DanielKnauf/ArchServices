@@ -4,7 +4,7 @@ import Libs.Room.addRoom
 
 plugins {
     id("com.android.library")
-    // id("com.github.dcendents.android-maven")
+    id("com.github.dcendents.android-maven")
     kotlin("android")
     kotlin("kapt")
 }

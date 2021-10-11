@@ -11,6 +11,7 @@ import Versions.AndroidX.vPaging
 import Versions.AndroidX.vRecyclerView
 import Versions.AndroidX.vRoom
 import Versions.AndroidX.vTestRunner
+import Versions.AndroidX.vTransition
 import Versions.AndroidX.vViewPager2
 import Versions.DK.vArchServices
 import Versions.DK.vLiveDataKit
@@ -41,6 +42,7 @@ object Libs {
             "androidx.localbroadcastmanager:localbroadcastmanager:$vBroadcastManager"
         const val paging = "androidx.paging:paging-runtime:$vPaging"
         const val recyclerView = "androidx.recyclerview:recyclerview:$vRecyclerView"
+        const val transition = "androidx.transition:transition-ktx:$vTransition"
         const val testRunner = "androidx.test:runner:$vTestRunner"
         const val viewPager2 = "androidx.viewpager2:viewpager2:$vViewPager2"
     }
