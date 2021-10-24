@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- strings -->
+    <string name="core_calendar_monday">Montag</string>
+    <string name="core_calendar_monday_short">Mo</string>
+    <string name="core_calendar_tuesday">Dienstag</string>
+    <string name="core_calendar_tuesday_short">Di</string>
+    <string name="core_calendar_wednesday">Mittwoch</string>
+    <string name="core_calendar_wednesday_short">Mi</string>
+    <string name="core_calendar_thursday">Donnerstag</string>
+    <string name="core_calendar_thursday_short">Do</string>
+    <string name="core_calendar_friday">Freitag</string>
+    <string name="core_calendar_friday_short">Fr</string>
+    <string name="core_calendar_saturday">Samstag</string>
+    <string name="core_calendar_saturday_short">Sa</string>
+    <string name="core_calendar_sunday">Sonntag</string>
+    <string name="core_calendar_sunday_short">So</string>
+
+    <string name="core_calendar_day_picker_title">Tag</string>
+
+</resources>

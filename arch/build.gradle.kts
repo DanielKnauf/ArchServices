@@ -1,3 +1,9 @@
+import Libs.Dagger.addDagger
+import Libs.Kotlin.addKotlin
+import Libs.Lifecycle.addLifecycle
+import Libs.Navigation.addNavigation
+import Libs.Retrofit.addRetrofit
+
 plugins {
     id("com.android.library")
     id("com.github.dcendents.android-maven")
@@ -5,16 +11,16 @@ plugins {
     kotlin("kapt")
 }
 
-group = Constants.group_name
+group = Constants.GROUP_NAME
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(BuildConfig.compileSdkVersion)
 
     defaultConfig {
-        minSdkVersion(ReleaseConfig.minSdk)
-        targetSdkVersion(ReleaseConfig.targetSdk)
-        versionCode = ReleaseConfig.versionCode
-        versionName = ReleaseConfig.versionName
+        minSdkVersion(BuildConfig.minSdk)
+        targetSdkVersion(BuildConfig.targetSdk)
+        versionCode = BuildConfig.versionCode
+        versionName = BuildConfig.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -31,12 +37,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = BuildConfig.javaVersion
+        targetCompatibility = BuildConfig.javaVersion
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = BuildConfig.javaVersion.toString()
     }
 
     buildFeatures {
@@ -49,40 +55,30 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
-    //androidX
-    implementation(Dependencies.androidX_app_compat)
-    implementation(Dependencies.AndroidX.recyclerView)
-    implementation(Dependencies.androidX_core_ktx)
-    implementation(Dependencies.android_material_design)
-    implementation(Dependencies.AndroidX.legacySupport)
-    implementation(Dependencies.AndroidX.viewPager2)
+    addDagger()
+    addKotlin()
+    addLifecycle()
+    addNavigation()
+    addRetrofit()
 
-    //lifecycle
-    implementation(Dependencies.AndroidX.viewModel)
-    implementation(Dependencies.AndroidX.extensions)
-    kapt(Dependencies.AndroidX.compiler)
+    implementation(Libs.AndroidX.appCompat)
+    implementation(Libs.AndroidX.core)
+    implementation(Libs.AndroidX.constraintLayout)
+    implementation(Libs.AndroidX.fragment)
+    implementation(Libs.AndroidX.legacySupport)
+    implementation(Libs.AndroidX.paging)
+    implementation(Libs.AndroidX.recyclerView)
+    implementation(Libs.AndroidX.transition)
+    implementation(Libs.AndroidX.viewPager2)
+    androidTestImplementation(Libs.AndroidX.testRunner)
 
-    //picasso
-    implementation(Dependencies.picasso)
+    implementation(Libs.Google.materialDesign)
 
-    //dagger2
-    implementation(Dependencies.Dagger.core)
-    implementation(Dependencies.Dagger.android)
-    implementation(Dependencies.Dagger.androidSupport)
-    kapt(Dependencies.Dagger.compiler)
-    kapt(Dependencies.Dagger.androidProcessor)
+    implementation(Libs.picasso)
 
-    //testing
-    androidTestImplementation(Dependencies.androidX_test_runner)
-    testImplementation(Dependencies.jUnit)
+    testImplementation(Libs.jUnit)
 
-    //retrofit
-    implementation(Dependencies.retrofit_core)
-    implementation(Dependencies.retrofit_gson)
-
-    //kotlin
-    implementation(Dependencies.kotlin_reflect)
-    implementation(Dependencies.kotlin_stdlib)
+    implementation(Libs.DK.liveDataKit)
 
     implementation(project(":core"))
 }

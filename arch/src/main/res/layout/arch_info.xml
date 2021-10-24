@@ -6,14 +6,14 @@
 
         <variable
             name="viewModel"
-            type="knaufdan.android.arch.base.component.base.info.implementation.InfoViewModel" />
+            type="knaufdan.android.arch.base.component.common.info.implementation.InfoViewModel" />
     </data>
 
     <LinearLayout
         style="@style/ArchInfoContainer"
-        app:background="@{viewModel.background}"
-        app:layout_height="@{viewModel.containerLayoutHeight}"
-        app:layout_width="@{viewModel.containerLayoutWidth}"
+        app:background="@{viewModel.config.background}"
+        app:layout_height="@{viewModel.config.layoutHeight}"
+        app:layout_width="@{viewModel.config.layoutWidth}"
         app:marginBottom="@{viewModel.marginBottom}"
         app:marginLeft="@{viewModel.marginLeft}"
         app:marginRight="@{viewModel.marginRight}"
@@ -26,14 +26,14 @@
         <TextView
             style="@style/ArchInfoText"
             android:lineSpacingExtra="@{viewModel.lineSpacingExtra}"
-            android:text="@{viewModel.text}"
+            android:text="@{viewModel.config.text}"
             android:textColor="@{viewModel.textColor}"
             android:textSize="@{viewModel.textSize}"
-            app:textGravity="@{viewModel.textGravity}" />
+            app:textGravity="@{viewModel.config.textGravity}" />
 
         <Button
             style="@style/ArchInfoButton"
-            android:onClick="@{_ -> viewModel.onButtonClicked()}"
+            android:onClick="@{_ -> viewModel.config.onButtonClicked.invoke()}"
             android:text="@{viewModel.buttonText}"
             app:marginLeft="@{viewModel.buttonMarginLeft}"
             app:marginRight="@{viewModel.buttonMarginRight}"

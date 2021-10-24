@@ -3,55 +3,47 @@
 package knaufdan.android.core.calendar
 
 import java.util.Calendar
-import java.util.concurrent.TimeUnit
+import java.util.Date
 
 val today: Triple<DayOfMonth, Month, Year>
     get() = Triple(
-        first = getTodayDayOfMonth(),
-        second = getTodayMonth(),
-        third = getTodayYear()
+        first = getTodayAsDayOfMonth(),
+        second = getTodayAsMonth(),
+        third = getTodayAsYear()
     )
 
-val rightNow: Calendar
+val now: Calendar
     get() = Calendar.getInstance()
 
-fun getTodayDayOfMonth(): DayOfMonth = rightNow.getDayOfMonth()
+val nowInMillis: Long
+    get() = now.timeInMillis
 
-fun getTodayMonth(): Month = rightNow.getMonth()
+fun calendar(cal: Calendar): Calendar = calendar(cal.timeInMillis)
 
-fun getTodayYear(): Year = rightNow.getYear()
+fun calendar(timeInMillis: Long): Calendar = now.apply { this.timeInMillis = timeInMillis }
 
-fun getTimeOfDay(): Pair<Hour, Minute> =
-    rightNow.run {
-        getHour() to getMinute()
-    }
+fun calendar(day: DayOfMonth, month: Month, year: Year): Calendar =
+    now.apply { set(year, month, day) }
 
-fun Triple<DayOfMonth, Month, Year>.daysBetween(other: Triple<DayOfMonth, Month, Year>): Int {
-    if (
-        ((other.third == this.third) && (other.second < this.second)) ||
-        (other.third < this.third) ||
-        ((other.third == this.third) && (other.second == this.second) && (other.first < this.first))
-    ) {
-        return 0
-    }
+fun getTodayAsWeekday(): Weekday = now.getWeekday()
 
-    val cal = rightNow.apply {
-        set(
-            third,
-            second,
-            first
-        )
-    }
+fun getTodayAsDayOfMonth(): DayOfMonth = now.getDayOfMonth()
 
-    val otherCal = rightNow.apply {
-        set(
-            other.third,
-            other.second,
-            other.first
-        )
-    }
+fun getTodayAsMonth(): Month = now.getMonth()
 
-    val timeBetween = otherCal.timeInMillis - cal.timeInMillis
+fun getTodayAsYear(): Year = now.getYear()
 
-    return TimeUnit.MILLISECONDS.toDays(timeBetween).toInt()
-}
+fun getTimeOfDay(): Pair<Hour, Minute> = now.run { getHour() to getMinute() }
+
+/**
+ * NOTE: result is always a positive value, regardless if [other] is set in the future
+ * or past.
+ *
+ * @return days between receiving date and other date.
+ */
+fun Triple<DayOfMonth, Month, Year>.daysBetween(other: Triple<DayOfMonth, Month, Year>): Int =
+    toCalendar().getDaysBetween(other.toCalendar().timeInMillis)
+
+fun Triple<DayOfMonth, Month, Year>.toCalendar(): Calendar = now.apply { set(third, second, first) }
+
+fun Date.toCalendar(): Calendar = now.apply() { timeInMillis = this@toCalendar.time }

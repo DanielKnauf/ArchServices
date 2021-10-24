@@ -15,6 +15,7 @@ import javax.inject.Singleton
     ]
 )
 class ArchModule {
+
     @Provides
     @Singleton
     internal fun provideNavigator(

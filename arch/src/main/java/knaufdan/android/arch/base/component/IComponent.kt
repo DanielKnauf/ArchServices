@@ -1,5 +1,6 @@
 package knaufdan.android.arch.base.component
 
+import knaufdan.android.arch.BR
 import knaufdan.android.arch.base.BindingKey
 import knaufdan.android.arch.base.LayoutRes
 
@@ -27,9 +28,11 @@ interface IComponent<DataSource> {
     fun getLayoutRes(): LayoutRes
 
     /**
+     * NOTE: default key is [BR.viewModel]
+     *
      * @return key to which [DataSource] should be mapped.
      */
-    fun getBindingKey(): BindingKey
+    fun getBindingKey(): BindingKey = BR.viewModel
 
     /**
      * @return [DataSource] which should be bound into [LayoutRes].

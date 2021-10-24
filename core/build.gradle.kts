@@ -1,3 +1,7 @@
+import Libs.Dagger.addDagger
+import Libs.Kotlin.addKotlin
+import Libs.Lifecycle.addLifecycle
+
 plugins {
     id("com.android.library")
     id("com.github.dcendents.android-maven")
@@ -5,16 +9,16 @@ plugins {
     kotlin("kapt")
 }
 
-group = Constants.group_name
+group = Constants.GROUP_NAME
 
 android {
-    compileSdkVersion(29)
+    compileSdkVersion(BuildConfig.compileSdkVersion)
 
     defaultConfig {
-        minSdkVersion(ReleaseConfig.minSdk)
-        targetSdkVersion(ReleaseConfig.targetSdk)
-        versionCode = ReleaseConfig.versionCode
-        versionName = ReleaseConfig.versionName
+        minSdkVersion(BuildConfig.minSdk)
+        targetSdkVersion(BuildConfig.targetSdk)
+        versionCode = BuildConfig.versionCode
+        versionName = BuildConfig.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -31,12 +35,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = BuildConfig.javaVersion
+        targetCompatibility = BuildConfig.javaVersion
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = BuildConfig.javaVersion.toString()
     }
 
     apply(from = "$rootDir/buildSrc/ktlint.gradle.kts")
@@ -45,33 +49,18 @@ android {
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
 
+    addDagger()
+    addKotlin()
+    addLifecycle()
+
     //androidX
-    implementation(Dependencies.androidX_app_compat)
-    implementation(Dependencies.AndroidX.localBroadcastManager)
-    implementation(Dependencies.androidX_core_ktx)
+    implementation(Libs.AndroidX.appCompat)
+    implementation(Libs.AndroidX.core)
+    implementation(Libs.AndroidX.localBroadcastManager)
+    androidTestImplementation(Libs.AndroidX.testRunner)
 
-    implementation(Dependencies.android_material_design)
+    implementation(Libs.Google.gson)
+    implementation(Libs.Google.materialDesign)
 
-    //google
-    implementation(Dependencies.gson)
-
-    //lifecycle
-    implementation(Dependencies.AndroidX.viewModel)
-    implementation(Dependencies.AndroidX.extensions)
-    kapt(Dependencies.AndroidX.compiler)
-
-    //testing
-    androidTestImplementation(Dependencies.androidX_test_runner)
-    testImplementation(Dependencies.jUnit)
-
-    //dagger2
-    implementation(Dependencies.Dagger.core)
-    implementation(Dependencies.Dagger.android)
-    implementation(Dependencies.Dagger.androidSupport)
-    kapt(Dependencies.Dagger.compiler)
-    kapt(Dependencies.Dagger.androidProcessor)
-
-    //kotlin
-    implementation(Dependencies.kotlin_reflect)
-    implementation(Dependencies.kotlin_stdlib)
+    testImplementation(Libs.jUnit)
 }
