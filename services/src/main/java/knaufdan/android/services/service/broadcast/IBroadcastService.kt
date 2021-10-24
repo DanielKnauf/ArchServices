@@ -20,16 +20,16 @@ interface IBroadcastService {
     fun registerLocalBroadcastReceiver(receiver: ActionBroadcastReceiver)
 
     /**
-     * Unregisters [BroadcastReceiver] from the LocalBroadcastManager
+     * Unregisters [BroadcastReceiver] from the LocalBroadcastManager.
      *
-     * @param receiver [BroadcastReceiver] to unregister.
+     * @param receiver [BroadcastReceiver] to unregister
      */
     fun unregisterLocalBroadcastReceiver(receiver: BroadcastReceiver)
 
     /**
      * Sends an intent to all interested BroadcastReceivers.
      *
-     * @param receiver [KClass] to handle the intent.
+     * @param receiver [KClass] to handle the intent
      * @param action [IntentAction] to perform by the [receiver]
      */
     fun <T : BroadcastReceiver> sendBroadcast(

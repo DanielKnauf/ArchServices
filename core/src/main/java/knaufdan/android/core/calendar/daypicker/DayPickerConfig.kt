@@ -1,7 +1,7 @@
 package knaufdan.android.core.calendar.daypicker
 
 import androidx.annotation.StyleRes
-import knaufdan.android.core.calendar.Day
+import knaufdan.android.core.calendar.Weekday
 import knaufdan.android.core.resources.IResourceProvider
 
 /**
@@ -11,7 +11,7 @@ import knaufdan.android.core.resources.IResourceProvider
  * @param theme style to customize the displayed day picker
  */
 data class DayPickerConfig(
-    val initialDay: Day,
+    val initialDay: Weekday,
     @StyleRes val theme: Int = IResourceProvider.INVALID_RES_ID
 ) {
 
@@ -19,7 +19,7 @@ data class DayPickerConfig(
 
         val DEFAULT: DayPickerConfig by lazy {
             DayPickerConfig(
-                initialDay = Day.Monday,
+                initialDay = Weekday.Monday,
                 theme = IResourceProvider.INVALID_RES_ID
             )
         }

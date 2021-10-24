@@ -4,7 +4,7 @@ import android.content.Context
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.R
-import knaufdan.android.core.calendar.Day
+import knaufdan.android.core.calendar.Weekday
 import knaufdan.android.core.calendar.daypicker.DayPickerConfig
 import knaufdan.android.core.calendar.daypicker.IDayPickerService
 import knaufdan.android.core.resources.IResourceProvider
@@ -15,13 +15,13 @@ internal class DayPickerService(
 ) : IDayPickerService {
 
     private val days: Array<String> by lazy {
-        Day.week.map { day -> resourceProvider.getString(day.displayName) }.toTypedArray()
+        Weekday.week.map { day -> resourceProvider.getString(day.displayName) }.toTypedArray()
     }
 
     override fun showDayPicker(
         config: DayPickerConfig,
         onCancelClicked: () -> Unit,
-        onDaySelected: (Day) -> Unit
+        onDaySelected: (Weekday) -> Unit
     ) {
         var selectedDay = config.initialDay
 
@@ -34,8 +34,8 @@ internal class DayPickerService(
             }
             .setNegativeButton(R.string.core_dialog_action_cancel) { _, _ -> onCancelClicked() }
             .setOnCancelListener { onCancelClicked() }
-            .setSingleChoiceItems(days, Day.week.indexOf(selectedDay)) { _, i ->
-                selectedDay = Day.week.getOrNull(i) ?: return@setSingleChoiceItems
+            .setSingleChoiceItems(days, Weekday.week.indexOf(selectedDay)) { _, i ->
+                selectedDay = Weekday.week.getOrNull(i) ?: return@setSingleChoiceItems
             }.show()
     }
 

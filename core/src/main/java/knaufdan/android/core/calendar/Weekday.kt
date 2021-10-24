@@ -3,48 +3,48 @@ package knaufdan.android.core.calendar
 import androidx.annotation.StringRes
 import knaufdan.android.core.R
 
-sealed class Day(
+sealed class Weekday(
     val name: String,
     @StringRes val displayName: Int,
     @StringRes val shortDisplayName: Int
 ) {
-    object Monday : Day(
+    object Monday : Weekday(
         name = NAME_MONDAY,
         displayName = R.string.core_calendar_monday,
         shortDisplayName = R.string.core_calendar_monday_short
     )
 
-    object Tuesday : Day(
+    object Tuesday : Weekday(
         name = NAME_TUESDAY,
         displayName = R.string.core_calendar_tuesday,
         shortDisplayName = R.string.core_calendar_tuesday_short
     )
 
-    object Wednesday : Day(
+    object Wednesday : Weekday(
         name = NAME_WEDNESDAY,
         displayName = R.string.core_calendar_wednesday,
         shortDisplayName = R.string.core_calendar_wednesday_short
     )
 
-    object Thursday : Day(
+    object Thursday : Weekday(
         name = NAME_THURSDAY,
         displayName = R.string.core_calendar_thursday,
         shortDisplayName = R.string.core_calendar_thursday_short
     )
 
-    object Friday : Day(
+    object Friday : Weekday(
         name = NAME_FRIDAY,
         displayName = R.string.core_calendar_friday,
         shortDisplayName = R.string.core_calendar_friday_short
     )
 
-    object Saturday : Day(
+    object Saturday : Weekday(
         name = NAME_SATURDAY,
         displayName = R.string.core_calendar_saturday,
         shortDisplayName = R.string.core_calendar_saturday_short
     )
 
-    object Sunday : Day(
+    object Sunday : Weekday(
         name = NAME_SUNDAY,
         displayName = R.string.core_calendar_sunday,
         shortDisplayName = R.string.core_calendar_sunday_short
@@ -59,11 +59,11 @@ sealed class Day(
         const val NAME_SATURDAY = "Saturday"
         const val NAME_SUNDAY = "Sunday"
 
-        val week: List<Day> by lazy {
+        val week: List<Weekday> by lazy {
             listOf(Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday)
         }
 
-        fun String.toDay(): Day =
+        fun String.toDay(): Weekday =
             when (this) {
                 NAME_MONDAY -> Monday
                 NAME_TUESDAY -> Tuesday

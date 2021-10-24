@@ -3,21 +3,25 @@ package knaufdan.android.core.calendar
 import java.util.Calendar
 import java.util.concurrent.TimeUnit
 
-fun Calendar.getDayOfWeek(): Day =
-    get(Calendar.DAY_OF_WEEK).run {
+fun Calendar.getWeekday(): Weekday =
+    getDayOfWeek().run {
         when (this) {
-            Calendar.SUNDAY -> Day.Sunday
-            Calendar.MONDAY -> Day.Monday
-            Calendar.TUESDAY -> Day.Tuesday
-            Calendar.WEDNESDAY -> Day.Wednesday
-            Calendar.THURSDAY -> Day.Thursday
-            Calendar.FRIDAY -> Day.Friday
-            Calendar.SATURDAY -> Day.Saturday
+            Calendar.SUNDAY -> Weekday.Sunday
+            Calendar.MONDAY -> Weekday.Monday
+            Calendar.TUESDAY -> Weekday.Tuesday
+            Calendar.WEDNESDAY -> Weekday.Wednesday
+            Calendar.THURSDAY -> Weekday.Thursday
+            Calendar.FRIDAY -> Weekday.Friday
+            Calendar.SATURDAY -> Weekday.Saturday
             else -> throw IllegalStateException("Invalid weekday index = $this")
         }
     }
 
+fun Calendar.getDayOfWeek(): Int = get(Calendar.DAY_OF_WEEK)
+
 fun Calendar.getDayOfMonth(): DayOfMonth = get(Calendar.DAY_OF_MONTH)
+
+fun Calendar.getDayOfYear(): DayOfYear = get(Calendar.DAY_OF_YEAR)
 
 /**
  * NOTE: month in [Calendar] starts with 0 (January).
@@ -51,15 +55,35 @@ fun Calendar.setMinute(minute: Minute): Calendar =
     }
 
 fun Calendar.addDay(): Calendar =
+    changeDay(1)
+
+fun Calendar.changeDay(steps: Int): Calendar =
     apply {
-        add(Calendar.DATE, 1)
+        add(Calendar.DATE, steps)
     }
+
+/**
+ * NOTE: result is 0 if receiving [Calendar] is after [future].
+ *
+ * @return days between receiving [Calendar] and [future]
+ */
+fun Calendar.getDaysUntil(future: Calendar): Int =
+    if (future.before(this)) 0
+    else getDaysBetween(future)
+
+/**
+ * NOTE: result is always a positive value, regardless if [other] is set in the future or past.
+ *
+ * @return days between receiving [Calendar] and [other]
+ */
+fun Calendar.getDaysBetween(other: Calendar): Int =
+    getDaysBetween(other.timeInMillis)
 
 /**
  * NOTE: result is always a positive value, regardless if [otherTimeStamp] is set in the future
  * or past.
  *
- * @return days between receiving [Calendar] and [otherTimeStamp].
+ * @return days between receiving [Calendar] and [otherTimeStamp]
  */
 fun Calendar.getDaysBetween(otherTimeStamp: Long): Int =
     when {

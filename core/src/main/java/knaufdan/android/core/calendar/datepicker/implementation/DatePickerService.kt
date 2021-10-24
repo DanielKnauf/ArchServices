@@ -32,10 +32,7 @@ internal class DatePickerService(
                     addOnCancelListener { onCancelClicked() }
                     addOnNegativeButtonClickListener { onCancelClicked() }
                 }
-                .show(
-                    this,
-                    this@DatePickerService.javaClass.simpleName
-                )
+                .show(this, this@DatePickerService.javaClass.simpleName)
         }
     }
 }

@@ -7,9 +7,9 @@ import java.util.Date
 
 val today: Triple<DayOfMonth, Month, Year>
     get() = Triple(
-        first = getTodayDayOfMonth(),
-        second = getTodayMonth(),
-        third = getTodayYear()
+        first = getTodayAsDayOfMonth(),
+        second = getTodayAsMonth(),
+        third = getTodayAsYear()
     )
 
 val now: Calendar
@@ -18,18 +18,20 @@ val now: Calendar
 val nowInMillis: Long
     get() = now.timeInMillis
 
+fun calendar(cal: Calendar): Calendar = calendar(cal.timeInMillis)
+
 fun calendar(timeInMillis: Long): Calendar = now.apply { this.timeInMillis = timeInMillis }
 
 fun calendar(day: DayOfMonth, month: Month, year: Year): Calendar =
     now.apply { set(year, month, day) }
 
-fun getTodayDayOfWeek(): Day = now.getDayOfWeek()
+fun getTodayAsWeekday(): Weekday = now.getWeekday()
 
-fun getTodayDayOfMonth(): DayOfMonth = now.getDayOfMonth()
+fun getTodayAsDayOfMonth(): DayOfMonth = now.getDayOfMonth()
 
-fun getTodayMonth(): Month = now.getMonth()
+fun getTodayAsMonth(): Month = now.getMonth()
 
-fun getTodayYear(): Year = now.getYear()
+fun getTodayAsYear(): Year = now.getYear()
 
 fun getTimeOfDay(): Pair<Hour, Minute> = now.run { getHour() to getMinute() }
 
