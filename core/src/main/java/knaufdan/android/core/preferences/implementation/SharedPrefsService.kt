@@ -5,13 +5,13 @@ import android.util.Log
 import androidx.core.content.edit
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import javax.inject.Inject
-import javax.inject.Singleton
 import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.preferences.ISharedPrefsService
 import knaufdan.android.core.preferences.ISharedPrefsServiceConfig
 import knaufdan.android.core.preferences.Key
 import knaufdan.android.core.preferences.serializeconfig.WeekdaySerializeConfig
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlin.reflect.KClass
 
 @Singleton
