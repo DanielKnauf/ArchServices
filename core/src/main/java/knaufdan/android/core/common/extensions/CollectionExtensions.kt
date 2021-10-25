@@ -1,6 +1,6 @@
 package knaufdan.android.core.common.extensions
 
-fun Collection<*>.validateIndex(index: Int): Boolean = index in this.indices
+fun Collection<*>.hasIndex(index: Int): Boolean = index in this.indices
 
 inline fun <reified T> T.toArray(): Array<T> = arrayOf(this)
 
