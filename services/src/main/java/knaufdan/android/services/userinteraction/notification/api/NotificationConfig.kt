@@ -8,6 +8,7 @@ data class NotificationConfig(
     val style: NotificationStyle,
     val interaction: NotificationInteraction = NotificationInteraction.EMPTY
 ) {
+
     companion object {
         const val NO_AUTO_CANCEL_TIME_SET: Long = -1L
         const val DEFAULT_NOTIFICATION_ID = 0

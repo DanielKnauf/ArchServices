@@ -13,6 +13,7 @@ import androidx.core.app.NotificationManagerCompat.IMPORTANCE_MIN
 import knaufdan.android.services.userinteraction.notification.INotificationServiceConfig
 
 class NotificationServiceConfig : INotificationServiceConfig {
+
     var channelId: String = ""
     var channelName: String = ""
     var channelDescription: String = ""
@@ -40,7 +41,7 @@ class NotificationServiceConfig : INotificationServiceConfig {
         this.isVibrationEnabled = enabled
     }
 
-    fun validate(): Boolean {
+    internal fun isValid(): Boolean {
         val needAdditionalChannelInfo = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
 
         return when {
@@ -71,9 +72,7 @@ class NotificationServiceConfig : INotificationServiceConfig {
     }
 
     companion object {
-        internal val EMPTY: NotificationServiceConfig by lazy {
-            NotificationServiceConfig()
-        }
+        internal val EMPTY: NotificationServiceConfig by lazy { NotificationServiceConfig() }
 
         private fun Int.toPriority(): Int =
             when (this) {
