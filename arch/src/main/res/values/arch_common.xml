@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    
+
     <!-- dimension -->
     <dimen name="arch_default_elevation">8dp</dimen>
+
+    <!-- identifiers-->
+    <item name="arch_floatingActionButton_scrollListener" type="id" />
 
 </resources>
