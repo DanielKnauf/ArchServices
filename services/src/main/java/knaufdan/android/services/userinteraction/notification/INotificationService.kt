@@ -6,7 +6,7 @@ import knaufdan.android.services.userinteraction.notification.api.NotificationId
 /**
  * Provides functionality to configure a notification channel and send notifications through it.
  *
- * NOTE: currently only one notification channel can be configure within [INotificationService],
+ * NOTE: Currently only one notification channel can be configure within [INotificationService],
  *       and as it is a singleton only one channel can be provided within an application.
  */
 interface INotificationService {
@@ -16,7 +16,7 @@ interface INotificationService {
      * A notification channel based on made adjustments will be created when first notification
      * is shown.
      *
-     * NOTE: valid config (corresponding to the used Android version) must be set before calling
+     * NOTE: A valid config (corresponding to the used Android version) must be set before calling
      * [showNotification] otherwise notifications will be blocked.
      *
      * @param adjust function block on [INotificationServiceConfig] to configure notification channel for [INotificationService].
