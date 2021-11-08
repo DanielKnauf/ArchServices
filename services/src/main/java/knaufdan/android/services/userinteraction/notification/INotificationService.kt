@@ -6,33 +6,22 @@ import knaufdan.android.services.userinteraction.notification.api.NotificationId
 /**
  * Provides functionality to configure a notification channel and send notifications through it.
  *
- * NOTE: currently only one notification channel can be configure within [INotificationService],
+ * NOTE: Currently only one notification channel can be configure within [INotificationService],
  *       and as it is a singleton only one channel can be provided within an application.
  */
 interface INotificationService {
-    /**
-     * Adjusts config within [INotificationService] using [INotificationServiceConfig] methods.
-     * Notification channel will be created based on config when first notification is sent.
-     *
-     * NOTE: valid config (corresponding to the used Android version) must be configured before calling [sendNotification]
-     *       otherwise all notifications will be blocked.
-     *
-     * @param adjust extension function block on [INotificationServiceConfig] to configure [INotificationService] notification channel.
-     */
-    fun configure(adjust: INotificationServiceConfig.() -> Unit)
 
     /**
-     * Sends a notification through the configured notification channel.
+     * Adjusts config within [INotificationService] using [INotificationServiceConfig] methods.
+     * A notification channel based on made adjustments will be created when first notification
+     * is shown.
      *
-     * NOTE: [configure] must be called before sending notifications otherwise all will be blocked.
+     * NOTE: A valid config (corresponding to the used Android version) must be set before calling
+     * [showNotification] otherwise notifications will be blocked.
      *
-     * @param notificationConfig contains styling and interactions of notification.
+     * @param adjust function block on [INotificationServiceConfig] to configure notification channel for [INotificationService].
      */
-    @Deprecated(
-        message = "With release 0.5.0, removed with 0.7.0",
-        replaceWith = ReplaceWith("showNotification(notificationConfig: NotificationConfig)")
-    )
-    fun sendNotification(notificationConfig: NotificationConfig)
+    fun configure(adjust: INotificationServiceConfig.() -> Unit)
 
     /**
      * Shows a notification through the configured notification channel.
