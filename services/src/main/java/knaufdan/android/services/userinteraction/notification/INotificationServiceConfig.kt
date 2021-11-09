@@ -4,10 +4,11 @@ package knaufdan.android.services.userinteraction.notification
  * Provides functionality to adjust the notification config within [INotificationService].
  */
 interface INotificationServiceConfig {
+
     /**
      * Sets all parameters needed to create a notification channel.
      *
-     * NOTE: Starting with Android O [26] a [channelName] and [channelDescription] are mandatory and must not be blank.
+     * NOTE: Starting with Android O [26] [channelName] and [channelDescription] are mandatory and must not be blank.
      *
      * @param channelId unique id
      * @param channelName displayed name in user system preferences

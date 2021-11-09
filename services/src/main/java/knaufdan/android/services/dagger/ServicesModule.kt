@@ -37,7 +37,10 @@ class ServicesModule {
         BroadcastService(contextProvider)
 
     @Provides
-    internal fun provideNotificationService(contextProvider: IContextProvider): INotificationService =
+    @Singleton
+    fun provideNotificationService(
+        contextProvider: IContextProvider
+    ): INotificationService =
         NotificationService(
             contextProvider = contextProvider
         )

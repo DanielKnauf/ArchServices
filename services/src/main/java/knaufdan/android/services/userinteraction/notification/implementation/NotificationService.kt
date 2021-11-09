@@ -10,20 +10,17 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import knaufdan.android.core.IContextProvider
+import knaufdan.android.services.common.createIntentToOpenActivity
 import knaufdan.android.services.userinteraction.notification.INotificationService
 import knaufdan.android.services.userinteraction.notification.INotificationServiceConfig
 import knaufdan.android.services.userinteraction.notification.api.NotificationAction
-import knaufdan.android.services.userinteraction.notification.api.NotificationAction.Companion.toAndroidClick
-import knaufdan.android.services.userinteraction.notification.api.NotificationAction.Companion.toAndroidReply
 import knaufdan.android.services.userinteraction.notification.api.NotificationConfig
 import knaufdan.android.services.userinteraction.notification.api.NotificationId
-import knaufdan.android.services.userinteraction.notification.createIntentToOpenActivity
-import javax.inject.Singleton
 
-@Singleton
 internal class NotificationService(
     private val contextProvider: IContextProvider
 ) : INotificationService {
+
     private val context: Context
         get() = contextProvider.getContext()
     private val notificationManager: NotificationManager
@@ -31,30 +28,8 @@ internal class NotificationService(
 
     override fun configure(adjust: INotificationServiceConfig.() -> Unit) = adjust(config)
 
-    override fun sendNotification(notificationConfig: NotificationConfig) {
-        val hasInvalidConfig = !config.validate()
-        if (hasInvalidConfig) {
-            Log.e(
-                this::class.simpleName,
-                "Current NotificationServiceConfig [$config] is not valid, thus no notification could be sent."
-            )
-            return
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel()
-        }
-
-        notificationConfig.buildNotification().apply {
-            notificationManager.notify(
-                notificationConfig.id,
-                this
-            )
-        }
-    }
-
     override fun showNotification(notificationConfig: NotificationConfig) {
-        val hasInvalidConfig = !config.validate()
+        val hasInvalidConfig = !config.isValid()
         if (hasInvalidConfig) {
             Log.e(
                 this::class.simpleName,
@@ -119,20 +94,24 @@ internal class NotificationService(
             build()
         }
 
-    private fun NotificationCompat.Builder.setAutoCancelTime(timeInMillis: Long) =
-        run {
-            if (timeInMillis == NotificationConfig.NO_AUTO_CANCEL_TIME_SET) return@run this
-
-            setTimeoutAfter(timeInMillis)
+    private fun NotificationCompat.Builder.setAutoCancelTime(
+        timeInMillis: Long
+    ): NotificationCompat.Builder =
+        when (timeInMillis) {
+            NotificationConfig.NO_AUTO_CANCEL_TIME_SET -> this
+            else -> setTimeoutAfter(timeInMillis)
         }
 
-    private fun NotificationCompat.Builder.setOnNotificationClicked(notificationConfig: NotificationConfig): NotificationCompat.Builder =
-        run {
-            val activityTarget = notificationConfig.interaction.activityTarget ?: return@run this
+    private fun NotificationCompat.Builder.setOnNotificationClicked(
+        notificationConfig: NotificationConfig
+    ): NotificationCompat.Builder =
+        apply {
+            val activityTarget = notificationConfig.interaction.activityTarget ?: return@apply
 
             setContentIntent(
                 context.createIntentToOpenActivity(
                     activity = activityTarget,
+                    action = notificationConfig.interaction.activityTargetAction,
                     notificationId = notificationConfig.id,
                     requestCode = notificationConfig.requestCode
                 )
@@ -148,18 +127,10 @@ internal class NotificationService(
 
     private fun List<NotificationAction>.toAndroidActions(notificationId: Int): List<NotificationCompat.Action> =
         map { action ->
-            when (action) {
-                is NotificationAction.Click ->
-                    action.toAndroidClick(
-                        context = context,
-                        notificationId = notificationId
-                    )
-                is NotificationAction.Reply ->
-                    action.toAndroidReply(
-                        context = context,
-                        notificationId = notificationId
-                    )
-            }
+            action.toAndroidAction(
+                context = context,
+                notificationId = notificationId
+            )
         }
 
     companion object {

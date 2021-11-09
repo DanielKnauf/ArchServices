@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package knaufdan.android.services.userinteraction.notification.api
 
 import android.app.PendingIntent
@@ -6,22 +8,25 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.RemoteInput
-import knaufdan.android.services.userinteraction.notification.NOTIFICATION_DATA_KEY_NOTIFICATION_ID
-import knaufdan.android.services.userinteraction.notification.NOTIFICATION_DATA_KEY_REQUEST_CODE
+import knaufdan.android.services.common.Constants.Intent.KEY_NOTIFICATION_ID
+import knaufdan.android.services.common.Constants.Intent.KEY_REQUEST_CODE
 import kotlin.reflect.KClass
 
 sealed class NotificationAction(
-    val title: String,
+    @StringRes val title: Int,
     @DrawableRes val icon: Int,
     val requestCode: Int,
     val action: String = "",
     val receiverTarget: KClass<out BroadcastReceiver>,
     val extraData: Bundle = Bundle.EMPTY
 ) {
-    class Click(
-        title: String,
+    abstract fun toAndroidAction(context: Context, notificationId: Int): NotificationCompat.Action
+
+    class Button(
+        @StringRes title: Int,
         @DrawableRes icon: Int,
         requestCode: Int,
         action: String = "",
@@ -34,28 +39,8 @@ sealed class NotificationAction(
         action = action,
         receiverTarget = receiverTarget,
         extraData = extraData
-    )
-
-    class Reply(
-        title: String,
-        @DrawableRes icon: Int,
-        requestCode: Int,
-        action: String = "",
-        receiverTarget: KClass<out BroadcastReceiver>,
-        extraData: Bundle = Bundle.EMPTY,
-        val replyLabel: String,
-        val replyKey: String
-    ) : NotificationAction(
-        title = title,
-        icon = icon,
-        requestCode = requestCode,
-        action = action,
-        receiverTarget = receiverTarget,
-        extraData = extraData
-    )
-
-    companion object {
-        fun Click.toAndroidClick(
+    ) {
+        override fun toAndroidAction(
             context: Context,
             notificationId: Int
         ): NotificationCompat.Action =
@@ -71,20 +56,36 @@ sealed class NotificationAction(
 
                 NotificationCompat.Action.Builder(
                     icon,
-                    title,
+                    context.getString(title),
                     replyPendingIntent
                 ).build()
             }
+    }
 
-        fun Reply.toAndroidReply(
+    class Reply(
+        @StringRes title: Int,
+        @DrawableRes icon: Int,
+        requestCode: Int,
+        action: String = "",
+        receiverTarget: KClass<out BroadcastReceiver>,
+        extraData: Bundle = Bundle.EMPTY,
+        private val replyLabel: String,
+        private val replyKey: String
+    ) : NotificationAction(
+        title = title,
+        icon = icon,
+        requestCode = requestCode,
+        action = action,
+        receiverTarget = receiverTarget,
+        extraData = extraData
+    ) {
+        override fun toAndroidAction(
             context: Context,
             notificationId: Int
         ): NotificationCompat.Action =
             run {
                 val remoteInput: RemoteInput =
-                    RemoteInput.Builder(
-                        replyKey
-                    ).run {
+                    RemoteInput.Builder(replyKey).run {
                         setLabel(replyLabel)
                         build()
                     }
@@ -100,13 +101,16 @@ sealed class NotificationAction(
 
                 NotificationCompat.Action.Builder(
                     icon,
-                    title,
+                    context.getString(title),
                     replyPendingIntent
                 ).run {
                     addRemoteInput(remoteInput)
                     build()
                 }
             }
+    }
+
+    companion object {
 
         private fun Context.createIntentToStartBroadcastReceiver(
             receiverTarget: KClass<out BroadcastReceiver>,
@@ -124,12 +128,12 @@ sealed class NotificationAction(
                 flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
 
                 putExtra(
-                    NOTIFICATION_DATA_KEY_NOTIFICATION_ID,
+                    KEY_NOTIFICATION_ID,
                     notificationId
                 )
 
                 putExtra(
-                    NOTIFICATION_DATA_KEY_REQUEST_CODE,
+                    KEY_REQUEST_CODE,
                     requestCode
                 )
 
@@ -139,7 +143,7 @@ sealed class NotificationAction(
                     this@createIntentToStartBroadcastReceiver,
                     requestCode,
                     this,
-                    PendingIntent.FLAG_UPDATE_CURRENT
+                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
                 )
             }
     }
