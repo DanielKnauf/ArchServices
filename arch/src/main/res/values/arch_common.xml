@@ -5,6 +5,8 @@
     <dimen name="arch_default_elevation">8dp</dimen>
 
     <!-- identifiers-->
+    <item name="arch_recyclerView_itemTouchListener" type="id" />
+    <item name="arch_recyclerView_itemDecorator" type="id" />
     <item name="arch_floatingActionButton_scrollListener" type="id" />
 
 </resources>
