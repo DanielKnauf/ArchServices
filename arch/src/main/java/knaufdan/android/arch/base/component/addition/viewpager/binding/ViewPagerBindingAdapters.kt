@@ -16,16 +16,19 @@ import knaufdan.android.arch.utils.findLifecycleOwner
         "components",
         "fragmentManager",
         "orientation",
-        "onPageSelected"
+        "onPageSelected",
+        "initialPage"
     ],
     requireAll = false
 )
 fun ViewPager2.bindPages(
-    components: List<IComponent<IComponentViewModel>>,
+    components: List<IComponent<IComponentViewModel>>?,
     fragmentManager: FragmentManager,
     viewPagerOrientation: ViewPagerOrientation?,
-    listener: OnPageSelectedListener?
+    listener: OnPageSelectedListener?,
+    initialPage: Int?
 ) {
+    components ?: return
     val lifecycleOwner = context.findLifecycleOwner() ?: return
 
     val hasSameItems =
@@ -41,6 +44,8 @@ fun ViewPager2.bindPages(
                 components = components,
                 lifecycleOwner = lifecycleOwner
             )
+
+        initialPage?.run { setCurrentItem(this, false) }
     }
 
     listener?.run {
@@ -60,14 +65,10 @@ fun ViewPager2.bindPages(
 fun ViewPager2.bindPage(index: Int) {
     val count = adapter?.itemCount ?: return
 
-    if (index !in 0 until count) {
-        return
-    }
+    if (index !in 0 until count) return
 
     val currentIndex = currentItem
-    if (currentIndex == index) {
-        return
-    }
+    if (currentIndex == index) return
 
     currentItem = index
 }
@@ -97,9 +98,7 @@ private class OnPageChanceCallback(
 
 private fun ViewPager2.setOrientation(viewPagerOrientation: ViewPagerOrientation?) {
     val androidOrientation = viewPagerOrientation.toAndroidOrientation()
-    if (orientation == androidOrientation) {
-        return
-    }
+    if (orientation == androidOrientation) return
 
     orientation = androidOrientation
 }
