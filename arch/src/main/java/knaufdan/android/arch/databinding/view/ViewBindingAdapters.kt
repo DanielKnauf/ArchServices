@@ -166,7 +166,7 @@ fun View.bindMargins(
 }
 
 @BindingAdapter("gone")
-fun View.bindGone(gone: Boolean) {
+fun View.gone(gone: Boolean) {
     visibility =
         when (gone) {
             true -> View.GONE
