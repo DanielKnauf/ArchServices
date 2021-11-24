@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- styles -->
+    <style name="ArchEntry" />
+
+    <style name="ArchEntry.Container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="ArchEntry.Icon">
+        <item name="android:layout_width">@dimen/spacing_quadruple</item>
+        <item name="android:layout_height">@dimen/spacing_quadruple</item>
+    </style>
+
+    <style name="ArchEntry.Header">
+        <item name="android:layout_width">@dimen/spacing_zero</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">12dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Caption</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ArchEntry.Content">
+        <item name="android:layout_width">@dimen/spacing_zero</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart">12dp</item>
+        <item name="android:textAppearance">@style/TextAppearance.MaterialComponents.Body1</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+</resources>
