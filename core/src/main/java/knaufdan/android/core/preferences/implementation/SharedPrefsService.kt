@@ -54,8 +54,6 @@ internal class SharedPrefsService @Inject constructor(
         key: String,
         value: Any?
     ) {
-        value ?: return
-
         sharedPrefs.edit {
             putValue(
                 key = key,
@@ -102,9 +100,10 @@ internal class SharedPrefsService @Inject constructor(
 
         private fun SharedPreferences.Editor.putValue(
             key: String,
-            value: Any
+            value: Any?
         ) {
             when (value) {
+                null -> remove(key)
                 is Boolean -> putBoolean(key, value)
                 is Int -> putInt(key, value)
                 is Long -> putLong(key, value)
