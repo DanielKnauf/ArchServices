@@ -111,7 +111,8 @@ sealed class NotificationAction(
                         requestCode = requestCode,
                         intentAction = action,
                         notificationId = notificationId,
-                        extraData = extraData
+                        extraData = extraData,
+                        asMutable = true
                     )
 
                 NotificationCompat.Action
@@ -132,7 +133,8 @@ sealed class NotificationAction(
             requestCode: Int = 0,
             intentAction: String = "",
             notificationId: Int = 0,
-            extraData: Bundle
+            extraData: Bundle,
+            asMutable: Boolean = false
         ): PendingIntent =
             Intent(
                 this,
@@ -158,8 +160,12 @@ sealed class NotificationAction(
                     this@createIntentToStartBroadcastReceiver,
                     requestCode,
                     this,
-                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                    asMutable.toFlags()
                 )
             }
+
+        private fun Boolean.toFlags() =
+            if (this) PendingIntent.FLAG_UPDATE_CURRENT
+            else PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
     }
 }
