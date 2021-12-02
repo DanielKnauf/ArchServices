@@ -9,14 +9,14 @@ import knaufdan.android.services.common.Constants.Intent.ACTION_OPEN_APP
 import kotlin.reflect.KClass
 
 /**
- * Creates a [PendingIntent] to navigate to [activity].
+ * Creates a [PendingIntent] to navigate to an [activity].
  * Included [Intent] is configured by [configureFor] and [putNotificationId].
  *
  * @param activity to navigate to
  * @param notificationId id of the related notification
  * @param requestCode associated with the [PendingIntent]
  *
- * @return [PendingIntent] configured to open [activity]
+ * @return [PendingIntent] configured to open the [activity]
  */
 fun Context.createIntentToOpenActivity(
     activity: KClass<out Activity>,
@@ -33,14 +33,14 @@ fun Context.createIntentToOpenActivity(
         )
 
 /**
- * Creates a [PendingIntent] to navigate to [activity].
+ * Creates a [PendingIntent] to navigate to an [activity].
  * Included [Intent] is configured by [configureFor].
  *
  * @param activity to navigate to
  * @param requestCode associated with the [PendingIntent]
- * @param extras data included in the intent sent to [activity].
+ * @param extras data included in the intent sent to the [activity].
  *
- * @return [PendingIntent] configured to open [activity]
+ * @return [PendingIntent] configured to open the [activity]
  */
 fun Context.createIntentToOpenActivity(
     activity: KClass<out Activity>,
