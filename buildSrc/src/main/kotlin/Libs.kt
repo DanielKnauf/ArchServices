@@ -42,8 +42,8 @@ object Libs {
             "androidx.localbroadcastmanager:localbroadcastmanager:$vBroadcastManager"
         const val paging = "androidx.paging:paging-runtime:$vPaging"
         const val recyclerView = "androidx.recyclerview:recyclerview:$vRecyclerView"
-        const val transition = "androidx.transition:transition-ktx:$vTransition"
         const val testRunner = "androidx.test:runner:$vTestRunner"
+        const val transition = "androidx.transition:transition-ktx:$vTransition"
         const val viewPager2 = "androidx.viewpager2:viewpager2:$vViewPager2"
     }
 
