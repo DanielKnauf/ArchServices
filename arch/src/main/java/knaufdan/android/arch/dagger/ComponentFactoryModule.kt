@@ -6,6 +6,8 @@ import knaufdan.android.arch.base.component.common.button.IButtonComponentFactor
 import knaufdan.android.arch.base.component.common.button.implementation.ButtonComponentFactory
 import knaufdan.android.arch.base.component.common.divider.IHorizontalDividerComponentFactory
 import knaufdan.android.arch.base.component.common.divider.implementation.HorizontalDividerComponentFactory
+import knaufdan.android.arch.base.component.common.entry.IEntryComponentFactory
+import knaufdan.android.arch.base.component.common.entry.implementation.EntryComponentFactory
 import knaufdan.android.arch.base.component.common.info.IInfoComponentFactory
 import knaufdan.android.arch.base.component.common.info.implementation.InfoComponentFactory
 import knaufdan.android.arch.base.component.common.progress.IProgressComponentFactory
@@ -24,6 +26,15 @@ class ComponentFactoryModule {
         resourceProvider: IResourceProvider
     ): IButtonComponentFactory =
         ButtonComponentFactory(
+            resourceProvider = resourceProvider
+        )
+
+    @Provides
+    @Singleton
+    fun provideEntryComponentFactory(
+        resourceProvider: IResourceProvider
+    ): IEntryComponentFactory =
+        EntryComponentFactory(
             resourceProvider = resourceProvider
         )
 
