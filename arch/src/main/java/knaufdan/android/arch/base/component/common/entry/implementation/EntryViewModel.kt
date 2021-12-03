@@ -12,11 +12,6 @@ class EntryViewModel(
     val marginTop = resourceProvider.getDimension(config.marginTop)
     val headerColor = resourceProvider.getColor(config.headerColor)
     val contentColor = resourceProvider.getColor(config.contentColor)
-    val icon =
-        when (config) {
-            is EntryConfig.Drawable -> config.icon
-            is EntryConfig.Uri -> config.icon
-        }
     val iconTint =
         when (config) {
             is EntryConfig.Drawable -> resourceProvider.getColor(config.iconTint)

@@ -17,6 +17,8 @@ sealed interface EntryConfig {
     @get:ColorRes
     val contentColor: Int
 
+    val icon: Any
+
     @get:DimenRes
     val marginTop: Int
 
@@ -25,7 +27,7 @@ sealed interface EntryConfig {
         @ColorRes override val headerColor: Int = R.color.arch_default_text_color,
         override val content: String,
         @ColorRes override val contentColor: Int = R.color.arch_default_text_color,
-        @DrawableRes val icon: Int,
+        @DrawableRes override val icon: Int,
         @ColorRes val iconTint: Int,
         @DimenRes override val marginTop: Int = R.dimen.arch_text_default_margin_vertical,
     ) : EntryConfig
@@ -34,7 +36,7 @@ sealed interface EntryConfig {
         override val header: String,
         @ColorRes override val headerColor: Int = R.color.arch_default_text_color,
         override val content: String,
-        val icon: String,
+        override val icon: String,
         @ColorRes override val contentColor: Int = R.color.arch_default_text_color,
         @DimenRes override val marginTop: Int = R.dimen.arch_text_default_margin_vertical,
     ) : EntryConfig
