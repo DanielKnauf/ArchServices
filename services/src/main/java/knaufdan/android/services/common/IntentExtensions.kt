@@ -8,8 +8,8 @@ import knaufdan.android.services.common.Constants.Intent.KEY_REQUEST_CODE
 import knaufdan.android.services.userinteraction.notification.api.NotificationId
 
 /**
- * Configures [Intent] by setting action, request code and flags.
- * Per default [Constants] are used to signal an app opening.
+ * Configures the [Intent] by setting action, request code and flags.
+ * Per default it is build to signal an app opening.
  *
  * @param action default == [ACTION_OPEN_APP]
  * @param flags default == [Intent.FLAG_ACTIVITY_SINGLE_TOP] or [Intent.FLAG_ACTIVITY_CLEAR_TOP]
