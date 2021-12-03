@@ -13,6 +13,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.RemoteInput
 import knaufdan.android.services.common.Constants.Intent.KEY_NOTIFICATION_ID
 import knaufdan.android.services.common.Constants.Intent.KEY_REQUEST_CODE
+import knaufdan.android.services.common.createIntentToOpenActivity
 import kotlin.reflect.KClass
 
 sealed class NotificationAction(
@@ -20,45 +21,60 @@ sealed class NotificationAction(
     @DrawableRes val icon: Int,
     val requestCode: Int,
     val action: String = "",
-    val receiverTarget: KClass<out BroadcastReceiver>,
     val extraData: Bundle = Bundle.EMPTY
 ) {
-    abstract fun toAndroidAction(context: Context, notificationId: Int): NotificationCompat.Action
+
+    abstract fun toAndroidAction(
+        context: Context,
+        notificationId: Int
+    ): NotificationCompat.Action
 
     class Button(
         @StringRes title: Int,
         @DrawableRes icon: Int,
         requestCode: Int,
         action: String = "",
-        receiverTarget: KClass<out BroadcastReceiver>,
-        extraData: Bundle = Bundle.EMPTY
+        extraData: Bundle = Bundle.EMPTY,
+        val target: NotificationTarget
     ) : NotificationAction(
         title = title,
         icon = icon,
         requestCode = requestCode,
         action = action,
-        receiverTarget = receiverTarget,
         extraData = extraData
     ) {
+
         override fun toAndroidAction(
             context: Context,
             notificationId: Int
         ): NotificationCompat.Action =
             run {
                 val replyPendingIntent: PendingIntent =
-                    context.createIntentToStartBroadcastReceiver(
-                        receiverTarget = receiverTarget,
-                        requestCode = requestCode,
-                        intentAction = action,
-                        notificationId = notificationId,
-                        extraData = extraData
-                    )
+                    when (target) {
+                        is NotificationTarget.BroadCastReceiver ->
+                            context.createIntentToStartBroadcastReceiver(
+                                receiverTarget = target.receiver,
+                                requestCode = requestCode,
+                                intentAction = action,
+                                notificationId = notificationId,
+                                extraData = extraData
+                            )
+                        is NotificationTarget.Activity ->
+                            context.createIntentToOpenActivity(
+                                activity = target.activity,
+                                requestCode = requestCode,
+                                notificationId = notificationId,
+                                action = action
+                            )
+                    }
 
-                NotificationCompat.Action.Builder(
-                    icon,
-                    context.getString(title),
-                    replyPendingIntent
-                ).build()
+                NotificationCompat.Action
+                    .Builder(
+                        icon,
+                        context.getString(title),
+                        replyPendingIntent
+                    )
+                    .build()
             }
     }
 
@@ -67,8 +83,8 @@ sealed class NotificationAction(
         @DrawableRes icon: Int,
         requestCode: Int,
         action: String = "",
-        receiverTarget: KClass<out BroadcastReceiver>,
         extraData: Bundle = Bundle.EMPTY,
+        val target: NotificationTarget.BroadCastReceiver,
         private val replyLabel: String,
         private val replyKey: String
     ) : NotificationAction(
@@ -76,37 +92,37 @@ sealed class NotificationAction(
         icon = icon,
         requestCode = requestCode,
         action = action,
-        receiverTarget = receiverTarget,
         extraData = extraData
     ) {
+
         override fun toAndroidAction(
             context: Context,
             notificationId: Int
         ): NotificationCompat.Action =
             run {
                 val remoteInput: RemoteInput =
-                    RemoteInput.Builder(replyKey).run {
-                        setLabel(replyLabel)
-                        build()
-                    }
+                    RemoteInput.Builder(replyKey)
+                        .setLabel(replyLabel)
+                        .build()
 
                 val replyPendingIntent: PendingIntent =
                     context.createIntentToStartBroadcastReceiver(
-                        receiverTarget = receiverTarget,
+                        receiverTarget = target.receiver,
                         requestCode = requestCode,
                         intentAction = action,
                         notificationId = notificationId,
-                        extraData = extraData
+                        extraData = extraData,
+                        asMutable = true
                     )
 
-                NotificationCompat.Action.Builder(
-                    icon,
-                    context.getString(title),
-                    replyPendingIntent
-                ).run {
-                    addRemoteInput(remoteInput)
-                    build()
-                }
+                NotificationCompat.Action
+                    .Builder(
+                        icon,
+                        context.getString(title),
+                        replyPendingIntent
+                    )
+                    .addRemoteInput(remoteInput)
+                    .build()
             }
     }
 
@@ -117,7 +133,8 @@ sealed class NotificationAction(
             requestCode: Int = 0,
             intentAction: String = "",
             notificationId: Int = 0,
-            extraData: Bundle
+            extraData: Bundle,
+            asMutable: Boolean = false
         ): PendingIntent =
             Intent(
                 this,
@@ -143,8 +160,12 @@ sealed class NotificationAction(
                     this@createIntentToStartBroadcastReceiver,
                     requestCode,
                     this,
-                    PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+                    asMutable.toFlags()
                 )
             }
+
+        private fun Boolean.toFlags() =
+            if (this) PendingIntent.FLAG_UPDATE_CURRENT
+            else PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
     }
 }
