@@ -6,7 +6,7 @@ import knaufdan.android.core.resources.IResourceProvider
 
 class HorizontalDividerViewModel(
     config: HorizontalDividerConfig,
-    resourceProvider: IResourceProvider,
+    resourceProvider: IResourceProvider
 ) : IComponentViewModel {
 
     val height = resourceProvider.getDimension(config.height)
