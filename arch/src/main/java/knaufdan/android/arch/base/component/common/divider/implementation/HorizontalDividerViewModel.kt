@@ -10,6 +10,7 @@ class HorizontalDividerViewModel(
 ) : IComponentViewModel {
 
     val height = resourceProvider.getDimension(config.height)
+    val marginTop = resourceProvider.getDimension(config.marginTop)
     val marginLeft = resourceProvider.getDimension(config.marginLeft)
     val marginRight = resourceProvider.getDimension(config.marginRight)
     val paddingLeft = resourceProvider.getDimension(config.paddingLeft)
