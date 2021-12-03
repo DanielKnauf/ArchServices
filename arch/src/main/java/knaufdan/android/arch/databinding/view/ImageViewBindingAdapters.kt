@@ -12,6 +12,9 @@ import androidx.databinding.BindingAdapter
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
 import knaufdan.android.core.resources.IResourceProvider
+import java.util.WeakHashMap
+
+val images: WeakHashMap<ImageView, Uri> = WeakHashMap()
 
 @BindingAdapter("src")
 fun ImageView.bindSrc(source: Any?) {
@@ -50,6 +53,50 @@ fun ImageView.iconTint(@ColorInt color: Int?) {
 
     imageTintList = ColorStateList.valueOf(color)
 }
+
+@BindingAdapter(
+    value = [
+        "imageUri",
+        "loadingImage",
+        "loadingImageRes",
+        "resizeWidth",
+        "resizeHeight",
+        "scaleType",
+        "onlyScaleDown"
+    ],
+    requireAll = false
+)
+fun ImageView.bindImageUri(
+    imageUri: Uri?,
+    loadingImage: Drawable? = null,
+    @DrawableRes loadingImageRes: Int? = null,
+    resizeWidth: Int = -1,
+    resizeHeight: Int = -1,
+    scaleType: ScaleType? = ScaleType.CENTER_INSIDE,
+    onlyScaleDown: Boolean = false,
+) {
+    if (imageUri == null || imageUri == Uri.EMPTY) return
+
+    val uri = images[this]
+    if (uri == imageUri) return
+
+    images[this] = imageUri
+
+    Picasso.get()
+        .load(imageUri)
+        .applyTransformation(
+            resizeWidth = resizeWidth,
+            resizeHeight = resizeHeight,
+            scaleType = scaleType,
+            onlyScaleDown = onlyScaleDown
+        )
+        .setLoadingImage(
+            loadingImage = loadingImage,
+            loadingImageRes = loadingImageRes
+        )
+        .into(this)
+}
+
 @BindingAdapter(
     value = [
         "imageUrl",
@@ -62,18 +109,16 @@ fun ImageView.iconTint(@ColorInt color: Int?) {
     ],
     requireAll = false
 )
-fun ImageView.bindImage(
+fun ImageView.bindImageUrl(
     imageUrl: String?,
     loadingImage: Drawable?,
     @DrawableRes loadingImageRes: Int?,
     resizeWidth: Int = -1,
     resizeHeight: Int = -1,
     scaleType: ScaleType? = ScaleType.CENTER_INSIDE,
-    onlyScaleDown: Boolean = false
+    onlyScaleDown: Boolean = false,
 ) {
-    if (imageUrl == null || imageUrl.isBlank()) {
-        return
-    }
+    if (imageUrl == null || imageUrl.isBlank()) return
 
     Picasso.get()
         .load(imageUrl)
