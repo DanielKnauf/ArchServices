@@ -12,13 +12,10 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.utils.doOnAttachedToWindow
-import knaufdan.android.core.common.extensions.hasIndex
 
 @BindingAdapter("viewPager")
 fun TabLayout.bindLayoutMediator(viewPager: ViewPager2) {
-    viewPager.doOnAttachedToWindow {
-        TabLayoutMediator(this, viewPager) { _, _ -> }.attach()
-    }
+    viewPager.doOnAttachedToWindow { attachTabLayoutMediator(this, viewPager) }
 }
 
 @BindingAdapter(
@@ -32,9 +29,9 @@ fun TabLayout.bindTabNames(
     tabNames: List<String>
 ) {
     viewPager.doOnAttachedToWindow {
-        TabLayoutMediator(this, viewPager) { tab, position ->
+        attachTabLayoutMediator(this, viewPager) { tab, position ->
             tab.text = tabNames.getOrNull(position) ?: position.toString()
-        }.attach()
+        }
     }
 }
 
@@ -46,24 +43,26 @@ fun TabLayout.bindTabNames(
 )
 fun TabLayout.bindTabs(
     viewPager: ViewPager2,
-    tabs: List<IComponent<*>>?
+    components: List<IComponent<*>>?
 ) {
-    tabs ?: return
-    if (tabs.isEmpty()) return
+    components ?: return
+    if (components.isEmpty()) return
 
     val attachTabLayoutMediator = {
-        TabLayoutMediator(this@bindTabs, viewPager) { tab, position ->
-            if (tabs.hasIndex(position).not()) return@TabLayoutMediator
-
-            tab.customView = inflateComponent(tabs[position])
-        }.attach()
+        attachTabLayoutMediator(this@bindTabs, viewPager) { tab, position ->
+            tab.customView =
+                components
+                    .getOrNull(position)
+                    ?.let(::inflateComponent)
+                    ?: return@attachTabLayoutMediator
+        }
     }
 
     val adapter = viewPager.adapter
     if (adapter != null && adapter.itemCount > 0) {
         attachTabLayoutMediator()
     } else {
-        if (viewPager.isAttachedToWindow) postDelayed(100) { bindTabs(viewPager, tabs) }
+        if (viewPager.isAttachedToWindow) postDelayed(100) { bindTabs(viewPager, components) }
         else {
             viewPager.doOnAttachedToWindow { attachTabLayoutMediator() }
         }
@@ -81,6 +80,12 @@ fun TabLayout.bindTabs(components: List<IComponent<*>>?) {
         addTab(component.toTab(this))
     }
 }
+
+private fun attachTabLayoutMediator(
+    tabLayout: TabLayout,
+    viewPager: ViewPager2,
+    configure: (TabLayout.Tab, Int) -> Unit = { _, _ -> }
+) = TabLayoutMediator(tabLayout, viewPager) { tab, position -> configure(tab, position) }.attach()
 
 private fun IComponent<*>.toTab(parent: TabLayout): TabLayout.Tab =
     parent
