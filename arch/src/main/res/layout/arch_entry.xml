@@ -17,8 +17,8 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/arch_entry_icon"
             style="@style/ArchEntry.Icon"
-            android:src="@{viewModel.config.icon}"
-            android:tint="@{viewModel.iconTint}"
+            app:src="@{viewModel.config.icon}"
+            app:tint="@{viewModel.iconTint}"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
