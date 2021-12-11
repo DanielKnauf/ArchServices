@@ -21,6 +21,7 @@ import androidx.core.view.updatePadding
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import knaufdan.android.arch.R
+import knaufdan.android.arch.utils.rotateAnimated
 import knaufdan.android.core.resources.IResourceProvider
 
 @BindingAdapter("layout_width")
@@ -145,28 +146,30 @@ fun View.bindPadding(
     ],
     requireAll = false
 )
-fun View.bindMargins(
-    marginTop: Number?,
-    marginBottom: Number?,
-    marginLeft: Number?,
-    marginRight: Number?
+fun View.margins(
+    marginTop: Number? = null,
+    marginBottom: Number? = null,
+    marginLeft: Number? = null,
+    marginRight: Number? = null
 ) {
     (layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
 
-        marginStart = marginLeft?.toInt() ?: this@bindMargins.marginStart
-        marginEnd = marginRight?.toInt() ?: this@bindMargins.marginEnd
+        marginStart = marginLeft?.toInt() ?: this@margins.marginStart
+        marginEnd = marginRight?.toInt() ?: this@margins.marginEnd
 
         setMargins(
-            marginLeft?.toInt() ?: this@bindMargins.marginLeft,
-            marginTop?.toInt() ?: this@bindMargins.marginTop,
-            marginRight?.toInt() ?: this@bindMargins.marginRight,
-            marginBottom?.toInt() ?: this@bindMargins.marginBottom
+            marginLeft?.toInt() ?: this@margins.marginLeft,
+            marginTop?.toInt() ?: this@margins.marginTop,
+            marginRight?.toInt() ?: this@margins.marginRight,
+            marginBottom?.toInt() ?: this@margins.marginBottom
         )
     }
 }
 
 @BindingAdapter("gone")
-fun View.gone(gone: Boolean) {
+fun View.gone(gone: Boolean?) {
+    gone ?: return
+
     visibility =
         when (gone) {
             true -> View.GONE
@@ -255,3 +258,6 @@ fun View.bindFading(
         start()
     }
 }
+
+@BindingAdapter("rotate")
+fun View.rotate(rotation: Float) = rotateAnimated(rotation)
