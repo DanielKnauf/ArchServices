@@ -232,9 +232,11 @@ fun View.bindScrolledElevation(
     requireAll = false
 )
 fun View.bindFading(
-    direction: FadeDirection,
+    direction: FadeDirection?,
     fadeDuration: Number?
 ) {
+    direction ?: return
+
     val targetAlpha =
         when (direction) {
             FadeDirection.STAY -> return
