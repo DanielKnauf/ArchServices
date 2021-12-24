@@ -1,6 +1,5 @@
 package knaufdan.android.arch.databinding.view
 
-import android.graphics.Typeface
 import android.os.Build
 import android.text.Html
 import android.view.Gravity
@@ -68,7 +67,7 @@ enum class TextGravity {
 }
 
 @BindingAdapter("textStyle")
-fun TextView.bindTextStyle(
+fun TextView.textStyle(
     textStyle: TextStyle
 ) {
     setTypeface(
@@ -76,21 +75,6 @@ fun TextView.bindTextStyle(
         textStyle.toTypeFace()
     )
 }
-
-enum class TextStyle {
-    DEFAULT,
-    BOLD,
-    ITALIC,
-    BOLD_ITALIC
-}
-
-private fun TextStyle.toTypeFace(): Int =
-    when (this) {
-        TextStyle.DEFAULT -> Typeface.NORMAL
-        TextStyle.BOLD -> Typeface.BOLD
-        TextStyle.ITALIC -> Typeface.ITALIC
-        TextStyle.BOLD_ITALIC -> Typeface.BOLD_ITALIC
-    }
 
 @BindingAdapter("htmlText")
 fun TextView.bindHtmlText(
