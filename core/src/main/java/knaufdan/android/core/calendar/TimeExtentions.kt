@@ -1,5 +1,7 @@
 package knaufdan.android.core.calendar
 
+import knaufdan.android.core.calendar.alias.Hour
+import knaufdan.android.core.calendar.alias.Minute
 import java.util.Calendar
 
 fun Pair<Hour, Minute>.isEarlierToday(): Boolean = toCalendar().before(now)

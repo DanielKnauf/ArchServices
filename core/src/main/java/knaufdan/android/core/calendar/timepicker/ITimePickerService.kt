@@ -1,7 +1,7 @@
 package knaufdan.android.core.calendar.timepicker
 
-import knaufdan.android.core.calendar.Hour
-import knaufdan.android.core.calendar.Minute
+import knaufdan.android.core.calendar.alias.Hour
+import knaufdan.android.core.calendar.alias.Minute
 
 interface ITimePickerService {
 

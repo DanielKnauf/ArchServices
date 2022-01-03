@@ -1,8 +1,8 @@
 package knaufdan.android.core.calendar.timepicker
 
 import androidx.annotation.StyleRes
-import knaufdan.android.core.calendar.Hour
-import knaufdan.android.core.calendar.Minute
+import knaufdan.android.core.calendar.alias.Hour
+import knaufdan.android.core.calendar.alias.Minute
 import knaufdan.android.core.calendar.getTimeOfDay
 import knaufdan.android.core.resources.IResourceProvider
 

@@ -2,6 +2,11 @@
 
 package knaufdan.android.core.calendar
 
+import knaufdan.android.core.calendar.alias.DayOfMonth
+import knaufdan.android.core.calendar.alias.Hour
+import knaufdan.android.core.calendar.alias.Minute
+import knaufdan.android.core.calendar.alias.Month
+import knaufdan.android.core.calendar.alias.Year
 import java.util.Calendar
 import java.util.Date
 
@@ -25,13 +30,13 @@ fun calendar(timeInMillis: Long): Calendar = now.apply { this.timeInMillis = tim
 fun calendar(day: DayOfMonth, month: Month, year: Year): Calendar =
     now.apply { set(year, month, day) }
 
-fun getTodayAsWeekday(): Weekday = now.getWeekday()
+fun getTodayAsWeekday(): Weekday = now.weekday
 
-fun getTodayAsDayOfMonth(): DayOfMonth = now.getDayOfMonth()
+fun getTodayAsDayOfMonth(): DayOfMonth = now.dayOfMonth
 
-fun getTodayAsMonth(): Month = now.getMonth()
+fun getTodayAsMonth(): Month = now.month
 
-fun getTodayAsYear(): Year = now.getYear()
+fun getTodayAsYear(): Year = now.year
 
 fun getTimeOfDay(): Pair<Hour, Minute> = now.run { getHour() to getMinute() }
 
