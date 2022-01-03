@@ -7,9 +7,10 @@ import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel
 
 class ComponentViewHolder(
-    val binding: ViewDataBinding,
+    private val binding: ViewDataBinding,
     private val lifeCycleOwner: LifecycleOwner?
 ) : RecyclerView.ViewHolder(binding.root) {
+
     private lateinit var component: IComponent<Any>
 
     fun bind(component: IComponent<Any>) {
