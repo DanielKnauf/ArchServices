@@ -4,8 +4,8 @@ package knaufdan.android.arch.base.component.common.entry.implementation
 
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel
-import knaufdan.android.arch.base.component.common.entry.IEntryConfig
 import knaufdan.android.arch.base.component.common.entry.IEntryComponentFactory
+import knaufdan.android.arch.base.component.common.entry.IEntryConfig
 import knaufdan.android.core.resources.IResourceProvider
 
 class EntryComponentFactory(

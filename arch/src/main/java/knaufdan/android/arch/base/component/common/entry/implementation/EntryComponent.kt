@@ -3,8 +3,8 @@ package knaufdan.android.arch.base.component.common.entry.implementation
 import knaufdan.android.arch.R
 import knaufdan.android.arch.base.LayoutRes
 import knaufdan.android.arch.base.component.addition.recyclerview.IDiffItem
-import knaufdan.android.arch.base.component.common.entry.IEntryConfig
 import knaufdan.android.arch.base.component.common.entry.IEntryComponent
+import knaufdan.android.arch.base.component.common.entry.IEntryConfig
 import knaufdan.android.core.resources.IResourceProvider
 
 class EntryComponent(
