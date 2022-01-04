@@ -1,11 +1,11 @@
 package knaufdan.android.arch.base.component.common.entry.implementation
 
 import knaufdan.android.arch.base.component.IComponentViewModel
-import knaufdan.android.arch.base.component.common.entry.EntryConfig
+import knaufdan.android.arch.base.component.common.entry.IEntryConfig
 import knaufdan.android.core.resources.IResourceProvider
 
 class EntryViewModel(
-    val config: EntryConfig,
+    val config: IEntryConfig,
     resourceProvider: IResourceProvider,
 ) : IComponentViewModel {
 
@@ -14,7 +14,7 @@ class EntryViewModel(
     val contentColor = resourceProvider.getColor(config.contentColor)
     val iconTint =
         when (config) {
-            is EntryConfig.Drawable -> resourceProvider.getColor(config.iconTint)
-            is EntryConfig.Uri -> null
+            is IEntryConfig.Drawable -> resourceProvider.getColor(config.iconTint)
+            is IEntryConfig.Uri -> null
         }
 }

@@ -5,7 +5,7 @@ import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
 import knaufdan.android.arch.R
 
-sealed interface EntryConfig {
+sealed interface IEntryConfig {
 
     val header: String
 
@@ -30,7 +30,7 @@ sealed interface EntryConfig {
         @DrawableRes override val icon: Int,
         @ColorRes val iconTint: Int,
         @DimenRes override val marginTop: Int = R.dimen.arch_text_default_margin_vertical
-    ) : EntryConfig
+    ) : IEntryConfig
 
     data class Uri(
         override val header: String,
@@ -39,5 +39,5 @@ sealed interface EntryConfig {
         override val icon: String,
         @ColorRes override val contentColor: Int = R.color.arch_default_text_color,
         @DimenRes override val marginTop: Int = R.dimen.arch_text_default_margin_vertical
-    ) : EntryConfig
+    ) : IEntryConfig
 }
