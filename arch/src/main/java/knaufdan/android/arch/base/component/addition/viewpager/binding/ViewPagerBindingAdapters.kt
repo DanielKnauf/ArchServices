@@ -5,11 +5,11 @@ import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel
-import knaufdan.android.arch.base.component.addition.viewpager.IComponentAdapter
-import knaufdan.android.arch.base.component.addition.viewpager.implementation.ComponentAdapter
+import knaufdan.android.arch.base.component.addition.recyclerview.implementation.ComponentAdapter
 import knaufdan.android.arch.base.component.addition.viewpager.implementation.ViewPagerOrientation
 import knaufdan.android.arch.base.component.addition.viewpager.implementation.ViewPagerOrientation.Companion.toAndroidOrientation
 import knaufdan.android.arch.utils.findLifecycleOwner
+import knaufdan.android.arch.base.component.addition.viewpager.implementation.ComponentAdapter as ViewPagerAdapter
 
 @BindingAdapter(
     value = [
@@ -21,25 +21,26 @@ import knaufdan.android.arch.utils.findLifecycleOwner
     ],
     requireAll = false
 )
-fun ViewPager2.bindPages(
+fun ViewPager2.setPages(
     components: List<IComponent<IComponentViewModel>>?,
-    fragmentManager: FragmentManager,
+    fragmentManager: FragmentManager?,
     viewPagerOrientation: ViewPagerOrientation?,
     listener: OnPageSelectedListener?,
     initialPage: Int?
 ) {
     components ?: return
+    fragmentManager ?: return setPages(components, viewPagerOrientation)
     val lifecycleOwner = context.findLifecycleOwner() ?: return
 
     val hasSameItems =
         adapter?.run {
-            this is IComponentAdapter && hasSameItems(components)
+            this is ViewPagerAdapter && hasSameItems(components)
         } ?: false
 
     val needsNewAdapter = !hasSameItems
     if (needsNewAdapter) {
         adapter =
-            ComponentAdapter(
+            ViewPagerAdapter(
                 fragmentManager = fragmentManager,
                 components = components,
                 lifecycleOwner = lifecycleOwner
@@ -49,8 +50,8 @@ fun ViewPager2.bindPages(
     }
 
     listener?.run {
-        this@bindPages.registerOnPageChangeCallback(
-            OnPageChanceCallback(
+        this@setPages.registerOnPageChangeCallback(
+            OnPageChangeCallback(
                 listener = this
             )
         )
@@ -59,12 +60,9 @@ fun ViewPager2.bindPages(
     setOrientation(viewPagerOrientation)
 }
 
-@BindingAdapter(
-    "selectedPage"
-)
-fun ViewPager2.bindPage(index: Int) {
+@BindingAdapter("selectedPage")
+fun ViewPager2.setSelectedPage(index: Int) {
     val count = adapter?.itemCount ?: return
-
     if (index !in 0 until count) return
 
     val currentIndex = currentItem
@@ -74,12 +72,12 @@ fun ViewPager2.bindPage(index: Int) {
 }
 
 @BindingAdapter("isSwipeEnabled")
-fun ViewPager2.bindSwipeEnabled(isEnabled: Boolean) {
+fun ViewPager2.setSwipeEnabled(isEnabled: Boolean) {
     isUserInputEnabled = isEnabled
 }
 
 @BindingAdapter("offscreenPageLimit")
-fun ViewPager2.bindOffscreenPageLimit(limit: Int) {
+fun ViewPager2.setOffscreenPageLimit(limit: Int) {
     offscreenPageLimit = limit
 }
 
@@ -87,9 +85,26 @@ interface OnPageSelectedListener {
     fun onPageSelected(index: Int)
 }
 
-private class OnPageChanceCallback(
+private fun ViewPager2.setPages(
+    components: List<IComponent<IComponentViewModel>>?,
+    viewPagerOrientation: ViewPagerOrientation?
+) {
+    val anyComponents = components?.asListOfType<IComponent<Any>>() ?: return
+
+    (adapter as? ComponentAdapter)?.run {
+        submitList(anyComponents)
+        return
+    }
+
+    adapter = ComponentAdapter(anyComponents)
+
+    setOrientation(viewPagerOrientation)
+}
+
+private class OnPageChangeCallback(
     private val listener: OnPageSelectedListener
 ) : ViewPager2.OnPageChangeCallback() {
+
     override fun onPageSelected(position: Int) {
         listener.onPageSelected(position)
         super.onPageSelected(position)
@@ -102,3 +117,7 @@ private fun ViewPager2.setOrientation(viewPagerOrientation: ViewPagerOrientation
 
     orientation = androidOrientation
 }
+
+@Suppress("UNCHECKED_CAST")
+private inline fun <reified T> List<*>.asListOfType(): List<T>? =
+    if (all { item -> item is T }) this as List<T> else null
