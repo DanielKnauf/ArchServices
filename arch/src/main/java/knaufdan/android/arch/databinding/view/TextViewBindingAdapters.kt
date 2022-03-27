@@ -1,6 +1,5 @@
 package knaufdan.android.arch.databinding.view
 
-import android.graphics.Typeface
 import android.os.Build
 import android.text.Html
 import android.view.Gravity
@@ -11,7 +10,7 @@ import androidx.databinding.BindingAdapter
 import knaufdan.android.core.resources.IResourceProvider
 
 @BindingAdapter("onTextClicked")
-fun TextView.onTextViewClicked(
+fun TextView.bindOnTextViewClicked(
     onTextClicked: IOnTextClickedListener
 ) {
     setOnClickListener {
@@ -77,27 +76,12 @@ fun TextView.bindTextStyle(
     )
 }
 
-enum class TextStyle {
-    DEFAULT,
-    BOLD,
-    ITALIC,
-    BOLD_ITALIC
-}
-
-private fun TextStyle.toTypeFace(): Int =
-    when (this) {
-        TextStyle.DEFAULT -> Typeface.NORMAL
-        TextStyle.BOLD -> Typeface.BOLD
-        TextStyle.ITALIC -> Typeface.ITALIC
-        TextStyle.BOLD_ITALIC -> Typeface.BOLD_ITALIC
-    }
-
 @BindingAdapter("htmlText")
 fun TextView.bindHtmlText(
     text: String
 ) {
     val formattedText =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= 24) {
             Html.fromHtml(
                 text,
                 Html.FROM_HTML_MODE_COMPACT

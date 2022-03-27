@@ -21,6 +21,7 @@ import androidx.core.view.updatePadding
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import knaufdan.android.arch.R
+import knaufdan.android.arch.utils.rotateAnimated
 import knaufdan.android.core.resources.IResourceProvider
 
 @BindingAdapter("layout_width")
@@ -146,10 +147,10 @@ fun View.bindPadding(
     requireAll = false
 )
 fun View.bindMargins(
-    marginTop: Number?,
-    marginBottom: Number?,
-    marginLeft: Number?,
-    marginRight: Number?
+    marginTop: Number? = null,
+    marginBottom: Number? = null,
+    marginLeft: Number? = null,
+    marginRight: Number? = null
 ) {
     (layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
 
@@ -166,7 +167,9 @@ fun View.bindMargins(
 }
 
 @BindingAdapter("gone")
-fun View.gone(gone: Boolean) {
+fun View.bindGone(gone: Boolean?) {
+    gone ?: return
+
     visibility =
         when (gone) {
             true -> View.GONE
@@ -229,9 +232,11 @@ fun View.bindScrolledElevation(
     requireAll = false
 )
 fun View.bindFading(
-    direction: FadeDirection,
+    direction: FadeDirection?,
     fadeDuration: Number?
 ) {
+    direction ?: return
+
     val targetAlpha =
         when (direction) {
             FadeDirection.STAY -> return
@@ -255,3 +260,6 @@ fun View.bindFading(
         start()
     }
 }
+
+@BindingAdapter("rotate")
+fun View.bindRotate(rotation: Float) = rotateAnimated(rotation)
