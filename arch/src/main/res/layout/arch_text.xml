@@ -13,7 +13,6 @@
             type="knaufdan.android.arch.base.component.common.text.implementation.TextViewModel" />
     </data>
 
-    <TextView
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/ArchText"
         android:lineSpacingExtra="@{viewModel.lineSpacingExtra}"
