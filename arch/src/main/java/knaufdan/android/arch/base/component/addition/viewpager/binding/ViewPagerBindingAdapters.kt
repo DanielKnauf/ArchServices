@@ -21,7 +21,7 @@ import knaufdan.android.arch.base.component.addition.viewpager.implementation.Co
     ],
     requireAll = false
 )
-fun ViewPager2.setPages(
+fun ViewPager2.bindPages(
     components: List<IComponent<IComponentViewModel>>?,
     fragmentManager: FragmentManager?,
     viewPagerOrientation: ViewPagerOrientation?,
@@ -29,7 +29,65 @@ fun ViewPager2.setPages(
     initialPage: Int?
 ) {
     components ?: return
-    fragmentManager ?: return setPages(components, viewPagerOrientation)
+    fragmentManager ?: return submitPages(components, viewPagerOrientation)
+
+    submitPages(
+        components = components,
+        fragmentManager = fragmentManager,
+        viewPagerOrientation = viewPagerOrientation,
+        listener = listener,
+        initialPage = initialPage
+    )
+}
+
+@BindingAdapter("selectedPage")
+fun ViewPager2.bindSelectedPage(index: Int) {
+    val count = adapter?.itemCount ?: return
+    if (index !in 0 until count) return
+
+    val currentIndex = currentItem
+    if (currentIndex == index) return
+
+    currentItem = index
+}
+
+@BindingAdapter("isSwipeEnabled")
+fun ViewPager2.bindSwipeEnabled(isEnabled: Boolean) {
+    isUserInputEnabled = isEnabled
+}
+
+@BindingAdapter("offscreenPageLimit")
+fun ViewPager2.bindOffscreenPageLimit(limit: Int) {
+    offscreenPageLimit = limit
+}
+
+interface OnPageSelectedListener {
+    fun onPageSelected(index: Int)
+}
+
+private fun ViewPager2.submitPages(
+    components: List<IComponent<IComponentViewModel>>?,
+    viewPagerOrientation: ViewPagerOrientation?
+) {
+    val anyComponents = components?.asListOfType<IComponent<Any>>() ?: return
+
+    (adapter as? ComponentAdapter)?.run {
+        submitList(anyComponents)
+        return
+    }
+
+    adapter = ComponentAdapter(anyComponents)
+
+    setOrientation(viewPagerOrientation)
+}
+
+private fun ViewPager2.submitPages(
+    components: List<IComponent<IComponentViewModel>>,
+    fragmentManager: FragmentManager,
+    viewPagerOrientation: ViewPagerOrientation?,
+    listener: OnPageSelectedListener?,
+    initialPage: Int?
+) {
     val lifecycleOwner = context.findLifecycleOwner() ?: return
 
     val hasSameItems =
@@ -50,7 +108,7 @@ fun ViewPager2.setPages(
     }
 
     listener?.run {
-        this@setPages.registerOnPageChangeCallback(
+        this@submitPages.registerOnPageChangeCallback(
             OnPageChangeCallback(
                 listener = this
             )
@@ -60,55 +118,11 @@ fun ViewPager2.setPages(
     setOrientation(viewPagerOrientation)
 }
 
-@BindingAdapter("selectedPage")
-fun ViewPager2.setSelectedPage(index: Int) {
-    val count = adapter?.itemCount ?: return
-    if (index !in 0 until count) return
-
-    val currentIndex = currentItem
-    if (currentIndex == index) return
-
-    currentItem = index
-}
-
-@BindingAdapter("isSwipeEnabled")
-fun ViewPager2.setSwipeEnabled(isEnabled: Boolean) {
-    isUserInputEnabled = isEnabled
-}
-
-@BindingAdapter("offscreenPageLimit")
-fun ViewPager2.setOffscreenPageLimit(limit: Int) {
-    offscreenPageLimit = limit
-}
-
-interface OnPageSelectedListener {
-    fun onPageSelected(index: Int)
-}
-
-private fun ViewPager2.setPages(
-    components: List<IComponent<IComponentViewModel>>?,
-    viewPagerOrientation: ViewPagerOrientation?
-) {
-    val anyComponents = components?.asListOfType<IComponent<Any>>() ?: return
-
-    (adapter as? ComponentAdapter)?.run {
-        submitList(anyComponents)
-        return
-    }
-
-    adapter = ComponentAdapter(anyComponents)
-
-    setOrientation(viewPagerOrientation)
-}
-
 private class OnPageChangeCallback(
     private val listener: OnPageSelectedListener
 ) : ViewPager2.OnPageChangeCallback() {
 
-    override fun onPageSelected(position: Int) {
-        listener.onPageSelected(position)
-        super.onPageSelected(position)
-    }
+    override fun onPageSelected(position: Int) = listener.onPageSelected(position)
 }
 
 private fun ViewPager2.setOrientation(viewPagerOrientation: ViewPagerOrientation?) {
