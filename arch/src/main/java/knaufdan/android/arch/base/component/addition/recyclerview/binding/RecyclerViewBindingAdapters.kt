@@ -26,8 +26,7 @@ fun RecyclerView.bindComponents(
         layoutManager = context.createLinearLayoutManager(viewOrientation)
     }
 
-    if (items == null) return
-    val components = items.asListOfType<IComponent<Any>>() ?: return
+    val components = items?.asListOfType<IComponent<Any>>() ?: return
 
     (adapter as? ComponentAdapter)?.run {
         submitList(components)

@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import knaufdan.android.arch.R
+import knaufdan.android.arch.base.LayoutRes
 
 @BindingAdapter(
     value = [
@@ -130,6 +131,25 @@ fun RecyclerView.bindScrollInsideViewPager(scroll: Boolean) {
     hasItemTouchListener = true
 }
 
+@BindingAdapter("spanSizeLookup")
+fun RecyclerView.bindSpanSizeLookup(spanSizeProvider: ISpanSizeLookup) {
+    val layoutManager = (layoutManager as? GridLayoutManager) ?: return
+
+    layoutManager.spanSizeLookup =
+        object : GridLayoutManager.SpanSizeLookup() {
+
+            override fun getSpanSize(position: Int): Int =
+                adapter
+                    ?.getItemViewType(position)
+                    ?.let(spanSizeProvider::getSpanSize)
+                    ?: ARCH_SPAN_SIZE_DEFAULT
+        }
+}
+
+interface ISpanSizeLookup {
+    fun getSpanSize(layoutRes: LayoutRes): Int
+}
+
 private var RecyclerView.hasItemTouchListener: Boolean
     get() = getTag(R.id.arch_recyclerView_itemTouchListener) == true
     set(value) {
@@ -141,3 +161,5 @@ private var RecyclerView.hasItemDecorator: Boolean
     set(value) {
         setTag(R.id.arch_recyclerView_itemDecorator, value)
     }
+
+private const val ARCH_SPAN_SIZE_DEFAULT: Int = 1
