@@ -7,6 +7,7 @@ enum class ViewPagerOrientation {
     HORIZONTAL;
 
     companion object {
+
         fun ViewPagerOrientation?.toAndroidOrientation(): Int =
             when (this) {
                 VERTICAL -> ViewPager2.ORIENTATION_VERTICAL

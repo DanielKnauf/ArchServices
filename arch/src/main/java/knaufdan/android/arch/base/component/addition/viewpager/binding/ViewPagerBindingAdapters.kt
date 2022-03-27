@@ -5,11 +5,11 @@ import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel
-import knaufdan.android.arch.base.component.addition.viewpager.IComponentAdapter
-import knaufdan.android.arch.base.component.addition.viewpager.implementation.ComponentAdapter
+import knaufdan.android.arch.base.component.addition.recyclerview.implementation.ComponentAdapter
 import knaufdan.android.arch.base.component.addition.viewpager.implementation.ViewPagerOrientation
 import knaufdan.android.arch.base.component.addition.viewpager.implementation.ViewPagerOrientation.Companion.toAndroidOrientation
 import knaufdan.android.arch.utils.findLifecycleOwner
+import knaufdan.android.arch.base.component.addition.viewpager.implementation.ComponentAdapter as ViewPagerAdapter
 
 @BindingAdapter(
     value = [
@@ -23,48 +23,26 @@ import knaufdan.android.arch.utils.findLifecycleOwner
 )
 fun ViewPager2.bindPages(
     components: List<IComponent<IComponentViewModel>>?,
-    fragmentManager: FragmentManager,
+    fragmentManager: FragmentManager?,
     viewPagerOrientation: ViewPagerOrientation?,
     listener: OnPageSelectedListener?,
     initialPage: Int?
 ) {
     components ?: return
-    val lifecycleOwner = context.findLifecycleOwner() ?: return
+    fragmentManager ?: return submitPages(components, viewPagerOrientation)
 
-    val hasSameItems =
-        adapter?.run {
-            this is IComponentAdapter && hasSameItems(components)
-        } ?: false
-
-    val needsNewAdapter = !hasSameItems
-    if (needsNewAdapter) {
-        adapter =
-            ComponentAdapter(
-                fragmentManager = fragmentManager,
-                components = components,
-                lifecycleOwner = lifecycleOwner
-            )
-
-        initialPage?.run { setCurrentItem(this, false) }
-    }
-
-    listener?.run {
-        this@bindPages.registerOnPageChangeCallback(
-            OnPageChanceCallback(
-                listener = this
-            )
-        )
-    }
-
-    setOrientation(viewPagerOrientation)
+    submitPages(
+        components = components,
+        fragmentManager = fragmentManager,
+        viewPagerOrientation = viewPagerOrientation,
+        listener = listener,
+        initialPage = initialPage
+    )
 }
 
-@BindingAdapter(
-    "selectedPage"
-)
-fun ViewPager2.bindPage(index: Int) {
+@BindingAdapter("selectedPage")
+fun ViewPager2.bindSelectedPage(index: Int) {
     val count = adapter?.itemCount ?: return
-
     if (index !in 0 until count) return
 
     val currentIndex = currentItem
@@ -87,13 +65,64 @@ interface OnPageSelectedListener {
     fun onPageSelected(index: Int)
 }
 
-private class OnPageChanceCallback(
+private fun ViewPager2.submitPages(
+    components: List<IComponent<IComponentViewModel>>?,
+    viewPagerOrientation: ViewPagerOrientation?
+) {
+    val anyComponents = components?.asListOfType<IComponent<Any>>() ?: return
+
+    (adapter as? ComponentAdapter)?.run {
+        submitList(anyComponents)
+        return
+    }
+
+    adapter = ComponentAdapter(anyComponents)
+
+    setOrientation(viewPagerOrientation)
+}
+
+private fun ViewPager2.submitPages(
+    components: List<IComponent<IComponentViewModel>>,
+    fragmentManager: FragmentManager,
+    viewPagerOrientation: ViewPagerOrientation?,
+    listener: OnPageSelectedListener?,
+    initialPage: Int?
+) {
+    val lifecycleOwner = context.findLifecycleOwner() ?: return
+
+    val hasSameItems =
+        adapter?.run {
+            this is ViewPagerAdapter && hasSameItems(components)
+        } ?: false
+
+    val needsNewAdapter = !hasSameItems
+    if (needsNewAdapter) {
+        adapter =
+            ViewPagerAdapter(
+                fragmentManager = fragmentManager,
+                components = components,
+                lifecycleOwner = lifecycleOwner
+            )
+
+        initialPage?.run { setCurrentItem(this, false) }
+    }
+
+    listener?.run {
+        this@submitPages.registerOnPageChangeCallback(
+            OnPageChangeCallback(
+                listener = this
+            )
+        )
+    }
+
+    setOrientation(viewPagerOrientation)
+}
+
+private class OnPageChangeCallback(
     private val listener: OnPageSelectedListener
 ) : ViewPager2.OnPageChangeCallback() {
-    override fun onPageSelected(position: Int) {
-        listener.onPageSelected(position)
-        super.onPageSelected(position)
-    }
+
+    override fun onPageSelected(position: Int) = listener.onPageSelected(position)
 }
 
 private fun ViewPager2.setOrientation(viewPagerOrientation: ViewPagerOrientation?) {
@@ -102,3 +131,7 @@ private fun ViewPager2.setOrientation(viewPagerOrientation: ViewPagerOrientation
 
     orientation = androidOrientation
 }
+
+@Suppress("UNCHECKED_CAST")
+private inline fun <reified T> List<*>.asListOfType(): List<T>? =
+    if (all { item -> item is T }) this as List<T> else null
