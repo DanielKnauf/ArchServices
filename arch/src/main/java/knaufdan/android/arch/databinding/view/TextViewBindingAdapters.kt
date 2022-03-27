@@ -1,5 +1,6 @@
 package knaufdan.android.arch.databinding.view
 
+import android.os.Build
 import android.text.Html
 import android.view.Gravity
 import android.widget.TextView
@@ -80,10 +81,15 @@ fun TextView.bindHtmlText(
     text: String
 ) {
     val formattedText =
-        Html.fromHtml(
-            text,
-            Html.FROM_HTML_MODE_COMPACT
-        )
+        if (Build.VERSION.SDK_INT >= 24) {
+            Html.fromHtml(
+                text,
+                Html.FROM_HTML_MODE_COMPACT
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            Html.fromHtml(text)
+        }
 
     setText(formattedText)
 }
