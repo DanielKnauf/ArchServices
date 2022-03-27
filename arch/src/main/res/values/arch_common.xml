@@ -11,5 +11,6 @@
     <item name="arch_recyclerView_itemTouchListener" type="id" />
     <item name="arch_recyclerView_itemDecorator" type="id" />
     <item name="arch_floatingActionButton_scrollListener" type="id" />
+    <item name="arch_viewPager_pageChangedCallback" type="id" />
 
 </resources>
