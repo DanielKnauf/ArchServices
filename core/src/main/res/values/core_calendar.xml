@@ -18,4 +18,29 @@
 
     <string name="core_calendar_day_picker_title">Day</string>
 
+    <string name="core_calendar_january">January</string>
+    <string name="core_calendar_january_short">Jan</string>
+    <string name="core_calendar_february">February</string>
+    <string name="core_calendar_february_short">Feb</string>
+    <string name="core_calendar_march">March</string>
+    <string name="core_calendar_march_short">Mar</string>
+    <string name="core_calendar_april">April</string>
+    <string name="core_calendar_april_short">Apr</string>
+    <string name="core_calendar_may">May</string>
+    <string name="core_calendar_may_short">May</string>
+    <string name="core_calendar_june">June</string>
+    <string name="core_calendar_june_short">Jun</string>
+    <string name="core_calendar_july">July</string>
+    <string name="core_calendar_july_short">Jul</string>
+    <string name="core_calendar_august">August</string>
+    <string name="core_calendar_august_short">Aug</string>
+    <string name="core_calendar_september">September</string>
+    <string name="core_calendar_september_short">Sep</string>
+    <string name="core_calendar_october">October</string>
+    <string name="core_calendar_october_short">Oct</string>
+    <string name="core_calendar_november">November</string>
+    <string name="core_calendar_november_short">Nov</string>
+    <string name="core_calendar_december">December</string>
+    <string name="core_calendar_december_short">Dec</string>
+
 </resources>

@@ -1,10 +1,17 @@
 package knaufdan.android.core.calendar
 
+import knaufdan.android.core.calendar.alias.DayOfMonth
+import knaufdan.android.core.calendar.alias.DayOfYear
+import knaufdan.android.core.calendar.alias.Hour
+import knaufdan.android.core.calendar.alias.Minute
+import knaufdan.android.core.calendar.alias.Year
 import java.util.Calendar
+import java.util.Locale
 import java.util.concurrent.TimeUnit
+import knaufdan.android.core.calendar.alias.Month as MonthAlias
 
-fun Calendar.getWeekday(): Weekday =
-    getDayOfWeek().run {
+val Calendar.weekday: Weekday
+    get() = dayOfWeek.run {
         when (this) {
             Calendar.SUNDAY -> Weekday.Sunday
             Calendar.MONDAY -> Weekday.Monday
@@ -17,24 +24,59 @@ fun Calendar.getWeekday(): Weekday =
         }
     }
 
-fun Calendar.getDayOfWeek(): Int = get(Calendar.DAY_OF_WEEK)
+val Calendar.monthNames: Month
+    get() = month.run {
+        when (this) {
+            Calendar.JANUARY -> Month.January
+            Calendar.FEBRUARY -> Month.February
+            Calendar.MARCH -> Month.March
+            Calendar.APRIL -> Month.April
+            Calendar.MAY -> Month.May
+            Calendar.JUNE -> Month.June
+            Calendar.JULY -> Month.July
+            Calendar.AUGUST -> Month.August
+            Calendar.SEPTEMBER -> Month.September
+            Calendar.OCTOBER -> Month.October
+            Calendar.NOVEMBER -> Month.November
+            Calendar.DECEMBER -> Month.December
+            else -> throw IllegalStateException("Invalid month index = $this")
+        }
+    }
 
-fun Calendar.getDayOfMonth(): DayOfMonth = get(Calendar.DAY_OF_MONTH)
+val Calendar.dayOfWeek: Int
+    get() = get(Calendar.DAY_OF_WEEK)
 
-fun Calendar.getDayOfYear(): DayOfYear = get(Calendar.DAY_OF_YEAR)
+val Calendar.dayOfMonth: DayOfMonth
+    get() = get(Calendar.DAY_OF_MONTH)
+
+val Calendar.dayOfYear: DayOfYear
+    get() = get(Calendar.DAY_OF_YEAR)
 
 /**
  * NOTE: month in [Calendar] starts with 0 (January).
- * For a corrected value use [getMonthCorrected].
+ * For a corrected value use [monthCorrected].
  */
-fun Calendar.getMonth(): Month = get(Calendar.MONTH)
+val Calendar.month: MonthAlias
+    get() = get(Calendar.MONTH)
 
 /**
  * @return corrected [Calendar] month, starting at 1 (January).
  */
-fun Calendar.getMonthCorrected(): Month = getMonth() + 1
+val Calendar.monthCorrected: MonthAlias
+    get() = month + 1
 
-fun Calendar.getYear(): Year = get(Calendar.YEAR)
+val Calendar.monthShortName: String?
+    get() =
+        runCatching {
+            getDisplayName(
+                Calendar.MONTH,
+                Calendar.SHORT,
+                Locale.getDefault()
+            )
+        }.getOrNull()
+
+val Calendar.year: Year
+    get() = get(Calendar.YEAR)
 
 fun Calendar.getHour(
     is24Hours: Boolean = true
@@ -61,6 +103,11 @@ fun Calendar.changeDay(steps: Int): Calendar =
     apply {
         add(Calendar.DATE, steps)
     }
+
+fun Calendar.isSameDay(other: Calendar = now) =
+    year == other.year &&
+        month == other.month &&
+        dayOfMonth == other.dayOfMonth
 
 /**
  * NOTE: result is 0 if receiving [Calendar] is after [future].
