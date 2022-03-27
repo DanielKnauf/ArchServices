@@ -2,19 +2,18 @@ package knaufdan.android.arch.databinding.view
 
 import android.animation.ObjectAnimator
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.PopupMenu
 import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.MenuRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
-import androidx.core.view.marginBottom
-import androidx.core.view.marginEnd
-import androidx.core.view.marginLeft
-import androidx.core.view.marginRight
-import androidx.core.view.marginStart
-import androidx.core.view.marginTop
 import androidx.core.view.postDelayed
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
@@ -76,7 +75,7 @@ fun View.bindBackground(@DrawableRes background: Int) {
 
     val drawable = ContextCompat.getDrawable(context, background) ?: return
 
-    setBackground(drawable)
+    ViewCompat.setBackground(this, drawable)
 }
 
 @BindingAdapter("backgroundColor")
@@ -85,6 +84,19 @@ fun View.bindBackgroundColor(@ColorInt color: Int?) {
         null -> return
         IResourceProvider.INVALID_RES_ID -> return
         else -> setBackgroundColor(color)
+    }
+}
+
+@BindingAdapter("android:backgroundTint")
+fun View.bindBackgroundTint(@ColorRes color: Int?) {
+    when (color) {
+        null -> return
+        IResourceProvider.INVALID_RES_ID -> return
+        else ->
+            ViewCompat.setBackgroundTintList(
+                this,
+                ContextCompat.getColorStateList(context, color)
+            )
     }
 }
 
@@ -152,17 +164,14 @@ fun View.bindMargins(
     marginLeft: Number? = null,
     marginRight: Number? = null
 ) {
-    (layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
+    updateLayoutParams<ViewGroup.MarginLayoutParams> {
+        marginStart = marginLeft?.toInt() ?: this@margins.marginStart
+        marginEnd = marginRight?.toInt() ?: this@margins.marginEnd
 
-        marginStart = marginLeft?.toInt() ?: this@bindMargins.marginStart
-        marginEnd = marginRight?.toInt() ?: this@bindMargins.marginEnd
-
-        setMargins(
-            marginLeft?.toInt() ?: this@bindMargins.marginLeft,
-            marginTop?.toInt() ?: this@bindMargins.marginTop,
-            marginRight?.toInt() ?: this@bindMargins.marginRight,
-            marginBottom?.toInt() ?: this@bindMargins.marginBottom
-        )
+        leftMargin = marginLeft?.toInt() ?: this@margins.marginLeft
+        topMargin = marginTop?.toInt() ?: this@margins.marginTop
+        rightMargin = marginRight?.toInt() ?: this@margins.marginRight
+        bottomMargin = marginBottom?.toInt() ?: this@margins.marginBottom
     }
 }
 
@@ -184,6 +193,27 @@ fun View.bindInvisible(invisible: Boolean) {
             true -> View.INVISIBLE
             else -> View.VISIBLE
         }
+}
+
+@BindingAdapter(
+    value = [
+        "showKeyboard",
+        "showKeyboardDelay"
+    ],
+    requireAll = false
+)
+fun View.bindShowKeyboard(
+    show: Boolean?,
+    delay: Number?
+) {
+    show ?: return
+
+    if (delay == null) {
+        bindShowKeyboard(show)
+        return
+    }
+
+    postDelayed(delay.toLong()) { this@bindShowKeyboard.bindShowKeyboard(show) }
 }
 
 @BindingAdapter("showKeyboard")
@@ -263,3 +293,24 @@ fun View.bindFading(
 
 @BindingAdapter("rotate")
 fun View.bindRotate(rotation: Float) = rotateAnimated(rotation)
+
+@BindingAdapter(
+    value = [
+        "popupActions",
+        "popupListener",
+        "popupGravity"
+    ]
+)
+fun View.bindPopup(
+    @MenuRes actions: Int,
+    listener: PopupMenu.OnMenuItemClickListener,
+    gravity: Int = Gravity.NO_GRAVITY
+) {
+    setOnClickListener { view ->
+        PopupMenu(context, view, gravity).run {
+            inflate(actions)
+            setOnMenuItemClickListener(listener)
+            show()
+        }
+    }
+}
