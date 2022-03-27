@@ -14,6 +14,12 @@ import androidx.annotation.MenuRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
+import androidx.core.view.marginBottom
+import androidx.core.view.marginEnd
+import androidx.core.view.marginLeft
+import androidx.core.view.marginRight
+import androidx.core.view.marginStart
+import androidx.core.view.marginTop
 import androidx.core.view.postDelayed
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
@@ -165,13 +171,13 @@ fun View.bindMargins(
     marginRight: Number? = null
 ) {
     updateLayoutParams<ViewGroup.MarginLayoutParams> {
-        marginStart = marginLeft?.toInt() ?: this@margins.marginStart
-        marginEnd = marginRight?.toInt() ?: this@margins.marginEnd
+        marginStart = marginLeft?.toInt() ?: this@bindMargins.marginStart
+        marginEnd = marginRight?.toInt() ?: this@bindMargins.marginEnd
 
-        leftMargin = marginLeft?.toInt() ?: this@margins.marginLeft
-        topMargin = marginTop?.toInt() ?: this@margins.marginTop
-        rightMargin = marginRight?.toInt() ?: this@margins.marginRight
-        bottomMargin = marginBottom?.toInt() ?: this@margins.marginBottom
+        leftMargin = marginLeft?.toInt() ?: this@bindMargins.marginLeft
+        topMargin = marginTop?.toInt() ?: this@bindMargins.marginTop
+        rightMargin = marginRight?.toInt() ?: this@bindMargins.marginRight
+        bottomMargin = marginBottom?.toInt() ?: this@bindMargins.marginBottom
     }
 }
 
