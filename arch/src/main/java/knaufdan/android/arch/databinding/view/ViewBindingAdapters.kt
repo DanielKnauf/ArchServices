@@ -146,7 +146,7 @@ fun View.bindPadding(
     ],
     requireAll = false
 )
-fun View.margins(
+fun View.bindMargins(
     marginTop: Number? = null,
     marginBottom: Number? = null,
     marginLeft: Number? = null,
@@ -154,20 +154,20 @@ fun View.margins(
 ) {
     (layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
 
-        marginStart = marginLeft?.toInt() ?: this@margins.marginStart
-        marginEnd = marginRight?.toInt() ?: this@margins.marginEnd
+        marginStart = marginLeft?.toInt() ?: this@bindMargins.marginStart
+        marginEnd = marginRight?.toInt() ?: this@bindMargins.marginEnd
 
         setMargins(
-            marginLeft?.toInt() ?: this@margins.marginLeft,
-            marginTop?.toInt() ?: this@margins.marginTop,
-            marginRight?.toInt() ?: this@margins.marginRight,
-            marginBottom?.toInt() ?: this@margins.marginBottom
+            marginLeft?.toInt() ?: this@bindMargins.marginLeft,
+            marginTop?.toInt() ?: this@bindMargins.marginTop,
+            marginRight?.toInt() ?: this@bindMargins.marginRight,
+            marginBottom?.toInt() ?: this@bindMargins.marginBottom
         )
     }
 }
 
 @BindingAdapter("gone")
-fun View.gone(gone: Boolean?) {
+fun View.bindGone(gone: Boolean?) {
     gone ?: return
 
     visibility =
@@ -262,4 +262,4 @@ fun View.bindFading(
 }
 
 @BindingAdapter("rotate")
-fun View.rotate(rotation: Float) = rotateAnimated(rotation)
+fun View.bindRotate(rotation: Float) = rotateAnimated(rotation)
