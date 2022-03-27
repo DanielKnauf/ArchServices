@@ -1,5 +1,6 @@
 package knaufdan.android.core.resources
 
+import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
@@ -9,6 +10,7 @@ import androidx.annotation.StringRes
 import knaufdan.android.core.R
 
 interface IResourceProvider {
+
     /**
      * NOTE: if [stringRes] is [INVALID_RES_ID] an empty string is returned.
      *
@@ -23,11 +25,10 @@ interface IResourceProvider {
     ): String
 
     /**
-     * @throws IllegalArgumentException if no drawable is associated with [drawableRes]
      * @param drawableRes resource id for the drawable
-     * @return drawable associated with the resource
+     * @return drawable associated with the resource or null if no drawable is associated with [drawableRes]
      */
-    fun getDrawable(@DrawableRes drawableRes: Int): Drawable
+    fun getDrawable(@DrawableRes drawableRes: Int): Drawable?
 
     /**
      * NOTE: if [dimenRes] is [INVALID_RES_ID] 0f is returned.
@@ -42,6 +43,7 @@ interface IResourceProvider {
      * @param colorRes resource id for the color
      * @return color associated with the resource
      */
+    @Throws(Resources.NotFoundException::class)
     fun getColor(@ColorRes colorRes: Int): Int
 
     /**
