@@ -17,7 +17,6 @@
         style="@style/ArchText"
         android:lineSpacingExtra="@{viewModel.lineSpacingExtra}"
         android:text="@{viewModel.config.text}"
-        android:textColor="@{viewModel.textColor}"
         android:textColor="@{viewModel.config.textColor}"
         android:textSize="@{viewModel.textSize}"
         app:background="@{viewModel.config.background}"
