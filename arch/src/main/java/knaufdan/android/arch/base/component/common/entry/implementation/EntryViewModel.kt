@@ -10,8 +10,6 @@ class EntryViewModel(
 ) : IComponentViewModel {
 
     val marginTop = resourceProvider.getDimension(config.marginTop)
-    val headerColor = resourceProvider.getColor(config.headerColor)
-    val contentColor = resourceProvider.getColor(config.contentColor)
     val iconTint =
         when (config) {
             is IEntryConfig.Drawable -> resourceProvider.getColor(config.iconTint)

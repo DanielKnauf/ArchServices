@@ -1,11 +1,17 @@
 package knaufdan.android.arch.databinding.view
 
+import android.content.res.ColorStateList
 import android.os.Build
 import android.text.Html
 import android.view.Gravity
+import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.ColorRes
+import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
+import androidx.core.view.postDelayed
+import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
 import knaufdan.android.core.resources.IResourceProvider
 
@@ -18,24 +24,18 @@ fun TextView.bindOnTextViewClicked(
     }
 }
 
-interface IOnTextClickedListener {
-    fun onClick(text: String)
-}
-
 @BindingAdapter("number")
 fun TextView.bindNumber(
-    number: Int?
+    number: Number?
 ) {
     text = number?.toString() ?: ""
 }
 
-@BindingAdapter("textColor")
+@BindingAdapter("android:textColor")
 fun TextView.bindTextColor(
     @ColorRes textColorRes: Int
 ) {
-    if (textColorRes == IResourceProvider.INVALID_RES_ID) {
-        return
-    }
+    if (textColorRes == IResourceProvider.INVALID_RES_ID) return
 
     val color =
         ContextCompat.getColor(
@@ -57,13 +57,6 @@ fun TextView.bindTextGravity(
             TextGravity.CENTER_VERTICAL -> Gravity.CENTER_VERTICAL
             TextGravity.DEFAULT -> Gravity.NO_GRAVITY
         }
-}
-
-enum class TextGravity {
-    CENTER,
-    CENTER_VERTICAL,
-    CENTER_HORIZONTAL,
-    DEFAULT
 }
 
 @BindingAdapter("textStyle")
@@ -92,4 +85,65 @@ fun TextView.bindHtmlText(
         }
 
     setText(formattedText)
+}
+
+@BindingAdapter(
+    value = [
+        "focusText",
+        "focusTextDelay"
+    ],
+    requireAll = false
+)
+fun EditText.bindFocus(
+    focus: Boolean,
+    delay: Number?
+) {
+    if (focus.not()) return clearFocus()
+
+    val select = {
+        requestFocus()
+        setSelection(text.length)
+    }
+
+    if (delay == null) {
+        select()
+        return
+    }
+
+    postDelayed(delay.toLong()) { select() }
+}
+
+@BindingAdapter("android:drawableTint")
+fun TextView.bindDrawableTint(@ColorRes color: Int) {
+    if (color == IResourceProvider.INVALID_RES_ID) return
+
+    TextViewCompat.setCompoundDrawableTintList(
+        this,
+        ColorStateList.valueOf(ContextCompat.getColor(context, color))
+    )
+}
+
+@BindingAdapter("android:drawablePadding")
+fun TextView.bindDrawablePadding(padding: Number) {
+    compoundDrawablePadding = padding.toInt()
+}
+
+@BindingAdapter("gone")
+fun TextView.bindGone(@StringRes text: Int) {
+    isGone =
+        when (text) {
+            IResourceProvider.INVALID_RES_ID -> true
+            else -> resources.getString(text).isBlank()
+        }
+}
+
+interface IOnTextClickedListener {
+    fun onClick(text: String)
+}
+
+enum class TextGravity {
+    CENTER,
+    CENTER_VERTICAL,
+    CENTER_HORIZONTAL,
+    DEFAULT
 }
