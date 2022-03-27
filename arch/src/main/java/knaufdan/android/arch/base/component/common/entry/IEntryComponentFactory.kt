@@ -5,5 +5,5 @@ import knaufdan.android.arch.base.component.IComponentViewModel
 
 interface IEntryComponentFactory {
 
-    fun get(config: EntryConfig): IComponent<IComponentViewModel>
+    fun get(config: IEntryConfig): IComponent<IComponentViewModel>
 }
