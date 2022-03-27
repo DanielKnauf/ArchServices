@@ -3,6 +3,7 @@ package knaufdan.android.arch.base.component.addition.viewpager.binding
 import androidx.databinding.BindingAdapter
 import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
+import knaufdan.android.arch.R
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel
 import knaufdan.android.arch.base.component.addition.recyclerview.implementation.ComponentAdapter
@@ -29,15 +30,23 @@ fun ViewPager2.bindPages(
     initialPage: Int?
 ) {
     components ?: return
-    fragmentManager ?: return submitPages(components, viewPagerOrientation)
 
-    submitPages(
-        components = components,
-        fragmentManager = fragmentManager,
-        viewPagerOrientation = viewPagerOrientation,
-        listener = listener,
-        initialPage = initialPage
-    )
+    if (fragmentManager == null) {
+        submitPages(
+            components = components,
+            viewPagerOrientation = viewPagerOrientation,
+            listener = listener,
+            initialPage = initialPage
+        )
+    } else {
+        submitPages(
+            components = components,
+            fragmentManager = fragmentManager,
+            viewPagerOrientation = viewPagerOrientation,
+            listener = listener,
+            initialPage = initialPage
+        )
+    }
 }
 
 @BindingAdapter("selectedPage")
@@ -67,7 +76,9 @@ interface OnPageSelectedListener {
 
 private fun ViewPager2.submitPages(
     components: List<IComponent<IComponentViewModel>>?,
-    viewPagerOrientation: ViewPagerOrientation?
+    viewPagerOrientation: ViewPagerOrientation?,
+    listener: OnPageSelectedListener?,
+    initialPage: Int?
 ) {
     val anyComponents = components?.asListOfType<IComponent<Any>>() ?: return
 
@@ -77,6 +88,15 @@ private fun ViewPager2.submitPages(
     }
 
     adapter = ComponentAdapter(anyComponents)
+
+    initialPage?.run { setCurrentItem(this, false) }
+
+    listener?.run {
+        if (this@submitPages.hasPageChangedCallback) return@run
+
+        this@submitPages.hasPageChangedCallback = true
+        this@submitPages.registerOnPageChangeCallback(OnPageChangeCallback(this))
+    }
 
     setOrientation(viewPagerOrientation)
 }
@@ -108,11 +128,10 @@ private fun ViewPager2.submitPages(
     }
 
     listener?.run {
-        this@submitPages.registerOnPageChangeCallback(
-            OnPageChangeCallback(
-                listener = this
-            )
-        )
+        if (this@submitPages.hasPageChangedCallback) return@run
+
+        this@submitPages.hasPageChangedCallback = true
+        this@submitPages.registerOnPageChangeCallback(OnPageChangeCallback(this))
     }
 
     setOrientation(viewPagerOrientation)
@@ -135,3 +154,9 @@ private fun ViewPager2.setOrientation(viewPagerOrientation: ViewPagerOrientation
 @Suppress("UNCHECKED_CAST")
 private inline fun <reified T> List<*>.asListOfType(): List<T>? =
     if (all { item -> item is T }) this as List<T> else null
+
+private var ViewPager2.hasPageChangedCallback: Boolean
+    get() = getTag(R.id.arch_viewPager_pageChangedCallback) == true
+    set(value) {
+        setTag(R.id.arch_viewPager_pageChangedCallback, value)
+    }
