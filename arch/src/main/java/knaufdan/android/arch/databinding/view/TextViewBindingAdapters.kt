@@ -10,7 +10,7 @@ import androidx.databinding.BindingAdapter
 import knaufdan.android.core.resources.IResourceProvider
 
 @BindingAdapter("onTextClicked")
-fun TextView.onTextViewClicked(
+fun TextView.bindOnTextViewClicked(
     onTextClicked: IOnTextClickedListener
 ) {
     setOnClickListener {
@@ -67,7 +67,7 @@ enum class TextGravity {
 }
 
 @BindingAdapter("textStyle")
-fun TextView.textStyle(
+fun TextView.bindTextStyle(
     textStyle: TextStyle
 ) {
     setTypeface(
@@ -81,7 +81,7 @@ fun TextView.bindHtmlText(
     text: String
 ) {
     val formattedText =
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        if (Build.VERSION.SDK_INT >= 24) {
             Html.fromHtml(
                 text,
                 Html.FROM_HTML_MODE_COMPACT
