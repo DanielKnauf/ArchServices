@@ -132,15 +132,17 @@ fun RecyclerView.bindScrollInsideViewPager(scroll: Boolean) {
 }
 
 @BindingAdapter("spanSizeLookup")
-fun RecyclerView.spanSizeLookup(spanSizeProvider: ISpanSizeLookup) {
-    val layoutManager = layoutManager
-    if (layoutManager !is GridLayoutManager) return
+fun RecyclerView.bindSpanSizeLookup(spanSizeProvider: ISpanSizeLookup) {
+    val layoutManager = (layoutManager as? GridLayoutManager) ?: return
 
     layoutManager.spanSizeLookup =
         object : GridLayoutManager.SpanSizeLookup() {
 
             override fun getSpanSize(position: Int): Int =
-                adapter?.getItemViewType(position)?.let(spanSizeProvider::getSpanSize) ?: 1
+                adapter
+                    ?.getItemViewType(position)
+                    ?.let(spanSizeProvider::getSpanSize)
+                    ?: ARCH_SPAN_SIZE_DEFAULT
         }
 }
 
@@ -159,3 +161,5 @@ private var RecyclerView.hasItemDecorator: Boolean
     set(value) {
         setTag(R.id.arch_recyclerView_itemDecorator, value)
     }
+
+private const val ARCH_SPAN_SIZE_DEFAULT: Int = 1
