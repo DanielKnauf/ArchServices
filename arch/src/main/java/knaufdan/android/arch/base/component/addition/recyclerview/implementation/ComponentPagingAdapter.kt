@@ -36,5 +36,7 @@ class ComponentPagingAdapter :
     }
 
     override fun getItemViewType(position: Int): LayoutRes =
-        getItem(position)?.getLayoutRes() ?: IResourceProvider.INVALID_RES_ID
+        getItem(position)
+            ?.getLayoutRes()
+            ?: IResourceProvider.INVALID_RES_ID
 }
