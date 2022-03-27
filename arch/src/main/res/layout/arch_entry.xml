@@ -17,16 +17,16 @@
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/arch_entry_icon"
             style="@style/ArchEntry.Icon"
-            app:src="@{viewModel.config.icon}"
-            app:tint="@{viewModel.iconTint}"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:src="@{viewModel.config.icon}"
+            app:tint="@{viewModel.iconTint}" />
 
         <TextView
             android:id="@+id/arch_entry_header"
             style="@style/ArchEntry.Header"
             android:text="@{viewModel.config.header}"
-            android:textColor="@{viewModel.headerColor}"
+            android:textColor="@{viewModel.config.headerColor}"
             app:layout_constraintBottom_toTopOf="@id/arch_entry_content"
             app:layout_constraintLeft_toRightOf="@id/arch_entry_icon"
             app:layout_constraintRight_toRightOf="parent"
@@ -37,7 +37,7 @@
             android:id="@+id/arch_entry_content"
             style="@style/ArchEntry.Content"
             android:text="@{viewModel.config.content}"
-            android:textColor="@{viewModel.contentColor}"
+            android:textColor="@{viewModel.config.contentColor}"
             app:layout_constraintLeft_toRightOf="@id/arch_entry_icon"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/arch_entry_header"
