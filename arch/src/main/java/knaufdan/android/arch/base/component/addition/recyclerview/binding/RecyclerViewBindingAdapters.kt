@@ -26,7 +26,7 @@ import knaufdan.android.core.common.extensions.toList
     ],
     requireAll = false
 )
-fun RecyclerView.submitComponents(
+fun RecyclerView.bindComponents(
     items: List<IComponent<*>>?,
     viewOrientation: ViewOrientation?,
     snapBehavior: RecyclerViewSnapBehavior?
@@ -56,7 +56,7 @@ fun RecyclerView.submitComponents(
     ],
     requireAll = false
 )
-fun RecyclerView.submitComponents(
+fun RecyclerView.bindComponents(
     data: PagingData<IComponent<*>>?,
     viewOrientation: ViewOrientation?,
     snapBehavior: RecyclerViewSnapBehavior?,
@@ -78,12 +78,10 @@ fun RecyclerView.submitComponents(
     }
 
     adapter = ComponentPagingAdapter().apply {
-        submitData(lifecycle, components)
-
         addLoadStateListener { loadStates ->
             val component =
                 when {
-                    showEmpty(loadStates) -> provideEmptyComponent?.invoke()
+                    showEmptyState(loadStates) -> provideEmptyComponent?.invoke()
                     else -> return@addLoadStateListener
                 }
 
@@ -94,12 +92,14 @@ fun RecyclerView.submitComponents(
                 PagingData.from(component.toList())
             )
         }
+
+        submitData(lifecycle, components)
     }
 
     setSnapHelper(snapBehavior)
 }
 
-private fun ComponentPagingAdapter.showEmpty(loadStates: CombinedLoadStates): Boolean =
+private fun ComponentPagingAdapter.showEmptyState(loadStates: CombinedLoadStates): Boolean =
     loadStates.isInitialLoadingFinished() && isEmpty()
 
 private fun CombinedLoadStates.isInitialLoadingFinished(): Boolean =
