@@ -10,6 +10,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import knaufdan.android.arch.R
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.utils.doOnAttachedToWindow
 
@@ -42,11 +43,17 @@ fun TabLayout.bindTabNames(
     ]
 )
 fun TabLayout.bindTabs(
+    previousViewPager: ViewPager2?,
+    previousComponents: List<IComponent<*>>?,
     viewPager: ViewPager2,
     components: List<IComponent<*>>?
 ) {
     components ?: return
     if (components.isEmpty()) return
+
+    val areSameComponents =
+        components.toTypedArray().contentDeepEquals(previousComponents?.toTypedArray())
+    if (areSameComponents) return
 
     val attachTabLayoutMediator = {
         attachTabLayoutMediator(this@bindTabs, viewPager) { tab, position ->
@@ -62,7 +69,14 @@ fun TabLayout.bindTabs(
     if (adapter != null && adapter.itemCount > 0) {
         attachTabLayoutMediator()
     } else {
-        if (viewPager.isAttachedToWindow) postDelayed(100) { bindTabs(viewPager, components) }
+        if (viewPager.isAttachedToWindow) postDelayed(100) {
+            bindTabs(
+                previousViewPager,
+                previousComponents,
+                viewPager,
+                components
+            )
+        }
         else {
             viewPager.doOnAttachedToWindow { attachTabLayoutMediator() }
         }
@@ -79,6 +93,41 @@ fun TabLayout.bindTabs(components: List<IComponent<*>>?) {
     components.forEach { component ->
         addTab(component.toTab(this))
     }
+}
+
+@BindingAdapter("tabSelectedListener")
+fun TabLayout.bindTabSelectedListener(listener: ITabSelectedListener) {
+    if (hasTabSelectedListener) return
+
+    hasTabSelectedListener = true
+
+    addOnTabSelectedListener(
+        object : TabLayout.OnTabSelectedListener {
+
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                tab?.index?.let(listener::onTabSelected)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                tab?.index?.let(listener::onTabUnselected)
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                tab?.index?.let(listener::onTabReselected)
+            }
+
+            private val TabLayout.Tab.index
+                get() = this@bindTabSelectedListener.getTabIndex(this)
+
+            private fun TabLayout.getTabIndex(tab: TabLayout.Tab): Int? {
+                for (i in 0 until tabCount) {
+                    if (getTabAt(i) == tab) return i
+                }
+
+                return null
+            }
+        }
+    )
 }
 
 private fun attachTabLayoutMediator(
@@ -102,4 +151,19 @@ private fun ViewGroup.inflateComponent(component: IComponent<*>): View =
         setVariable(component.getBindingKey(), component.getDataSource())
         executePendingBindings()
         root
+    }
+
+interface ITabSelectedListener {
+
+    fun onTabSelected(index: Int) = Unit
+
+    fun onTabUnselected(index: Int) = Unit
+
+    fun onTabReselected(index: Int) = Unit
+}
+
+private var TabLayout.hasTabSelectedListener: Boolean
+    get() = getTag(R.id.arch_tabLayout_tabSelectedListener) == true
+    set(value) {
+        setTag(R.id.arch_tabLayout_tabSelectedListener, value)
     }
