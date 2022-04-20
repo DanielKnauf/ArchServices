@@ -73,7 +73,7 @@ fun ImageView.bindImageUri(
     resizeWidth: Int = -1,
     resizeHeight: Int = -1,
     scaleType: ScaleType? = ScaleType.CENTER_INSIDE,
-    onlyScaleDown: Boolean = false,
+    onlyScaleDown: Boolean = false
 ) {
     if (imageUri == null || imageUri == Uri.EMPTY) return
 
@@ -116,7 +116,7 @@ fun ImageView.bindImageUrl(
     resizeWidth: Int = -1,
     resizeHeight: Int = -1,
     scaleType: ScaleType? = ScaleType.CENTER_INSIDE,
-    onlyScaleDown: Boolean = false,
+    onlyScaleDown: Boolean = false
 ) {
     if (imageUrl == null || imageUrl.isBlank()) return
 
