@@ -19,4 +19,6 @@ class TextViewModel(
     val marginBottom = resourceProvider.getDimension(config.marginBottom)
     val marginLeft = resourceProvider.getDimension(config.marginLeft)
     val marginRight = resourceProvider.getDimension(config.marginRight)
+    val drawableLeft = resourceProvider.getDrawable(config.drawableLeft)
+    val drawablePadding = resourceProvider.getDimension(config.drawablePadding)
 }

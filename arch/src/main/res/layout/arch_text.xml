@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
-        <variable
-            name="fm"
-            type="androidx.fragment.app.FragmentManager" />
 
         <variable
             name="viewModel"
@@ -15,6 +12,9 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         style="@style/ArchText"
+        android:drawableLeft="@{viewModel.drawableLeft}"
+        android:drawablePadding="@{viewModel.drawablePadding}"
+        android:drawableTint="@{viewModel.config.drawableLeftTint}"
         android:lineSpacingExtra="@{viewModel.lineSpacingExtra}"
         android:text="@{viewModel.config.text}"
         android:textColor="@{viewModel.config.textColor}"
@@ -32,6 +32,7 @@
         app:paddingRight="@{viewModel.paddingRight}"
         app:paddingTop="@{viewModel.paddingTop}"
         app:textGravity="@{viewModel.config.textGravity}"
-        app:textStyle="@{viewModel.config.textStyle}" />
+        app:textStyle="@{viewModel.config.textStyle}"
+        tools:text="Text Component" />
 
 </layout>
