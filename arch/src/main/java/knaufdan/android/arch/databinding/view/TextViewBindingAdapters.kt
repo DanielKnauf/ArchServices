@@ -87,32 +87,6 @@ fun TextView.bindHtmlText(
     setText(formattedText)
 }
 
-@BindingAdapter(
-    value = [
-        "focusText",
-        "focusTextDelay"
-    ],
-    requireAll = false
-)
-fun EditText.bindFocus(
-    focus: Boolean,
-    delay: Number?
-) {
-    if (focus.not()) return clearFocus()
-
-    val select = {
-        requestFocus()
-        setSelection(text.length)
-    }
-
-    if (delay == null) {
-        select()
-        return
-    }
-
-    postDelayed(delay.toLong()) { select() }
-}
-
 @BindingAdapter("android:drawableTint")
 fun TextView.bindDrawableTint(@ColorRes color: Int) {
     if (color == IResourceProvider.INVALID_RES_ID) return
