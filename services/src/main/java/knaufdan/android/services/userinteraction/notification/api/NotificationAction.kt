@@ -14,6 +14,8 @@ import androidx.core.app.RemoteInput
 import knaufdan.android.services.common.Constants.Intent.KEY_NOTIFICATION_ID
 import knaufdan.android.services.common.Constants.Intent.KEY_REQUEST_CODE
 import knaufdan.android.services.common.createIntentToOpenActivity
+import knaufdan.android.services.common.immutableFlags
+import knaufdan.android.services.common.mutableFlags
 import kotlin.reflect.KClass
 
 sealed class NotificationAction(
@@ -165,7 +167,9 @@ sealed class NotificationAction(
             }
 
         private fun Boolean.toFlags() =
-            if (this) PendingIntent.FLAG_UPDATE_CURRENT
-            else PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            when {
+                this -> mutableFlags
+                else -> immutableFlags
+            }
     }
 }

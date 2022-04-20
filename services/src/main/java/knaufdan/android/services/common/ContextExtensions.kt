@@ -73,6 +73,6 @@ private fun Intent.toPendingIntentForOpenApp(
             context,
             requestCode,
             this,
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+            immutableFlags
         )
     }
