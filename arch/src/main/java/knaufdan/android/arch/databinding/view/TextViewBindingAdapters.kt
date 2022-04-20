@@ -4,13 +4,11 @@ import android.content.res.ColorStateList
 import android.os.Build
 import android.text.Html
 import android.view.Gravity
-import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
-import androidx.core.view.postDelayed
 import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
 import knaufdan.android.core.resources.IResourceProvider
