@@ -13,6 +13,7 @@
     <FrameLayout
         style="@style/ArchHorizontalDividerContainer"
         android:background="@{viewModel.background}"
+        app:marginTop="@{viewModel.marginTop}"
         app:marginLeft="@{viewModel.marginLeft}"
         app:marginRight="@{viewModel.marginRight}"
         app:paddingLeft="@{viewModel.paddingLeft}"

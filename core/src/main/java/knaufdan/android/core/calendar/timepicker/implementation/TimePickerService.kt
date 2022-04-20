@@ -6,8 +6,8 @@ import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOC
 import com.google.android.material.timepicker.TimeFormat.CLOCK_12H
 import com.google.android.material.timepicker.TimeFormat.CLOCK_24H
 import knaufdan.android.core.IContextProvider
-import knaufdan.android.core.calendar.Hour
-import knaufdan.android.core.calendar.Minute
+import knaufdan.android.core.calendar.alias.Hour
+import knaufdan.android.core.calendar.alias.Minute
 import knaufdan.android.core.calendar.timepicker.ITimePickerService
 import knaufdan.android.core.calendar.timepicker.TimePickerConfig
 

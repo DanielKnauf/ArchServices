@@ -6,6 +6,7 @@ import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.addition.recyclerview.IDiffItem
 
 class ComponentDiffCallback : DiffUtil.ItemCallback<IComponent<Any>>() {
+
     override fun areItemsTheSame(
         oldItem: IComponent<Any>,
         newItem: IComponent<Any>

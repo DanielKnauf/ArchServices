@@ -6,6 +6,7 @@ import knaufdan.android.arch.R
 
 data class HorizontalDividerConfig(
     @DimenRes val height: Int = R.dimen.arch_horizontal_divider_default_height,
+    @DimenRes val marginTop: Int = R.dimen.arch_horizontal_divider_default_margin,
     @DimenRes val marginLeft: Int = R.dimen.arch_horizontal_divider_default_margin,
     @DimenRes val marginRight: Int = R.dimen.arch_horizontal_divider_default_margin,
     @DimenRes val paddingLeft: Int = R.dimen.arch_horizontal_divider_default_padding,

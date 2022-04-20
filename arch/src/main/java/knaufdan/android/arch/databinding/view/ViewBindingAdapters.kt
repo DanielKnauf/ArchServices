@@ -2,12 +2,17 @@ package knaufdan.android.arch.databinding.view
 
 import android.animation.ObjectAnimator
 import android.content.Context.INPUT_METHOD_SERVICE
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.PopupMenu
 import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
+import androidx.annotation.MenuRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.core.view.marginBottom
 import androidx.core.view.marginEnd
@@ -21,6 +26,7 @@ import androidx.core.view.updatePadding
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import knaufdan.android.arch.R
+import knaufdan.android.arch.utils.rotateAnimated
 import knaufdan.android.core.resources.IResourceProvider
 
 @BindingAdapter("layout_width")
@@ -75,7 +81,7 @@ fun View.bindBackground(@DrawableRes background: Int) {
 
     val drawable = ContextCompat.getDrawable(context, background) ?: return
 
-    setBackground(drawable)
+    ViewCompat.setBackground(this, drawable)
 }
 
 @BindingAdapter("backgroundColor")
@@ -84,6 +90,19 @@ fun View.bindBackgroundColor(@ColorInt color: Int?) {
         null -> return
         IResourceProvider.INVALID_RES_ID -> return
         else -> setBackgroundColor(color)
+    }
+}
+
+@BindingAdapter("android:backgroundTint")
+fun View.bindBackgroundTint(@ColorRes color: Int?) {
+    when (color) {
+        null -> return
+        IResourceProvider.INVALID_RES_ID -> return
+        else ->
+            ViewCompat.setBackgroundTintList(
+                this,
+                ContextCompat.getColorStateList(context, color)
+            )
     }
 }
 
@@ -146,27 +165,26 @@ fun View.bindPadding(
     requireAll = false
 )
 fun View.bindMargins(
-    marginTop: Number?,
-    marginBottom: Number?,
-    marginLeft: Number?,
-    marginRight: Number?
+    marginTop: Number? = null,
+    marginBottom: Number? = null,
+    marginLeft: Number? = null,
+    marginRight: Number? = null
 ) {
-    (layoutParams as? ViewGroup.MarginLayoutParams)?.apply {
-
+    updateLayoutParams<ViewGroup.MarginLayoutParams> {
         marginStart = marginLeft?.toInt() ?: this@bindMargins.marginStart
         marginEnd = marginRight?.toInt() ?: this@bindMargins.marginEnd
 
-        setMargins(
-            marginLeft?.toInt() ?: this@bindMargins.marginLeft,
-            marginTop?.toInt() ?: this@bindMargins.marginTop,
-            marginRight?.toInt() ?: this@bindMargins.marginRight,
-            marginBottom?.toInt() ?: this@bindMargins.marginBottom
-        )
+        leftMargin = marginLeft?.toInt() ?: this@bindMargins.marginLeft
+        topMargin = marginTop?.toInt() ?: this@bindMargins.marginTop
+        rightMargin = marginRight?.toInt() ?: this@bindMargins.marginRight
+        bottomMargin = marginBottom?.toInt() ?: this@bindMargins.marginBottom
     }
 }
 
 @BindingAdapter("gone")
-fun View.bindGone(gone: Boolean) {
+fun View.bindGone(gone: Boolean?) {
+    gone ?: return
+
     visibility =
         when (gone) {
             true -> View.GONE
@@ -181,6 +199,27 @@ fun View.bindInvisible(invisible: Boolean) {
             true -> View.INVISIBLE
             else -> View.VISIBLE
         }
+}
+
+@BindingAdapter(
+    value = [
+        "showKeyboard",
+        "showKeyboardDelay"
+    ],
+    requireAll = false
+)
+fun View.bindShowKeyboard(
+    show: Boolean?,
+    delay: Number?
+) {
+    show ?: return
+
+    if (delay == null) {
+        bindShowKeyboard(show)
+        return
+    }
+
+    postDelayed(delay.toLong()) { this@bindShowKeyboard.bindShowKeyboard(show) }
 }
 
 @BindingAdapter("showKeyboard")
@@ -229,9 +268,11 @@ fun View.bindScrolledElevation(
     requireAll = false
 )
 fun View.bindFading(
-    direction: FadeDirection,
+    direction: FadeDirection?,
     fadeDuration: Number?
 ) {
+    direction ?: return
+
     val targetAlpha =
         when (direction) {
             FadeDirection.STAY -> return
@@ -253,5 +294,29 @@ fun View.bindFading(
         }
 
         start()
+    }
+}
+
+@BindingAdapter("rotate")
+fun View.bindRotate(rotation: Float) = rotateAnimated(rotation)
+
+@BindingAdapter(
+    value = [
+        "popupActions",
+        "popupListener",
+        "popupGravity"
+    ]
+)
+fun View.bindPopup(
+    @MenuRes actions: Int,
+    listener: PopupMenu.OnMenuItemClickListener,
+    gravity: Int = Gravity.NO_GRAVITY
+) {
+    setOnClickListener { view ->
+        PopupMenu(context, view, gravity).run {
+            inflate(actions)
+            setOnMenuItemClickListener(listener)
+            show()
+        }
     }
 }

@@ -81,6 +81,7 @@ internal class NotificationService(
             setSmallIcon(style.smallIcon)
             setContentTitle(style.title)
             setContentText(style.text)
+            setLargeIcon(style.largeIcon)
             setStyle(NotificationCompat.BigTextStyle().bigText(style.bigText))
             setDefaults(NotificationCompat.DEFAULT_ALL)
             setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
@@ -106,11 +107,9 @@ internal class NotificationService(
         notificationConfig: NotificationConfig
     ): NotificationCompat.Builder =
         apply {
-            val activityTarget = notificationConfig.interaction.activityTarget ?: return@apply
-
             setContentIntent(
                 context.createIntentToOpenActivity(
-                    activity = activityTarget,
+                    activity = notificationConfig.interaction.activityTarget ?: return@apply,
                     action = notificationConfig.interaction.activityTargetAction,
                     notificationId = notificationConfig.id,
                     requestCode = notificationConfig.requestCode

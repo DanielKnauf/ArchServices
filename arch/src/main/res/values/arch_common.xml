@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- colors -->
+    <color name="arch_default_text_color">#808080</color>
+
     <!-- dimension -->
     <dimen name="arch_default_elevation">8dp</dimen>
 
     <!-- identifiers-->
+    <item name="arch_recyclerView_itemTouchListener" type="id" />
+    <item name="arch_recyclerView_itemDecorator" type="id" />
     <item name="arch_floatingActionButton_scrollListener" type="id" />
+    <item name="arch_viewPager_pageChangedCallback" type="id" />
+    <item name="arch_tabLayout_tabSelectedListener" type="id" />
 
 </resources>

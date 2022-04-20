@@ -10,7 +10,6 @@ class TextViewModel(
 ) : IComponentViewModel {
 
     val textSize = resourceProvider.getDimension(config.textSize)
-    val textColor = resourceProvider.getColor(config.textColor)
     val lineSpacingExtra = resourceProvider.getDimension(config.lineSpacingExtra)
     val paddingTop = resourceProvider.getDimension(config.paddingTop)
     val paddingBottom = resourceProvider.getDimension(config.paddingBottom)
