@@ -17,6 +17,13 @@ val today: Triple<DayOfMonth, Month, Year>
         third = getTodayAsYear()
     )
 
+val Calendar.today: Triple<DayOfMonth, Month, Year>
+    get() = Triple(
+        first = dayOfMonth,
+        second = month,
+        third = year
+    )
+
 val now: Calendar
     get() = Calendar.getInstance()
 
