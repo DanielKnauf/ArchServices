@@ -11,6 +11,7 @@ class GridLayoutItemDecorator(
     spacing: Int = 4,
     context: Context
 ) : RecyclerView.ItemDecoration() {
+
     private val spacingInPx = context.dpToPx(spacing).toInt()
 
     override fun getItemOffsets(
