@@ -12,6 +12,7 @@ import knaufdan.android.core.calendar.nowInMillis
 import knaufdan.android.services.alarm.AlarmConfig
 import knaufdan.android.services.alarm.AlarmIteration
 import knaufdan.android.services.alarm.IAlarmService
+import knaufdan.android.services.common.mutableFlags
 import kotlin.reflect.KClass
 
 internal class AlarmService(
@@ -117,7 +118,7 @@ internal class AlarmService(
                     extras = extras,
                     broadcastReceiver = broadcastReceiver
                 ),
-                PendingIntent.FLAG_UPDATE_CURRENT
+                mutableFlags
             )
 
         private fun Context.buildIntent(
