@@ -1,5 +1,6 @@
 import Versions.AndroidX.vAppCompat
 import Versions.AndroidX.vBroadcastManager
+import Versions.AndroidX.vBrowser
 import Versions.AndroidX.vConstraintLayout
 import Versions.AndroidX.vCore
 import Versions.AndroidX.vFragment
@@ -13,7 +14,6 @@ import Versions.AndroidX.vRoom
 import Versions.AndroidX.vTestRunner
 import Versions.AndroidX.vTransition
 import Versions.AndroidX.vViewPager2
-import Versions.DK.vArchServices
 import Versions.DK.vLiveDataKit
 import Versions.Google.vDagger
 import Versions.Google.vFirebaseAnalytics
@@ -34,6 +34,7 @@ object Libs {
 
     object AndroidX {
         const val appCompat = "androidx.appcompat:appcompat:$vAppCompat"
+        const val browser = "androidx.browser:browser:$vBrowser"
         const val core = "androidx.core:core-ktx:$vCore"
         const val constraintLayout = "androidx.constraintlayout:constraintlayout:$vConstraintLayout"
         const val fragment = "androidx.fragment:fragment-ktx:$vFragment"
@@ -74,7 +75,6 @@ object Libs {
     }
 
     object DK {
-        const val archServices = "com.github.DanielKnauf:archservices:$vArchServices"
         const val liveDataKit = "com.github.DanielKnauf:livedata-kit:$vLiveDataKit"
     }
 
