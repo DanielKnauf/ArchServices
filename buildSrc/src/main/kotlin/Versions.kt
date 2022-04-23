@@ -39,14 +39,14 @@ object Versions {
     }
 
     object Kotlin {
-        const val vKotlin = "1.6.20"
+        const val vKotlin = "1.6.21"
         const val vCoroutines = "1.6.1"
     }
 
     object Other {
         const val vAndroidMaven = "2.1"
         const val vDependencyUpdates = "0.42.0"
-        const val vKtLint = "0.43.2"
+        const val vKtLint = "0.45.2"
         const val vJUnit = "4.13.2"
         const val vPicasso = "2.71828"
         const val vRetrofit = "2.9.0"
