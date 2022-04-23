@@ -158,6 +158,7 @@ private fun RequestCreator.applyTransformation(
             when (scaleType) {
                 ScaleType.CENTER_INSIDE -> centerInside()
                 ScaleType.CENTER_CROP -> centerCrop()
+                null -> Unit
             }
 
             if (onlyScaleDown) {
