@@ -2,8 +2,8 @@ import org.gradle.api.JavaVersion
 
 object BuildConfig {
     const val minSdk = 21
-    const val targetSdk = 30
-    const val compileSdkVersion = 30
+    const val targetSdk = 31
+    const val compileSdkVersion = 31
     const val versionCode = 9
     const val versionName = "0.8.0"
 

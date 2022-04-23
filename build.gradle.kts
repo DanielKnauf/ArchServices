@@ -32,7 +32,7 @@ allprojects {
 }
 
 subprojects {
-    apply { plugin("maven") }
+    apply { plugin("maven-publish") }
 }
 
 tasks.register("clean", Delete::class) { delete(rootProject.buildDir) }
