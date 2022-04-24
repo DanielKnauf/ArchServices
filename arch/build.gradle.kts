@@ -39,7 +39,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = BuildConfig.javaVersion.toString()
+        jvmTarget = BuildConfig.jvmVersion
     }
 
     buildFeatures {
