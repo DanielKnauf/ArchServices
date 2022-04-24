@@ -55,7 +55,7 @@ class PermissionRequestResolver : IPermissionRequestResolver {
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.arch_services_permission_request_resolver_rationale_title))
             .setMessage(config.rationale)
-            .setCancelable(false)
+            .setCancelable(true)
             .setPositiveButton(getString(android.R.string.ok)) { _, _ ->
                 requestPermission(config.permission, onResult)
             }
