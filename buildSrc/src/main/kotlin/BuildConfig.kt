@@ -1,7 +1,7 @@
 import org.gradle.api.JavaVersion
 
 /**
- * Current version: 0.8.0
+ * Current version: 0.9.0
  */
 object BuildConfig {
     const val minSdk = 24
