@@ -41,7 +41,7 @@ android {
     }
 
     kotlinOptions {
-        jvmTarget = BuildConfig.javaVersion.toString()
+        jvmTarget = BuildConfig.jvmVersion
     }
 
     apply(from = "$rootDir/buildSrc/ktlint.gradle.kts")
