@@ -21,11 +21,11 @@ interface IPermissionRequestResolver {
      * Calls [onResult] with [PermissionResult.GRANTED] if permission is already given or user gives
      * permission. Otherwise, [onResult] is called with [PermissionResult.DENIED].
      *
-     * NOTE: return [PermissionResult.DENIED] if no [ComponentActivity] is set via
+     * NOTE: returns [PermissionResult.DENIED] if no [ComponentActivity] is set via
      * [registerPermissionRequestsFor].
      *
      * @param config containing the requested permission and displayed rational.
-     * @param onResult callback to be called when [PermissionResult] is available.
+     * @param onResult callback to be called when a [PermissionResult] is available.
      */
     fun requestPermission(
         config: PermissionRequestConfig,
