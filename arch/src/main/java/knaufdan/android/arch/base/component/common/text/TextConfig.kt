@@ -33,6 +33,9 @@ data class TextConfig(
     @DimenRes val marginLeft: Int = R.dimen.arch_text_default_margin_vertical,
     @DimenRes val marginRight: Int = R.dimen.arch_text_default_margin_vertical,
     @DrawableRes val background: Int = IResourceProvider.INVALID_RES_ID,
+    @DrawableRes val drawableLeft: Int = IResourceProvider.INVALID_RES_ID,
+    @ColorRes val drawableLeftTint: Int = IResourceProvider.INVALID_RES_ID,
+    @DimenRes val drawablePadding: Int = R.dimen.spacing_zero,
     val onTextClicked: (text: String) -> Unit = {}
 ) {
     constructor(
@@ -53,6 +56,9 @@ data class TextConfig(
         @DimenRes marginLeft: Int = R.dimen.arch_text_default_margin_vertical,
         @DimenRes marginRight: Int = R.dimen.arch_text_default_margin_vertical,
         @DrawableRes background: Int = IResourceProvider.INVALID_RES_ID,
+        @DrawableRes drawableLeft: Int = IResourceProvider.INVALID_RES_ID,
+        @ColorRes drawableLeftTint: Int = IResourceProvider.INVALID_RES_ID,
+        @DimenRes drawablePadding: Int = R.dimen.spacing_zero,
         onTextClicked: (text: String) -> Unit = {}
     ) : this(
         text = MutableLiveData(text),
@@ -72,6 +78,9 @@ data class TextConfig(
         marginLeft = marginLeft,
         marginRight = marginRight,
         background = background,
+        drawableLeft = drawableLeft,
+        drawableLeftTint = drawableLeftTint,
+        drawablePadding = drawablePadding,
         onTextClicked = onTextClicked
     )
 
@@ -93,6 +102,9 @@ data class TextConfig(
         @DimenRes marginLeft: Int = R.dimen.arch_text_default_margin_vertical,
         @DimenRes marginRight: Int = R.dimen.arch_text_default_margin_vertical,
         @DrawableRes background: Int = IResourceProvider.INVALID_RES_ID,
+        @DrawableRes drawableLeft: Int = IResourceProvider.INVALID_RES_ID,
+        @ColorRes drawableLeftTint: Int = IResourceProvider.INVALID_RES_ID,
+        @DimenRes drawablePadding: Int = R.dimen.spacing_zero,
         onTextClicked: (text: String) -> Unit = {}
     ) : this(
         text = MutableLiveData(SpannableString(text) as Spannable),
@@ -112,6 +124,9 @@ data class TextConfig(
         marginLeft = marginLeft,
         marginRight = marginRight,
         background = background,
+        drawableLeft = drawableLeft,
+        drawableLeftTint = drawableLeftTint,
+        drawablePadding = drawablePadding,
         onTextClicked = onTextClicked
     )
 
@@ -138,6 +153,9 @@ data class TextConfig(
         if (marginLeft != other.marginLeft) return false
         if (marginRight != other.marginRight) return false
         if (background != other.background) return false
+        if (drawableLeft != other.drawableLeft) return false
+        if (drawableLeftTint != other.drawableLeftTint) return false
+        if (drawablePadding != other.drawablePadding) return false
 
         return true
     }
@@ -159,6 +177,9 @@ data class TextConfig(
         result = 31 * result + marginBottom
         result = 31 * result + marginLeft
         result = 31 * result + marginRight
+        result = 31 * result + drawableLeft
+        result = 31 * result + drawableLeftTint
+        result = 31 * result + drawablePadding
 
         return result
     }

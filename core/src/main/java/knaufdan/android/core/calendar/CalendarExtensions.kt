@@ -24,7 +24,7 @@ val Calendar.weekday: Weekday
         }
     }
 
-val Calendar.monthNames: Month
+val Calendar.monthName: Month
     get() = month.run {
         when (this) {
             Calendar.JANUARY -> Month.January
@@ -75,6 +75,16 @@ val Calendar.monthShortName: String?
             )
         }.getOrNull()
 
+val Calendar.monthLongName: String?
+    get() =
+        runCatching {
+            getDisplayName(
+                Calendar.MONTH,
+                Calendar.LONG,
+                Locale.getDefault()
+            )
+        }.getOrNull()
+
 val Calendar.year: Year
     get() = get(Calendar.YEAR)
 
@@ -99,12 +109,15 @@ fun Calendar.setMinute(minute: Minute): Calendar =
 fun Calendar.addDay(): Calendar =
     changeDay(1)
 
+fun Calendar.removeDay(): Calendar =
+    changeDay(-1)
+
 fun Calendar.changeDay(steps: Int): Calendar =
     apply {
         add(Calendar.DATE, steps)
     }
 
-fun Calendar.isSameDay(other: Calendar = now) =
+fun Calendar.isSameDay(other: Calendar) =
     year == other.year &&
         month == other.month &&
         dayOfMonth == other.dayOfMonth

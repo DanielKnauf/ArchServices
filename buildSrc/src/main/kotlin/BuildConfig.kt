@@ -1,11 +1,13 @@
 import org.gradle.api.JavaVersion
 
+/**
+ * Current version: 0.9.0
+ */
 object BuildConfig {
-    const val minSdk = 21
-    const val targetSdk = 30
-    const val compileSdkVersion = 30
-    const val versionCode = 9
-    const val versionName = "0.8.0"
+    const val minSdk = 24
+    const val targetSdk = 31
+    const val compileSdkVersion = 31
 
-    val javaVersion by lazy { JavaVersion.VERSION_1_8 }
+    val javaVersion = JavaVersion.VERSION_11
+    const val jvmVersion = "11"
 }

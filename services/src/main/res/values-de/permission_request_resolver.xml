@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Strings -->
+    <string name="arch_services_permission_request_resolver_rationale_title">Berechtigung notwendig</string>
+    <string name="arch_services_permission_request_resolver_rationale">Diese Berechtigung wird für die volle Funktionalität der App benötigt.</string>
+
+</resources>

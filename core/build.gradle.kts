@@ -4,7 +4,6 @@ import Libs.Lifecycle.addLifecycle
 
 plugins {
     id("com.android.library")
-    id("com.github.dcendents.android-maven")
     kotlin("android")
     kotlin("kapt")
 }
@@ -12,13 +11,11 @@ plugins {
 group = Constants.GROUP_NAME
 
 android {
-    compileSdkVersion(BuildConfig.compileSdkVersion)
+    compileSdk = BuildConfig.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion(BuildConfig.minSdk)
-        targetSdkVersion(BuildConfig.targetSdk)
-        versionCode = BuildConfig.versionCode
-        versionName = BuildConfig.versionName
+        minSdk = BuildConfig.minSdk
+        targetSdk = BuildConfig.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -34,21 +31,23 @@ android {
         }
     }
 
+    buildFeatures {
+        dataBinding = true
+    }
+
     compileOptions {
         sourceCompatibility = BuildConfig.javaVersion
         targetCompatibility = BuildConfig.javaVersion
     }
 
     kotlinOptions {
-        jvmTarget = BuildConfig.javaVersion.toString()
+        jvmTarget = BuildConfig.jvmVersion
     }
 
     apply(from = "$rootDir/buildSrc/ktlint.gradle.kts")
 }
 
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-
     addDagger()
     addKotlin()
     addLifecycle()

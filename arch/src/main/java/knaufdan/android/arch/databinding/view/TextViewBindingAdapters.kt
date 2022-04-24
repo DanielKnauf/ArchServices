@@ -4,13 +4,11 @@ import android.content.res.ColorStateList
 import android.os.Build
 import android.text.Html
 import android.view.Gravity
-import android.widget.EditText
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.view.isGone
-import androidx.core.view.postDelayed
 import androidx.core.widget.TextViewCompat
 import androidx.databinding.BindingAdapter
 import knaufdan.android.core.resources.IResourceProvider
@@ -85,32 +83,6 @@ fun TextView.bindHtmlText(
         }
 
     setText(formattedText)
-}
-
-@BindingAdapter(
-    value = [
-        "focusText",
-        "focusTextDelay"
-    ],
-    requireAll = false
-)
-fun EditText.bindFocus(
-    focus: Boolean,
-    delay: Number?
-) {
-    if (focus.not()) return clearFocus()
-
-    val select = {
-        requestFocus()
-        setSelection(text.length)
-    }
-
-    if (delay == null) {
-        select()
-        return
-    }
-
-    postDelayed(delay.toLong()) { select() }
 }
 
 @BindingAdapter("android:drawableTint")
