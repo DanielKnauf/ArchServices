@@ -33,7 +33,7 @@ android {
         }
     }
 
-    compileOptions {
+    java {
         sourceCompatibility = BuildConfig.javaVersion
         targetCompatibility = BuildConfig.javaVersion
     }
@@ -76,4 +76,30 @@ dependencies {
     implementation(Libs.DK.liveDataKit)
 
     implementation(project(":core"))
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = BuildConfig.groupId
+            artifactId = "arch"
+            version = BuildConfig.versionCode
+
+            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
+
+            pom {
+                withXml {
+                    val dependenciesNode = asNode().appendNode("dependencies")
+                    configurations.getByName("implementation") {
+                        dependencies.forEach {
+                            val dependencyNode = dependenciesNode.appendNode("dependency")
+                            dependencyNode.appendNode("groupId", it.group)
+                            dependencyNode.appendNode("artifactId", it.name)
+                            dependencyNode.appendNode("version", it.version)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
