@@ -85,8 +85,6 @@ publishing {
             artifactId = "arch"
             version = BuildConfig.versionCode
 
-            from(components["java"])
-
             artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
 
             pom {
