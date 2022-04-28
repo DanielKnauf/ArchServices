@@ -61,3 +61,29 @@ dependencies {
 
     implementation(Libs.uCrop)
 }
+
+publishing {
+    publications {
+        create<MavenPublication>("maven") {
+            groupId = BuildConfig.groupId
+            artifactId = "services"
+            version = BuildConfig.versionCode
+
+            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
+
+            pom {
+                withXml {
+                    val dependenciesNode = asNode().appendNode("dependencies")
+                    configurations.getByName("implementation") {
+                        dependencies.forEach {
+                            val dependencyNode = dependenciesNode.appendNode("dependency")
+                            dependencyNode.appendNode("groupId", it.group)
+                            dependencyNode.appendNode("artifactId", it.name)
+                            dependencyNode.appendNode("version", it.version)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
