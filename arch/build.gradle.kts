@@ -11,6 +11,7 @@ plugins {
 }
 
 group = BuildConfig.groupId
+version = BuildConfig.versionCode
 
 android {
     compileSdk = BuildConfig.compileSdkVersion
