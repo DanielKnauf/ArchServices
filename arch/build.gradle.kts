@@ -33,6 +33,12 @@ android {
         }
     }
 
+    publishing{
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
+
     java {
         sourceCompatibility = BuildConfig.javaVersion
         targetCompatibility = BuildConfig.javaVersion
