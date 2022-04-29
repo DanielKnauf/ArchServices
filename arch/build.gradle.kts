@@ -87,7 +87,7 @@ dependencies {
 
 publishing {
     publications {
-        create<MavenPublication>("maven") {
+        create<MavenPublication>("mavenLocal") {
             groupId = BuildConfig.groupId
             artifactId = "arch"
             version = BuildConfig.versionCode

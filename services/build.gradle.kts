@@ -71,7 +71,7 @@ dependencies {
 
 publishing {
     publications {
-        create<MavenPublication>("maven") {
+        create<MavenPublication>("mavenLocal") {
             groupId = BuildConfig.groupId
             artifactId = "services"
             version = BuildConfig.versionCode
