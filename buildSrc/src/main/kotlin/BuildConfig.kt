@@ -5,7 +5,7 @@ object BuildConfig {
     const val targetSdk = 31
     const val compileSdkVersion = 31
 
-    const val groupId = "knaufdan.android"
+    const val groupId = "com.github.DanielKnauf"
     const val versionCode = "0.9.0"
 
     val javaVersion = JavaVersion.VERSION_11
