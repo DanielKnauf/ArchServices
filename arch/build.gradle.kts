@@ -10,7 +10,7 @@ plugins {
     kotlin("kapt")
 }
 
-group = Constants.GROUP_NAME
+group = BuildConfig.groupId
 
 android {
     compileSdk = BuildConfig.compileSdkVersion
