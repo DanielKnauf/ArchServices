@@ -31,6 +31,12 @@ android {
         }
     }
 
+    publishing{
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
+
     buildFeatures {
         dataBinding = true
     }
