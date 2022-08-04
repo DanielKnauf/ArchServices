@@ -2,7 +2,7 @@
 <resources>
 
     <!-- colors -->
-    <color name="arch_default_text_color">#808080</color>
+    <color name="arch_default_text_color">@android:color/black</color>
 
     <!-- dimension -->
     <dimen name="arch_default_elevation">8dp</dimen>
