@@ -2,6 +2,7 @@ package knaufdan.android.core.resources
 
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
+import androidx.annotation.ArrayRes
 import androidx.annotation.ColorRes
 import androidx.annotation.DimenRes
 import androidx.annotation.DrawableRes
@@ -23,6 +24,14 @@ interface IResourceProvider {
         @StringRes stringRes: Int,
         vararg formatArguments: Any = emptyArray()
     ): String
+
+    /**
+     * NOTE: if [arrayRes] is [INVALID_RES_ID] an empty array is returned.
+     *
+     * @param arrayRes resource id for the string-array
+     * @return an array of strings associated with the resource
+     */
+    fun getStringArray(@ArrayRes arrayRes: Int): Array<String>
 
     /**
      * @param drawableRes resource id for the drawable
