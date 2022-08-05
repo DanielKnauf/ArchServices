@@ -23,6 +23,7 @@ import Versions.Google.vHilt
 import Versions.Google.vMaterial
 import Versions.Kotlin.vCoroutines
 import Versions.Kotlin.vKotlin
+import Versions.Other.vCoil
 import Versions.Other.vJUnit
 import Versions.Other.vKtLint
 import Versions.Other.vPicasso
@@ -161,6 +162,7 @@ object Libs {
         }
     }
 
+    const val coil = "io.coil-kt:coil:$vCoil"
     const val ktLint = "com.pinterest:ktlint:$vKtLint"
     const val jUnit = "junit:junit:$vJUnit"
     const val picasso = "com.squareup.picasso:picasso:$vPicasso"

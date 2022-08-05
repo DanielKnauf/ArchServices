@@ -45,6 +45,7 @@ object Versions {
 
     object Other {
         const val vAndroidMaven = "2.1"
+        const val vCoil = "2.1.0"
         const val vDependencyUpdates = "0.42.0"
         const val vKtLint = "0.45.2"
         const val vJUnit = "4.13.2"
