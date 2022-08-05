@@ -29,7 +29,7 @@ interface IResourceProvider {
      * NOTE: if [arrayRes] is [INVALID_RES_ID] an empty array is returned.
      *
      * @param arrayRes resource id for the string-array
-     * @return an array of strings associated with the resource
+     * @return array of strings associated with the resource
      */
     fun getStringArray(@ArrayRes arrayRes: Int): Array<String>
 
