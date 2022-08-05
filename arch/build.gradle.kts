@@ -11,6 +11,7 @@ plugins {
 }
 
 group = BuildConfig.groupId
+version = BuildConfig.versionCode
 
 android {
     compileSdk = BuildConfig.compileSdkVersion
@@ -86,7 +87,7 @@ dependencies {
 
 publishing {
     publications {
-        create<MavenPublication>("maven") {
+        create<MavenPublication>("mavenLocal") {
             groupId = BuildConfig.groupId
             artifactId = "arch"
             version = BuildConfig.versionCode
