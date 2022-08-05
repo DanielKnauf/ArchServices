@@ -1,6 +1,7 @@
 package knaufdan.android.arch.base.component.addition.recyclerview
 
 interface IDiffItem {
+
     /**
      * Determines whether [IDiffItem] and [other] represent the same item
      * (e.g. by comparing an unique identifier).
