@@ -8,9 +8,6 @@ plugins {
     kotlin("kapt")
 }
 
-group = BuildConfig.groupId
-version = BuildConfig.versionCode
-
 android {
     compileSdk = BuildConfig.compileSdkVersion
 
@@ -69,30 +66,4 @@ dependencies {
     implementation(Libs.Google.materialDesign)
 
     testImplementation(Libs.jUnit)
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("mavenLocal") {
-            groupId = BuildConfig.groupId
-            artifactId = "core"
-            version = BuildConfig.versionCode
-
-            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
-
-            pom {
-                withXml {
-                    val dependenciesNode = asNode().appendNode("dependencies")
-                    configurations.getByName("implementation") {
-                        dependencies.forEach {
-                            val dependencyNode = dependenciesNode.appendNode("dependency")
-                            dependencyNode.appendNode("groupId", it.group)
-                            dependencyNode.appendNode("artifactId", it.name)
-                            dependencyNode.appendNode("version", it.version)
-                        }
-                    }
-                }
-            }
-        }
-    }
 }
