@@ -14,5 +14,5 @@ object StringToIntTranslator {
 
     @JvmStatic
     fun fromIntToString(value: Int?): String =
-        value?.toString() ?: ""
+        value?.toString().orEmpty()
 }

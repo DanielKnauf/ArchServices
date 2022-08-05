@@ -6,7 +6,7 @@ import knaufdan.android.core.resources.IResourceProvider
 
 class EntryViewModel(
     val config: IEntryConfig,
-    resourceProvider: IResourceProvider,
+    resourceProvider: IResourceProvider
 ) : IComponentViewModel {
 
     val marginTop = resourceProvider.getDimension(config.marginTop)
