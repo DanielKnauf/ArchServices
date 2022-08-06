@@ -1,14 +1,17 @@
 import Libs.Dagger.addDagger
 import Libs.Kotlin.addKotlin
 import Libs.Lifecycle.addLifecycle
+import org.jetbrains.dokka.DokkaDefaults.moduleName
 
 plugins {
     id("com.android.library")
+    id("maven-publish")
     kotlin("android")
     kotlin("kapt")
 }
 
 android {
+    namespace = "${BuildConfig.namespace}.core"
     compileSdk = BuildConfig.compileSdkVersion
 
     defaultConfig {
@@ -29,7 +32,7 @@ android {
         }
     }
 
-    publishing{
+    publishing {
         singleVariant("release") {
             withSourcesJar()
         }
@@ -66,4 +69,18 @@ dependencies {
     implementation(Libs.Google.materialDesign)
 
     testImplementation(Libs.jUnit)
+}
+
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = BuildConfig.groupId
+            artifactId = "core"
+            version = BuildConfig.version
+
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
 }

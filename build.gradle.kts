@@ -2,8 +2,6 @@ import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 
 apply(plugin = "com.github.ben-manes.versions")
 
-group = BuildConfig.groupId
-
 buildscript {
     repositories {
         google()
@@ -27,12 +25,7 @@ allprojects {
         maven(url = Constants.JIT_PACK_URL)
     }
 
-    apply(plugin = "maven-publish")
     apply(plugin = "com.github.ben-manes.versions")
-}
-
-subprojects {
-    apply { plugin("maven-publish") }
 }
 
 tasks.register("clean", Delete::class) { delete(rootProject.buildDir) }

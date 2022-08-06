@@ -6,11 +6,13 @@ import Libs.Retrofit.addRetrofit
 
 plugins {
     id("com.android.library")
+    id("maven-publish")
     kotlin("android")
     kotlin("kapt")
 }
 
 android {
+    namespace = "${BuildConfig.namespace}.arch"
     compileSdk = BuildConfig.compileSdkVersion
 
     defaultConfig {
@@ -31,13 +33,13 @@ android {
         }
     }
 
-    publishing{
+    publishing {
         singleVariant("release") {
             withSourcesJar()
         }
     }
 
-    java {
+    compileOptions {
         sourceCompatibility = BuildConfig.javaVersion
         targetCompatibility = BuildConfig.javaVersion
     }
@@ -82,4 +84,18 @@ dependencies {
     implementation(Libs.DK.liveDataKit)
 
     implementation(project(":core"))
+}
+
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = BuildConfig.groupId
+            artifactId = "arch"
+            version = BuildConfig.version
+
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
 }
