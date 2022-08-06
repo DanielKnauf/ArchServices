@@ -1,14 +1,17 @@
 import Libs.Dagger.addDagger
 import Libs.Kotlin.addKotlin
 import Libs.Room.addRoom
+import org.jetbrains.dokka.DokkaDefaults.moduleName
 
 plugins {
     id("com.android.library")
+    id("maven-publish")
     kotlin("android")
     kotlin("kapt")
 }
 
 android {
+    namespace = "${BuildConfig.namespace}.services"
     compileSdk = BuildConfig.compileSdkVersion
 
     defaultConfig {
@@ -29,7 +32,7 @@ android {
         }
     }
 
-    publishing{
+    publishing {
         singleVariant("release") {
             withSourcesJar()
         }
@@ -65,4 +68,18 @@ dependencies {
     implementation(project(":core"))
 
     implementation(Libs.uCrop)
+}
+
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = BuildConfig.groupId
+            artifactId = "services"
+            version = BuildConfig.version
+
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
 }
