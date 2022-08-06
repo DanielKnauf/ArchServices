@@ -54,8 +54,8 @@ internal class NotificationService(
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel() {
-        val isAlreadyConfigure = notificationManager.getNotificationChannel(config.channelId) != null
-        if (isAlreadyConfigure) return
+        val isAlreadyConfigured = notificationManager.getNotificationChannel(config.channelId) != null
+        if (isAlreadyConfigured) return
 
         NotificationChannel(
             config.channelId,
