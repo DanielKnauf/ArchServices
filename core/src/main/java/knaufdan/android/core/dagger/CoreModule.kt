@@ -10,8 +10,6 @@ import knaufdan.android.core.calendar.daypicker.IDayPickerService
 import knaufdan.android.core.calendar.daypicker.implementation.DayPickerService
 import knaufdan.android.core.calendar.timepicker.ITimePickerService
 import knaufdan.android.core.calendar.timepicker.implementation.TimePickerService
-import knaufdan.android.core.preferences.ISharedPrefsService
-import knaufdan.android.core.preferences.implementation.SharedPrefsService
 import knaufdan.android.core.resources.IResourceProvider
 import knaufdan.android.core.resources.implementation.ResourceProvider
 import javax.inject.Singleton
@@ -31,11 +29,6 @@ class CoreModule {
         ResourceProvider(
             contextProvider = contextProvider
         )
-
-    @Provides
-    @Singleton
-    internal fun provideSharedPrefService(sharedPrefService: SharedPrefsService): ISharedPrefsService =
-        sharedPrefService
 
     @Provides
     @Singleton
