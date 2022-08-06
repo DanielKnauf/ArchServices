@@ -6,38 +6,43 @@ interface ISharedPrefsService {
 
     fun configure(adjust: ISharedPrefsServiceConfig.() -> Unit)
 
-    fun putJson(
-        key: Key,
+    fun put(
+        key: String,
         value: Any?
     )
 
-    fun put(
-        key: Key,
+    fun putJson(
+        key: String,
         value: Any?
     )
+
+    fun getBoolean(
+        key: String,
+        defaultValue: Boolean = false
+    ): Boolean
+
+    fun getFloat(
+        key: String,
+        defaultValue: Float = 0.0F
+    ): Float
 
     fun <T : Any> getJson(
-        key: Key,
+        key: String,
         targetClass: KClass<T>
     ): T?
 
     fun getString(
-        key: Key,
+        key: String,
         defaultValue: String = ""
     ): String
 
     fun getLong(
-        key: Key,
+        key: String,
         defaultValue: Long = 0L
     ): Long
 
     fun getInt(
-        key: Key,
+        key: String,
         defaultValue: Int = 0
     ): Int
-
-    fun getBoolean(
-        key: Key,
-        defaultValue: Boolean = false
-    ): Boolean
 }

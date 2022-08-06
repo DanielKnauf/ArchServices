@@ -1,29 +1,24 @@
 package knaufdan.android.core.preferences.implementation
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import androidx.core.content.edit
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.preferences.ISharedPrefsService
 import knaufdan.android.core.preferences.ISharedPrefsServiceConfig
-import knaufdan.android.core.preferences.Key
 import knaufdan.android.core.preferences.serializeconfig.WeekdaySerializeConfig
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlin.reflect.KClass
 
-@Singleton
-internal class SharedPrefsService @Inject constructor(
-    private val contextProvider: IContextProvider,
-) : ISharedPrefsService {
+class SharedPrefsService(private val context: Context) : ISharedPrefsService {
 
-    private val sharedPrefs: SharedPreferences
-        get() = contextProvider.getContext().getSharedPreferences(
+    private val sharedPrefs: SharedPreferences by lazy {
+        context.getSharedPreferences(
             config.sharedPrefLocation,
             config.sharedPrefMode
         )
+    }
 
     private val gson: Gson by lazy {
         GsonBuilder()
@@ -62,6 +57,16 @@ internal class SharedPrefsService @Inject constructor(
         }
     }
 
+    override fun getBoolean(
+        key: String,
+        defaultValue: Boolean
+    ): Boolean = sharedPrefs.getBoolean(key, defaultValue)
+
+    override fun getFloat(
+        key: String,
+        defaultValue: Float
+    ): Float = sharedPrefs.getFloat(key, defaultValue)
+
     override fun <T : Any> getJson(
         key: String,
         targetClass: KClass<T>
@@ -85,14 +90,9 @@ internal class SharedPrefsService @Inject constructor(
         defaultValue: Int
     ): Int = sharedPrefs.getInt(key, defaultValue)
 
-    override fun getBoolean(
-        key: Key,
-        defaultValue: Boolean
-    ): Boolean = sharedPrefs.getBoolean(key, defaultValue)
-
     companion object {
 
-        private val config = SharedPrefsServiceConfig.EMPTY
+        private val config = SharedPrefsServiceConfig()
 
         private val serializeConfigs = listOf(
             WeekdaySerializeConfig
@@ -108,6 +108,7 @@ internal class SharedPrefsService @Inject constructor(
                 is Int -> putInt(key, value)
                 is Long -> putLong(key, value)
                 is String -> putString(key, value)
+                is Float -> putFloat(key, value)
                 is Enum<*> -> putString(key, value.name)
                 else -> Log.e(
                     "${SharedPrefsService::class.simpleName}",
