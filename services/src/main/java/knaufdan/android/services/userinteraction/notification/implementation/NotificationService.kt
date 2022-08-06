@@ -1,7 +1,6 @@
 package knaufdan.android.services.userinteraction.notification.implementation
 
 import android.app.Notification
-import android.app.Notification.CATEGORY_ALARM
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
@@ -38,29 +37,25 @@ internal class NotificationService(
             return
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel()
-        }
+        if (Build.VERSION.SDK_INT >= 26) createNotificationChannel()
 
-        notificationConfig.buildNotification().apply {
-            notificationManager.notify(
-                notificationConfig.id,
-                this
-            )
-        }
+        notificationConfig
+            .buildNotification()
+            .apply {
+                notificationManager.notify(
+                    notificationConfig.id,
+                    this
+                )
+            }
     }
 
-    override fun hideNotification(notificationId: NotificationId) {
+    override fun hideNotification(notificationId: NotificationId) =
         notificationManager.cancel(notificationId)
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel() {
-        val isAlreadyConfigure =
-            notificationManager.getNotificationChannel(config.channelId) != null
-        if (isAlreadyConfigure) {
-            return
-        }
+        val isAlreadyConfigure = notificationManager.getNotificationChannel(config.channelId) != null
+        if (isAlreadyConfigure) return
 
         NotificationChannel(
             config.channelId,
@@ -88,7 +83,7 @@ internal class NotificationService(
             priority = config.priority
             setAutoCancel(isAutoCancelEnabled)
             setAutoCancelTime(autoCancelAfterMillis)
-            setCategory(CATEGORY_ALARM)
+            setCategory(category)
             setVibrate(longArrayOf())
             setOnNotificationClicked(this@buildNotification)
             setNotificationActions(this@buildNotification)

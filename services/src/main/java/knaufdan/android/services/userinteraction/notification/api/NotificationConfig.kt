@@ -1,10 +1,13 @@
 package knaufdan.android.services.userinteraction.notification.api
 
+import android.app.Notification
+
 data class NotificationConfig(
     val id: NotificationId = DEFAULT_NOTIFICATION_ID,
     val requestCode: Int = DEFAULT_REQUEST_CODE,
     val isAutoCancelEnabled: Boolean = false,
     val autoCancelAfterMillis: Long = NO_AUTO_CANCEL_TIME_SET,
+    val category: String = Notification.CATEGORY_ALARM,
     val style: NotificationStyle,
     val interaction: NotificationInteraction = NotificationInteraction.EMPTY
 ) {
