@@ -5,22 +5,29 @@ The underlying architecture concept of _ArchServices_ is to keep `Activities` an
 From this premise, base classed for `Activity` and `Fragment` were created which handle the _Mvvm_-setup (e.g. connect layout to viewmodel) and forward events to the `ViewModel` (e.g. onBackPressed or the bundle of onCreate). Also `Micro Services` for different functionalities were created which can easily be injected into the `ViewModel` via _Dagger2_. 
 
 ## How to use it
+[![](https://jitpack.io/v/DanielKnauf/ArchServices.svg)](https://jitpack.io/#DanielKnauf/ArchServices)
 
-The latest `master` version can be received as a dependency from [jitpack.io](https://jitpack.io): 
+The latest version can be received as a dependency from [jitpack.io](https://jitpack.io): 
 ```
 allprojects {
    repositories {
-      maven { url 'https://jitpack.io' }
+      maven(url = "https://jitpack.io") // kotlin
+      maven { url 'https://jitpack.io' } // groovy
    }
 }
 
 dependencies {
-   implementation 'com.github.DanielKnauf:archservices:master-SNAPSHOT'
+   // kotlin
+   implementation("com.github.DanielKnauf:archservices:master-SNAPSHOT") // master
+   implementation("com.github.DanielKnauf:archservices:VERSION") // version
+   
+   // groovy
+   implementation 'com.github.DanielKnauf:archservices:master-SNAPSHOT' // master
+   implementation 'com.github.DanielKnauf:archservices:VERSION' // version
 }
 ```
 ## Used in
 * [Simple Timer App](https://github.com/DanielKnauf/SimpleTimer)
-* [WiP] [b2u](https://github.com/DanielKnauf/b2u)
 
 
 ## License
