@@ -6,14 +6,13 @@ import Libs.Retrofit.addRetrofit
 
 plugins {
     id("com.android.library")
+    id("maven-publish")
     kotlin("android")
     kotlin("kapt")
 }
 
-group = BuildConfig.groupId
-version = BuildConfig.versionCode
-
 android {
+    namespace = "${BuildConfig.namespace}.arch"
     compileSdk = BuildConfig.compileSdkVersion
 
     defaultConfig {
@@ -34,13 +33,13 @@ android {
         }
     }
 
-    publishing{
+    publishing {
         singleVariant("release") {
             withSourcesJar()
         }
     }
 
-    java {
+    compileOptions {
         sourceCompatibility = BuildConfig.javaVersion
         targetCompatibility = BuildConfig.javaVersion
     }
@@ -64,6 +63,7 @@ dependencies {
     addRetrofit()
 
     implementation(Libs.AndroidX.appCompat)
+    implementation(Libs.AndroidX.browser)
     implementation(Libs.AndroidX.core)
     implementation(Libs.AndroidX.constraintLayout)
     implementation(Libs.AndroidX.fragment)
@@ -76,6 +76,7 @@ dependencies {
 
     implementation(Libs.Google.materialDesign)
 
+    implementation(Libs.coil)
     implementation(Libs.picasso)
 
     testImplementation(Libs.jUnit)
@@ -87,25 +88,13 @@ dependencies {
 
 publishing {
     publications {
-        create<MavenPublication>("mavenLocal") {
+        register<MavenPublication>("release") {
             groupId = BuildConfig.groupId
             artifactId = "arch"
-            version = BuildConfig.versionCode
+            version = BuildConfig.version
 
-            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
-
-            pom {
-                withXml {
-                    val dependenciesNode = asNode().appendNode("dependencies")
-                    configurations.getByName("implementation") {
-                        dependencies.forEach {
-                            val dependencyNode = dependenciesNode.appendNode("dependency")
-                            dependencyNode.appendNode("groupId", it.group)
-                            dependencyNode.appendNode("artifactId", it.name)
-                            dependencyNode.appendNode("version", it.version)
-                        }
-                    }
-                }
+            afterEvaluate {
+                from(components["release"])
             }
         }
     }

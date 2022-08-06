@@ -12,7 +12,7 @@ import knaufdan.android.core.calendar.timepicker.ITimePickerService
 import knaufdan.android.core.calendar.timepicker.TimePickerConfig
 
 internal class TimePickerService(
-    private val contextProvider: IContextProvider,
+    private val contextProvider: IContextProvider
 ) : ITimePickerService {
 
     override fun showTimePicker(

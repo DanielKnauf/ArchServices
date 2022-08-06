@@ -91,7 +91,7 @@ abstract class BaseFragment<ViewModel : BaseFragmentViewModel> :
      *
      * @param isBackPressed indicates whether corresponding [IBaseActivity] was back pressed or not..
      */
-    internal fun setBackPressed(isBackPressed: Boolean) {
+    fun setBackPressed(isBackPressed: Boolean) {
         viewModel.isBackPressed = isBackPressed
     }
 

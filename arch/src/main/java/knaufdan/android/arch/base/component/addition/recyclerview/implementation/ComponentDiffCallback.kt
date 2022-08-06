@@ -10,23 +10,24 @@ class ComponentDiffCallback : DiffUtil.ItemCallback<IComponent<Any>>() {
     override fun areItemsTheSame(
         oldItem: IComponent<Any>,
         newItem: IComponent<Any>
-    ): Boolean {
-        if (oldItem is IDiffItem) {
-            return oldItem.areItemsTheSame(newItem)
+    ): Boolean =
+        when (oldItem) {
+            is IDiffItem -> oldItem.areItemsTheSame(newItem)
+            else -> oldItem.getId() == newItem.getId()
         }
-
-        return oldItem.getId() == newItem.getId()
-    }
 
     @SuppressLint("DiffUtilEquals")
     override fun areContentsTheSame(
         oldItem: IComponent<Any>,
         newItem: IComponent<Any>
-    ): Boolean {
-        if (oldItem is IDiffItem) {
-            return oldItem.areContentsTheSame(newItem)
+    ): Boolean =
+        when (oldItem) {
+            is IDiffItem -> oldItem.areContentsTheSame(newItem)
+            else -> oldItem.getDataSource() == newItem.getDataSource()
         }
 
-        return oldItem.getDataSource() == newItem.getDataSource()
-    }
+    override fun getChangePayload(
+        oldItem: IComponent<Any>,
+        newItem: IComponent<Any>
+    ): Any = true
 }

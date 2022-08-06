@@ -1,17 +1,17 @@
 import Libs.Dagger.addDagger
 import Libs.Kotlin.addKotlin
 import Libs.Lifecycle.addLifecycle
+import org.jetbrains.dokka.DokkaDefaults.moduleName
 
 plugins {
     id("com.android.library")
+    id("maven-publish")
     kotlin("android")
     kotlin("kapt")
 }
 
-group = BuildConfig.groupId
-version = BuildConfig.versionCode
-
 android {
+    namespace = "${BuildConfig.namespace}.core"
     compileSdk = BuildConfig.compileSdkVersion
 
     defaultConfig {
@@ -32,7 +32,7 @@ android {
         }
     }
 
-    publishing{
+    publishing {
         singleVariant("release") {
             withSourcesJar()
         }
@@ -73,25 +73,13 @@ dependencies {
 
 publishing {
     publications {
-        create<MavenPublication>("mavenLocal") {
+        register<MavenPublication>("release") {
             groupId = BuildConfig.groupId
             artifactId = "core"
-            version = BuildConfig.versionCode
+            version = BuildConfig.version
 
-            artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
-
-            pom {
-                withXml {
-                    val dependenciesNode = asNode().appendNode("dependencies")
-                    configurations.getByName("implementation") {
-                        dependencies.forEach {
-                            val dependencyNode = dependenciesNode.appendNode("dependency")
-                            dependencyNode.appendNode("groupId", it.group)
-                            dependencyNode.appendNode("artifactId", it.name)
-                            dependencyNode.appendNode("version", it.version)
-                        }
-                    }
-                }
+            afterEvaluate {
+                from(components["release"])
             }
         }
     }

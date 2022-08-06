@@ -32,6 +32,10 @@ internal class ResourceProvider(
             }
         } else ""
 
+    override fun getStringArray(arrayRes: Int): Array<String> =
+        if (arrayRes.isValid()) resources.getStringArray(arrayRes)
+        else emptyArray()
+
     override fun getDrawable(drawableRes: Int): Drawable? =
         runCatching {
             ContextCompat.getDrawable(
@@ -53,6 +57,7 @@ internal class ResourceProvider(
         if (intRes.isValid()) resources.getInteger(intRes) else 0
 
     companion object {
+
         private fun Int.isValid(): Boolean = this != IResourceProvider.INVALID_RES_ID
     }
 }
