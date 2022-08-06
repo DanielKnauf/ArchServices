@@ -1,5 +1,6 @@
 package knaufdan.android.core.calendar
 
+import android.text.format.DateUtils
 import knaufdan.android.core.calendar.alias.DayOfMonth
 import knaufdan.android.core.calendar.alias.DayOfYear
 import knaufdan.android.core.calendar.alias.Hour
@@ -106,6 +107,8 @@ fun Calendar.setMinute(minute: Minute): Calendar =
         set(Calendar.MINUTE, minute)
     }
 
+fun Calendar.getSecond(): Minute = get(Calendar.SECOND)
+
 fun Calendar.addDay(): Calendar =
     changeDay(1)
 
@@ -117,13 +120,17 @@ fun Calendar.changeDay(steps: Int): Calendar =
         add(Calendar.DATE, steps)
     }
 
-fun Calendar.isSameDay(other: Calendar) =
+fun Calendar.isToday(): Boolean = DateUtils.isToday(timeInMillis)
+
+fun Calendar.isSameDay(other: Calendar): Boolean =
     year == other.year &&
         month == other.month &&
         dayOfMonth == other.dayOfMonth
 
+fun Calendar.isSameYear(other: Calendar): Boolean = year == other.year
+
 /**
- * NOTE: result is 0 if receiving [Calendar] is after [future].
+ * NOTE: result is 0 if [future] is before receiving [Calendar].
  *
  * @return days between receiving [Calendar] and [future]
  */
