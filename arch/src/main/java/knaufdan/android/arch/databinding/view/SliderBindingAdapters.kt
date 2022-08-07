@@ -21,3 +21,12 @@ fun Slider.bindValueChangedListener(attrChange: InverseBindingListener) {
 
     addOnChangeListener { _, _, _ -> attrChange.onChange() }
 }
+
+@BindingAdapter("android:onValueChanged")
+fun Slider.bindOnValueChanged(listener: ISliderValueChangedListener) {
+    addOnChangeListener { _, newValue, _ -> listener.onValueChanged(newValue) }
+}
+
+fun interface ISliderValueChangedListener {
+    fun onValueChanged(value: Float)
+}
