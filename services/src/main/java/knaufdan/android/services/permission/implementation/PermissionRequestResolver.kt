@@ -5,8 +5,8 @@ import android.content.pm.PackageManager
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import knaufdan.android.services.R
 import knaufdan.android.services.permission.IPermissionRequestResolver
 import knaufdan.android.services.permission.PermissionRequestConfig
@@ -52,7 +52,7 @@ class PermissionRequestResolver : IPermissionRequestResolver {
         config: PermissionRequestConfig,
         onResult: (PermissionResult) -> Unit
     ) {
-        AlertDialog.Builder(this)
+        MaterialAlertDialogBuilder(this)
             .setTitle(getString(R.string.arch_services_permission_request_resolver_rationale_title))
             .setMessage(config.rationale)
             .setCancelable(true)
