@@ -36,13 +36,15 @@ internal class BroadcastService(
 
     override fun <T : BroadcastReceiver> sendBroadcast(
         receiver: KClass<T>,
-        action: IntentAction
+        action: IntentAction,
+        configure: Intent.() -> Unit
     ) =
         context.sendBroadcast(
             Intent(
                 context,
                 receiver.java
             ).setAction(action)
+                .apply(configure)
         )
 
     override fun sendBroadcast(
