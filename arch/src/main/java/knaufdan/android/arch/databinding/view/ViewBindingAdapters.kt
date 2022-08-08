@@ -1,6 +1,7 @@
 package knaufdan.android.arch.databinding.view
 
 import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.Context.INPUT_METHOD_SERVICE
 import android.view.Gravity
 import android.view.View
@@ -49,7 +50,7 @@ fun View.bindLayoutWidth(
 fun View.bindLayoutHeight(
     layoutHeight: LayoutBehavior = LayoutBehavior.DEFAULT
 ) {
-    val updatedWidth =
+    val updatedHeight =
         when (layoutHeight) {
             LayoutBehavior.WRAP_CONTENT -> ViewGroup.LayoutParams.WRAP_CONTENT
             LayoutBehavior.MATCH_PARENT -> ViewGroup.LayoutParams.MATCH_PARENT
@@ -57,7 +58,7 @@ fun View.bindLayoutHeight(
         }
 
     updateLayoutParams {
-        height = updatedWidth
+        height = updatedHeight
     }
 }
 
@@ -66,6 +67,31 @@ fun View.bindHeight(
     height: Number
 ) {
     updateLayoutParams { this.height = height.toInt() }
+}
+
+@BindingAdapter(
+    value = [
+        "heightAnimated",
+        "heightAnimatedDuration"
+    ]
+)
+fun View.bindHeightAnimated(
+    updatedHeight: Number,
+    updateDuration: Number
+) {
+    ValueAnimator
+        .ofInt(measuredHeight, updatedHeight.toInt())
+        .apply {
+            addUpdateListener { valueAnimator ->
+                updateLayoutParams {
+                    height = valueAnimator.animatedValue as Int
+                }
+            }
+
+            duration = updateDuration.toLong()
+
+            start()
+        }
 }
 
 @BindingAdapter("width")
