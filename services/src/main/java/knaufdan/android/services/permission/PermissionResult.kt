@@ -6,6 +6,9 @@ enum class PermissionResult {
 
     companion object {
 
+        val PermissionResult.isGranted: Boolean
+            get() = this == GRANTED
+
         fun Boolean.toPermissionResult(): PermissionResult = if (this) GRANTED else DENIED
     }
 }
