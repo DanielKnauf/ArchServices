@@ -7,7 +7,7 @@ import knaufdan.android.core.calendar.Weekday
 import knaufdan.android.core.calendar.Weekday.Companion.toDay
 import kotlin.reflect.KClass
 
-object WeekdaySerializeConfig : ISerializeConfig<Weekday> {
+object WeekdayJsonConfig : IJsonConfig<Weekday> {
 
     private const val PROPERTY_NAME = "day_name"
 
@@ -23,10 +23,13 @@ object WeekdaySerializeConfig : ISerializeConfig<Weekday> {
 
     override val deserializer: JsonDeserializer<Weekday> by lazy {
         JsonDeserializer { jsonElement, _, _ ->
-            when {
-                jsonElement.asJsonObject.has(PROPERTY_NAME).not() -> Weekday.Sunday
-                else -> jsonElement.asJsonObject[PROPERTY_NAME].asString.toDay()
-            }
+            kotlin.runCatching {
+                jsonElement
+                    .asJsonObject[PROPERTY_NAME]
+                    ?.asString
+                    ?.toDay()
+                    ?: Weekday.Sunday
+            }.getOrDefault(Weekday.Sunday)
         }
     }
 }
