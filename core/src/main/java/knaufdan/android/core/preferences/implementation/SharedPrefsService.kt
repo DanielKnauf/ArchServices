@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package knaufdan.android.core.preferences.implementation
 
 import android.content.Context
@@ -11,6 +13,9 @@ import knaufdan.android.core.preferences.ISharedPrefsServiceConfig
 import knaufdan.android.core.preferences.serializeconfig.WeekdaySerializeConfig
 import kotlin.reflect.KClass
 
+/**
+ * Manipulations to the SharedPreferences will be done using the apply function.
+ */
 class SharedPrefsService(private val context: Context) : ISharedPrefsService {
 
     private val sharedPrefs: SharedPreferences by lazy {
@@ -33,15 +38,35 @@ class SharedPrefsService(private val context: Context) : ISharedPrefsService {
 
     override fun configure(adjust: ISharedPrefsServiceConfig.() -> Unit) = adjust(config)
 
+    override fun set(
+        key: String,
+        value: Any?
+    ) {
+        sharedPrefs.edit {
+            putValue(
+                key = key,
+                value = value
+            )
+        }
+    }
+
+    override fun setAsJson(
+        key: String,
+        value: Any?
+    ) {
+        set(
+            key = key,
+            value = value?.let(gson::toJson)
+        )
+    }
+
     override fun putJson(
         key: String,
         value: Any?
     ) {
-        value ?: return
-
         put(
             key = key,
-            value = gson.toJson(value)
+            value = value?.let(gson::toJson)
         )
     }
 
@@ -67,28 +92,25 @@ class SharedPrefsService(private val context: Context) : ISharedPrefsService {
         defaultValue: Float
     ): Float = sharedPrefs.getFloat(key, defaultValue)
 
+    override fun getInt(
+        key: String,
+        defaultValue: Int
+    ): Int = sharedPrefs.getInt(key, defaultValue)
+
     override fun <T : Any> getJson(
         key: String,
         targetClass: KClass<T>
-    ): T? =
-        runCatching {
-            getString(key).run { gson.fromJson(this, targetClass.java) }
-        }.getOrNull()
-
-    override fun getString(
-        key: String,
-        defaultValue: String
-    ): String = sharedPrefs.getString(key, defaultValue) ?: defaultValue
+    ): T? = runCatching { gson.fromJson(getString(key), targetClass.java) }.getOrNull()
 
     override fun getLong(
         key: String,
         defaultValue: Long
     ): Long = sharedPrefs.getLong(key, defaultValue)
 
-    override fun getInt(
+    override fun getString(
         key: String,
-        defaultValue: Int
-    ): Int = sharedPrefs.getInt(key, defaultValue)
+        defaultValue: String
+    ): String = sharedPrefs.getString(key, defaultValue) ?: defaultValue
 
     companion object {
 
@@ -105,11 +127,11 @@ class SharedPrefsService(private val context: Context) : ISharedPrefsService {
             when (value) {
                 null -> remove(key)
                 is Boolean -> putBoolean(key, value)
+                is Enum<*> -> putString(key, value.name)
+                is Float -> putFloat(key, value)
                 is Int -> putInt(key, value)
                 is Long -> putLong(key, value)
                 is String -> putString(key, value)
-                is Float -> putFloat(key, value)
-                is Enum<*> -> putString(key, value.name)
                 else -> Log.e(
                     "${SharedPrefsService::class.simpleName}",
                     "Could not store value of class ${value::class} to key $key."
