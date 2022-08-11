@@ -10,7 +10,6 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import knaufdan.android.core.preferences.ISharedPrefsService
 import knaufdan.android.core.preferences.ISharedPrefsServiceConfig
-import knaufdan.android.core.preferences.serializeconfig.WeekdaySerializeConfig
 import kotlin.reflect.KClass
 
 /**
@@ -28,7 +27,7 @@ class SharedPrefsService(private val context: Context) : ISharedPrefsService {
     private val gson: Gson by lazy {
         GsonBuilder()
             .apply {
-                serializeConfigs.forEach { config ->
+                config.jsonConfigs.forEach { config ->
                     registerTypeAdapter(config.clazz.java, config.serializer)
                     registerTypeAdapter(config.clazz.java, config.deserializer)
                 }
@@ -115,10 +114,6 @@ class SharedPrefsService(private val context: Context) : ISharedPrefsService {
     companion object {
 
         private val config = SharedPrefsServiceConfig()
-
-        private val serializeConfigs = listOf(
-            WeekdaySerializeConfig
-        )
 
         private fun SharedPreferences.Editor.putValue(
             key: String,

@@ -4,7 +4,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonSerializer
 import kotlin.reflect.KClass
 
-interface ISerializeConfig<T : Any> {
+interface IJsonConfig<T : Any> {
 
     val clazz: KClass<T>
 
