@@ -19,7 +19,7 @@ class SharedPrefsService(private val context: Context) : ISharedPrefsService {
 
     private val sharedPrefs: SharedPreferences by lazy {
         context.getSharedPreferences(
-            config.sharedPrefLocation,
+            config.sharedPrefName,
             config.sharedPrefMode
         )
     }

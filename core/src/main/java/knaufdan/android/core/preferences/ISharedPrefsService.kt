@@ -6,7 +6,7 @@ interface ISharedPrefsService {
 
     /**
      * NOTE: if you do not specify the config, defaults will be used
-     * - for location [ISharedPrefsServiceConfig.DEFAULT_LOCATION] and
+     * - for location [ISharedPrefsServiceConfig.DEFAULT_FILE_NAME] and
      * - for mode [ISharedPrefsServiceConfig.DEFAULT_MODE].
      *
      * @param adjust extension function block to adjust the used [ISharedPrefsServiceConfig]
