@@ -8,7 +8,6 @@ import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 
 fun View.doOnAttachedToWindow(block: (View?) -> Unit) {
-
     addOnAttachStateChangeListener(
 
         object : View.OnAttachStateChangeListener {
