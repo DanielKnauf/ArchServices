@@ -12,7 +12,7 @@ interface ISharedPrefsServiceConfig {
 
     @Deprecated(
         message = "Will be replaced in 0.11.0 by setFileName(name)",
-        replaceWith = ReplaceWith("setFileName(name)")
+        replaceWith = ReplaceWith("setFileName(location)")
     )
     fun setLocation(location: String)
 
