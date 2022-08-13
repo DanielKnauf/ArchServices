@@ -9,6 +9,7 @@ import knaufdan.android.core.calendar.alias.Month
 import knaufdan.android.core.calendar.alias.Year
 import java.util.Calendar
 import java.util.Date
+import java.util.TimeZone
 
 val today: Triple<DayOfMonth, Month, Year>
     get() = Triple(
@@ -30,9 +31,18 @@ val now: Calendar
 val nowInMillis: Long
     get() = now.timeInMillis
 
+fun now(timeZone: TimeZone): Calendar = Calendar.getInstance(timeZone)
+
 fun calendar(cal: Calendar): Calendar = calendar(cal.timeInMillis)
 
 fun calendar(timeInMillis: Long): Calendar = now.apply { this.timeInMillis = timeInMillis }
+
+fun calendar(
+    timeInMillis: Long,
+    timeZone: String
+): Calendar =
+    runCatching { now(TimeZone.getTimeZone(timeZone)).apply { this.timeInMillis = timeInMillis } }
+        .getOrElse { now.apply { this.timeInMillis = timeInMillis } }
 
 fun calendar(day: DayOfMonth, month: Month, year: Year): Calendar =
     now.apply { set(year, month, day) }

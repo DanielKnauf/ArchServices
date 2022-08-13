@@ -17,6 +17,7 @@ interface IBroadcastService {
      *
      * @param receiver [ActionBroadcastReceiver] to handle the broadcast
      */
+    @Deprecated("LocalBroadcast is no longer supported by Google, will be removed with 0.11.0")
     fun registerLocalBroadcastReceiver(receiver: ActionBroadcastReceiver)
 
     /**
@@ -24,17 +25,20 @@ interface IBroadcastService {
      *
      * @param receiver [BroadcastReceiver] to unregister
      */
+    @Deprecated("LocalBroadcast is no longer supported by Google, will be removed with 0.11.0")
     fun unregisterLocalBroadcastReceiver(receiver: BroadcastReceiver)
 
     /**
-     * Sends an intent to all interested BroadcastReceivers.
+     * Sends an intent to [receiver].
      *
      * @param receiver [KClass] to handle the intent
      * @param action [IntentAction] to perform by the [receiver]
+     * @param configure extension function block to manipulate the created Intent
      */
     fun <T : BroadcastReceiver> sendBroadcast(
         receiver: KClass<T>,
-        action: IntentAction
+        action: IntentAction,
+        configure: Intent.() -> Unit = {}
     )
 
     /**
