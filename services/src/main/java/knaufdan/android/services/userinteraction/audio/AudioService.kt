@@ -7,6 +7,7 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Handler
+import android.os.Looper
 import knaufdan.android.core.IContextProvider
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -64,7 +65,7 @@ internal class AudioService @Inject constructor(private val contextProvider: ICo
     override fun release(audioRes: AudioRes) {
         mediaPlayers[audioRes]?.run {
             if (isPlaying) {
-                Handler().postDelayed({ release(audioRes) }, 500)
+                Handler(Looper.getMainLooper()).postDelayed({ release(audioRes) }, 500)
             } else {
                 release()
                 mediaPlayers.remove(audioRes)
