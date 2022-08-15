@@ -6,27 +6,10 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlin.reflect.KClass
 
 /**
- * [IBroadcastService] is an injectable service providing functionality for (un-)registering
- * [BroadcastReceiver] at the [LocalBroadcastManager] and sending out Intents to [BroadcastReceiver].
+ * [IBroadcastService] is an injectable service providing functionality for sending out Intents to
+ * [BroadcastReceiver]s.
  */
 interface IBroadcastService {
-
-    /**
-     * Registers a [ActionBroadcastReceiver] at the LocalBroadcastManager.
-     * [ActionBroadcastReceiver.forActions] defines for which actions the [receiver] is registered.
-     *
-     * @param receiver [ActionBroadcastReceiver] to handle the broadcast
-     */
-    @Deprecated("LocalBroadcast is no longer supported by Google, will be removed with 0.11.0")
-    fun registerLocalBroadcastReceiver(receiver: ActionBroadcastReceiver)
-
-    /**
-     * Unregisters [BroadcastReceiver] from the LocalBroadcastManager.
-     *
-     * @param receiver [BroadcastReceiver] to unregister
-     */
-    @Deprecated("LocalBroadcast is no longer supported by Google, will be removed with 0.11.0")
-    fun unregisterLocalBroadcastReceiver(receiver: BroadcastReceiver)
 
     /**
      * Sends an intent to [receiver].
@@ -42,7 +25,7 @@ interface IBroadcastService {
     )
 
     /**
-     * Sends an intent to all interested BroadcastReceivers.
+     * Sends an intent to all interested [BroadcastReceiver]s.
      *
      * @param action [IntentAction] to be performed
      * @param configure extension function block to manipulate the created Intent
