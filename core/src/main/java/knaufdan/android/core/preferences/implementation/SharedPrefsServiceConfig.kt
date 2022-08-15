@@ -24,8 +24,6 @@ class SharedPrefsServiceConfig : ISharedPrefsServiceConfig {
     private var userSharedPrefsMode = DEFAULT_MODE
     private val userConfigs = mutableSetOf<IJsonConfig<*>>()
 
-    override fun setLocation(location: String) = setFileName(location)
-
     override fun setFileName(name: String) {
         if (name.isBlank()) {
             Log.e(javaClass.simpleName, "setFileName :: name is blank")
