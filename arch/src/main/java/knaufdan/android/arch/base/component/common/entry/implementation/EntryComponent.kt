@@ -23,9 +23,7 @@ class EntryComponent(
 
     override fun getDataSource(): EntryViewModel = viewModel
 
-    override fun areItemsTheSame(other: Any): Boolean =
-        other is EntryComponent &&
-            other.config.hashCode() == this.config.hashCode()
+    override fun areItemsTheSame(other: Any): Boolean = other is EntryComponent
 
     override fun areContentsTheSame(other: Any): Boolean =
         other is EntryComponent &&
