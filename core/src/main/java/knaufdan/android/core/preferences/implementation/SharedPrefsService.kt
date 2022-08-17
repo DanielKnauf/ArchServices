@@ -59,28 +59,6 @@ class SharedPrefsService(private val context: Context) : ISharedPrefsService {
         )
     }
 
-    override fun putJson(
-        key: String,
-        value: Any?
-    ) {
-        put(
-            key = key,
-            value = value?.let(gson::toJson)
-        )
-    }
-
-    override fun put(
-        key: String,
-        value: Any?
-    ) {
-        sharedPrefs.edit {
-            putValue(
-                key = key,
-                value = value
-            )
-        }
-    }
-
     override fun getBoolean(
         key: String,
         defaultValue: Boolean
