@@ -2,7 +2,6 @@ package knaufdan.android.services.service.broadcast
 
 import android.content.BroadcastReceiver
 import android.content.Intent
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import kotlin.reflect.KClass
 
 /**
