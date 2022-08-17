@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import knaufdan.android.arch.R
 import knaufdan.android.arch.base.LayoutRes
 
+@BindingAdapter("hasFixedSize")
+fun RecyclerView.bindHasFixedSize(fixedSize: Boolean) = setHasFixedSize(fixedSize)
+
 @BindingAdapter(
     value = [
         "gridItemSpanCount",
@@ -95,41 +98,56 @@ fun RecyclerView.bindSpanCount(spanCount: Int) {
 }
 
 /**
- * General idea from article:
- * https://medium.com/@goforbg/horizontal-recyclerview-inside-viewpager2-handling-scrolls-982da4aa454b
+ * Based on ideas found here:
+ * - https://stackoverflow.com/a/57589708/17799032
+ * - https://medium.com/@goforbg/horizontal-recyclerview-inside-viewpager2-handling-scrolls-982da4aa454b
  */
 @BindingAdapter("scrollInsideViewPager")
 fun RecyclerView.bindScrollInsideViewPager(scroll: Boolean) {
     if (scroll.not()) return
     if (hasItemTouchListener) return
 
-    val listener = object : RecyclerView.OnItemTouchListener {
-
-        override fun onInterceptTouchEvent(
-            recyclerView: RecyclerView,
-            event: MotionEvent
-        ): Boolean =
-            if (canScrollHorizontally(RecyclerView.FOCUS_FORWARD)) {
-                if (event.action == MotionEvent.ACTION_MOVE) {
-                    recyclerView.parent.requestDisallowInterceptTouchEvent(true)
-                }
-                false
-            } else {
-                if (event.action == MotionEvent.ACTION_MOVE) {
-                    recyclerView.parent.requestDisallowInterceptTouchEvent(false)
-                }
-                removeOnItemTouchListener(this)
-                hasItemTouchListener = false
-                true
-            }
-
-        override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) = Unit
-        override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) = Unit
-    }
-
-    addOnItemTouchListener(listener)
     hasItemTouchListener = true
+
+    addOnItemTouchListener(
+        object : RecyclerView.OnItemTouchListener {
+            private var startX = 0f
+
+            override fun onInterceptTouchEvent(
+                recyclerView: RecyclerView,
+                event: MotionEvent
+            ): Boolean =
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        startX = event.x
+                    }
+                    MotionEvent.ACTION_MOVE -> {
+                        val isScrollingRight = event.x < startX
+                        val scrollItemsToRight = isScrollingRight && recyclerView.canScrollRight
+                        val scrollItemsToLeft = !isScrollingRight && recyclerView.canScrollLeft
+                        val disallowIntercept = scrollItemsToRight || scrollItemsToLeft
+                        recyclerView.parent.requestDisallowInterceptTouchEvent(disallowIntercept)
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        startX = 0f
+                    }
+                    else -> Unit
+                }.let { false }
+
+            override fun onTouchEvent(rv: RecyclerView, e: MotionEvent) = Unit
+            override fun onRequestDisallowInterceptTouchEvent(disallowIntercept: Boolean) = Unit
+        }
+    )
 }
+
+private val RecyclerView.canScrollRight: Boolean
+    get() = canScrollHorizontally(SCROLL_DIRECTION_RIGHT)
+
+private val RecyclerView.canScrollLeft: Boolean
+    get() = canScrollHorizontally(SCROLL_DIRECTION_LEFT)
+
+private const val SCROLL_DIRECTION_RIGHT = 1
+private const val SCROLL_DIRECTION_LEFT = -1
 
 @BindingAdapter("spanSizeLookup")
 fun RecyclerView.bindSpanSizeLookup(spanSizeProvider: ISpanSizeLookup) {
