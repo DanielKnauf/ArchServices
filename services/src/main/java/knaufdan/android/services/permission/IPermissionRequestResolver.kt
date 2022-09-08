@@ -10,7 +10,7 @@ interface IPermissionRequestResolver {
      *
      * NOTE: must be called before any permission can be requested with [requestPermission].
      *
-     * @param activity at which the permission request registered.
+     * @param activity at which the permission request is registered.
      */
     fun registerPermissionRequestsFor(activity: ComponentActivity)
 
