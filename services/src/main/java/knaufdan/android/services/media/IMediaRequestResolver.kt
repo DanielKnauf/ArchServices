@@ -40,7 +40,7 @@ interface IMediaRequestResolver {
     )
 
     /**
-     * Opens the gallery app to select a new picture.
+     * Opens the gallery app to select a single picture.
      *
      * NOTE:
      * - does not request any permission (e.g. [Manifest.permission.READ_EXTERNAL_STORAGE] and will
