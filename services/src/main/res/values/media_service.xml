@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Strings -->
+    <string name="arch_service_media_service_rationale_save_picture">This permission is required to save pictures onto your device.</string>
+
+</resources>
