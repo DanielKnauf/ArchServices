@@ -11,7 +11,7 @@ import java.util.Date
 /**
  * NOTE: the [Context] in which the [IMediaService] is running must implement
  * [IPermissionRequestResolver] and [IMediaRequestResolver] to
- * resolve requests regarding permissions or perform actions like take a picture.
+ * resolve requests regarding permissions or perform actions (e.g. take a picture).
  */
 interface IMediaService {
 
