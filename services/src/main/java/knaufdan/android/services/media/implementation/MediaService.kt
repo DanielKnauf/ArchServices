@@ -46,7 +46,7 @@ internal class MediaService(
     private val cameraPermissionConfig: PermissionRequestConfig by lazy {
         PermissionRequestConfig(
             permission = Manifest.permission.CAMERA,
-            rationale = R.string.arch_service_media_service_rationale_save_picture
+            rationale = R.string.arch_service_media_service_camera_rationale
         )
     }
 
@@ -144,7 +144,7 @@ internal class MediaService(
             permissionRequestResolver?.requestPermission(
                 PermissionRequestConfig(
                     permission = Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    rationale = R.string.arch_service_media_service_rationale_save_picture
+                    rationale = R.string.arch_service_media_service_camera_rationale
                 )
             ) { result ->
                 when (result) {

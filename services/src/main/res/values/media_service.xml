@@ -2,6 +2,6 @@
 <resources>
 
     <!-- Strings -->
-    <string name="arch_service_media_service_rationale_save_picture">This permission is required to save pictures onto your device.</string>
+    <string name="arch_service_media_service_camera_rationale">This permission is required to save pictures onto your device.</string>
 
 </resources>
