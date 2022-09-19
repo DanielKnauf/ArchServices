@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- colors-->
+    <color name="media_resolver_edit_picture_contract_toolbar">@android:color/black</color>
+    <color name="media_resolver_edit_picture_contract_toolbar_controls">@android:color/white</color>
+    <color name="media_resolver_edit_picture_contract_statusbar">@android:color/black</color>
+    <color name="media_resolver_edit_picture_contract_background">#111111</color>
+    <color name="media_resolver_edit_picture_contract_active_control">#FF8A65</color>
+
+</resources>
