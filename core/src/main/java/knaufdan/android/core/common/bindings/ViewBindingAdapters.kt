@@ -1,19 +1,14 @@
-package knaufdan.android.core.extensions
+package knaufdan.android.core.common.bindings
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.graphics.Insets
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.databinding.BindingAdapter
+import knaufdan.android.core.common.extensions.doOnAttachedToWindow
+import knaufdan.android.core.common.extensions.setOnApplyWindowInsetsListenerCompat
+import knaufdan.android.core.common.extensions.systemWindowInsetsCompat
 import kotlin.reflect.KMutableProperty0
-
-fun View.width(width: Number) =
-    updateLayoutParams {
-        this.width = width.toInt()
-    }
 
 @BindingAdapter(
     value = [
@@ -83,41 +78,7 @@ private fun View.applyInsetsTo(
     view.requestApplyInsets()
 }
 
-fun View.doOnAttachedToWindow(
-    block: (View) -> Unit
-) {
-    if (isAttachedToWindow) return block(this)
-
-    addOnAttachStateChangeListener(
-        object : View.OnAttachStateChangeListener {
-            override fun onViewAttachedToWindow(view: View) {
-                view.removeOnAttachStateChangeListener(this)
-                block(view)
-            }
-
-            override fun onViewDetachedFromWindow(view: View) = Unit
-        }
-    )
-}
-
-fun View.setOnApplyWindowInsetsListenerCompat(
-    listener: ((v: View, insets: WindowInsetsCompat) -> WindowInsetsCompat)?
-) = ViewCompat.setOnApplyWindowInsetsListener(this, listener)
-
-val WindowInsetsCompat.systemBarsCompat: Insets
-    get() = getInsets(WindowInsetsCompat.Type.systemBars())
-
-val WindowInsetsCompat.imeCompat: Insets
-    get() = getInsets(WindowInsetsCompat.Type.ime())
-
-val WindowInsetsCompat.systemWindowInsetsCompat: Insets
-    get() = getInsets(WindowInsetsCompat.Type.systemBars() or WindowInsetsCompat.Type.ime())
-
-val WindowInsetsCompat.isImeVisible: Boolean
-    get() = isVisible(WindowInsetsCompat.Type.ime())
-
-private
-var View.margin: Spacing
+private var View.margin: Spacing
     get() = when (val lp = layoutParams) {
         is ViewGroup.MarginLayoutParams -> Spacing(
             lp.leftMargin,
@@ -138,8 +99,7 @@ var View.margin: Spacing
         }
     }
 
-private
-var View.padding: Spacing
+private var View.padding: Spacing
     get() = Spacing(
         paddingLeft,
         paddingTop,
