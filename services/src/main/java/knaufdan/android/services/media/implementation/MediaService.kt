@@ -13,7 +13,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.content.FileProvider
 import knaufdan.android.core.IContextProvider
-import knaufdan.android.core.extensions.toBitmap
+import knaufdan.android.core.common.extensions.toBitmap
 import knaufdan.android.services.R
 import knaufdan.android.services.media.EditImageConfig
 import knaufdan.android.services.media.IMediaRequestResolver
