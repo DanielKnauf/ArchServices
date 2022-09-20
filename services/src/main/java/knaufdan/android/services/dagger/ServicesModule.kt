@@ -6,6 +6,8 @@ import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.dagger.CoreModule
 import knaufdan.android.services.alarm.IAlarmService
 import knaufdan.android.services.alarm.implementation.AlarmService
+import knaufdan.android.services.media.IMediaService
+import knaufdan.android.services.media.implementation.MediaService
 import knaufdan.android.services.service.IServiceDispatcher
 import knaufdan.android.services.service.ServiceDispatcher
 import knaufdan.android.services.service.broadcast.IBroadcastService
@@ -45,8 +47,15 @@ class ServicesModule {
             contextProvider = contextProvider
         )
 
-    @Singleton
     @Provides
+    @Singleton
+    fun provideMediaService(
+        contextProvider: IContextProvider
+    ): IMediaService =
+        MediaService(contextProvider)
+
+    @Provides
+    @Singleton
     internal fun provideServiceDispatcher(serviceDispatcher: ServiceDispatcher): IServiceDispatcher =
         serviceDispatcher
 }
