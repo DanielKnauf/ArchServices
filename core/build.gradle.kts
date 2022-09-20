@@ -1,7 +1,6 @@
 import Libs.Dagger.addDagger
 import Libs.Kotlin.addKotlin
 import Libs.Lifecycle.addLifecycle
-import org.jetbrains.dokka.DokkaDefaults.moduleName
 
 plugins {
     id("com.android.library")

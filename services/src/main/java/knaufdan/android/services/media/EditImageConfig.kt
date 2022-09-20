@@ -22,6 +22,13 @@ data class EditImageConfig(
     @ColorRes val backgroundColor: Int = R.color.media_resolver_edit_picture_contract_background,
     @ColorRes val activeControlColor: Int = R.color.media_resolver_edit_picture_contract_active_control,
     val isCropGridVisible: Boolean = false,
-    val compressionFormat: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG,
-    val compressionQuality: Int = 92
-)
+    val compressionFormat: Bitmap.CompressFormat = DEFAULT_COMPRESSION_FORMAT,
+    val compressionQuality: Int = DEFAULT_COMPRESSION_QUALITY
+) {
+
+    companion object {
+
+        const val DEFAULT_COMPRESSION_QUALITY: Int = 92
+        val DEFAULT_COMPRESSION_FORMAT: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
+    }
+}

@@ -131,7 +131,9 @@ internal class MediaService(
         directoryName: String,
         onPictureSaved: (IPictureResult) -> Unit
     ) {
-        val bitmap = uri.toBitmap(contentResolver) ?: return
+        val bitmap = uri.toBitmap(contentResolver) ?: return onPictureSaved(
+            pictureError("Could not convert uri to bitmap (uri=$uri).")
+        )
 
         if (Build.VERSION.SDK_INT >= 29) {
             savePictureToGallery(
@@ -167,12 +169,7 @@ internal class MediaService(
                         onPictureSaved(IPictureResult.Success(uri))
                     }
                 }
-            } ?: run {
-                Log.e(
-                    "${this::class.simpleName}",
-                    "Context not implementing ${IPermissionRequestResolver::class.simpleName}"
-                )
-            }
+            } ?: run { onPictureSaved(IPictureResult.Error(PermissionRequestResolverException)) }
         }
     }
 
@@ -197,7 +194,7 @@ internal class MediaService(
         directoryName: String,
         onPictureSaved: (IPictureResult) -> Unit
     ) {
-        var tempUri: Uri? = null // Keep uri reference so it can be removed on failure
+        var tempUri: Uri? = null
 
         runCatching {
             val values = contentValues(displayName) {
@@ -209,7 +206,12 @@ internal class MediaService(
                 ?: throw IOException("Failed to create new MediaStore record.")
 
             tempUri = uri
-            saveImageToStream(bitmap, contentResolver.openOutputStream(uri))
+
+            val outputStream = contentResolver
+                .openOutputStream(uri)
+                ?: throw IOException("Could not open output stream")
+
+            saveImageToStream(bitmap, outputStream)
             onPictureSaved(IPictureResult.Success(uri))
         }.getOrElse { error ->
             tempUri?.let { orphanUri ->
@@ -222,20 +224,16 @@ internal class MediaService(
 
     private fun saveImageToStream(
         bitmap: Bitmap,
-        outputStream: OutputStream?
-    ) =
-        runCatching {
-            outputStream?.use { stream ->
-                if (!bitmap.compress(Bitmap.CompressFormat.JPEG, 92, stream)) {
-                    throw IOException("Failed to save bitmap.")
-                }
-            } ?: throw IOException("Failed to open output stream.")
-        }.getOrElse { e ->
-            Log.e(
-                MediaService::class.simpleName,
-                "Error saving image, message=${e.message}"
-            )
-        }
+        outputStream: OutputStream
+    ) = outputStream.use { stream ->
+        val isCompressed = bitmap.compress(
+            EditImageConfig.DEFAULT_COMPRESSION_FORMAT,
+            EditImageConfig.DEFAULT_COMPRESSION_QUALITY,
+            stream
+        )
+
+        if (isCompressed.not()) throw IOException("Failed to save bitmap.")
+    }
 
     companion object {
 
