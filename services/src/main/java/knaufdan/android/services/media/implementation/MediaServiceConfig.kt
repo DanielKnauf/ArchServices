@@ -16,6 +16,6 @@ class MediaServiceConfig : IMediaServiceConfig {
     fun validate(): Boolean = authority.isNotBlank()
 
     companion object {
-        internal val EMPTY: MediaServiceConfig by lazy { MediaServiceConfig() }
+        internal val EMPTY: MediaServiceConfig by lazy(::MediaServiceConfig)
     }
 }

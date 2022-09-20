@@ -28,7 +28,7 @@ data class EditImageConfig(
 
     companion object {
 
-        const val DEFAULT_COMPRESSION_QUALITY: Int = 92
         val DEFAULT_COMPRESSION_FORMAT: Bitmap.CompressFormat = Bitmap.CompressFormat.JPEG
+        const val DEFAULT_COMPRESSION_QUALITY: Int = 92
     }
 }

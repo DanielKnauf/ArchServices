@@ -55,7 +55,7 @@ internal class MediaService(
     override fun takePicture(onPictureTaken: (IPictureResult) -> Unit) {
         val hasInvalidConfig = config.validate().not()
         if (hasInvalidConfig) {
-            return onPictureTaken(pictureError("Invalid MediaServiceConfig (config=$config)"))
+            return onPictureTaken(pictureError("Invalid MediaServiceConfig (config=$config)."))
         }
 
         val mediaRequestResolver = mediaRequestResolver
@@ -90,7 +90,7 @@ internal class MediaService(
     ) {
         val hasInvalidConfig = config.validate().not()
         if (hasInvalidConfig) {
-            return onPictureEdited(pictureError("Invalid MediaServiceConfig (config=$config)"))
+            return onPictureEdited(pictureError("Invalid MediaServiceConfig (config=$config)."))
         }
 
         val targetUri =
@@ -102,7 +102,7 @@ internal class MediaService(
                 )
             }.getOrElse { e ->
                 return onPictureEdited(
-                    pictureError("Error while getting picture to edit (error=$e)")
+                    pictureError("Error while getting picture to edit (error=$e).")
                 )
             }
 
@@ -156,8 +156,7 @@ internal class MediaService(
                         val directory = File(directoryName.toDirectoryPath())
                         findOrCreateFile(directory)
 
-                        val fileName = System.currentTimeMillis().toString() + DEFAULT_FILE_SUFFIX
-                        val file = File(directory, fileName)
+                        val file = File(directory, defaultFileName)
                         saveImageToStream(
                             bitmap,
                             FileOutputStream(file)
@@ -183,7 +182,7 @@ internal class MediaService(
         runCatching {
             contentResolver.delete(uri, null, null)
         }.getOrElse { e ->
-            Log.d("MediaService", "Failed to not delete file at $uri (msg=${e.message})")
+            Log.e("MediaService", "Failed to not delete file at $uri (msg=${e.message}).")
         }
     }
 
@@ -209,7 +208,7 @@ internal class MediaService(
 
             val outputStream = contentResolver
                 .openOutputStream(uri)
-                ?: throw IOException("Could not open output stream")
+                ?: throw IOException("Could not open output stream.")
 
             saveImageToStream(bitmap, outputStream)
             onPictureSaved(IPictureResult.Success(uri))

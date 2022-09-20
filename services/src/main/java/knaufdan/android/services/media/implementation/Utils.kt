@@ -5,7 +5,8 @@ import android.util.Log
 import java.io.File
 import java.util.Date
 
-const val DEFAULT_FILE_SUFFIX = ".jpeg"
+val defaultFileName: String
+    get() = System.currentTimeMillis().toString() + DEFAULT_FILE_SUFFIX
 
 fun Context.createFileImage(): File = createFile(storageDir = filesDir)
 
@@ -32,3 +33,5 @@ private fun createFile(
         deleteOnExit()
     }
 }
+
+private const val DEFAULT_FILE_SUFFIX = ".jpeg"
