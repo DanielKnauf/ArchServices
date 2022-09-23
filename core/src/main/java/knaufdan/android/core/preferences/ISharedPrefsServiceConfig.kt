@@ -10,12 +10,6 @@ import knaufdan.android.core.preferences.serializeconfig.IJsonConfig
  */
 interface ISharedPrefsServiceConfig {
 
-    @Deprecated(
-        message = "Will be replaced in 0.11.0 by setFileName(name)",
-        replaceWith = ReplaceWith("setFileName(location)")
-    )
-    fun setLocation(location: String)
-
     /**
      * NOTE: If not set the [DEFAULT_FILE_NAME] will be used.
      *
