@@ -13,10 +13,15 @@ import com.google.android.material.tabs.TabLayoutMediator
 import knaufdan.android.arch.R
 import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.utils.doOnAttachedToWindow
+import java.util.WeakHashMap
+
+private val tabLayoutMediators = WeakHashMap<View, TabLayoutMediator>()
 
 @BindingAdapter("viewPager")
 fun TabLayout.bindLayoutMediator(viewPager: ViewPager2) {
-    viewPager.doOnAttachedToWindow { attachTabLayoutMediator(this, viewPager) }
+    viewPager.doOnAttachedToWindow {
+        attachTabLayoutMediator(this, viewPager)
+    }
 }
 
 @BindingAdapter(
@@ -78,7 +83,9 @@ fun TabLayout.bindTabs(
             )
         }
         else {
-            viewPager.doOnAttachedToWindow { attachTabLayoutMediator() }
+            viewPager.doOnAttachedToWindow {
+                attachTabLayoutMediator()
+            }
         }
     }
 }
@@ -134,7 +141,18 @@ private fun attachTabLayoutMediator(
     tabLayout: TabLayout,
     viewPager: ViewPager2,
     configure: (TabLayout.Tab, Int) -> Unit = { _, _ -> }
-) = TabLayoutMediator(tabLayout, viewPager) { tab, position -> configure(tab, position) }.attach()
+) {
+    tabLayoutMediators[tabLayout]?.detach()
+
+    TabLayoutMediator(
+        tabLayout,
+        viewPager,
+        configure
+    ).also { tabLayoutMediator ->
+        tabLayoutMediators[tabLayout] = tabLayoutMediator
+        tabLayoutMediator.attach()
+    }
+}
 
 private fun IComponent<*>.toTab(parent: TabLayout): TabLayout.Tab =
     parent
