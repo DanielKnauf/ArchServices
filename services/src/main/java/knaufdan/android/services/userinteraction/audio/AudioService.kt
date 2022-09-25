@@ -9,12 +9,10 @@ import android.os.Build
 import android.os.Handler
 import android.os.Looper
 import knaufdan.android.core.IContextProvider
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-internal class AudioService @Inject constructor(private val contextProvider: IContextProvider) :
-    IAudioService {
+internal class AudioService(
+    private val contextProvider: IContextProvider
+) : IAudioService {
 
     private val mediaPlayers = mutableMapOf<Int, MediaPlayer>()
 
@@ -37,11 +35,12 @@ internal class AudioService @Inject constructor(private val contextProvider: ICo
                 val res: Int =
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         requestAudioFocus(
-                            AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).run {
-                                setAudioAttributes(audioAttributes)
-                                setOnAudioFocusChangeListener(audioFocusChangeListener)
-                                build()
-                            }
+                            AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+                                .run {
+                                    setAudioAttributes(audioAttributes)
+                                    setOnAudioFocusChangeListener(audioFocusChangeListener)
+                                    build()
+                                }
                         )
                     } else {
                         @Suppress("DEPRECATION")
@@ -78,10 +77,11 @@ internal class AudioService @Inject constructor(private val contextProvider: ICo
             with(audioManager) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     abandonAudioFocusRequest(
-                        AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK).run {
-                            setAudioAttributes(audioAttributes)
-                            build()
-                        }
+                        AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN_TRANSIENT_MAY_DUCK)
+                            .run {
+                                setAudioAttributes(audioAttributes)
+                                build()
+                            }
                     )
                 } else {
                     @Suppress("DEPRECATION")

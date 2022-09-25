@@ -20,16 +20,20 @@ import javax.inject.Singleton
 
 @Module(includes = [CoreModule::class])
 class ServicesModule {
-    @Provides
+
     @Singleton
-    internal fun provideAlarmService(contextProvider: IContextProvider): IAlarmService =
-        AlarmService(
-            contextProvider = contextProvider
-        )
+    @Provides
+    fun provideAlarmService(
+        contextProvider: IContextProvider
+    ): IAlarmService =
+        AlarmService(contextProvider)
 
     @Provides
     @Singleton
-    internal fun provideAudioService(audioService: AudioService): IAudioService = audioService
+    internal fun provideAudioService(
+        contextProvider: IContextProvider
+    ): IAudioService =
+        AudioService(contextProvider)
 
     @Provides
     @Singleton
@@ -43,9 +47,7 @@ class ServicesModule {
     fun provideNotificationService(
         contextProvider: IContextProvider
     ): INotificationService =
-        NotificationService(
-            contextProvider = contextProvider
-        )
+        NotificationService(contextProvider)
 
     @Provides
     @Singleton
@@ -56,6 +58,8 @@ class ServicesModule {
 
     @Provides
     @Singleton
-    internal fun provideServiceDispatcher(serviceDispatcher: ServiceDispatcher): IServiceDispatcher =
-        serviceDispatcher
+    internal fun provideServiceDispatcher(
+        contextProvider: IContextProvider
+    ): IServiceDispatcher =
+        ServiceDispatcher(contextProvider)
 }
