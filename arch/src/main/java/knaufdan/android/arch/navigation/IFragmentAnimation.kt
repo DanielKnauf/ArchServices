@@ -1,8 +1,13 @@
 package knaufdan.android.arch.navigation
 
 import androidx.annotation.AnimRes
+import androidx.fragment.app.Fragment
 import knaufdan.android.arch.R
 
+/**
+ * An [IFragmentAnimation] defines how [Fragment] transaction (e.g. add or replace) should be
+ * animated when the [Fragment] enters or exits.
+ */
 sealed interface IFragmentAnimation {
 
     @get:AnimRes
