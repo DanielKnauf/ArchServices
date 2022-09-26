@@ -6,7 +6,7 @@ import knaufdan.android.arch.R
 
 /**
  * An [IFragmentAnimation] defines how [Fragment] transaction (e.g. add or replace) should be
- * animated when the [Fragment] enters or exits.
+ * animated when the [Fragment] [enter]s or [exit]s.
  */
 sealed interface IFragmentAnimation {
 
