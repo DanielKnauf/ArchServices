@@ -14,7 +14,7 @@ interface ISharedPrefsService {
     fun configure(adjust: ISharedPrefsServiceConfig.() -> Unit)
 
     /**
-     * Creates a entry or updates an existing entry in the SharedPreferences related to the [key].
+     * Creates an entry or updates an existing entry in the SharedPreferences related to the [key].
      * If the value is null, the key will be removed.
      *
      * @param key key to which the value is assigned to
@@ -39,7 +39,7 @@ interface ISharedPrefsService {
     )
 
     /**
-     * Creates a entry or updates an existing entry in the SharedPreferences related to the [key].
+     * Creates an entry or updates an existing entry in the SharedPreferences related to the [key].
      * If the value is null, the key will be removed.
      *
      * @param key key to which the value is assigned to
