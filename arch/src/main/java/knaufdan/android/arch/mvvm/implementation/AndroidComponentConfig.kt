@@ -35,7 +35,7 @@ internal sealed class AndroidComponentConfig(
         @LayoutRes layoutRes: Int,
         viewModelKey: Int,
         @StringRes activityTitleRes: Int,
-        val dialogStyle: DialogStyle = DialogStyle.FULL_WIDTH
+        val dialogSize: DialogSize = DialogSize.FULL_WIDTH
     ) : AndroidComponentConfig(
         layoutRes = layoutRes,
         viewModelKey = viewModelKey,

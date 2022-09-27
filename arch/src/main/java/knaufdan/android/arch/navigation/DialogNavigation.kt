@@ -4,10 +4,11 @@ import android.content.Context
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import knaufdan.android.arch.mvvm.implementation.BaseFragmentViewModel
 import knaufdan.android.arch.mvvm.implementation.dialog.BaseDialogFragment
 import knaufdan.android.arch.mvvm.implementation.dialog.BaseDialogFragment.Companion.KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN
-import knaufdan.android.arch.mvvm.implementation.dialog.DialogStyle
+import knaufdan.android.arch.mvvm.implementation.dialog.api.DialogSize
 
 typealias FragmentTag = String
 
@@ -15,7 +16,7 @@ private val fragmentConversations: MutableMap<FragmentTag, FragmentConversation<
 
 internal fun <ResultType> Context.showDialog(
     fragment: BaseDialogFragment<out BaseFragmentViewModel>,
-    dialogStyle: DialogStyle,
+    dialogSize: DialogSize,
     callback: ((ResultType?) -> Unit)
 ) {
     if (this is AppCompatActivity) {
@@ -35,7 +36,7 @@ internal fun <ResultType> Context.showDialog(
 
         fragment.addStringToBundle(
             key = KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN,
-            value = dialogStyle.name
+            value = dialogSize.name
         )
 
         supportFragmentManager.beginTransaction().apply {
@@ -43,6 +44,43 @@ internal fun <ResultType> Context.showDialog(
             fragment.show(
                 this,
                 fragment.getFragmentTag()
+            )
+        }
+    }
+}
+
+internal fun <ResultType> Context.showDialog(
+    fragment: DialogFragment,
+    fragmentTag: FragmentTag,
+    dialogSize: DialogSize,
+    callback: ((ResultType?) -> Unit)
+) {
+    if (this is AppCompatActivity) {
+        if (supportFragmentManager.fragments.isNotEmpty()) {
+            val lastFragment = supportFragmentManager.fragments.last()
+            if (lastFragment is DialogFragment) {
+                Log.e(
+                    "DialogNavigation",
+                    "$fragmentTag could not be displayed as a ${Fragment::class.java.simpleName} because there is already a Dialog displayed. " +
+                        "Please dismiss the displayed dialog first using dismissDialog() in ${INavigationService::class.java.simpleName}"
+                )
+                return
+            }
+        }
+
+        fragmentConversations[fragmentTag] = FragmentConversation(callback)
+
+        fragment.addStringToBundle(
+            key = KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN,
+            value = dialogSize.name
+        )
+
+        supportFragmentManager.beginTransaction().apply {
+            addToBackStack(null)
+
+            fragment.show(
+                this,
+                fragmentTag
             )
         }
     }

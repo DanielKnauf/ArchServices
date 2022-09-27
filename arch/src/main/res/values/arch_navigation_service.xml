@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- strings -->
+    <string name="arch_navigation_service_error_no_browser">Could not find a browser to open link.</string>
+    <string name="arch_navigation_service_error_no_mail_client">Could not find an e-mail client.</string>
+    <string name="arch_navigation_service_mail_client_chooser">Choose mail client:</string>
+    <string name="arch_navigation_service_error_play_store">Could not open play store.</string>
+
+</resources>

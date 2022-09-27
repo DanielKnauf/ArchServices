@@ -19,7 +19,9 @@ import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.arch.mvvm.implementation.AndroidComponentConfig
 import knaufdan.android.arch.mvvm.implementation.BaseFragmentViewModel
-import knaufdan.android.arch.navigation.NavigationService
+import knaufdan.android.arch.mvvm.implementation.dialog.api.DialogSize
+import knaufdan.android.arch.mvvm.implementation.dialog.api.toDialogSize
+import knaufdan.android.arch.navigation.implementation.NavigationService
 import knaufdan.android.core.resources.IResourceProvider
 import java.util.WeakHashMap
 import javax.inject.Inject
@@ -45,7 +47,7 @@ abstract class BaseDialogFragment<ViewModel : BaseFragmentViewModel> :
             layoutRes = getLayoutRes(),
             viewModelKey = getBindingKey(),
             activityTitleRes = getActivityTitleRes(),
-            dialogStyle = getDialogStyle()
+            dialogSize = getDialogSize()
         )
     }
 
@@ -96,9 +98,19 @@ abstract class BaseDialogFragment<ViewModel : BaseFragmentViewModel> :
         super.onStart()
 
         dialog?.apply {
-            when (config.dialogStyle) {
-                DialogStyle.FULL_SCREEN -> setLayoutParams()
-                DialogStyle.FULL_WIDTH -> setLayoutParams(heightParam = ViewGroup.LayoutParams.WRAP_CONTENT)
+            when (config.dialogSize) {
+                DialogSize.FULL_SCREEN -> setLayoutParams(
+                    widthParam = ViewGroup.LayoutParams.MATCH_PARENT,
+                    heightParam = ViewGroup.LayoutParams.MATCH_PARENT
+                )
+                DialogSize.FULL_WIDTH -> setLayoutParams(
+                    widthParam = ViewGroup.LayoutParams.MATCH_PARENT,
+                    heightParam = ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                DialogSize.WRAP_CONTENT -> setLayoutParams(
+                    widthParam = ViewGroup.LayoutParams.WRAP_CONTENT,
+                    heightParam = ViewGroup.LayoutParams.WRAP_CONTENT
+                )
             }
         }
     }
@@ -110,14 +122,14 @@ abstract class BaseDialogFragment<ViewModel : BaseFragmentViewModel> :
     }
 
     private fun Dialog.setLayoutParams(
-        widthParam: Int = ViewGroup.LayoutParams.MATCH_PARENT,
-        heightParam: Int = ViewGroup.LayoutParams.MATCH_PARENT
+        widthParam: Int,
+        heightParam: Int
     ) {
         window?.setLayout(widthParam, heightParam)
     }
 
-    private fun getDialogStyle() =
-        (arguments?.getString(KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN) ?: "").toDialogStyle()
+    private fun getDialogSize() =
+        (arguments?.getString(KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN).orEmpty()).toDialogSize()
 
     companion object {
         const val KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN = "KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN"
