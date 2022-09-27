@@ -1,10 +1,11 @@
-package knaufdan.android.arch.navigation
+package knaufdan.android.arch.navigation.implementation
 
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import knaufdan.android.arch.mvvm.implementation.BaseFragment
 import knaufdan.android.arch.mvvm.implementation.BaseFragmentViewModel
+import knaufdan.android.arch.navigation.ContainerViewId
 
 internal fun Context.replaceFragmentCleanly(
     fragment: BaseFragment<out BaseFragmentViewModel>,

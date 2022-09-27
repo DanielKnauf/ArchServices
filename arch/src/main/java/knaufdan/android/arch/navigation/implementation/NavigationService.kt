@@ -37,11 +37,6 @@ import knaufdan.android.arch.navigation.FragmentTag
 import knaufdan.android.arch.navigation.IFragmentTransaction
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.arch.navigation.IWebTarget
-import knaufdan.android.arch.navigation.dismissDialog
-import knaufdan.android.arch.navigation.navigationController
-import knaufdan.android.arch.navigation.replaceFragment
-import knaufdan.android.arch.navigation.replaceFragmentCleanly
-import knaufdan.android.arch.navigation.showDialog
 import knaufdan.android.arch.utils.getColorCompat
 import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.common.applyIf

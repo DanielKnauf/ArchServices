@@ -1,4 +1,4 @@
-package knaufdan.android.arch.navigation
+package knaufdan.android.arch.navigation.implementation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

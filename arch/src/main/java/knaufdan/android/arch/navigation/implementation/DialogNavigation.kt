@@ -1,4 +1,4 @@
-package knaufdan.android.arch.navigation
+package knaufdan.android.arch.navigation.implementation
 
 import android.content.Context
 import android.util.Log
@@ -9,8 +9,8 @@ import knaufdan.android.arch.mvvm.implementation.BaseFragmentViewModel
 import knaufdan.android.arch.mvvm.implementation.dialog.BaseDialogFragment
 import knaufdan.android.arch.mvvm.implementation.dialog.BaseDialogFragment.Companion.KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN
 import knaufdan.android.arch.mvvm.implementation.dialog.api.DialogSize
-
-typealias FragmentTag = String
+import knaufdan.android.arch.navigation.FragmentTag
+import knaufdan.android.arch.navigation.INavigationService
 
 private val fragmentConversations: MutableMap<FragmentTag, FragmentConversation<*>> = mutableMapOf()
 
