@@ -2,7 +2,7 @@ package knaufdan.android.arch.mvvm.implementation
 
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
-import knaufdan.android.arch.mvvm.implementation.dialog.DialogStyle
+import knaufdan.android.arch.mvvm.implementation.dialog.api.DialogSize
 import knaufdan.android.arch.navigation.ContainerViewId
 
 internal sealed class AndroidComponentConfig(
