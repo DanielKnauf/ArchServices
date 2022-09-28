@@ -10,7 +10,7 @@ import knaufdan.android.core.resources.IResourceProvider
  * An [IWebTarget] navigates to a destination on the web which is defined by an [url].
  *
  * [CustomTab] opens the [url] via a [CustomTabsIntent].
- * [PlayStore] opens the play store or navigates to the website.
+ * [PlayStore] opens the PlayStore app or navigates to the PlayStore website.
  */
 sealed interface IWebTarget {
 
