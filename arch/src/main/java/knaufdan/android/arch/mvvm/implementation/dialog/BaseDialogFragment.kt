@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
@@ -20,7 +21,7 @@ import knaufdan.android.arch.mvvm.IBaseFragment
 import knaufdan.android.arch.mvvm.implementation.AndroidComponentConfig
 import knaufdan.android.arch.mvvm.implementation.BaseFragmentViewModel
 import knaufdan.android.arch.mvvm.implementation.dialog.api.DialogSize
-import knaufdan.android.arch.mvvm.implementation.dialog.api.toDialogSize
+import knaufdan.android.arch.mvvm.implementation.dialog.api.DialogSize.Companion.toDialogSize
 import knaufdan.android.arch.navigation.implementation.NavigationService
 import knaufdan.android.core.resources.IResourceProvider
 import java.util.WeakHashMap
@@ -47,7 +48,7 @@ abstract class BaseDialogFragment<ViewModel : BaseFragmentViewModel> :
             layoutRes = getLayoutRes(),
             viewModelKey = getBindingKey(),
             activityTitleRes = getActivityTitleRes(),
-            dialogSize = getDialogSize()
+            dialogSize = dialogSize
         )
     }
 
@@ -128,11 +129,14 @@ abstract class BaseDialogFragment<ViewModel : BaseFragmentViewModel> :
         window?.setLayout(widthParam, heightParam)
     }
 
-    private fun getDialogSize() =
-        (arguments?.getString(KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN).orEmpty()).toDialogSize()
-
     companion object {
         const val KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN = "KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN"
+
         private val bindings: MutableMap<ViewModel, ViewDataBinding> = WeakHashMap()
+        private val Fragment.dialogSize: DialogSize
+            get() =
+                arguments
+                    ?.getString(KEY_DIALOG_CONFIG_SHOW_AS_FULL_SCREEN)
+                    .toDialogSize()
     }
 }

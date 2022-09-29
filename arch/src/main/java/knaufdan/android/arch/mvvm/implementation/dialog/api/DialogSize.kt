@@ -3,10 +3,13 @@ package knaufdan.android.arch.mvvm.implementation.dialog.api
 enum class DialogSize {
     FULL_SCREEN,
     FULL_WIDTH,
-    WRAP_CONTENT
-}
+    WRAP_CONTENT;
 
-fun String.toDialogSize() =
-    DialogSize.values().firstOrNull { style ->
-        style.name.equals(this, true)
-    } ?: DialogSize.FULL_SCREEN
+    companion object {
+
+        fun String?.toDialogSize() =
+            values()
+                .firstOrNull { style -> style.name.equals(this, true) }
+                ?: FULL_SCREEN
+    }
+}
