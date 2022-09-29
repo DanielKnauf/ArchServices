@@ -32,7 +32,6 @@ import knaufdan.android.arch.mvvm.implementation.dialog.BaseDialogFragment
 import knaufdan.android.arch.mvvm.implementation.dialog.ComponentDialogFragmentFactory
 import knaufdan.android.arch.mvvm.implementation.dialog.api.DialogStyle
 import knaufdan.android.arch.navigation.AlertDialogConfig
-import knaufdan.android.arch.navigation.ContainerViewId
 import knaufdan.android.arch.navigation.FragmentTag
 import knaufdan.android.arch.navigation.IFragmentTransaction
 import knaufdan.android.arch.navigation.INavigationService
@@ -50,7 +49,7 @@ internal class NavigationService(
     override val fragmentManager: FragmentManager?
         get() = activity?.supportFragmentManager
 
-    override var containerViewId : ContainerViewId = R.id.arch_fragment_container
+    override var containerViewId = R.id.arch_fragment_container
 
     override val navigationController: NavController?
         get() = runCatching {
@@ -86,7 +85,7 @@ internal class NavigationService(
 
     override fun toFragment(
         transaction: IFragmentTransaction,
-        containerViewId: ContainerViewId
+        containerViewId: Int
     ) {
         fragmentManager?.commit {
             when (val animation = transaction.animation) {
@@ -172,7 +171,7 @@ internal class NavigationService(
     override fun showComponent(
         component: IComponent<IComponentViewModel>,
         addToBackStack: Boolean,
-        containerViewId: ContainerViewId
+        containerViewId: Int
     ) {
         withActivity {
             val fragment =
@@ -209,7 +208,7 @@ internal class NavigationService(
     override fun goToFragment(
         fragment: BaseFragment<out BaseFragmentViewModel>,
         addToBackStack: Boolean,
-        containerViewId: ContainerViewId,
+        containerViewId: Int,
         clearBackStack: Boolean,
         vararg params: Pair<String, Any?>
     ) {
