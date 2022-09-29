@@ -50,7 +50,7 @@ internal class NavigationService(
     override val fragmentManager: FragmentManager?
         get() = activity?.supportFragmentManager
 
-    override var containerViewId = R.id.arch_fragment_container
+    override var containerViewId : ContainerViewId = R.id.arch_fragment_container
 
     override val navigationController: NavController?
         get() = runCatching {
