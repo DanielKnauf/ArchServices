@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--suppress XmlUnusedNamespaceDeclaration -->
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="asFullscreen"
+            type="Boolean" />
+
+        <variable
+            name="toolbarViewModel"
+            type="knaufdan.android.arch.mvvm.toolbar.implementation.ToolbarViewModel" />
 
         <variable
             name="fm"
@@ -10,6 +19,24 @@
 
     </data>
 
-    <LinearLayout style="@style/ArchBaseActivityContainer" />
+    <androidx.appcompat.widget.LinearLayoutCompat
+        style="@style/ArchBaseActivity.Container"
+        app:applyInsetsToMarginLeft="@{asFullscreen}"
+        app:applyInsetsToMarginRight="@{asFullscreen}"
+        app:applyInsetsToMarginTop="@{asFullscreen}">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            style="@style/ArchBaseActivity.Toolbar"
+            app:config="@{toolbarViewModel.toolbarConfig}"
+            app:onMenuItemClicked="@{item -> toolbarViewModel.onMenuItemClicked.invoke(item)}"
+            app:onNavigationIconClicked="@{_ -> toolbarViewModel.onNavigationIconClicked.invoke()}"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.DayNight"
+            tools:visibility="visible" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/arch_fragment_container"
+            style="@style/ArchBaseActivity.FragmentContainer" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </layout>
