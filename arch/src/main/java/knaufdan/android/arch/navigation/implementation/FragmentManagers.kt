@@ -1,4 +1,4 @@
-package knaufdan.android.arch.navigation
+package knaufdan.android.arch.navigation.implementation
 
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController

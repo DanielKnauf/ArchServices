@@ -2,7 +2,7 @@ package knaufdan.android.arch.mvvm.implementation
 
 import androidx.annotation.LayoutRes
 import androidx.annotation.StringRes
-import knaufdan.android.arch.mvvm.implementation.dialog.DialogStyle
+import knaufdan.android.arch.mvvm.implementation.dialog.api.DialogSize
 import knaufdan.android.arch.navigation.ContainerViewId
 
 internal sealed class AndroidComponentConfig(
@@ -35,7 +35,7 @@ internal sealed class AndroidComponentConfig(
         @LayoutRes layoutRes: Int,
         viewModelKey: Int,
         @StringRes activityTitleRes: Int,
-        val dialogStyle: DialogStyle = DialogStyle.FULL_WIDTH
+        val dialogSize: DialogSize = DialogSize.FULL_WIDTH
     ) : AndroidComponentConfig(
         layoutRes = layoutRes,
         viewModelKey = viewModelKey,

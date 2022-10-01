@@ -1,10 +1,13 @@
-package knaufdan.android.arch.navigation
+package knaufdan.android.arch.navigation.implementation
 
 import android.content.Context
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import knaufdan.android.arch.mvvm.implementation.BaseFragment
 import knaufdan.android.arch.mvvm.implementation.BaseFragmentViewModel
+import knaufdan.android.arch.navigation.ContainerViewId
 
 internal fun Context.replaceFragmentCleanly(
     fragment: BaseFragment<out BaseFragmentViewModel>,
@@ -40,4 +43,13 @@ internal fun Context.replaceFragment(
             if (addToBackStack) addToBackStack(null)
         }
     }
+}
+
+fun Fragment.addStringToBundle(
+    key: String,
+    value: String
+) {
+    val args = this.arguments ?: Bundle()
+    args.putString(key, value)
+    this.arguments = args
 }

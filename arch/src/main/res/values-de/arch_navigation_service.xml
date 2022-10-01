@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- strings -->
+    <string name="arch_navigation_service_error_no_browser">Es wurde kein Browser gefunden, um den Link zu öffnen.</string>
+    <string name="arch_navigation_service_error_no_mail_client">Es wurde keine E-Mail-App gefunden.</string>
+    <string name="arch_navigation_service_mail_client_chooser">Wähle deine E-Mail-App:</string>
+    <string name="arch_navigation_service_error_play_store">Der PlayStore konnte nicht geöffnet werden.</string>
+
+</resources>
