@@ -7,10 +7,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import knaufdan.android.arch.mvvm.implementation.BaseFragment
 import knaufdan.android.arch.mvvm.implementation.BaseFragmentViewModel
+import knaufdan.android.arch.navigation.ContainerViewId
 
 internal fun Context.replaceFragmentCleanly(
     fragment: BaseFragment<out BaseFragmentViewModel>,
-    containerViewId: Int
+    containerViewId: ContainerViewId
 ) {
     if (this is AppCompatActivity) {
         supportFragmentManager.popBackStackImmediate()
@@ -25,7 +26,7 @@ internal fun Context.replaceFragmentCleanly(
 internal fun Context.replaceFragment(
     fragment: BaseFragment<out BaseFragmentViewModel>,
     addToBackStack: Boolean,
-    containerViewId: Int
+    containerViewId: ContainerViewId
 ) {
     check(containerViewId != -1) { "Could not replace ${fragment.getFragmentTag()}, missing fragmentContainer (id = $containerViewId)" }
 

@@ -17,7 +17,7 @@ import kotlin.reflect.KClass
 
 interface INavigationService {
 
-    var containerViewId: Int
+    var containerViewId: ContainerViewId
 
     val fragmentManager: FragmentManager?
 
@@ -35,7 +35,7 @@ interface INavigationService {
 
     fun toFragment(
         transaction: IFragmentTransaction,
-        containerViewId: Int = this.containerViewId
+        containerViewId: ContainerViewId = this.containerViewId
     )
 
     /**
@@ -60,7 +60,7 @@ interface INavigationService {
     fun showComponent(
         component: IComponent<IComponentViewModel>,
         addToBackStack: Boolean,
-        containerViewId: Int = this.containerViewId
+        containerViewId: ContainerViewId = this.containerViewId
     )
 
     /**
@@ -74,7 +74,7 @@ interface INavigationService {
     fun goToFragment(
         fragment: BaseFragment<out BaseFragmentViewModel>,
         addToBackStack: Boolean,
-        containerViewId: Int = this.containerViewId,
+        containerViewId: ContainerViewId = this.containerViewId,
         clearBackStack: Boolean = false,
         vararg params: Pair<String, Any?> = emptyArray()
     )
