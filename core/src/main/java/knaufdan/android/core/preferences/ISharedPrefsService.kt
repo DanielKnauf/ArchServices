@@ -14,7 +14,7 @@ interface ISharedPrefsService {
     fun configure(adjust: ISharedPrefsServiceConfig.() -> Unit)
 
     /**
-     * Creates a entry or updates an existing entry in the SharedPreferences related to the [key].
+     * Creates an entry or updates an existing entry in the SharedPreferences related to the [key].
      * If the value is null, the key will be removed.
      *
      * @param key key to which the value is assigned to
@@ -36,6 +36,18 @@ interface ISharedPrefsService {
     fun setAsJson(
         key: String,
         value: Any?
+    )
+
+    /**
+     * Creates an entry or updates an existing entry in the SharedPreferences related to the [key].
+     * If the value is null, the key will be removed.
+     *
+     * @param key key to which the value is assigned to
+     * @param value value assigned to the key
+     */
+    fun setAsStringSet(
+        key: String,
+        value: Set<String>?
     )
 
     /**
@@ -104,4 +116,15 @@ interface ISharedPrefsService {
         key: String,
         defaultValue: String = ""
     ): String
+
+    /**
+     * @param key key to which the value is assigned to
+     * @param defaultValue value to be returned if no value is assigned to the [key]
+     *
+     * @return [Set] of [String] assigned to the [key] or [defaultValue]
+     */
+    fun getStringSet(
+        key: String,
+        defaultValue: Set<String> = emptySet()
+    ): Set<String>
 }

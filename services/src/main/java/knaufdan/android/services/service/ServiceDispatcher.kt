@@ -4,10 +4,11 @@ import android.app.Service
 import android.content.Intent
 import android.os.Bundle
 import knaufdan.android.core.IContextProvider
-import javax.inject.Inject
 import kotlin.reflect.KClass
 
-internal class ServiceDispatcher @Inject constructor(private val contextProvider: IContextProvider) : IServiceDispatcher {
+internal class ServiceDispatcher(
+    private val contextProvider: IContextProvider
+) : IServiceDispatcher {
 
     override fun <S : Service> startService(
         serviceClass: KClass<S>,

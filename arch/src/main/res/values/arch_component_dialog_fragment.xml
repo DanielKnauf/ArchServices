@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- styles -->
+    <style name="ArchComponentDialogFragment" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorPrimary">?attr/archColorPrimary</item>
+        <item name="colorPrimaryDark">?attr/archColorPrimaryDark</item>
+        <item name="colorAccent">?attr/archColorAccent</item>
+    </style>
+
+    <style name="ArchComponentDialogFragment.SlideInOut">
+        <item name="android:windowAnimationStyle">@style/ArchDialogSlideInOutAnimation</item>
+    </style>
+
+    <style name="ArchDialogSlideInOutAnimation" parent="android:Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/arch_slide_up</item>
+        <item name="android:windowExitAnimation">@anim/arch_slide_down</item>
+    </style>
+
+    <style name="ArchComponentDialogFragment.FadeInOut">
+        <item name="android:windowAnimationStyle">@style/ArchDialogFadeInOutAnimation</item>
+    </style>
+
+    <style name="ArchDialogFadeInOutAnimation" parent="android:Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/arch_fade_in</item>
+        <item name="android:windowExitAnimation">@anim/arch_fade_out</item>
+    </style>
+
+</resources>

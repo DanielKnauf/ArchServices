@@ -59,6 +59,15 @@ class SharedPrefsService(private val context: Context) : ISharedPrefsService {
         )
     }
 
+    override fun setAsStringSet(
+        key: String,
+        value: Set<String>?
+    ) {
+        sharedPrefs.edit {
+            putStringSet(key, value)
+        }
+    }
+
     override fun getBoolean(
         key: String,
         defaultValue: Boolean
@@ -88,6 +97,16 @@ class SharedPrefsService(private val context: Context) : ISharedPrefsService {
         key: String,
         defaultValue: String
     ): String = sharedPrefs.getString(key, defaultValue) ?: defaultValue
+
+    override fun getStringSet(
+        key: String,
+        defaultValue: Set<String>
+    ): Set<String> =
+        runCatching {
+            sharedPrefs
+                .getStringSet(key, defaultValue)
+                .orEmpty()
+        }.getOrDefault(emptySet())
 
     companion object {
 
