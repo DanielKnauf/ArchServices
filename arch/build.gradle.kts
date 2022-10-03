@@ -77,7 +77,6 @@ dependencies {
     implementation(Libs.Google.materialDesign)
 
     implementation(Libs.coil)
-    implementation(Libs.picasso)
 
     testImplementation(Libs.jUnit)
 

@@ -49,7 +49,6 @@ object Versions {
         const val vDependencyUpdates = "0.42.0"
         const val vKtLint = "0.46.1"
         const val vJUnit = "4.13.2"
-        const val vPicasso = "2.71828"
         const val vRetrofit = "2.9.0"
         const val vUCrop = "2.2.8"
     }
