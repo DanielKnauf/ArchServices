@@ -34,7 +34,6 @@ class ComponentDialogFragment(
         savedInstanceState: Bundle?
     ): View =
         run {
-            // make configurable
             dialog?.setCanceledOnTouchOutside(true)
 
             DataBindingUtil.inflate<ViewDataBinding>(
