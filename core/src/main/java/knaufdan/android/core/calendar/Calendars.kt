@@ -126,8 +126,8 @@ val Calendar.isToday: Boolean
 
 fun Calendar.isSameDay(other: Calendar): Boolean =
     year == other.year &&
-            month == other.month &&
-            dayOfMonth == other.dayOfMonth
+        month == other.month &&
+        dayOfMonth == other.dayOfMonth
 
 fun Calendar.isSameYear(other: Calendar): Boolean = year == other.year
 
