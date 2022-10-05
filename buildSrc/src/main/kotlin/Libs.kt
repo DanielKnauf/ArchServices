@@ -26,7 +26,6 @@ import Versions.Kotlin.vKotlin
 import Versions.Other.vCoil
 import Versions.Other.vJUnit
 import Versions.Other.vKtLint
-import Versions.Other.vPicasso
 import Versions.Other.vRetrofit
 import Versions.Other.vUCrop
 import org.gradle.kotlin.dsl.DependencyHandlerScope
@@ -165,6 +164,5 @@ object Libs {
     const val coil = "io.coil-kt:coil:$vCoil"
     const val ktLint = "com.pinterest:ktlint:$vKtLint"
     const val jUnit = "junit:junit:$vJUnit"
-    const val picasso = "com.squareup.picasso:picasso:$vPicasso"
     const val uCrop = "com.github.yalantis:ucrop:$vUCrop"
 }
