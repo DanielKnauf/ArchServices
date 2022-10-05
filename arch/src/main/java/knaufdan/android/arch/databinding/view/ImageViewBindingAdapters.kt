@@ -41,7 +41,6 @@ fun ImageView.resource(@DrawableRes imageRes: Int) {
     setImageResource(imageRes)
 }
 
-// TODO: rename
 @BindingAdapter("android:src")
 fun ImageView.uri(imageUri: Uri?) {
     if (imageUri == null || imageUri == Uri.EMPTY) return
