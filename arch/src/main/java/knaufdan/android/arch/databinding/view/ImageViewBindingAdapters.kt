@@ -15,7 +15,7 @@ import coil.size.Scale
 import knaufdan.android.core.resources.IResourceProvider
 import java.util.WeakHashMap
 
-val images: WeakHashMap<ImageView, Uri> = WeakHashMap()
+private val images: WeakHashMap<ImageView, Uri> by lazy(::WeakHashMap)
 
 @BindingAdapter("src")
 fun ImageView.bindSrc(source: Any?) {
