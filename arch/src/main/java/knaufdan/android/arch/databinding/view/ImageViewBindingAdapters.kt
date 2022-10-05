@@ -9,8 +9,9 @@ import androidx.annotation.ColorInt
 import androidx.annotation.DrawableRes
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.RequestCreator
+import coil.imageLoader
+import coil.request.ImageRequest
+import coil.size.Scale
 import knaufdan.android.core.resources.IResourceProvider
 import java.util.WeakHashMap
 
@@ -40,6 +41,7 @@ fun ImageView.resource(@DrawableRes imageRes: Int) {
     setImageResource(imageRes)
 }
 
+// TODO: rename
 @BindingAdapter("android:src")
 fun ImageView.uri(imageUri: Uri?) {
     if (imageUri == null || imageUri == Uri.EMPTY) return
@@ -61,8 +63,7 @@ fun ImageView.iconTint(@ColorInt color: Int?) {
         "loadingImageRes",
         "resizeWidth",
         "resizeHeight",
-        "scaleType",
-        "onlyScaleDown"
+        "scaleType"
     ],
     requireAll = false
 )
@@ -72,8 +73,7 @@ fun ImageView.bindImageUri(
     @DrawableRes loadingImageRes: Int? = null,
     resizeWidth: Int = -1,
     resizeHeight: Int = -1,
-    scaleType: ScaleType? = ScaleType.CENTER_INSIDE,
-    onlyScaleDown: Boolean = false
+    scaleType: ScaleType? = ScaleType.CENTER_INSIDE
 ) {
     if (imageUri == null || imageUri == Uri.EMPTY) return
 
@@ -82,19 +82,24 @@ fun ImageView.bindImageUri(
 
     images[this] = imageUri
 
-    Picasso.get()
-        .load(imageUri)
-        .applyTransformation(
-            resizeWidth = resizeWidth,
-            resizeHeight = resizeHeight,
-            scaleType = scaleType,
-            onlyScaleDown = onlyScaleDown
+    context
+        .imageLoader
+        .enqueue(
+            ImageRequest
+                .Builder(context)
+                .data(imageUri)
+                .target(this)
+                .setLoadingImage(
+                    loadingImage = loadingImage,
+                    loadingImageRes = loadingImageRes
+                )
+                .applyTransformation(
+                    resizeWidth = resizeWidth,
+                    resizeHeight = resizeHeight,
+                    scaleType = scaleType
+                )
+                .build()
         )
-        .setLoadingImage(
-            loadingImage = loadingImage,
-            loadingImageRes = loadingImageRes
-        )
-        .into(this)
 }
 
 @BindingAdapter(
@@ -104,8 +109,7 @@ fun ImageView.bindImageUri(
         "loadingImageRes",
         "resizeWidth",
         "resizeHeight",
-        "scaleType",
-        "onlyScaleDown"
+        "scaleType"
     ],
     requireAll = false
 )
@@ -115,27 +119,31 @@ fun ImageView.bindImageUrl(
     @DrawableRes loadingImageRes: Int?,
     resizeWidth: Int = -1,
     resizeHeight: Int = -1,
-    scaleType: ScaleType? = ScaleType.CENTER_INSIDE,
-    onlyScaleDown: Boolean = false
+    scaleType: ScaleType? = ScaleType.CENTER_INSIDE
 ) {
     if (imageUrl == null || imageUrl.isBlank()) return
 
-    Picasso.get()
-        .load(imageUrl)
-        .applyTransformation(
-            resizeWidth = resizeWidth,
-            resizeHeight = resizeHeight,
-            scaleType = scaleType,
-            onlyScaleDown = onlyScaleDown
+    context
+        .imageLoader
+        .enqueue(
+            ImageRequest
+                .Builder(context)
+                .data(imageUrl)
+                .target(this)
+                .setLoadingImage(
+                    loadingImage = loadingImage,
+                    loadingImageRes = loadingImageRes
+                )
+                .applyTransformation(
+                    resizeWidth = resizeWidth,
+                    resizeHeight = resizeHeight,
+                    scaleType = scaleType
+                )
+                .build()
         )
-        .setLoadingImage(
-            loadingImage = loadingImage,
-            loadingImageRes = loadingImageRes
-        )
-        .into(this)
 }
 
-private fun RequestCreator.setLoadingImage(
+private fun ImageRequest.Builder.setLoadingImage(
     loadingImage: Drawable?,
     loadingImageRes: Int?
 ) =
@@ -145,24 +153,19 @@ private fun RequestCreator.setLoadingImage(
         else -> this
     }
 
-private fun RequestCreator.applyTransformation(
+private fun ImageRequest.Builder.applyTransformation(
     resizeWidth: Int = -1,
     resizeHeight: Int = -1,
-    scaleType: ScaleType? = ScaleType.CENTER_INSIDE,
-    onlyScaleDown: Boolean = false
+    scaleType: ScaleType? = ScaleType.CENTER_INSIDE
 ) =
     apply {
         if (resizeWidth > 0 || resizeHeight > 0) {
-            resize(resizeWidth, resizeHeight)
+            size(resizeWidth, resizeHeight)
 
             when (scaleType) {
-                ScaleType.CENTER_INSIDE -> centerInside()
-                ScaleType.CENTER_CROP -> centerCrop()
+                ScaleType.CENTER_INSIDE -> scale(Scale.FIT)
+                ScaleType.CENTER_CROP -> scale(Scale.FILL)
                 null -> Unit
-            }
-
-            if (onlyScaleDown) {
-                onlyScaleDown()
             }
         }
     }
