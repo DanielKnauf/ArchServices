@@ -10,6 +10,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import knaufdan.android.arch.BR
 import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseActivity
+import knaufdan.android.arch.navigation.IFragmentTransaction
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.resources.IResourceProvider
@@ -112,9 +113,8 @@ abstract class BaseActivity<ViewModel : BaseActivityViewModel> :
         initialFragment?.apply {
             arguments = savedInstanceState
 
-            navigationService.goToFragment(
-                fragment = this,
-                addToBackStack = false
+            navigationService.toFragment(
+                IFragmentTransaction.Replace(this, false)
             )
         }
     }
