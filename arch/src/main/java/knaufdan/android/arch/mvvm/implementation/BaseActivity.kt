@@ -114,7 +114,7 @@ abstract class BaseActivity<ViewModel : BaseActivityViewModel> :
             arguments = savedInstanceState
 
             navigationService.toFragment(
-                IFragmentTransaction.Replace(
+                transaction = IFragmentTransaction.Replace(
                 fragment = this,
                 addToBackStack = false
             )
