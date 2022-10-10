@@ -14,7 +14,6 @@ import knaufdan.android.arch.base.component.IComponent
 import knaufdan.android.arch.base.component.IComponentViewModel
 import knaufdan.android.arch.base.toAndroidTransition
 import knaufdan.android.arch.utils.findLifecycleOwner
-import java.util.Collections.emptyList
 import java.util.WeakHashMap
 
 private val parentComponents: WeakHashMap<ViewGroup, List<IComponent<*>>> = WeakHashMap()
@@ -50,9 +49,10 @@ fun ViewGroup.bindComponents(
     transition: ViewTransition?
 ) {
     if (components == null) return
+    if (components.isEmpty()) return removeAllViews()
 
     val newComponents = components.toList()
-    val oldComponents = parentComponents[this] ?: emptyList()
+    val oldComponents = parentComponents[this].orEmpty()
     if (oldComponents.contentDeepEquals(newComponents)) return
 
     val oldSize = oldComponents.size
