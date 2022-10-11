@@ -27,8 +27,8 @@ import knaufdan.android.arch.navigation.IFragmentTransaction
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.arch.navigation.IWebTarget
 import knaufdan.android.arch.utils.getColorCompat
-import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.common.applyIf
+import knaufdan.android.core.context.IContextProvider
 import knaufdan.android.core.resources.IResourceProvider
 import kotlin.reflect.KClass
 
@@ -42,11 +42,7 @@ internal class NavigationService(
     override var containerViewId: ContainerViewId = R.id.arch_fragment_container
 
     override val navigationController: NavController?
-        get() = runCatching {
-            contextProvider
-                .fragmentManager
-                ?.navigationController
-        }.getOrNull()
+        get() = runCatching { fragmentManager?.navigationController }.getOrNull()
 
     private val context: Context
         get() = contextProvider.getContext()
