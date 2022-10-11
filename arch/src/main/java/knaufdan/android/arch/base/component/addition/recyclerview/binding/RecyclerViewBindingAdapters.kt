@@ -2,8 +2,6 @@ package knaufdan.android.arch.base.component.addition.recyclerview.binding
 
 import android.content.Context
 import androidx.databinding.BindingAdapter
-import androidx.paging.CombinedLoadStates
-import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.map
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +14,6 @@ import knaufdan.android.arch.base.component.addition.recyclerview.RecyclerViewSn
 import knaufdan.android.arch.base.component.addition.recyclerview.implementation.ComponentAdapter
 import knaufdan.android.arch.base.component.addition.recyclerview.implementation.ComponentPagingAdapter
 import knaufdan.android.arch.utils.findLifecycleOwner
-import knaufdan.android.core.common.extensions.toList
 
 @BindingAdapter(
     value = [
@@ -51,16 +48,14 @@ fun RecyclerView.bindComponents(
     value = [
         "pagingData",
         "orientation",
-        "snapBehavior",
-        "emptyComponent"
+        "snapBehavior"
     ],
     requireAll = false
 )
 fun RecyclerView.bindComponents(
     data: PagingData<IComponent<*>>?,
     viewOrientation: ViewOrientation?,
-    snapBehavior: RecyclerViewSnapBehavior?,
-    provideEmptyComponent: (() -> IComponent<Any>)?
+    snapBehavior: RecyclerViewSnapBehavior?
 ) {
     data ?: return
     val lifecycle = context.findLifecycleOwner()?.lifecycle ?: return
@@ -78,38 +73,20 @@ fun RecyclerView.bindComponents(
     }
 
     adapter = ComponentPagingAdapter().apply {
-        addLoadStateListener { loadStates ->
-            val component =
-                when {
-                    showEmptyState(loadStates) -> provideEmptyComponent?.invoke()
-                    else -> return@addLoadStateListener
-                }
-
-            component ?: return@addLoadStateListener
-
-            submitData(
-                lifecycle,
-                PagingData.from(component.toList())
-            )
-        }
-
         submitData(lifecycle, components)
     }
 
     setSnapHelper(snapBehavior)
 }
 
-private fun ComponentPagingAdapter.showEmptyState(loadStates: CombinedLoadStates): Boolean =
-    loadStates.isInitialLoadingFinished() && isEmpty()
-
-private fun CombinedLoadStates.isInitialLoadingFinished(): Boolean =
-    refresh is LoadState.NotLoading && append.endOfPaginationReached
-
-private fun ComponentPagingAdapter.isEmpty(): Boolean = itemCount == 0
-
 private fun RecyclerView.setSnapHelper(snapBehavior: RecyclerViewSnapBehavior?) {
     val androidSnapHelper = snapBehavior?.toAndroidSnapHelper() ?: return
+    clearOnFlingListener()
     androidSnapHelper.attachToRecyclerView(this)
+}
+
+private fun RecyclerView.clearOnFlingListener() {
+    onFlingListener = null
 }
 
 @Suppress("UNCHECKED_CAST")
