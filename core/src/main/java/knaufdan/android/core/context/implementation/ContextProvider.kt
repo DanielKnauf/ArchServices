@@ -1,11 +1,10 @@
-package knaufdan.android.core
+package knaufdan.android.core.context.implementation
 
 import android.content.Context
-import javax.inject.Inject
-import javax.inject.Singleton
+import knaufdan.android.core.context.IContextProvider
 
-@Singleton
-internal class ContextProvider @Inject constructor() : IContextProvider {
+internal class ContextProvider : IContextProvider {
+
     private lateinit var context: Context
 
     override fun setContext(context: Context) {

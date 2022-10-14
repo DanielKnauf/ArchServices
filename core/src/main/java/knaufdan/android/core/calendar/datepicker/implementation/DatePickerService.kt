@@ -1,22 +1,25 @@
 package knaufdan.android.core.calendar.datepicker.implementation
 
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.datepicker.MaterialDatePicker
-import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.calendar.calendar
 import knaufdan.android.core.calendar.datepicker.DatePickerConfig
 import knaufdan.android.core.calendar.datepicker.IDatePickerService
+import knaufdan.android.core.context.IContextProvider
 import java.util.Calendar
 
-internal class DatePickerService(
-    private val contextProvider: IContextProvider
-) : IDatePickerService {
+internal class DatePickerService(contextProvider: IContextProvider) : IDatePickerService {
+
+    private val fragmentManager: FragmentManager? =
+        (contextProvider.getContext() as? AppCompatActivity)?.supportFragmentManager
 
     override fun showDatePicker(
         config: DatePickerConfig,
         onCancelClicked: () -> Unit,
         onDateSelected: (Calendar) -> Unit
     ) {
-        contextProvider.fragmentManager?.run {
+        fragmentManager?.run {
             MaterialDatePicker
                 .Builder
                 .datePicker()

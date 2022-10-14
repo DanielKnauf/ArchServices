@@ -12,7 +12,7 @@ import knaufdan.android.arch.dagger.vm.ViewModelFactory
 import knaufdan.android.arch.mvvm.IBaseActivity
 import knaufdan.android.arch.navigation.IFragmentTransaction
 import knaufdan.android.arch.navigation.INavigationService
-import knaufdan.android.core.IContextProvider
+import knaufdan.android.core.context.IContextProvider
 import knaufdan.android.core.resources.IResourceProvider
 import javax.inject.Inject
 

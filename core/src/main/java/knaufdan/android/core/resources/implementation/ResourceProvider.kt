@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import androidx.core.content.ContextCompat
-import knaufdan.android.core.IContextProvider
+import knaufdan.android.core.context.IContextProvider
 import knaufdan.android.core.resources.IResourceProvider
 
 internal class ResourceProvider(
