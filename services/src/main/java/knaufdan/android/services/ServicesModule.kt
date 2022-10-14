@@ -1,4 +1,4 @@
-package knaufdan.android.services.dagger
+package knaufdan.android.services
 
 import dagger.Module
 import dagger.Provides
