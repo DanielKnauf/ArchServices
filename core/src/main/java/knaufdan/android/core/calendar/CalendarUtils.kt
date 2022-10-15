@@ -55,7 +55,7 @@ fun getTodayAsMonth(): Month = now.month
 
 fun getTodayAsYear(): Year = now.year
 
-fun getTimeOfDay(): Pair<Hour, Minute> = now.run { getHour() to getMinute() }
+fun getTimeOfDay(): Pair<Hour, Minute> = now.run { getHour() to minute }
 
 /**
  * NOTE: result is always a positive value, regardless if [other] is set in the future

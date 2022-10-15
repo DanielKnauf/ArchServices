@@ -3,7 +3,7 @@ package knaufdan.android.services.service
 import android.app.Service
 import android.content.Intent
 import android.os.Bundle
-import knaufdan.android.core.IContextProvider
+import knaufdan.android.core.context.IContextProvider
 import kotlin.reflect.KClass
 
 internal class ServiceDispatcher(

@@ -2,7 +2,6 @@ package knaufdan.android.core.calendar
 
 import android.text.format.DateUtils
 import knaufdan.android.core.calendar.alias.DayOfMonth
-import knaufdan.android.core.calendar.alias.DayOfYear
 import knaufdan.android.core.calendar.alias.Hour
 import knaufdan.android.core.calendar.alias.Minute
 import knaufdan.android.core.calendar.alias.Year
@@ -50,7 +49,7 @@ val Calendar.dayOfWeek: Int
 val Calendar.dayOfMonth: DayOfMonth
     get() = get(Calendar.DAY_OF_MONTH)
 
-val Calendar.dayOfYear: DayOfYear
+val Calendar.dayOfYear: Int
     get() = get(Calendar.DAY_OF_YEAR)
 
 /**
@@ -100,14 +99,16 @@ fun Calendar.setHour(hour: Hour): Calendar =
         set(Calendar.HOUR_OF_DAY, hour)
     }
 
-fun Calendar.getMinute(): Minute = get(Calendar.MINUTE)
+val Calendar.minute: Minute
+    get() = get(Calendar.MINUTE)
 
 fun Calendar.setMinute(minute: Minute): Calendar =
     apply {
         set(Calendar.MINUTE, minute)
     }
 
-fun Calendar.getSecond(): Minute = get(Calendar.SECOND)
+val Calendar.second: Int
+    get() = get(Calendar.SECOND)
 
 fun Calendar.addDay(): Calendar =
     changeDay(1)
@@ -120,7 +121,8 @@ fun Calendar.changeDay(steps: Int): Calendar =
         add(Calendar.DATE, steps)
     }
 
-fun Calendar.isToday(): Boolean = DateUtils.isToday(timeInMillis)
+val Calendar.isToday: Boolean
+    get() = DateUtils.isToday(timeInMillis)
 
 fun Calendar.isSameDay(other: Calendar): Boolean =
     year == other.year &&

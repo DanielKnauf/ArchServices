@@ -2,11 +2,11 @@ package knaufdan.android.core.calendar.daypicker.implementation
 
 import android.content.Context
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.R
 import knaufdan.android.core.calendar.Weekday
 import knaufdan.android.core.calendar.daypicker.DayPickerConfig
 import knaufdan.android.core.calendar.daypicker.IDayPickerService
+import knaufdan.android.core.context.IContextProvider
 import knaufdan.android.core.resources.IResourceProvider
 
 internal class DayPickerService(

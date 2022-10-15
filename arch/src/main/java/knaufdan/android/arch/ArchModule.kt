@@ -1,11 +1,12 @@
-package knaufdan.android.arch.dagger
+package knaufdan.android.arch
 
 import dagger.Module
 import dagger.Provides
+import knaufdan.android.arch.dagger.ComponentFactoryModule
 import knaufdan.android.arch.navigation.INavigationService
 import knaufdan.android.arch.navigation.implementation.NavigationService
-import knaufdan.android.core.IContextProvider
-import knaufdan.android.core.dagger.CoreModule
+import knaufdan.android.core.CoreModule
+import knaufdan.android.core.context.IContextProvider
 import javax.inject.Singleton
 
 @Module(

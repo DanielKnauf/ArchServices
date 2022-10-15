@@ -7,8 +7,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import knaufdan.android.core.IContextProvider
 import knaufdan.android.core.calendar.nowInMillis
+import knaufdan.android.core.context.IContextProvider
 import knaufdan.android.services.alarm.AlarmConfig
 import knaufdan.android.services.alarm.AlarmIteration
 import knaufdan.android.services.alarm.IAlarmService

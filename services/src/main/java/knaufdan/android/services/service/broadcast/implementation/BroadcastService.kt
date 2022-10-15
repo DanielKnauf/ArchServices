@@ -3,7 +3,7 @@ package knaufdan.android.services.service.broadcast.implementation
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import knaufdan.android.core.IContextProvider
+import knaufdan.android.core.context.IContextProvider
 import knaufdan.android.services.service.broadcast.IBroadcastService
 import knaufdan.android.services.service.broadcast.IntentAction
 import kotlin.reflect.KClass

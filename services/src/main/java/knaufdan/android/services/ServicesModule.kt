@@ -1,9 +1,9 @@
-package knaufdan.android.services.dagger
+package knaufdan.android.services
 
 import dagger.Module
 import dagger.Provides
-import knaufdan.android.core.IContextProvider
-import knaufdan.android.core.dagger.CoreModule
+import knaufdan.android.core.CoreModule
+import knaufdan.android.core.context.IContextProvider
 import knaufdan.android.services.alarm.IAlarmService
 import knaufdan.android.services.alarm.implementation.AlarmService
 import knaufdan.android.services.media.IMediaService

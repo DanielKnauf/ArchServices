@@ -8,7 +8,7 @@ import android.media.MediaPlayer
 import android.os.Build
 import android.os.Handler
 import android.os.Looper
-import knaufdan.android.core.IContextProvider
+import knaufdan.android.core.context.IContextProvider
 
 internal class AudioService(
     private val contextProvider: IContextProvider

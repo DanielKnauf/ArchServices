@@ -8,7 +8,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
-import knaufdan.android.core.IContextProvider
+import knaufdan.android.core.context.IContextProvider
 import knaufdan.android.services.common.createIntentToOpenActivity
 import knaufdan.android.services.userinteraction.notification.INotificationService
 import knaufdan.android.services.userinteraction.notification.INotificationServiceConfig
