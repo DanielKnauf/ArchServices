@@ -18,12 +18,12 @@ allprojects {
 
 dependencies {
    // kotlin
-   implementation("com.github.DanielKnauf:archservices:master-SNAPSHOT") // master
-   implementation("com.github.DanielKnauf:archservices:VERSION") // version
+   implementation("com.github.DanielKnauf:ArchServices:master-SNAPSHOT") // master
+   implementation("com.github.DanielKnauf:ArchServices:${VERSION}") // version
    
    // groovy
-   implementation 'com.github.DanielKnauf:archservices:master-SNAPSHOT' // master
-   implementation 'com.github.DanielKnauf:archservices:VERSION' // version
+   implementation 'com.github.DanielKnauf:ArchServices:master-SNAPSHOT' // master
+   implementation 'com.github.DanielKnauf:ArchServices:${VERSION}' // version
 }
 ```
 ## Used in
