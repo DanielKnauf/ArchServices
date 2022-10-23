@@ -149,12 +149,6 @@ private fun createStateChangeListener(
     viewModel: IComponentViewModel
 ): View.OnAttachStateChangeListener =
     object : View.OnAttachStateChangeListener {
-
-        override fun onViewAttachedToWindow(v: View?) {
-            viewModel.onAttach()
-        }
-
-        override fun onViewDetachedFromWindow(v: View?) {
-            viewModel.onDetach()
-        }
+        override fun onViewAttachedToWindow(v: View) = viewModel.onAttach()
+        override fun onViewDetachedFromWindow(v: View) = viewModel.onDetach()
     }

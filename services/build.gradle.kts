@@ -1,7 +1,6 @@
 import Libs.Dagger.addDagger
 import Libs.Kotlin.addKotlin
 import Libs.Room.addRoom
-import org.jetbrains.dokka.DokkaDefaults.moduleName
 
 plugins {
     id("com.android.library")
@@ -55,6 +54,7 @@ dependencies {
     addKotlin()
     addRoom()
 
+    implementation(Libs.AndroidX.activity)
     implementation(Libs.AndroidX.appCompat)
     implementation(Libs.AndroidX.core)
     implementation(Libs.AndroidX.localBroadcastManager)

@@ -70,5 +70,12 @@ interface INavigationService {
 
     fun hideKeyboard()
 
+    @Deprecated(
+        message = "onBackPressed is deprecated in Android 13. " +
+            "Method will be removed with ArchServices 0.15.0",
+        replaceWith = ReplaceWith("popFragmentBackStack()")
+    )
     fun onBackPressed()
+
+    fun popFragmentBackStack()
 }
