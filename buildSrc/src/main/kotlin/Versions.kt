@@ -5,6 +5,7 @@ object Versions {
     }
 
     object AndroidX {
+        const val vActivity = "1.6.0"
         const val vAppCompat = "1.5.0"
         const val vBroadcastManager = "1.1.0"
         const val vBrowser = "1.4.0"
