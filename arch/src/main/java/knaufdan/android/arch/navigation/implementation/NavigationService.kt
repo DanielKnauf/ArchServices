@@ -199,6 +199,10 @@ internal class NavigationService(
         withActivity { onBackPressed() }
     }
 
+    override fun popFragmentBackStack() {
+        fragmentManager?.popBackStack()
+    }
+
     internal fun dismissDialogBySystem(
         fragmentTag: String
     ) =

@@ -16,14 +16,14 @@ fun View.doOnAttachedToWindow(block: (View?) -> Unit) {
         object : View.OnAttachStateChangeListener {
             private var isAttached = false
 
-            override fun onViewAttachedToWindow(v: View?) {
+            override fun onViewAttachedToWindow(v: View) {
                 if (isAttached) return
 
                 isAttached = true
                 block(v)
             }
 
-            override fun onViewDetachedFromWindow(v: View?) = Unit
+            override fun onViewDetachedFromWindow(v: View) = Unit
         }
     )
 }
