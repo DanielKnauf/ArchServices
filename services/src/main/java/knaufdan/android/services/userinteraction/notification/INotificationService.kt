@@ -2,6 +2,7 @@ package knaufdan.android.services.userinteraction.notification
 
 import knaufdan.android.services.userinteraction.notification.api.NotificationConfig
 import knaufdan.android.services.userinteraction.notification.api.NotificationId
+import android.Manifest.permission.POST_NOTIFICATIONS
 
 /**
  * Provides functionality to configure a notification channel and send notifications through it.
@@ -26,7 +27,10 @@ interface INotificationService {
     /**
      * Shows a notification through the configured notification channel.
      *
-     * NOTE: [configure] must be called before showing notifications otherwise all will be blocked.
+     * NOTE:
+     * - [configure] must be called before showing notifications otherwise all will be blocked.
+     * - Starting with Android 33, the [POST_NOTIFICATIONS] permission must be granted. Otherwise,
+     * notifications will be blocked by the system.
      *
      * @param notificationConfig contains styling and interactions of notification.
      */
