@@ -1,8 +1,8 @@
 package knaufdan.android.services.userinteraction.notification
 
+import android.Manifest.permission.POST_NOTIFICATIONS
 import knaufdan.android.services.userinteraction.notification.api.NotificationConfig
 import knaufdan.android.services.userinteraction.notification.api.NotificationId
-import android.Manifest.permission.POST_NOTIFICATIONS
 
 /**
  * Provides functionality to configure a notification channel and send notifications through it.
