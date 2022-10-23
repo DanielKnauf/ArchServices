@@ -22,8 +22,10 @@ class ActionDispatcher<E : Enum<E>>(
     }
 
     private fun IntentAction.evaluateAction(extras: Bundle?) {
-        if (forActions.contains(this)) actor(this, extras)
-        else logError("- action $this not registered for this receiver.")
+        when (forActions.contains(this)) {
+            true -> actor(this, extras)
+            false -> logError("- action $this not registered for this receiver.")
+        }
     }
 
     private fun logError(msg: String) = Log.e(javaClass.simpleName, msg)

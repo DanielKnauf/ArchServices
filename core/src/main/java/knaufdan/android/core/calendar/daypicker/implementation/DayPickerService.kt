@@ -40,6 +40,8 @@ internal class DayPickerService(
     }
 
     private fun DayPickerConfig.createBuilder(context: Context): MaterialAlertDialogBuilder =
-        if (theme == IResourceProvider.INVALID_RES_ID) MaterialAlertDialogBuilder(context)
-        else MaterialAlertDialogBuilder(context, theme)
+        when (theme == IResourceProvider.INVALID_RES_ID) {
+            true -> MaterialAlertDialogBuilder(context)
+            false -> MaterialAlertDialogBuilder(context, theme)
+        }
 }

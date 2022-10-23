@@ -20,21 +20,19 @@ internal class ResourceProvider(
         vararg formatArguments: Any
     ): String =
         if (stringRes.isValid()) {
-            context.run {
-                if (formatArguments.isEmpty()) {
-                    return@run getString(stringRes)
-                }
-
-                getString(
-                    stringRes,
-                    *formatArguments
-                )
+            when (formatArguments.isEmpty()) {
+                true -> resources.getString(stringRes)
+                false -> resources.getString(stringRes, *formatArguments)
             }
-        } else ""
+        } else {
+            ""
+        }
 
     override fun getStringArray(arrayRes: Int): Array<String> =
-        if (arrayRes.isValid()) resources.getStringArray(arrayRes)
-        else emptyArray()
+        when (arrayRes.isValid()) {
+            true -> resources.getStringArray(arrayRes)
+            false -> emptyArray()
+        }
 
     override fun getDrawable(drawableRes: Int): Drawable? =
         runCatching {
@@ -45,7 +43,10 @@ internal class ResourceProvider(
         }.getOrNull()
 
     override fun getDimension(dimenRes: Int): Float =
-        if (dimenRes.isValid()) resources.getDimension(dimenRes) else 0f
+        when (dimenRes.isValid()) {
+            true -> resources.getDimension(dimenRes)
+            false -> 0f
+        }
 
     override fun getColor(colorRes: Int): Int =
         ContextCompat.getColor(
@@ -54,7 +55,10 @@ internal class ResourceProvider(
         )
 
     override fun getInt(intRes: Int): Int =
-        if (intRes.isValid()) resources.getInteger(intRes) else 0
+        when (intRes.isValid()) {
+            true -> resources.getInteger(intRes)
+            false -> 0
+        }
 
     companion object {
 
