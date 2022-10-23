@@ -32,7 +32,7 @@ internal class NotificationService(
 
     override fun showNotification(notificationConfig: NotificationConfig) {
         if (needsNotificationPermission()) {
-            Log.e(this::class.simpleName, "Notifications are disabled.")
+            Log.e(this::class.simpleName, "POST_NOTIFICATIONS permission not granted.")
             return
         }
 
