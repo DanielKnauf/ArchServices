@@ -146,8 +146,10 @@ fun View.bindFocus(
     if (focused == hasFocus()) return
 
     val updateFocus = {
-        if (focused) requestFocus()
-        else clearFocus()
+        when (focused) {
+            true -> requestFocus()
+            false -> clearFocus()
+        }
     }
 
     if (focusDelay == null) {
@@ -255,8 +257,10 @@ fun View.bindShowKeyboard(show: Boolean?) {
     val inputMethodManager =
         (context.getSystemService(INPUT_METHOD_SERVICE) as? InputMethodManager) ?: return
 
-    if (show) inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
-    else inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+    when (show) {
+        true -> inputMethodManager.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+        false -> inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+    }
 }
 
 @BindingAdapter(
@@ -279,8 +283,10 @@ fun View.bindScrolledElevation(
                     elevationHeight ?: resources.getDimension(R.dimen.arch_default_elevation)
 
                 elevation =
-                    if (recyclerView.canScrollVertically(-1)) height
-                    else 0f
+                    when (recyclerView.canScrollVertically(-1)) {
+                        true -> height
+                        false -> 0f
+                    }
             }
         }
     )

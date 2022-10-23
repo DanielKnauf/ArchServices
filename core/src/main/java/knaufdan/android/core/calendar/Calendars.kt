@@ -91,8 +91,10 @@ val Calendar.year: Year
 fun Calendar.getHour(
     is24Hours: Boolean = true
 ): Hour =
-    if (is24Hours) get(Calendar.HOUR_OF_DAY)
-    else get(Calendar.HOUR)
+    when (is24Hours) {
+        true -> get(Calendar.HOUR_OF_DAY)
+        false -> get(Calendar.HOUR)
+    }
 
 fun Calendar.setHour(hour: Hour): Calendar =
     apply {
@@ -137,8 +139,10 @@ fun Calendar.isSameYear(other: Calendar): Boolean = year == other.year
  * @return days between receiving [Calendar] and [future]
  */
 fun Calendar.getDaysUntil(future: Calendar): Int =
-    if (future.before(this)) 0
-    else getDaysBetween(future)
+    when (future.before(this)) {
+        true -> 0
+        false -> getDaysBetween(future)
+    }
 
 /**
  * NOTE: result is always a positive value, regardless if [other] is set in the future or past.

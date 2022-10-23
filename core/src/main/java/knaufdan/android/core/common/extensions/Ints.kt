@@ -1,5 +1,7 @@
 package knaufdan.android.core.common.extensions
 
 fun Int.toStringWithZeros(): String =
-    if (this < 10) "0$this"
-    else "$this"
+    when (this < 10) {
+        true -> "0$this"
+        false -> "$this"
+    }
