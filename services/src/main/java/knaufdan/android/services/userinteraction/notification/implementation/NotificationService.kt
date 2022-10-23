@@ -2,12 +2,12 @@ package knaufdan.android.services.userinteraction.notification.implementation
 
 import android.app.Notification
 import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import knaufdan.android.core.context.IContextProvider
 import knaufdan.android.services.common.createIntentToOpenActivity
 import knaufdan.android.services.userinteraction.notification.INotificationService
@@ -22,12 +22,17 @@ internal class NotificationService(
 
     private val context: Context
         get() = contextProvider.getContext()
-    private val notificationManager: NotificationManager
-        get() = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+    private val notificationManager: NotificationManagerCompat
+        get() = NotificationManagerCompat.from(context)
 
     override fun configure(adjust: INotificationServiceConfig.() -> Unit) = adjust(config)
 
     override fun showNotification(notificationConfig: NotificationConfig) {
+        if (notificationManager.areNotificationsEnabled().not()) {
+            Log.e(this::class.simpleName, "Notifications are disabled.")
+            return
+        }
+
         val hasInvalidConfig = !config.isValid()
         if (hasInvalidConfig) {
             Log.e(
@@ -37,7 +42,7 @@ internal class NotificationService(
             return
         }
 
-        if (Build.VERSION.SDK_INT >= 26) createNotificationChannel()
+        if (needsNotificationChannel) createNotificationChannel()
 
         notificationConfig
             .buildNotification()
@@ -54,7 +59,8 @@ internal class NotificationService(
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel() {
-        val isAlreadyConfigured = notificationManager.getNotificationChannel(config.channelId) != null
+        val isAlreadyConfigured =
+            notificationManager.getNotificationChannel(config.channelId) != null
         if (isAlreadyConfigured) return
 
         NotificationChannel(
@@ -129,5 +135,8 @@ internal class NotificationService(
 
     companion object {
         private val config: NotificationServiceConfig = NotificationServiceConfig.EMPTY
+
+        private val needsNotificationChannel: Boolean
+            get() = Build.VERSION.SDK_INT >= 26
     }
 }
