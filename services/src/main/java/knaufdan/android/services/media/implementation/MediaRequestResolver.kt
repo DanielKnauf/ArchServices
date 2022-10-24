@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +24,7 @@ import knaufdan.android.services.media.IPictureResult.Companion.pictureError
 class MediaRequestResolver : IMediaRequestResolver {
 
     private lateinit var takePictureContract: ActivityResultLauncher<Uri>
-    private lateinit var selectPictureContract: ActivityResultLauncher<Unit>
+    private lateinit var selectPictureContract: ActivityResultLauncher<PickVisualMediaRequest>
     private lateinit var editPictureContract: ActivityResultLauncher<EditImageConfig>
 
     private lateinit var lastTakePictureRequest: (IPictureResult) -> Unit
@@ -31,6 +32,10 @@ class MediaRequestResolver : IMediaRequestResolver {
     private lateinit var lastEditPictureRequest: (IPictureResult) -> Unit
 
     private lateinit var lastTakePictureUri: Uri
+
+    private val imageOnlyMediaRequest: PickVisualMediaRequest by lazy {
+        PickVisualMediaRequest(mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly)
+    }
 
     override fun registerMediaContractsFor(activity: AppCompatActivity) {
         takePictureContract =
@@ -42,7 +47,7 @@ class MediaRequestResolver : IMediaRequestResolver {
 
         selectPictureContract =
             activity.registerForActivityResult(
-                SelectPictureResultContract
+                ActivityResultContracts.PickVisualMedia()
             ) { pictureUri -> lastSelectPictureRequest(pictureUri.toPictureResult()) }
 
         editPictureContract =
@@ -62,7 +67,7 @@ class MediaRequestResolver : IMediaRequestResolver {
 
     override fun selectPicture(onResult: (IPictureResult) -> Unit) {
         lastSelectPictureRequest = onResult
-        selectPictureContract.launch(Unit)
+        selectPictureContract.launch(imageOnlyMediaRequest)
     }
 
     override fun editPicture(
@@ -169,9 +174,9 @@ class MediaRequestResolver : IMediaRequestResolver {
                 false -> pictureError("Error while taking picture.")
             }
 
-        private fun Uri.toPictureResult(): IPictureResult =
+        private fun Uri?.toPictureResult(): IPictureResult =
             when (this) {
-                Uri.EMPTY -> pictureError("Picture Uri was empty.")
+                null, Uri.EMPTY -> pictureError("No media selected.")
                 else -> IPictureResult.Success(this)
             }
     }

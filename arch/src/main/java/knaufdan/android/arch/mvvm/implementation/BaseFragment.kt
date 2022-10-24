@@ -19,6 +19,7 @@ import knaufdan.android.core.resources.IResourceProvider
 import java.util.WeakHashMap
 import javax.inject.Inject
 
+@Deprecated("Will be removed and updated with a Hilt-Version")
 abstract class BaseFragment<ViewModel : BaseFragmentViewModel> :
     DaggerFragment(),
     IBaseFragment<ViewModel> {

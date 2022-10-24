@@ -74,15 +74,16 @@ fun TabLayout.bindTabs(
     if (adapter != null && adapter.itemCount > 0) {
         attachTabLayoutMediator()
     } else {
-        if (viewPager.isAttachedToWindow) postDelayed(100) {
-            bindTabs(
-                previousViewPager,
-                previousComponents,
-                viewPager,
-                components
-            )
-        }
-        else {
+        if (viewPager.isAttachedToWindow) {
+            postDelayed(100) {
+                bindTabs(
+                    previousViewPager,
+                    previousComponents,
+                    viewPager,
+                    components
+                )
+            }
+        } else {
             viewPager.doOnAttachedToWindow {
                 attachTabLayoutMediator()
             }

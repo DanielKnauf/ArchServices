@@ -69,6 +69,7 @@ abstract class BaseActivity<ViewModel : BaseActivityViewModel> :
         }
     }
 
+    @Suppress("DEPRECATION")
     override fun onBackPressed() {
         supportFragmentManager.notifyBackPressed()
 

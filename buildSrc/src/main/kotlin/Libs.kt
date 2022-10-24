@@ -1,3 +1,4 @@
+import Versions.AndroidX.vActivity
 import Versions.AndroidX.vAppCompat
 import Versions.AndroidX.vBroadcastManager
 import Versions.AndroidX.vBrowser
@@ -33,6 +34,7 @@ import org.gradle.kotlin.dsl.DependencyHandlerScope
 object Libs {
 
     object AndroidX {
+        const val activity = "androidx.activity:activity-ktx:$vActivity"
         const val appCompat = "androidx.appcompat:appcompat:$vAppCompat"
         const val browser = "androidx.browser:browser:$vBrowser"
         const val core = "androidx.core:core-ktx:$vCore"

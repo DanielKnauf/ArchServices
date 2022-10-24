@@ -1,12 +1,10 @@
 package knaufdan.android.services.permission.implementation
 
-import android.app.Activity
-import android.content.pm.PackageManager
 import androidx.activity.ComponentActivity
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import knaufdan.android.core.common.extensions.hasPermission
 import knaufdan.android.services.R
 import knaufdan.android.services.permission.IPermissionRequestResolver
 import knaufdan.android.services.permission.PermissionRequestConfig
@@ -69,7 +67,4 @@ class PermissionRequestResolver : IPermissionRequestResolver {
         lastPermissionRequest = onResult
         requestPermissionContract.launch(permission)
     }
-
-    private fun Activity.hasPermission(permission: String): Boolean =
-        ContextCompat.checkSelfPermission(this, permission) == PackageManager.PERMISSION_GRANTED
 }
