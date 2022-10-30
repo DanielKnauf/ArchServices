@@ -9,10 +9,12 @@ import knaufdan.android.core.calendar.datepicker.IDatePickerService
 import knaufdan.android.core.context.IContextProvider
 import java.util.Calendar
 
-internal class DatePickerService(contextProvider: IContextProvider) : IDatePickerService {
+internal class DatePickerService(
+    private val contextProvider: IContextProvider
+) : IDatePickerService {
 
-    private val fragmentManager: FragmentManager? =
-        (contextProvider.getContext() as? AppCompatActivity)?.supportFragmentManager
+    private val fragmentManager: FragmentManager?
+        get() = (contextProvider.getContext() as? AppCompatActivity)?.supportFragmentManager
 
     override fun showDatePicker(
         config: DatePickerConfig,
