@@ -13,10 +13,12 @@ import knaufdan.android.core.calendar.timepicker.ITimePickerService
 import knaufdan.android.core.calendar.timepicker.TimePickerConfig
 import knaufdan.android.core.context.IContextProvider
 
-internal class TimePickerService(contextProvider: IContextProvider) : ITimePickerService {
+internal class TimePickerService(
+    private val contextProvider: IContextProvider
+) : ITimePickerService {
 
-    private val fragmentManager: FragmentManager? =
-        (contextProvider.getContext() as? AppCompatActivity)?.supportFragmentManager
+    private val fragmentManager: FragmentManager?
+        get() = (contextProvider.getContext() as? AppCompatActivity)?.supportFragmentManager
 
     override fun showTimePicker(
         config: TimePickerConfig,

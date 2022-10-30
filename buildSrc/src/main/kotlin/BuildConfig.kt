@@ -7,7 +7,7 @@ object BuildConfig {
 
     const val namespace = "knaufdan.android"
     const val groupId = "com.github.DanielKnauf"
-    const val version = "0.13.0"
+    const val version = "0.14.1"
 
     val javaVersion = JavaVersion.VERSION_11
     const val jvmVersion = "11"
