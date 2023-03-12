@@ -2,6 +2,7 @@
 <resources>
 
     <!-- Strings -->
-    <string name="arch_service_media_service_camera_rationale">Die Berechtigung ist erforderlich, um auf deine Kamera zuzugreifen.</string>
+    <string name="arch_service_media_service_camera_rationale">Diese Berechtigung ist erforderlich, um auf deine Kamera zuzugreifen.</string>
+    <string name="arch_service_media_service_external_storage_rationale">Diese Berechtigung ist erforderlich, um Daten auf dein Gerät zu speichern.</string>
 
 </resources>

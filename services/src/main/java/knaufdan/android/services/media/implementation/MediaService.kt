@@ -52,7 +52,7 @@ internal class MediaService(
     private val writeExternalStoragePermissionRequest: PermissionRequest by lazy {
         PermissionRequest(
             permission = Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            rationale = R.string.arch_service_media_service_camera_rationale
+            rationale = R.string.arch_service_media_service_external_storage_rationale
         )
     }
 
