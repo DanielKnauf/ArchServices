@@ -7,7 +7,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import knaufdan.android.core.common.extensions.hasPermission
 import knaufdan.android.services.R
 import knaufdan.android.services.permission.IPermissionRequestResolver
-import knaufdan.android.services.permission.PermissionRequestConfig
+import knaufdan.android.services.permission.PermissionRequest
 import knaufdan.android.services.permission.PermissionResult
 import knaufdan.android.services.permission.PermissionResult.Companion.toPermissionResult
 import java.lang.ref.WeakReference
@@ -29,36 +29,35 @@ class PermissionRequestResolver : IPermissionRequestResolver {
     }
 
     override fun requestPermission(
-        config: PermissionRequestConfig,
+        request: PermissionRequest,
         onResult: (PermissionResult) -> Unit
     ) {
         val activity = activity.get() ?: return onResult(PermissionResult.DENIED)
 
         when {
-            activity.hasPermission(config.permission) -> onResult(PermissionResult.GRANTED)
-            activity.shouldShowRequestPermissionRationale(config.permission) ->
-                activity.showRationale(config, onResult)
+            activity.hasPermission(request.permission) -> onResult(PermissionResult.GRANTED)
+            activity.shouldShowRequestPermissionRationale(request.permission) ->
+                activity.showRationale(request, onResult)
             else ->
                 requestPermission(
-                    permission = config.permission,
+                    permission = request.permission,
                     onResult = onResult
                 )
         }
     }
 
     private fun ComponentActivity.showRationale(
-        config: PermissionRequestConfig,
+        request: PermissionRequest,
         onResult: (PermissionResult) -> Unit
-    ) {
+    ) =
         MaterialAlertDialogBuilder(this)
             .setTitle(getString(R.string.arch_services_permission_request_resolver_rationale_title))
-            .setMessage(config.rationale)
+            .setMessage(request.rationale)
             .setCancelable(true)
             .setPositiveButton(getString(android.R.string.ok)) { _, _ ->
-                requestPermission(config.permission, onResult)
+                requestPermission(request.permission, onResult)
             }
             .show()
-    }
 
     private fun requestPermission(
         permission: String,

@@ -66,7 +66,6 @@ class NotificationServiceConfig : INotificationServiceConfig {
                 )
                 false
             }
-
             else -> true
         }
     }

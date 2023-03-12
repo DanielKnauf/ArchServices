@@ -22,7 +22,7 @@ import knaufdan.android.services.media.IMediaServiceConfig
 import knaufdan.android.services.media.IPictureResult
 import knaufdan.android.services.media.IPictureResult.Companion.pictureError
 import knaufdan.android.services.permission.IPermissionRequestResolver
-import knaufdan.android.services.permission.PermissionRequestConfig
+import knaufdan.android.services.permission.PermissionRequest
 import knaufdan.android.services.permission.PermissionResult
 import java.io.File
 import java.io.File.separator
@@ -43,8 +43,8 @@ internal class MediaService(
     private val contentResolver: ContentResolver
         get() = context.contentResolver
 
-    private val cameraPermissionConfig: PermissionRequestConfig by lazy {
-        PermissionRequestConfig(
+    private val cameraPermissionConfig: PermissionRequest by lazy {
+        PermissionRequest(
             permission = Manifest.permission.CAMERA,
             rationale = R.string.arch_service_media_service_camera_rationale
         )
@@ -144,7 +144,7 @@ internal class MediaService(
             )
         } else {
             permissionRequestResolver?.requestPermission(
-                PermissionRequestConfig(
+                PermissionRequest(
                     permission = Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     rationale = R.string.arch_service_media_service_camera_rationale
                 )
