@@ -4,26 +4,32 @@ dependencies {
     ktlint(Libs.ktLint)
 }
 
-task("ktLintCheck", JavaExec::class) {
-    group = "kotlin verification"
+val outputDir = "${project.buildDir}/reports/ktlint/"
+val inputFiles = project.fileTree(mapOf("dir" to "src", "include" to "**/*.kt"))
+
+val ktlintCheck by tasks.creating(JavaExec::class) {
+    inputs.files(inputFiles)
+    outputs.dir(outputDir)
+
     description = "Check Kotlin code style."
-    main = "com.pinterest.ktlint.Main"
-    classpath = configurations.getByName("ktlint")
-    args("src/**/*.kt")
-    // to generate report in checkstyle format prepend following args:
-    // "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
-    // see https://github.com/pinterest/ktlint#usage for more
+    classpath = ktlint
+    mainClass.set("com.pinterest.ktlint.Main")
+    // see https://pinterest.github.io/ktlint/install/cli/#command-line-usage for more information
+    args = listOf("src/**/*.kt")
 }
 
 tasks.named("check") {
     dependsOn(ktlint)
 }
 
-task("ktlintFix", JavaExec::class) {
-    group = "formatting"
+val ktlintFormat by tasks.creating(JavaExec::class) {
+    inputs.files(inputFiles)
+    outputs.dir(outputDir)
+
     description = "Fix Kotlin code style deviations."
-    main = "com.pinterest.ktlint.Main"
-    classpath = configurations.getByName("ktlint")
-    args("-F", "src/**/*.kt")
+    classpath = ktlint
+    mainClass.set("com.pinterest.ktlint.Main")
+    // see https://pinterest.github.io/ktlint/install/cli/#command-line-usage for more information
+    args = listOf("-F", "src/**/*.kt")
 }
 
