@@ -14,8 +14,8 @@ import java.lang.ref.WeakReference
 
 class PermissionRequestResolver : IPermissionRequestResolver {
 
-    private lateinit var requestPermissionContract: ActivityResultLauncher<String>
-    private lateinit var lastPermissionRequest: (PermissionResult) -> Unit
+    private var requestPermissionContract: ActivityResultLauncher<String>? = null
+    private var lastPermissionRequest: ((PermissionResult) -> Unit)? = null
     private lateinit var activity: WeakReference<ComponentActivity>
     private val permissionRequest = ActivityResultContracts.RequestPermission()
 
@@ -24,7 +24,7 @@ class PermissionRequestResolver : IPermissionRequestResolver {
 
         requestPermissionContract =
             activity.registerForActivityResult(permissionRequest) { granted ->
-                lastPermissionRequest.invoke(granted.toPermissionResult())
+                lastPermissionRequest?.invoke(granted.toPermissionResult())
             }
     }
 
@@ -64,6 +64,6 @@ class PermissionRequestResolver : IPermissionRequestResolver {
         onResult: (PermissionResult) -> Unit
     ) {
         lastPermissionRequest = onResult
-        requestPermissionContract.launch(permission)
+        requestPermissionContract?.launch(permission)
     }
 }
