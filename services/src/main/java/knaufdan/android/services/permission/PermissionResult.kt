@@ -9,6 +9,10 @@ enum class PermissionResult {
         val PermissionResult.isGranted: Boolean
             get() = this == GRANTED
 
-        fun Boolean.toPermissionResult(): PermissionResult = if (this) GRANTED else DENIED
+        fun Boolean.toPermissionResult(): PermissionResult =
+            when (this) {
+                true -> GRANTED
+                false -> DENIED
+            }
     }
 }

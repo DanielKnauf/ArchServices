@@ -15,8 +15,8 @@ interface IPermissionRequestResolver {
     fun registerPermissionRequestsFor(activity: ComponentActivity)
 
     /**
-     * Requests the permission defined in the [config]. Automatically show a dialog displaying the
-     * rational defined in the [config] if the Android system indicates this.
+     * Requests the permission defined in the [request]. Automatically show a dialog displaying the
+     * rational defined in the [request] if the Android system indicates this.
      *
      * Calls [onResult] with [PermissionResult.GRANTED] if permission is already given or user gives
      * permission. Otherwise, [onResult] is called with [PermissionResult.DENIED].
@@ -24,11 +24,11 @@ interface IPermissionRequestResolver {
      * NOTE: returns [PermissionResult.DENIED] if no [ComponentActivity] is set via
      * [registerPermissionRequestsFor].
      *
-     * @param config containing the requested permission and displayed rational.
+     * @param request containing the requested permission and displayed rational.
      * @param onResult callback to be called when a [PermissionResult] is available.
      */
     fun requestPermission(
-        config: PermissionRequestConfig,
+        request: PermissionRequest,
         onResult: (PermissionResult) -> Unit
     )
 }
