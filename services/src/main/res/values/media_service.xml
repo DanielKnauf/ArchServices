@@ -3,5 +3,6 @@
 
     <!-- Strings -->
     <string name="arch_service_media_service_camera_rationale">The permission is required to use your camera.</string>
+    <string name="arch_service_media_service_external_storage_rationale">The permission is required to save data to our device storage.</string>
 
 </resources>
