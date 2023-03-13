@@ -43,10 +43,16 @@ internal class MediaService(
     private val contentResolver: ContentResolver
         get() = context.contentResolver
 
-    private val cameraPermissionConfig: PermissionRequest by lazy {
+    private val cameraPermissionRequest: PermissionRequest by lazy {
         PermissionRequest(
             permission = Manifest.permission.CAMERA,
             rationale = R.string.arch_service_media_service_camera_rationale
+        )
+    }
+    private val writeExternalStoragePermissionRequest: PermissionRequest by lazy {
+        PermissionRequest(
+            permission = Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            rationale = R.string.arch_service_media_service_external_storage_rationale
         )
     }
 
@@ -64,7 +70,7 @@ internal class MediaService(
         val permissionRequestResolver = permissionRequestResolver
             ?: return onPictureTaken(IPictureResult.Error(PermissionRequestResolverException))
 
-        permissionRequestResolver.requestPermission(cameraPermissionConfig) { result ->
+        permissionRequestResolver.requestPermission(cameraPermissionRequest) { result ->
             when (result) {
                 PermissionResult.DENIED -> onPictureTaken(pictureError("Camera permission denied."))
                 PermissionResult.GRANTED -> {
@@ -144,10 +150,7 @@ internal class MediaService(
             )
         } else {
             permissionRequestResolver?.requestPermission(
-                PermissionRequest(
-                    permission = Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    rationale = R.string.arch_service_media_service_camera_rationale
-                )
+                writeExternalStoragePermissionRequest
             ) { result ->
                 when (result) {
                     PermissionResult.DENIED ->
