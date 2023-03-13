@@ -23,15 +23,15 @@ import knaufdan.android.services.media.IPictureResult.Companion.pictureError
 
 class MediaRequestResolver : IMediaRequestResolver {
 
-    private lateinit var takePictureContract: ActivityResultLauncher<Uri>
-    private lateinit var selectPictureContract: ActivityResultLauncher<PickVisualMediaRequest>
-    private lateinit var editPictureContract: ActivityResultLauncher<EditImageConfig>
+    private var takePictureContract: ActivityResultLauncher<Uri>? = null
+    private var selectPictureContract: ActivityResultLauncher<PickVisualMediaRequest>? = null
+    private var editPictureContract: ActivityResultLauncher<EditImageConfig>? = null
 
-    private lateinit var lastTakePictureRequest: (IPictureResult) -> Unit
-    private lateinit var lastSelectPictureRequest: (IPictureResult) -> Unit
-    private lateinit var lastEditPictureRequest: (IPictureResult) -> Unit
+    private var lastTakePictureRequest: ((IPictureResult) -> Unit)? = null
+    private var lastSelectPictureRequest: ((IPictureResult) -> Unit)? = null
+    private var lastEditPictureRequest: ((IPictureResult) -> Unit)? = null
 
-    private lateinit var lastTakePictureUri: Uri
+    private var lastTakePictureUri: Uri? = null
 
     private val imageOnlyMediaRequest: PickVisualMediaRequest by lazy {
         PickVisualMediaRequest(mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly)
@@ -42,18 +42,19 @@ class MediaRequestResolver : IMediaRequestResolver {
             activity.registerForActivityResult(
                 ActivityResultContracts.TakePicture()
             ) { isSuccessful ->
-                lastTakePictureRequest(isSuccessful.toPictureResult(lastTakePictureUri))
+                lastTakePictureRequest
+                    ?.invoke(isSuccessful.toPictureResult(lastTakePictureUri.orEmpty()))
             }
 
         selectPictureContract =
             activity.registerForActivityResult(
                 ActivityResultContracts.PickVisualMedia()
-            ) { pictureUri -> lastSelectPictureRequest(pictureUri.toPictureResult()) }
+            ) { pictureUri -> lastSelectPictureRequest?.invoke(pictureUri.toPictureResult()) }
 
         editPictureContract =
             activity.registerForActivityResult(
                 EditPictureResultContract
-            ) { pictureUri -> lastEditPictureRequest(pictureUri.toPictureResult()) }
+            ) { pictureUri -> lastEditPictureRequest?.invoke(pictureUri.toPictureResult()) }
     }
 
     override fun takePicture(
@@ -62,12 +63,12 @@ class MediaRequestResolver : IMediaRequestResolver {
     ) {
         lastTakePictureUri = uri
         lastTakePictureRequest = onResult
-        takePictureContract.launch(uri)
+        takePictureContract?.launch(uri)
     }
 
     override fun selectPicture(onResult: (IPictureResult) -> Unit) {
         lastSelectPictureRequest = onResult
-        selectPictureContract.launch(imageOnlyMediaRequest)
+        selectPictureContract?.launch(imageOnlyMediaRequest)
     }
 
     override fun editPicture(
@@ -75,7 +76,7 @@ class MediaRequestResolver : IMediaRequestResolver {
         onResult: (IPictureResult) -> Unit
     ) {
         lastEditPictureRequest = onResult
-        editPictureContract.launch(config)
+        editPictureContract?.launch(config)
     }
 
     companion object {
@@ -138,29 +139,31 @@ class MediaRequestResolver : IMediaRequestResolver {
                 }
 
             private fun Context.intentToCrop(config: EditImageConfig): Intent =
-                UCrop
-                    .of(config.sourceUri, config.targetUri)
-                    .withAspectRatio(config.aspectRatio.first, config.aspectRatio.second)
-                    .withMaxResultSize(config.maxResultSize.width, config.maxResultSize.height)
-                    .withOptions(
-                        cropOptions {
-                            setCompressionFormat(config.compressionFormat)
-                            setCompressionQuality(config.compressionQuality)
+                with(config) {
+                    UCrop
+                        .of(sourceUri, targetUri)
+                        .withAspectRatio(aspectRatio.first, aspectRatio.second)
+                        .withMaxResultSize(maxResultSize.width, maxResultSize.height)
+                        .withOptions(
+                            cropOptions {
+                                setCompressionFormat(compressionFormat)
+                                setCompressionQuality(compressionQuality)
 
-                            setShowCropGrid(config.isCropGridVisible)
+                                setShowCropGrid(isCropGridVisible)
 
-                            if (config.toolbarTitle != IResourceProvider.INVALID_RES_ID) {
-                                setToolbarTitle(getString(config.toolbarTitle))
+                                if (toolbarTitle != IResourceProvider.INVALID_RES_ID) {
+                                    setToolbarTitle(getString(toolbarTitle))
+                                }
+
+                                setToolbarColor(getColor(toolbarColor))
+                                setToolbarWidgetColor(getColor(toolbarControlsColor))
+                                setStatusBarColor(getColor(statusBarColor))
+                                setActiveControlsWidgetColor(getColor(activeControlColor))
+                                setRootViewBackgroundColor(getColor(backgroundColor))
                             }
-
-                            setToolbarColor(getColor(config.toolbarColor))
-                            setToolbarWidgetColor(getColor(config.toolbarControlsColor))
-                            setStatusBarColor(getColor(config.statusBarColor))
-                            setActiveControlsWidgetColor(getColor(config.activeControlColor))
-                            setRootViewBackgroundColor(getColor(config.backgroundColor))
-                        }
-                    )
-                    .getIntent(this)
+                        )
+                        .getIntent(this@intentToCrop)
+                }
         }
 
         private fun Uri?.orEmpty(): Uri = this ?: Uri.EMPTY
