@@ -14,9 +14,9 @@ import java.lang.ref.WeakReference
 
 class PermissionRequestResolver : IPermissionRequestResolver {
 
-    private lateinit var requestPermissionContract: ActivityResultLauncher<String>
-    private lateinit var lastPermissionRequest: (PermissionResult) -> Unit
-    private lateinit var activity: WeakReference<ComponentActivity>
+    private var requestPermissionContract: ActivityResultLauncher<String>? = null
+    private var lastPermissionRequest: ((PermissionResult) -> Unit)? = null
+    private var activity: WeakReference<ComponentActivity>? = null
     private val permissionRequest = ActivityResultContracts.RequestPermission()
 
     override fun registerPermissionRequestsFor(activity: ComponentActivity) {
@@ -24,7 +24,7 @@ class PermissionRequestResolver : IPermissionRequestResolver {
 
         requestPermissionContract =
             activity.registerForActivityResult(permissionRequest) { granted ->
-                lastPermissionRequest.invoke(granted.toPermissionResult())
+                lastPermissionRequest?.invoke(granted.toPermissionResult())
             }
     }
 
@@ -32,7 +32,7 @@ class PermissionRequestResolver : IPermissionRequestResolver {
         request: PermissionRequest,
         onResult: (PermissionResult) -> Unit
     ) {
-        val activity = activity.get() ?: return onResult(PermissionResult.DENIED)
+        val activity = activity?.get() ?: return onResult(PermissionResult.DENIED)
 
         when {
             activity.hasPermission(request.permission) -> onResult(PermissionResult.GRANTED)
@@ -64,6 +64,6 @@ class PermissionRequestResolver : IPermissionRequestResolver {
         onResult: (PermissionResult) -> Unit
     ) {
         lastPermissionRequest = onResult
-        requestPermissionContract.launch(permission)
+        requestPermissionContract?.launch(permission)
     }
 }
