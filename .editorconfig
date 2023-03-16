@@ -1,2 +1,4 @@
 [*.{kt,kts}]
-ktlint_disabled_rules = filename
+ktlint_standard_filename = disabled
+ktlint_standard_trailing-comma-on-call-site = disabled
+ktlint_standard_trailing-comma-on-declaration-site = disabled

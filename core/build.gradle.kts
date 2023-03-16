@@ -58,7 +58,6 @@ dependencies {
     addKotlin()
     addLifecycle()
 
-    //androidX
     implementation(Libs.AndroidX.appCompat)
     implementation(Libs.AndroidX.core)
     implementation(Libs.AndroidX.localBroadcastManager)

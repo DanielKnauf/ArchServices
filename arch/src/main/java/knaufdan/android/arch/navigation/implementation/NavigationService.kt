@@ -195,10 +195,6 @@ internal class NavigationService(
         }
     }
 
-    override fun onBackPressed() {
-        withActivity { onBackPressed() }
-    }
-
     override fun popFragmentBackStack() {
         fragmentManager?.popBackStack()
     }
