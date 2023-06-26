@@ -19,12 +19,6 @@ class ComponentFragment(
     private val layoutRes = component.getLayoutRes()
     private val viewModelKey = component.getBindingKey()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        retainInstance = true
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
