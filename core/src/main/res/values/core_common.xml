@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
     <!-- strings -->
     <string name="core_dialog_action_confirm">@android:string/ok</string>
     <string name="core_dialog_action_cancel">@android:string/cancel</string>
