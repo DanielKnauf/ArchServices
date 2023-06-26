@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- dimensions -->
-    <dimen name="spacing_zero">0dp</dimen>
-    <dimen name="spacing_half">4dp</dimen>
-    <dimen name="spacing">8dp</dimen>
-    <dimen name="spacing_double">16dp</dimen>
-    <dimen name="spacing_triple">24dp</dimen>
-    <dimen name="spacing_quadruple">32dp</dimen>
-
+    
     <!-- strings -->
     <string name="core_dialog_action_confirm">@android:string/ok</string>
     <string name="core_dialog_action_cancel">@android:string/cancel</string>

@@ -5,7 +5,13 @@
     <color name="arch_default_text_color">@android:color/black</color>
 
     <!-- dimension -->
-    <dimen name="arch_default_elevation">8dp</dimen>
+    <dimen name="default_elevation">8dp</dimen>
+    <dimen name="spacing_zero">0dp</dimen>
+    <dimen name="spacing_half">4dp</dimen>
+    <dimen name="spacing">8dp</dimen>
+    <dimen name="spacing_double">16dp</dimen>
+    <dimen name="spacing_triple">24dp</dimen>
+    <dimen name="spacing_quadruple">32dp</dimen>
 
     <!-- identifiers-->
     <item name="arch_recyclerView_itemTouchListener" type="id" />

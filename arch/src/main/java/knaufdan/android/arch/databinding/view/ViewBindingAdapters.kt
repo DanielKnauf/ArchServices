@@ -280,7 +280,7 @@ fun View.bindScrolledElevation(
                 super.onScrolled(recyclerView, dx, dy)
 
                 val height =
-                    elevationHeight ?: resources.getDimension(R.dimen.arch_default_elevation)
+                    elevationHeight ?: resources.getDimension(R.dimen.default_elevation)
 
                 elevation =
                     when (recyclerView.canScrollVertically(-1)) {
