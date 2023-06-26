@@ -14,6 +14,7 @@ import knaufdan.android.arch.databinding.view.LayoutBehavior
 import knaufdan.android.arch.databinding.view.TextGravity
 import knaufdan.android.arch.databinding.view.TextStyle
 import knaufdan.android.core.resources.IResourceProvider
+import knaufdan.android.core.R as CoreR
 
 data class TextConfig(
     val text: LiveData<Spannable>,
@@ -35,7 +36,7 @@ data class TextConfig(
     @DrawableRes val background: Int = IResourceProvider.INVALID_RES_ID,
     @DrawableRes val drawableLeft: Int = IResourceProvider.INVALID_RES_ID,
     @ColorRes val drawableLeftTint: Int = IResourceProvider.INVALID_RES_ID,
-    @DimenRes val drawablePadding: Int = R.dimen.spacing_zero,
+    @DimenRes val drawablePadding: Int = CoreR.dimen.spacing_zero,
     val onTextClicked: (text: String) -> Unit = {}
 ) {
     constructor(
@@ -58,7 +59,7 @@ data class TextConfig(
         @DrawableRes background: Int = IResourceProvider.INVALID_RES_ID,
         @DrawableRes drawableLeft: Int = IResourceProvider.INVALID_RES_ID,
         @ColorRes drawableLeftTint: Int = IResourceProvider.INVALID_RES_ID,
-        @DimenRes drawablePadding: Int = R.dimen.spacing_zero,
+        @DimenRes drawablePadding: Int = CoreR.dimen.spacing_zero,
         onTextClicked: (text: String) -> Unit = {}
     ) : this(
         text = MutableLiveData(text),
@@ -104,7 +105,7 @@ data class TextConfig(
         @DrawableRes background: Int = IResourceProvider.INVALID_RES_ID,
         @DrawableRes drawableLeft: Int = IResourceProvider.INVALID_RES_ID,
         @ColorRes drawableLeftTint: Int = IResourceProvider.INVALID_RES_ID,
-        @DimenRes drawablePadding: Int = R.dimen.spacing_zero,
+        @DimenRes drawablePadding: Int = CoreR.dimen.spacing_zero,
         onTextClicked: (text: String) -> Unit = {}
     ) : this(
         text = MutableLiveData(SpannableString(text) as Spannable),

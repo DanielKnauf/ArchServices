@@ -15,7 +15,6 @@ android {
 
     defaultConfig {
         minSdk = BuildConfig.minSdk
-        targetSdk = BuildConfig.targetSdk
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -42,8 +41,8 @@ android {
         targetCompatibility = BuildConfig.javaVersion
     }
 
-    kotlinOptions {
-        jvmTarget = BuildConfig.jvmVersion
+    kotlin {
+        jvmToolchain(BuildConfig.jvmVersion)
     }
 
     apply(from = "$rootDir/buildSrc/ktlint.gradle.kts")
