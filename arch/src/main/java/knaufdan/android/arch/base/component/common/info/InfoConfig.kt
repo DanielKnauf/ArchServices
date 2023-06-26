@@ -10,7 +10,6 @@ import knaufdan.android.arch.R
 import knaufdan.android.arch.databinding.view.LayoutBehavior
 import knaufdan.android.arch.databinding.view.TextGravity
 import knaufdan.android.core.resources.IResourceProvider
-import knaufdan.android.core.R as CoreR
 
 data class InfoConfig(
     val text: Spannable,
@@ -30,9 +29,9 @@ data class InfoConfig(
     @DimenRes val marginRight: Int = R.dimen.arch_info_default_margin_vertical,
     @DrawableRes val background: Int = IResourceProvider.INVALID_RES_ID,
     @StringRes val buttonText: Int,
-    @DimenRes val buttonMarginTop: Int = CoreR.dimen.spacing,
-    @DimenRes val buttonMarginLeft: Int = CoreR.dimen.spacing,
-    @DimenRes val buttonMarginRight: Int = CoreR.dimen.spacing,
+    @DimenRes val buttonMarginTop: Int = R.dimen.spacing,
+    @DimenRes val buttonMarginLeft: Int = R.dimen.spacing,
+    @DimenRes val buttonMarginRight: Int = R.dimen.spacing,
     val onButtonClicked: () -> Unit = {}
 ) {
     constructor(
@@ -53,9 +52,9 @@ data class InfoConfig(
         @DimenRes marginRight: Int = R.dimen.arch_info_default_margin_vertical,
         @DrawableRes background: Int = IResourceProvider.INVALID_RES_ID,
         @StringRes buttonText: Int,
-        @DimenRes buttonMarginTop: Int = CoreR.dimen.spacing,
-        @DimenRes buttonMarginLeft: Int = CoreR.dimen.spacing,
-        @DimenRes buttonMarginRight: Int = CoreR.dimen.spacing,
+        @DimenRes buttonMarginTop: Int = R.dimen.spacing,
+        @DimenRes buttonMarginLeft: Int = R.dimen.spacing,
+        @DimenRes buttonMarginRight: Int = R.dimen.spacing,
         onButtonClicked: () -> Unit = {}
     ) : this(
         text = SpannableString(text),
