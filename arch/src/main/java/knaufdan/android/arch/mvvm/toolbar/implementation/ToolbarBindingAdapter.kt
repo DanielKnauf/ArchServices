@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.google.android.material.appbar.MaterialToolbar
+import knaufdan.android.arch.R
 
 @BindingAdapter("config")
 fun MaterialToolbar.bindConfig(config: ToolbarConfig) {
@@ -35,10 +36,10 @@ fun MaterialToolbar.bindOnNavigationIconClicked(listener: View.OnClickListener) 
 
 private fun MaterialToolbar.setNavigationIcon(@DrawableRes iconRes: Int?) {
     navigationIcon = null
-    navigationIcon = iconRes?.run {
-        ContextCompat.getDrawable(
-            context,
-            this
-        )
-    }
+    navigationContentDescription = null
+
+    iconRes ?: return
+
+    navigationIcon = ContextCompat.getDrawable(context, iconRes)
+    setNavigationContentDescription(R.string.arch_content_description_navigation_icon)
 }
