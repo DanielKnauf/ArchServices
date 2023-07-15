@@ -20,4 +20,7 @@
     <item name="arch_viewPager_pageChangedCallback" type="id" />
     <item name="arch_tabLayout_tabSelectedListener" type="id" />
 
+    <!-- string -->
+    <string name="arch_content_description_navigation_icon">Navigation icon</string>
+
 </resources>
