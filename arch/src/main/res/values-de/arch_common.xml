@@ -2,6 +2,6 @@
 <resources>
 
     <!-- string -->
-    <string name="arch_content_description_navigation_icon">Navigation icon</string>
+    <string name="arch_content_description_navigation_icon">Navigations Symbol</string>
 
 </resources>
