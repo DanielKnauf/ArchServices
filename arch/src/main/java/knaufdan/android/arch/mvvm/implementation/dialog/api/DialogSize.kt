@@ -8,7 +8,7 @@ enum class DialogSize {
     companion object {
 
         fun String?.toDialogSize() =
-            values()
+            entries
                 .firstOrNull { style -> style.name.equals(this, true) }
                 ?: FULL_SCREEN
     }

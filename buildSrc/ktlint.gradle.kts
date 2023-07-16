@@ -16,6 +16,7 @@ val ktlintCheck by tasks.creating(JavaExec::class) {
     mainClass.set("com.pinterest.ktlint.Main")
     // see https://pinterest.github.io/ktlint/install/cli/#command-line-usage for more information
     args = listOf("src/**/*.kt")
+    jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED")
 }
 
 tasks.named("check") {
@@ -31,5 +32,5 @@ val ktlintFormat by tasks.creating(JavaExec::class) {
     mainClass.set("com.pinterest.ktlint.Main")
     // see https://pinterest.github.io/ktlint/install/cli/#command-line-usage for more information
     args = listOf("-F", "src/**/*.kt")
+    jvmArgs("--add-opens", "java.base/java.lang=ALL-UNNAMED")
 }
-

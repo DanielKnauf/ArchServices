@@ -128,7 +128,7 @@ fun TabLayout.bindTabSelectedListener(listener: ITabSelectedListener) {
                 get() = this@bindTabSelectedListener.getTabIndex(this)
 
             private fun TabLayout.getTabIndex(tab: TabLayout.Tab): Int? {
-                for (i in 0 until tabCount) {
+                for (i in 0..<tabCount) {
                     if (getTabAt(i) == tab) return i
                 }
 

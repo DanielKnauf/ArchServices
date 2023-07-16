@@ -52,7 +52,7 @@ fun ViewPager2.bindPages(
 @BindingAdapter("selectedPage")
 fun ViewPager2.bindSelectedPage(index: Int) {
     val count = adapter?.itemCount ?: return
-    if (index !in 0 until count) return
+    if (index !in 0..<count) return
 
     val currentIndex = currentItem
     if (currentIndex == index) return

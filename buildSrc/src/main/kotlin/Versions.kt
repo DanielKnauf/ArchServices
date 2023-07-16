@@ -29,7 +29,7 @@ object Versions {
     }
 
     object Google {
-        const val vDagger = "2.46.1"
+        const val vDagger = "2.47"
         const val vFirebaseCrashlytics = "18.2.9"
         const val vFirebaseAnalytics = "20.1.2"
         const val vFirebaseCrashlyticsPlugin = "2.8.1"
@@ -40,7 +40,7 @@ object Versions {
     }
 
     object Kotlin {
-        const val vKotlin = "1.8.22"
+        const val vKotlin = "1.9.0"
         const val vCoroutines = "1.6.1"
     }
 
@@ -48,7 +48,7 @@ object Versions {
         const val vAndroidMaven = "2.1"
         const val vCoil = "2.4.0"
         const val vDependencyUpdates = "0.47.0"
-        const val vKtLint = "0.49.1"
+        const val vKtLint = "0.50.0"
         const val vJUnit = "4.13.2"
         const val vRetrofit = "2.9.0"
         const val vUCrop = "2.2.8"

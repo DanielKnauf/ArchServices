@@ -74,7 +74,7 @@ fun RecyclerView.bindSmoothScrollToPosition(
             if (isAttachedToWindow && isShown) {
                 val numItems = adapter?.itemCount ?: 0
 
-                if (position in 0 until numItems) {
+                if (position in 0..<numItems) {
                     smoothScrollToPosition(position)
                 }
             }
